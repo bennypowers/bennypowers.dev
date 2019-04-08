@@ -1,0 +1,26 @@
+{
+  "name": "bennypowers.github.io",
+  "version": "1.0.0",
+  "description": "github pages for bennypowers.dev",
+  "main": "index.html",
+  "scripts": {
+    "test": "echo \"tests passed, I guess\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bennypowers/bennypowers.github.io.git"
+  },
+  "author": "Benny Powers <web@bennypowers.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/bennypowers/bennypowers.github.io/issues"
+  },
+  "homepage": "https://github.com/bennypowers/bennypowers.github.io#readme",
+  "devDependencies": {
+    "@pika/web": "^0.4.1"
+  },
+  "dependencies": {
+    "dev-feed": "^1.0.3",
+    "github-repository": "github:abraham/github-repository"
+  }
+}

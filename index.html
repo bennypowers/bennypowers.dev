@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Benny Powers, Web Developer</title>
+    <script type="module" src="/web_modules/dev-feed.js"></script>
+    <script type="module" src="/web_modules/github-repository.js"></script>
+    <style>
+      html {
+        font-family: "Fira Code", "Panic Code", "Operator Mono", monospace
+      }
+
+      header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+
+      main {
+        display: grid;
+        grid-gap: 14px;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      }
+
+      github-repository {
+        margin-bottom: 12px;
+      }
+
+      dev-feed {
+        margin: 0;
+        padding: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>Benny Powers, Web Developer</h1>
+      <a href="https://bennypowers.com">Résumé</a>
+    </header>
+    <main>
+      <section id="projects">
+        <h2>Select Projects</h2>
+        <github-repository owner-repo="apollo-elements/apollo-elements"></github-repository>
+        <github-repository owner-repo="bennypowers/stripe-elements"></github-repository>
+        <github-repository owner-repo="bennypowers/lazy-image"></github-repository>
+        <github-repository owner-repo="bennypowers/rollup-plugin-lit-css"></github-repository>
+        <github-repository owner-repo="bennypowers/service-worker"></github-repository>
+      </section>
+      <section id="writing">
+        <h2>Writing</h2>
+        <dev-feed username="bennypowers" sort="date"></dev-feed>
+      </section>
+    </main>
+  </body>
+</html>
