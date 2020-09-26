@@ -1,3 +1,5 @@
 [submodule "json-viewer"]
 	path = json-viewer
 	url = git@github.com:bennypowers/json-viewer.git
+[submodule "json-viewer/"]
+	url = https://github.com/bennypowers/json-viewer.git
