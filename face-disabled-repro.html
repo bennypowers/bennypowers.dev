@@ -1,0 +1,155 @@
+<!doctype html>
+<html>
+  <head>
+    <title>FACE formDisabledCallback</title>
+    <script type="module">
+      class XButton extends HTMLElement {
+        static formAssociated = true;
+
+        static observedAttributes = ['disabled', 'type'];
+
+        static {
+          this.template = document.createElement('template');
+          this.template.innerHTML = `
+            <button>
+              <slot></slot>
+            </button>
+          `;
+        }
+
+        #internals = this.attachInternals();
+
+        get #button() { return this.shadowRoot?.querySelector?.('button') ?? null; }
+
+        get disabled() {
+          return this.hasAttribute('disabled');
+        }
+
+        set disabled(bool) {
+          this.toggleAttribute('disabled', !!bool);
+          this.#button.disabled = !!bool;
+        }
+
+        get type() {
+          return this.getAttribute('type') ?? 'button';
+        };
+
+        set type(v) {
+          this.type = v;
+        }
+
+        constructor() {
+          super()
+            .attachShadow({ mode:'open' })
+            .append(XButton.template.content.cloneNode(true));
+          this.#button.addEventListener('click', _ => this.#onClick());
+        }
+
+        #onClick() {
+          const { form } = this.#internals;
+          switch (this.type) {
+            case 'reset':
+              form?.reset();
+              break;
+            default:
+              this.#submit();
+              break;
+          }
+        }
+
+        #submit() {
+          if (form?.reportValidity()) {
+            const event = new Event('submit', { cancelable: true });
+            form.dispatchEvent(event);
+            if (!event.defaultPrevented) {
+              form.submit();
+            }
+          }
+        }
+
+        attributeChangedCallback(attr, old, val) {
+          switch (attr) {
+            case 'disabled':
+              this.disabled = val !== null;
+              break;
+            case 'type':
+              if (this.type !== val) this.type = val;
+              break;
+          }
+        }
+
+        formAssociatedCallback(nullableForm) { console.log('formAssociatedCallback', nullableForm); }
+        formResetCallback(...args) { console.log('formResetCallback', ...args); }
+        formStateRestoreCallback(state, mode) { console.log(`formStateRestoreCallback(${state}, ${mode})`); }
+
+        formDisabledCallback(disabled) {
+          console.log(`formDisabledCallback(${disabled})`);
+          this.disabled = disabled;
+        }
+      }
+      customElements.define('x-button', XButton);
+    </script>
+    <script type="module">
+      const form = document.getElementById('form');
+      const fieldset = document.getElementById('form-set');
+      const submit = document.getElementById('submit');
+
+      /** @this {HTMLFormElement} */
+      function onSubmit(event) {
+        event.preventDefault();
+        this.elements.output.textContent = 'Submitted';
+      }
+
+      /** @this {HTMLFormElement} */
+      function onReset() {
+        fieldset.disabled = false;
+        this.elements.output.textContent = 'Pending';
+      }
+
+      /** @this{HTMLInputElement} */
+      function onChange({ target: { checked, dataset: { controls } } }) {
+        const disabled = checked;
+        switch (controls) {
+          case 'fieldset':
+            console.log('Setting fieldset disabled', disabled);
+            fieldset.disabled = disabled;
+            break;
+          case 'button':
+            console.log('Setting button disabled', disabled);
+            submit.disabled = disabled;
+            break;
+        }
+      }
+
+      form.addEventListener('submit', onSubmit);
+      form.addEventListener('reset', onReset);
+      form.addEventListener('change', onChange);
+    </script>
+  </head>
+  <body>
+    <form id="form">
+      <fieldset id="form-set">
+        <legend>
+          Custom button in a <code>&lt;fieldset&gt;</code> element;
+          clicking this button must submit the form
+        </legend>
+        <x-button id="submit" type="submit">Submit</x-button>
+      </fieldset>
+
+      <fieldset id="checkboxes">
+        <legend>Use these checkboxes to toggle disabled state</legend>
+        <input id="fst" type="checkbox" data-controls="fieldset" type="checkbox">
+        <label for="fst">Disable fieldset</label>
+        <input id="btn" type="checkbox" data-controls="button">
+        <label for="btn">Disable x-button</label>
+      </fieldset>
+
+      <fieldset id="outputs">
+        <legend>Observe and reset form state</legend>
+        <x-button type="reset">Reset</x-button>
+        <label for="output">Form status:</label>
+        <output id="output">Pending</output>
+      </fieldset>
+    </form>
+  </body>
+</html>
