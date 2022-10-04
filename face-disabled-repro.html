@@ -79,20 +79,24 @@
         }
 
         formAssociatedCallback(nullableForm) { console.log('formAssociatedCallback', nullableForm); }
-        formResetCallback(...args) { console.log('formResetCallback', ...args); }
         formStateRestoreCallback(state, mode) { console.log(`formStateRestoreCallback(${state}, ${mode})`); }
 
         formDisabledCallback(disabled) {
           console.log(`formDisabledCallback(${disabled})`);
           this.disabled = disabled;
         }
+
+        formResetCallback(...args) {
+          console.log('formResetCallback()');
+          this.disabled = false;
+        }
       }
       customElements.define('x-button', XButton);
     </script>
     <script type="module">
       const form = document.getElementById('form');
-      const fieldset = document.getElementById('form-set');
-      const submit = document.getElementById('submit');
+      const fieldset = document.getElementById('fieldset');
+      const submit = document.getElementById('button');
 
       /** @this {HTMLFormElement} */
       function onSubmit(event) {
@@ -108,17 +112,8 @@
 
       /** @this{HTMLInputElement} */
       function onChange({ target: { checked, dataset: { controls } } }) {
-        const disabled = checked;
-        switch (controls) {
-          case 'fieldset':
-            console.log('Setting fieldset disabled', disabled);
-            fieldset.disabled = disabled;
-            break;
-          case 'button':
-            console.log('Setting button disabled', disabled);
-            submit.disabled = disabled;
-            break;
-        }
+        console.log(`Disable ${controls} checkbox:`, checked);
+        document.getElementById(controls).disabled = checked;
       }
 
       form.addEventListener('submit', onSubmit);
@@ -128,12 +123,25 @@
   </head>
   <body>
     <form id="form">
-      <fieldset id="form-set">
+      <p>
+        Clicking the "Disable x-button" checkbox should set or unset the
+        <code>disabled</code> attribute on the submit button, and it should also log
+        "formDisabledCallback()" to the console. Clicking the
+        "Disable fieldset" checkbox should have the exact same effect, except that
+        instead of directly setting <code>disabled</code> on <code>x-button</code>,
+        it sets <code>disabled</code> on the enclosing <code>fieldset</code>, and
+        <em>that</em> should cause the button to become disabled.
+      </p>
+      <p>We have observed that while <em>setting</em> <code>disabled</code> on the
+        <code>fieldset</code> has the intended effect, <em>unsetting</em> it does not
+        unset <code>disabled</code> from the button.
+      </p>
+      <fieldset id="fieldset">
         <legend>
-          Custom button in a <code>&lt;fieldset&gt;</code> element;
+          Custom submit button in a <code>&lt;fieldset&gt;</code> element;
           clicking this button must submit the form
         </legend>
-        <x-button id="submit" type="submit">Submit</x-button>
+        <x-button id="button" type="submit">Submit</x-button>
       </fieldset>
 
       <fieldset id="checkboxes">
