@@ -1,0 +1,38 @@
+---
+layout: base.html
+---
+
+<style>
+  main {
+    display: grid;
+    grid-gap: 14px;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  }
+
+  github-repository {
+    margin-bottom: 12px;
+  }
+
+  dev-feed {
+    margin: 0;
+    padding: 0;
+  }
+</style>
+
+<main>
+  <section id="projects">
+    <h2>Select Projects</h2>
+    <github-repository owner-repo="apollo-elements/apollo-elements"></github-repository>
+    <github-repository owner-repo="bennypowers/stripe-elements"></github-repository>
+    <github-repository owner-repo="bennypowers/json-viewer"></github-repository>
+    <github-repository owner-repo="bennypowers/lit-css"></github-repository>
+    <h2>Contributions</h2>
+    <github-repository owner-repo="open-wc/open-wc"></github-repository>
+    <github-repository owner-repo="patternfly/patternfly-elements"></github-repository>
+    <github-repository owner-repo="RedHat-UX/red-hat-design-system"></github-repository>
+  </section>
+  <section id="writing">
+    <h2>Writing</h2>
+    <dev-feed username="bennypowers" sort="date"></dev-feed>
+  </section>
+</main>

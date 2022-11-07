@@ -1,0 +1,283 @@
+---
+permalink: /resume/index.html
+---
+<!doctype html>
+
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
+
+  <!-- See https://goo.gl/qRE0vM -->
+  <meta name="theme-color" content="#464a5b">
+
+  <!-- Add to homescreen for Chrome on Android. Fallback for manifest.json -->
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="application-name" content="Benny Powers, Web Developer">
+
+  <!-- Add to homescreen for Safari on iOS -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Benny Powers, Web Developer">
+
+  <!-- Homescreen icons -->
+  <link rel="apple-touch-icon" href="{{ '/assets/images/manifest/icon-48x48.png' | url }}">
+  <link rel="apple-touch-icon" sizes="72x72" href="{{ '/assets/images/manifest/icon-72x72.png' | url }}">
+  <link rel="apple-touch-icon" sizes="96x96" href="{{ '/assets/images/manifest/icon-96x96.png' | url }}">
+  <link rel="apple-touch-icon" sizes="144x144" href="{{ '/assets/images/manifest/icon-144x144.png' | url }}">
+  <link rel="apple-touch-icon" sizes="192x192" href="{{ '/assets/images/manifest/icon-192x192.png' | url }}">
+
+  <!-- Tile icon for Windows 8 (144x144 + tile color) -->
+  <meta name="msapplication-TileImage" content="{{ '/assets/images/manifest/icon-144x144.png' | url }}">
+  <meta name="msapplication-TileColor" content="#464a5b">
+  <meta name="msapplication-tap-highlight" content="no">
+
+  <meta name="author" content="Benny Powers">
+  <meta name="date.created" content="01-2017">
+  <meta name="HandheldFriendly" content="true">
+  <meta name="description" content="Benny Powers, Web Developer">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta property="og:title" content="Benny Powers Resume">
+  <meta property="og:site_name" content="Benny Powers, Web Developer">
+  <meta property="og:type" content="profile">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:url" content="https://bennypowers.com/">
+  <meta property="og:image" content="https://bennypowers.com/images/benny.jpg">
+  <meta property="og:image:width" content="400">
+  <meta property="og:image:height" content="400">
+  <meta property="og:image:type" content="image/jpg">
+  <meta property="profile:first_name" content="Benny">
+  <meta property="profile:last_name" content="Powers">
+  <meta property="profile:gender" content="male">
+  <meta property="profile:username" content="bennyp">
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu+Mono|Lato:300|Anonymous+Pro:400|Playfair+Display+SC:400">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.0.0-beta.40/dist/themes/base.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.0.0-beta.40/dist/themes/dark.css">
+  <link rel="shortcut icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1024' height='1024' viewBox='0 0 1024 1024'%3E %3Cg fill='none' fill-rule='evenodd'%3E %3Crect width='1024' height='1024' fill='%23464A5B'/%3E %3Ctext font-family='UbuntuMono-Regular, Ubuntu Mono' font-size='1064' letter-spacing='-64.101'%3E %3Ctspan x='3.601' y='788.64' fill='%23C5DFF0'%3Eb%3C/tspan%3E %3Ctspan x='471.5' y='788.64' fill='%23FFF' letter-spacing='-64.222'%3Ep%3C/tspan%3E %3C/text%3E %3C/g%3E %3C/svg%3E">
+  <title>Benny Powers, Web Developer</title>
+
+  <link async href="https://fonts.googleapis.com/css?family=Hepta+Slab|Libre Franklin" rel="stylesheet">
+
+  <link rel="stylesheet" href="{{ '/assets/resume.css' | url }}">
+  <link rel="stylesheet" href="{{ '/assets/resume-print.css' | url }}" media="print">
+
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+
+  <link rel="icon" href="{{ '/assets/images/favicon.ico?v=2' | url }}">
+
+  <!-- See https://goo.gl/OOhYW5 -->
+  <link rel="manifest" href="{{ '/manifest.webmanifest' | url }}">
+
+  <script src="https://unpkg.com/@webcomponents/webcomponentsjs/webcomponents-loader.js"></script>
+  <script type="module" src="{{ '/assets/resume.js' | url }}"></script>
+  <style>:not(:defined) { display: none; }</style>
+  <noscript><style>:not(:defined) { display: initial; }</style></noscript>
+</head>
+
+<body class="sl-theme-dark" itemscope itemtype="https://schema.org/Person">
+
+  <header id="identity">
+    <h1 id="main-header">
+      <span itemprop="givenName">Benny</span>
+      <span itemprop="familyName">Powers</span>
+      <span itemprop="jobTitle">Web Developer</span>
+    </h1>
+
+    <section id="social">
+      <h2 class="invisible">Social Profiles</h2>{% for link in social %}
+      <a aria-label="{{ link.label }}" target="_blank" rel="me noreferrer nofollow" tabindex="-1" href="{{ link.href }}">
+        <svg><use xlink:href="#{{ link.icon }}-icon"/></svg>
+      </a>{% endfor %}
+      <sl-icon-button id="print-button" name="printer" label="Print this page" class="screen-only">
+        <svg aria-label="Print This Page"><use xlink:href="#printer-icon"/></svg>
+      </sl-icon-button>
+    </section>
+
+    <address itemprop="address" itemscope itemtype="https://schema.org/PostalAddress">
+      <span itemprop="addressRegion">Jerusalem</span>,
+      <span itemprop="addressCountry">Israel</span>
+      <span itemprop="nationality" role="img" aria-label="Israeli">🇮🇱</span>
+      <span itemprop="nationality" role="img" aria-label="Canadian">🇨🇦</span>
+      <details>
+        <summary>Contact</summary>
+        <a itemprop="email" href="mailto:web@bennypowers.com">web@bennypowers.com</a>
+        <a itemprop="telephone" href="tel:+972544825726">054-482-5726</a>
+        <p>To book a live mentoring session, find me on codementor.io. For all other enquiries, please email me.</p>
+        <a id="codementor-badge" href="https://www.codementor.io/@bennyp?refer=badge">
+          <img src="https://www.codementor.io/m-badges/bennyp/find-me-on-cm-b.svg" alt="Codementor badge">
+        </a>
+      </details>
+    </address>
+  </header>
+
+  <main>
+
+    <section id="summary" itemprop="description" itemref="identity">
+      <p>A passionate, creative, and curious programmer, I specialize in Progressive Web Apps using open web standards like <a href="https://developer.mozilla.org/en-US/docs/Web/API/Window/customElements" rel="noreferrer" target="_blank">custom elements</a>,
+        <a href="https://developer.mozilla.org/en-US/docs/Web/Web_Components/Using_shadow_DOM">shadow <abbr title="Document Object Model">DOM</abbr></a>, and <a href="https://developer.mozilla.org/en-US/docs/Web/API/ServiceWorker">service worker</a>.</p>
+
+      <p>I care about <abbr title="Free/Open Source Software">F/OSS</abbr> and engineering standards,
+        preferring comprehensive solutions over band-aid hacks that add technical debt.
+        An autodidact, my current interests include functional JavaScript, and algebraic data types.</p>
+
+      <p>I excel when I have a sense of ownership over my work,
+        and when my teammates share my enthusiasm. I'm a strong written communicator,
+        English is my native tongue. I'm also proficient in Hebrew.</p>
+
+      <p>I'm a regular <abbr title="Open Source Software">OSS</abbr> contributor:
+        I open issues and contribute pull requests,
+        and have released a collection of my own F/OSS web components.</p>
+
+      <p>You can find me in chatrooms asking questions and helping others,
+        I enjoy being a part of a community of learners.</p>
+
+      <p>The company that hires me is looking for a motivated, tenacious individual;
+        someone whose goal is to learn, grow, and produce excellent software.
+        They value creative expression, community contribution, two-way dialogue
+        between management and development,
+        and seek to generate job satisfaction for their team.</p>
+
+      <h2>Highlights</h2>
+      <ul>
+        <li>Mobile Web Specialist</li>
+        <li>Standards and <abbr title="accessibility">a11y</abbr></li>
+        <li>Functional Programming</li>
+        <li>Web Components</li>
+        <li>Contributor to Open Source</li>
+        <li>Tenacious autodidact</li>
+        <li>Bilingual (English and Hebrew)</li>
+        <li>Multifaceted</li>
+      </ul>
+
+    </section>
+
+    <header id="print-header">
+      <h1>
+        <span itemprop="givenName">Benny</span>
+        <span itemprop="familyName">Powers</span>
+        <span itemprop="jobTitle">Web Developer</span>
+      </h1>
+
+      <address itemprop="address" itemscope itemtype="https://schema.org/PostalAddress">
+        <div>
+          <span itemprop="addressRegion">Jerusalem</span>,
+          <span itemprop="addressCountry">Israel</span>
+        </div>
+        <div>
+          <a itemprop="email" href="mailto:web@bennypowers.com">web@bennypowers.com</a>
+          <a itemprop="telephone" href="tel:+972544825726">054-482-5726</a>
+        </div>
+        <div>
+          <span itemprop="nationality" role="img" aria-label="Israeli">🇮🇱</span>
+          <span itemprop="nationality" role="img" aria-label="Canadian">🇨🇦</span>
+        </div>
+      </address>
+    </header>
+
+    <section id="tools">
+      <h2>Relevant Buzzwords</h2>
+      {%- set icons = collections.icon | groupby('fileSlug') %}
+      <ul id="tools-and-technologies">{% for buzzword in buzzwords %}
+        {%- set icon = icons[buzzword.icon or buzzword] | first -%}
+        <li itemprop="knowsAbout" title="{{ buzzword.title or icon.data.title }}">
+          <svg aria-label="{{ icon.data.title }}"><use xlink:href="#{{ buzzword.icon or buzzword }}-icon"/></svg>
+        </li>{% endfor %}
+      </ul>
+    </section>
+
+    <section id="qualifications">
+      <h2>Qualifications & Education</h2>{% for file in collections.education %}
+      <!-- {{ file.data.shortDescription }} -->
+      <article class="credential" itemscope itemtype="http://schema.org/educationalCredentialAwarded">
+        <h3 itemscope itemtype="https://schema.org/Course">{{ file.data.title }}</h3>
+        {{ file.templateContent | safe }}
+        <dl>{% for credential in file.data.credentials %}
+          <dt>
+            <span itemscope
+                  itemprop="issuedBy"
+                  itemtype="https://schema.org/{{ credential.institutionType or 'CollegeOrUniversity' }}">
+              <span itemprop="name">{{ credential.institution }}</span>
+              <time datetime="{{ file.data.date }}">{{ credential.date }}</time>
+            </span>
+          </dt>
+          <dd>
+            <a itemprop="educationalCredentialAwarded"
+               tabindex="-1"
+               href="{{ file.data.href }}"
+               rel="noreferrer"
+               target="_blank">View Credential</a>
+          </dd>{% endfor %}
+        </dl>
+      </article>{% endfor %}
+    </section>
+
+    <section id="experience">
+      <h2>Experience</h2>{% for file in collections.experience | sort(true, false, 'data.startDate') %}{% set position = file.data %}
+      <!-- {{ position.organization.name }} -->
+      <article class="experience" itemscope itemtype="https://schema.org/OrganizationRole">
+        <header>
+          <h3 itemprop="roleName">{{ position.role }}</h3>
+          <span>
+            <time itemprop="startDate"
+                  datetime="{{ position.startDate }}">{{ position.startDate | formatDate(month = 'long', year = 'numeric') }}</time> -
+            <time itemprop="endDate"
+                  datetime="{{ position.endDate }}">{{ position.endDate | formatDate(month = 'long', year = 'numeric') }}</time>
+          </span>
+          <span itemscope
+                itemtype="https://schema.org/Organization">
+            <a itemprop="name url"
+               href="{{ position.organization.href }}">{{ position.organization.name }}</a>
+            <address itemprop="address">{{ position.organization.address }}</address>
+          </span>
+        </header>
+        <div>
+          <section itemprop="description">{{ file.templateContent | safe }}</section>
+          <section itemscope
+                  itemtype="https://schema.org/ItemList"
+                  class="technologies">
+            <h3 itemprop="name">Technologies</h3>
+              <ul>{% for technology in position.technologies %}{%- set icon = ((icons[technology] or []) | first) or [] | first -%}
+              <li itemprop="itemListElement" title="{{ icon.data.title }}">
+                <svg><use xlink:href="#{{ technology }}-icon"/></svg>
+              </li>{% endfor %}
+            </ul>
+          </section>
+        </div>
+      </article>{% endfor %}
+    </section>
+
+    <section id="open-source">
+      <h2>Open Source</h2>{% for file in collections['open-source'] %}
+      <article class="open-source" itemscope itemtype="https://schema.org/CreativeWork">
+        <header>
+          <h3 itemprop="name">
+            <a href="{{ file.data.href }}" target="_blank" rel="nofollow noreferrer noopener">{{ file.data.title }}</a>
+          </h3>
+          <span>
+            <time datetime="{{ file.data.date }}">{{ file.data.date }}</time>
+          </span>
+        </header>
+       <section itemprop="description">{{ file.templateContent | safe }}</section>
+      </article>{% endfor %}
+      <a href="https://github.com/bennypowers" target="_blank" rel="nofollow noreferrer noopener">And more</a>
+    </section>
+
+  </main>
+
+  <footer id="footer" class="screen-only">
+    <small id="legal">© 2016 Benny Powers.</small>
+  </footer>
+
+  <svg id="icons">
+    <defs>{% for icon in collections.icon %}
+      <g id="{{ icon.fileSlug }}-icon">{{ icon.templateContent | safe }}</g>{% endfor %}
+    </defs>
+  </svg>
+</body>
+
+</html>
+

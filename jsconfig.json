@@ -1,0 +1,9 @@
+{
+  "compilerOptions": {
+    "module": "commonjs",
+    "moduleResolution": "Node",
+    "target": "esnext",
+    "emit": false,
+    "checkJs": true
+  }
+}

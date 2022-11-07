@@ -1,0 +1,50 @@
+---
+title: Rollup
+---
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 571 571">
+  <defs>
+    <linearGradient id="rollup-logo-a" x1="26.824%" x2="67.576%" y1="48.224%" y2="55.339%">
+      <stop offset="0%" stop-color="#FF6533"></stop>
+      <stop offset="15.7%" stop-color="#FF5633"></stop>
+      <stop offset="43.4%" stop-color="#FF4333"></stop>
+      <stop offset="71.4%" stop-color="#FF3733"></stop>
+      <stop offset="100%" stop-color="#F33"></stop>
+    </linearGradient>
+    <linearGradient id="rollup-logo-b" x1="20.45%" x2="93.486%" y1="38.133%" y2="80.432%">
+      <stop offset="0%" stop-color="#BF3338"></stop>
+      <stop offset="100%" stop-color="#F33"></stop>
+    </linearGradient>
+    <linearGradient id="rollup-logo-c" x1="32.293%" x2="45.556%" y1="39.497%" y2="48.914%">
+      <stop offset="0%" stop-color="#FF6533"></stop>
+      <stop offset="15.7%" stop-color="#FF5633"></stop>
+      <stop offset="43.4%" stop-color="#FF4333"></stop>
+      <stop offset="71.4%" stop-color="#FF3733"></stop>
+      <stop offset="100%" stop-color="#F33"></stop>
+    </linearGradient>
+    <linearGradient id="rollup-logo-d" x1="51.564%" x2="48.518%" y1="78.344%" y2="41.663%">
+      <stop offset="0%" stop-color="#FF6533"></stop>
+      <stop offset="15.7%" stop-color="#FF5633"></stop>
+      <stop offset="43.4%" stop-color="#FF4333"></stop>
+      <stop offset="71.4%" stop-color="#FF3733"></stop>
+      <stop offset="100%" stop-color="#F33"></stop>
+    </linearGradient>
+    <linearGradient id="rollup-logo-e" x1="40.201%" x2="53.975%" y1="47.215%" y2="54.535%">
+      <stop offset="0%" stop-color="#FBB040"></stop>
+      <stop offset="100%" stop-color="#FB8840"></stop>
+    </linearGradient>
+    <linearGradient id="rollup-logo-f" x1="55.222%" x2="40.926%" y1="5.888%" y2="128.016%">
+      <stop offset="0%" stop-color="#FFF"></stop>
+      <stop offset="100%" stop-color="#FFF" stop-opacity="0"></stop>
+    </linearGradient>
+  </defs>
+  <g fill="none" transform="translate(67)">
+    <path fill="url(#rollup-logo-a)" d="M437,188 C437,154.4 428.2,122.9 412.7,95.6 C371.6,53.3 282.2,43.5 260,95.4 C237.2,148.6 298.3,207.8 325,203.1 C359,197.1 319,119.1 319,119.1 C371,217.1 359,187.1 265,277.1 C171,367.1 75,557 61,565 C60.4,565.4 59.8,565.7 59.1,566 L427.8,566 C434.3,566 438.5,559.1 435.6,553.3 L339.2,362.5 C337.1,358.4 338.6,353.3 342.6,351 C399,318.6 437,257.8 437,188 Z"></path>
+    <path fill="url(#rollup-logo-b)" d="M437,188 C437,154.4 428.2,122.9 412.7,95.6 C371.6,53.3 282.2,43.5 260,95.4 C237.2,148.6 298.3,207.8 325,203.1 C359,197.1 319,119.1 319,119.1 C371,217.1 359,187.1 265,277.1 C171,367.1 75,557 61,565 C60.4,565.4 59.8,565.7 59.1,566 L427.8,566 C434.3,566 438.5,559.1 435.6,553.3 L339.2,362.5 C337.1,358.4 338.6,353.3 342.6,351 C399,318.6 437,257.8 437,188 Z"></path>
+    <path fill="url(#rollup-logo-c)" d="M61,565 C75,557 171,367 265,277 C359,187 371,217 319,119 C319,119 120,398 48,536"></path>
+    <path fill="url(#rollup-logo-d)" d="M89,315 C223.4,67.9 241,43 311,43 C347.8,43 384.9,59.6 408.9,89.1 C376.2,36.4 318.3,1.1 252,0.1 L23.7,0.1 C18.9,0.1 15,4 15,8.8 L15,469 C28.6,433.9 51.7,383.7 89,315 Z"></path>
+    <path fill="url(#rollup-logo-e)" d="M265,277 C171,367 75,557 61,565 C47,573 23.5,574 11,560 C-2.3,545.1 -23,521 89,315 C223.4,67.9 241,43 311,43 C347.8,43 384.9,59.6 408.9,89.1 C410.2,91.2 411.5,93.4 412.8,95.6 C371.7,53.3 282.3,43.5 260.1,95.4 C237.3,148.6 298.4,207.8 325.1,203.1 C359.1,197.1 319.1,119.1 319.1,119.1 C371,217 359,187 265,277 Z"></path>
+    <path fill="url(#rollup-logo-f)" d="M100,326 C234.4,78.9 252,54 322,54 C352.3,54 382.8,65.3 406,85.7 C382,58.3 346.4,43 311,43 C241,43 223.4,67.9 89,315 C-23,521 -2.3,545.1 11,560 C12.9,562.1 15.1,563.9 17.4,565.4 C5.7,548.4 0.5,508.9 100,326 Z" opacity=".3"></path>
+  </g>
+</svg>
+
+
