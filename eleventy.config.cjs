@@ -2,7 +2,6 @@ const YAML = require('yaml');
 const esbuildPlugin = require('./_plugins/esbuild.cjs');
 const glitchPlugin = require('./_plugins/glitch.cjs');
 const embedPlugin = require('eleventy-plugin-embed-everything');
-const helmetPlugin = require('eleventy-plugin-helmet');
 const EleventyPluginSyntaxhighlight = require('@11ty/eleventy-plugin-syntaxhighlight');
 
 /**
@@ -10,17 +9,12 @@ const EleventyPluginSyntaxhighlight = require('@11ty/eleventy-plugin-syntaxhighl
  * @return{import('@11ty/eleventy/src/UserConfig.js')}
  */
 module.exports = function(eleventyConfig) {
-  eleventyConfig.addDataExtension('yaml', x => YAML.parse(x));
-  eleventyConfig.addExtension('svg', {
-    compile(inputContent) {
-      return () => inputContent;
-    }
-  });
   eleventyConfig.ignores.add('README.md');
+  eleventyConfig.addDataExtension('yaml', x => YAML.parse(x));
+  eleventyConfig.addExtension('svg', { compile: x => () => x });
   eleventyConfig.addPassthroughCopy('assets');
-  eleventyConfig.addPlugin(esbuildPlugin, [ 'github-repository', 'dev-feed' ]);
+  eleventyConfig.addPlugin(esbuildPlugin, ['github-repository']);
   eleventyConfig.addPlugin(glitchPlugin);
-  eleventyConfig.addPlugin(helmetPlugin);
   eleventyConfig.addPlugin(embedPlugin, { lite: true });
   eleventyConfig.addPlugin(EleventyPluginSyntaxhighlight);
 

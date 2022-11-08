@@ -19,7 +19,6 @@
   },
   "homepage": "https://github.com/bennypowers/bennypowers.github.io#readme",
   "dependencies": {
-    "dev-feed": "^1.1.0",
     "github-repository": "^0.4.0"
   },
   "devDependencies": {
