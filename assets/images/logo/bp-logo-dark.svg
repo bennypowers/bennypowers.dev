@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="1024px" height="1024px" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="background: #464A5B;">
+    <!-- Generator: Sketch 3.7.2 (28276) - http://www.bohemiancoding.com/sketch -->
+    <title>bp-logo-dark</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" font-size="884.012994" font-family="Ubuntu-Medium, Ubuntu" font-weight="400">
+        <g id="bp-logo-dark">
+            <g id="bp" transform="translate(24.000000, -82.000000)">
+                <text id="b" fill="#CCE3F2">
+                    <tspan x="0" y="824">b</tspan>
+                </text>
+                <text id="p" transform="translate(712.500000, 680.000000) scale(1, -1) translate(-712.500000, -680.000000) " fill="#6D91A9">
+                    <tspan x="448" y="996">b</tspan>
+                </text>
+            </g>
+        </g>
+    </g>
+</svg>

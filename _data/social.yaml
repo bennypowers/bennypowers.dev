@@ -1,0 +1,24 @@
+- label: Mastodon
+  href: https://social.bennypowers.dev/@i
+  icon: mastodon-mono
+
+- label: GitLab
+  href: https://gitlab.com/bennyp
+  icon: gitlab-mono
+
+- label: GitHub
+  href: https://github.com/bennypowers
+  icon: github-mono
+
+- label: StackOverflow
+  href: https://stackexchange.com/users/2936504/benny-powers
+  icon: stackoverflow-mono
+
+- label: LinkedIn
+  href: https://il.linkedin.com/in/bennypowers
+  icon: linkedin-mono
+
+- label: Twitter
+  href: https://twitter.com/PowersBenny
+  icon: twitter-mono
+

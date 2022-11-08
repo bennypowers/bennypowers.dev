@@ -1,0 +1,27 @@
+---
+layout: list.html
+eleventyComputed:
+  title: "{{ tag }}"
+  h1: "Posts Tagged with <code>{{ tag }}</code>"
+  tagPageTag: "{{ tag }}"
+pagination:
+  data: collections
+  size: 1
+  alias: tag
+  filter:
+    - all
+    - posts
+    - resume-open-source
+    - resume-experience
+    - resume-education
+permalink: /tags/{{ tag | slug }}/
+stylesheets:
+  - href: /assets/post.css
+---
+
+<aside id="side-menu">
+  <h2>All Tags</h2>
+  <ul id="tags-list">{%- for tag, _ in collections -%}
+    <li><a href="{{ ('/tags/' + tag | slug) | url }}">{{ tag }}</a> ({{ _ | length }})</li>{%- endfor -%}
+  </ul>
+</aside>

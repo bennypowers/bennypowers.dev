@@ -1,59 +1,12 @@
-<!DOCTYPE html>
-<html lang="en" dir="ltr">
-  <head>
-    <meta charset="utf-8">
-    <title>Benny Powers, Web Developer</title>
-    <script type="module" src="/web_modules/dev-feed.js"></script>
-    <script type="module" src="/web_modules/github-repository.js"></script>
-    <style>
-      html {
-        font-family: "Fira Code", "Panic Code", "Operator Mono", monospace
-      }
+---
+layout: base.html
+---
 
-      header {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-      }
-
-      main {
-        display: grid;
-        grid-gap: 14px;
-        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      }
-
-      github-repository {
-        margin-bottom: 12px;
-      }
-
-      dev-feed {
-        margin: 0;
-        padding: 0;
-      }
-    </style>
-  </head>
-  <body>
-    <header>
-      <h1>Benny Powers, Web Developer</h1>
-      <a href="https://bennypowers.com">Résumé</a>
-      <a rel="me" href="https://social.bennypowers.dev/@i"><abbr title="mastodon">🐘</abbr></a>
-    </header>
-    <main>
-      <section id="projects">
-        <h2>Select Projects</h2>
-        <github-repository owner-repo="apollo-elements/apollo-elements"></github-repository>
-        <github-repository owner-repo="bennypowers/stripe-elements"></github-repository>
-        <github-repository owner-repo="bennypowers/json-viewer"></github-repository>
-        <github-repository owner-repo="bennypowers/lit-css"></github-repository>
-        <h2>Contributions</h2>
-        <github-repository owner-repo="open-wc/open-wc"></github-repository>
-        <github-repository owner-repo="patternfly/patternfly-elements"></github-repository>
-        <github-repository owner-repo="RedHat-UX/red-hat-design-system"></github-repository>
-      </section>
-      <section id="writing">
-        <h2>Writing</h2>
-        <dev-feed username="bennypowers" sort="date"></dev-feed>
-      </section>
-    </main>
-  </body>
-</html>
+<main class="home">
+    <h1>Greetings</h1>
+    <img alt="Ness, from the 90s era SNES classic Earthbound"
+         src="{{ '/assets/images/ness-bike.png' | url }}">
+    <p><a href="https://github.com/bennypowers">Furiously procrastinate</a></p>
+    <p><a href="{{ '/posts' | url }}">Read Something</a></p>
+    <p><a href="https://social.bennypowers.dev">Gawk</a></p>
+</main>

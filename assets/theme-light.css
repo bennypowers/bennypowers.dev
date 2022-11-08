@@ -1,0 +1,81 @@
+:root {
+  /* theme */
+  --primary-color-accent: var(--blue-grey-100);
+  --primary-color-darker: var(--purple-700);
+  --primary-color-lighter: var(--purple-a400);
+  --primary-color: var(--purple-a700);
+  --primary-lines-color: #ccc;
+  --primary-text-color: #2c3e50;
+
+  /* Contrast colors */
+  --contrast-color-light: #fff;
+  --contrast-color-dark: var(--page-background);
+
+  /* background-colors */
+  --page-background: white;
+  --footer-background: rgba(0, 0, 0, 0.1);
+  --text-color: black;
+  --text-contrast-color: var(--contrast-color-light);
+
+  /* code blocks */
+  --code-button-focus-background: var(--grey-200);
+  --code-button-focus-color: var(--text-color);
+  --code-button-background: var(--page-background);
+  --code-tabs-tabs-background: transparent;
+  --code-tabs-selected-highlight-color: var(--markdown-link-decoration);
+  --code-tabs-border-color: var(--page-background);
+  --playground-snippet-button-background: var(--code-button-background);
+  --playground-snippet-button-focus-background: var(--code-button-focus-background);
+  --playground-snippet-button-focus-color: var(--code-button-focus-color);
+  --playground-snippet-outer-background-color: var(--page-background);
+  --playground-snippet-focus-border-color: var(--primary-color);
+
+  /* markdown */
+  --markdown-blockquote-color: var(--light-blue-900);
+  --markdown-link-color: var(--pink-a700);
+  --markdown-link-decoration: var(--pink-200);
+  --markdown-syntax-attr-name-color: var(--blue-900);
+  --markdown-syntax-background-color: var(--grey-80);
+  --markdown-syntax-boolean-color: var(--light-blue-900);
+  --markdown-syntax-class-name-color: var(--deep-orange-a700);
+  --markdown-syntax-comment-color: var(--teal-700);
+  --markdown-syntax-function-color: var(--cyan-900);
+  --markdown-syntax-keyword-color: var(--deep-orange-a400);
+  --markdown-syntax-keyword-color: var(--light-blue-900);
+  --markdown-syntax-number-color: var(--light-blue-900);
+  --markdown-syntax-operator-color: var(--light-blue-900);
+  --markdown-syntax-punctuation-color: var(--teal-900);
+  --markdown-syntax-string-color: var(--deep-orange-a700);
+  --markdown-syntax-tag-color: var(--cyan-900);
+  --markdown-syntax-variable-color: var(--deep-orange-a700);
+
+  /* playground */
+  --playground-code-attribute-color: var(--markdown-syntax-attr-name-color);
+  --playground-code-atom-color: var(--markdown-syntax-keyword-color);
+  --playground-code-default-color: var(--markdown-syntax-color);
+  --playground-code-punctuation-color: var(--markdown-syntax-punctuation-color);
+  --playground-code-property-color: var(--markdown-syntax-class-name-color);
+  --playground-code-string-color: var(--markdown-syntax-string-color);
+  --playground-code-function-color: var(--markdown-syntax-function-color);
+  --playground-code-operator-color: var(--markdown-syntax-operator-color);
+  --playground-code-comment-color: var(--markdown-syntax-comment-color);
+  --playground-code-number-color: var(--markdown-syntax-number-color);
+  --playground-code-boolean-color: var(--markdown-syntax-boolean-color);
+  --playground-code-tag-color: var(--markdown-syntax-tag-color);
+  --playground-code-variable-color: var(--markdown-syntax-variable-color);
+  --playground-code-def-color: var(--markdown-syntax-variable-color);
+  --playground-code-background-color: var(--markdown-syntax-background-color);
+  --playground-code-callee-color: var(--markdown-syntax-function-color);
+  --playground-code-keyword-color: var(--markdown-syntax-keyword-color);
+  --playground-code-variable-2-color: var(--markdown-syntax-attr-name-color);
+  --playground-code-selection-background: var(--markdown-table-row-odd-background-color, #f6f8fa);
+  --playground-code-cursor-color: var(--markdown-syntax-color);
+  --playground-code-background: var(--markdown-syntax-background-color);
+  --playground-tab-bar-background: var(--page-background);
+  --playground-tab-bar-foreground-color: var(--primary-text-color);
+  --playground-preview-toolbar-background: var(--page-background);
+  --playground-preview-toolbar-foreground-color: var(--primary-text-color);
+  --playground-highlight-color: var(--primary-color);
+  --playground-code-builtin-color: var(--markdown-blockquote-color);
+}
+

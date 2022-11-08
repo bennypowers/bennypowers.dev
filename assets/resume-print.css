@@ -1,0 +1,289 @@
+@page {
+  margin: 1cm 1cm;
+}
+
+.screen-only {
+  display: none !important;
+}
+
+.experience,
+.qualification {
+  display: block;
+}
+
+.experience {
+  margin-bottom: 12px;
+  margin-top: 0;
+}
+
+html,
+body,
+main {
+  height: initial;
+  width: initial;
+  overflow: visible;
+  display: block;
+  background: white;
+  color: black;
+  overscroll-behavior: auto;
+}
+
+body {
+  font-size: 12px;
+}
+
+main {
+  display: block;
+}
+
+main > * {
+  background: white !important;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+abbr {
+  text-decoration: none;
+}
+
+abbr::after {
+  content: ' (' attr(title) ')';
+  font-family: var(--body-font-family);
+  font-weight: var(--body-font-weight);
+  display: inline;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--heading-font);
+  font-weight: 700;
+  background: initial;
+  background-clip: initial;
+  -webkit-text-fill-color: initial;
+  -webkit-background-clip: initial;
+}
+
+h1 {
+  margin-bottom: 0;
+}
+
+h2 {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 0;
+}
+
+h3 {
+  margin-bottom: 0;
+  font-weight: normal;
+}
+
+[itemprop="jobTitle"] {
+  display: block;
+}
+
+#identity {
+  position: initial;
+  display: grid;
+  margin-bottom: 12px;
+  grid-template-areas:
+    'name social'
+    'address social';
+}
+
+#identity h1 {
+  grid-area: name;
+}
+
+#identity h1::after {
+  content: none;
+  display: none;
+}
+
+#identity img {
+  width: 160px;
+  height: 160px;
+}
+
+#identity address {
+  grid-area: address;
+  background: white;
+  box-shadow: none;
+}
+
+#social {
+  margin-top: 30px;
+  grid-area: social;
+  display: grid;
+  grid-template-columns: auto auto;
+  gap: 1em;
+}
+
+#social svg {
+  display: none;
+}
+
+#social a {
+  display: contents;
+}
+
+#social a::before {
+  content: attr(aria-label) ': ';
+  font-style: normal;
+}
+
+#social a::after {
+  content: attr(href);
+  text-decoration: underline;
+}
+
+#summary {
+  margin-top: 0;
+  justify-content: flex-start;
+  padding: 0;
+  display: block;
+  columns: 1;
+}
+
+#summary ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+#summary ul li {
+  padding: 0;
+  display: inline;
+}
+
+#summary ul li:not(:last-of-type)::after {
+  content: ',';
+}
+
+#tools {
+  page: one;
+}
+
+#identity,
+#qualifications,
+#tools,
+#experience,
+#open-source {
+  padding: 0;
+}
+
+#qualifications h2 {
+  margin-top: 10px;
+}
+
+#qualifications dd a::after {
+  content: ': ' attr(href);
+}
+
+#experience,
+#open-source {
+  display: block;
+}
+
+:is(#experience, #open-source) article {
+  min-width: initial;
+  max-width: initial;
+  width: auto;
+  background-color: white;
+  box-shadow: none;
+  padding: 0;
+  margin-top: 0;
+  margin-right: 0;
+  margin-left: 0;
+  margin-bottom: 12px;
+  page-break-inside: avoid;
+}
+
+:is(#experience, #open-source) ul li::before {
+  content: attr(title);
+}
+
+:is(#experience, #open-source) ul li:not(:last-of-type)::after {
+  content: ',';
+}
+
+:is(#experience, #open-source) article:hover,
+:is(#experience, #open-source) article:focus {
+  box-shadow: none;
+  border: none;
+  outline: none;
+  padding: initial;
+}
+
+:is(#experience, #open-source, #tools) ul li svg {
+  display: none;
+}
+
+:is(#experience, #open-source) .technologies {
+  display: flex;
+  align-items: baseline;
+}
+
+:is(#experience, #open-source) .technologies h3 {
+  margin-right: 0.5em;
+}
+
+:is(#experience, #open-source) .technologies h3::after {
+  content: ':';
+}
+
+#tools ul {
+  list-style-type: disc;
+  display: block;
+  margin: 0;
+  padding: 0;
+}
+
+#tools ul li {
+  display: inline-block;
+}
+
+#tools ul li::before {
+  content: attr(title);
+}
+
+#tools ul li:not(:last-of-type)::after {
+  content: ',';
+  display: inline;
+}
+
+#experience {
+  page-break-before: always;
+}
+
+:is(.experience, .open-source) header h2 {
+  font-size: 1.1rem;
+}
+
+:is(#experience, #open-source) article {
+  margin-bottom: 10px;
+}
+
+#open-source h2 {
+  font-style: normal;
+}
+
+#open-source h2 a::after {
+  content: attr(href);
+  font-style: italic;
+  text-decoration: underline;
+  font-size: 12px;
+  font-weight: normal;
+  margin-left: 4px;
+}
+
+#open-source > a {
+  display: none;
+}
+

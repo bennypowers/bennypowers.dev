@@ -3,8 +3,10 @@
   "version": "1.0.0",
   "description": "github pages for bennypowers.dev",
   "main": "index.html",
+  "type": "module",
   "scripts": {
-    "test": "echo \"tests passed, I guess\""
+    "build": "eleventy",
+    "start": "eleventy --serve"
   },
   "repository": {
     "type": "git",
@@ -16,12 +18,18 @@
     "url": "https://github.com/bennypowers/bennypowers.github.io/issues"
   },
   "homepage": "https://github.com/bennypowers/bennypowers.github.io#readme",
-  "devDependencies": {
-    "@pika/web": "^0.6.1",
-    "snowpack": "^2.11.1"
-  },
   "dependencies": {
     "dev-feed": "^1.1.0",
     "github-repository": "^0.4.0"
+  },
+  "devDependencies": {
+    "@11ty/eleventy": "^2.0.0-canary.16",
+    "@11ty/eleventy-navigation": "^0.3.5",
+    "@11ty/eleventy-plugin-syntaxhighlight": "^4.2.0",
+    "eleventy-plugin-embed-everything": "^1.14.1",
+    "eleventy-plugin-helmet": "^0.2.2",
+    "eleventy-plugin-youtube-embed": "^1.7.1",
+    "esbuild": "^0.15.13",
+    "yaml": "^2.1.3"
   }
 }

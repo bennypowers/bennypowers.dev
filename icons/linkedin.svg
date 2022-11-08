@@ -1,0 +1,16 @@
+---
+title: LinkedIn
+---
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 36 36">
+  <defs>
+    <path id="linkedin-a" d="M0 0h35.999v35.94H0z"/>
+  </defs>
+  <g fill="none" fill-rule="evenodd">
+    <mask id="linkedin-b" fill="#fff">
+      <use xlink:href="#linkedin-a"/>
+    </mask>
+    <path fill="#0071A1" d="M33.336 0H2.655C1.19 0 0 1.162 0 2.596v30.806C0 34.836 1.19 36 2.655 36h30.681c1.468 0 2.663-1.164 2.663-2.598V2.596C35.999 1.162 34.804 0 33.336 0" mask="url(#linkedin-b)"/>
+    <path fill="#FFFFFE" d="M8.008 4.956a3.096 3.096 0 1 1-.004 6.192 3.096 3.096 0 0 1 .004-6.192zm-2.674 25.72h5.345v-17.18H5.334v17.18zm8.694-17.18h5.118v2.349h.074c.712-1.351 2.454-2.775 5.051-2.775 5.407 0 6.406 3.557 6.406 8.184v9.422h-5.339v-8.355c0-1.992-.034-4.555-2.774-4.555-2.779 0-3.203 2.171-3.203 4.413v8.497h-5.333v-17.18"/>
+  </g>
+</svg>
+

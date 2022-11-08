@@ -1,0 +1,27 @@
+---
+layout: base.html
+stylesheets:
+  - href: /assets/post.css
+---
+<aside id="side-menu">
+  <dl>
+    <dt>Published</dt>
+    <dd><time datetime="{{ datePublished }}">{{ datePublished | formatDate(month='short', day='numeric', year='numeric') }}</time></dd>
+    <dt>Last Touched</dt>
+    <dd><time datetime="{{ date }}">{{ page.date | formatDate(month='short', day='numeric', year='numeric') }}</time></dd>
+  </dl>
+  <h2>Tags</h2>
+  <ul id="tags-list">{% for tag in tags %}{% if tag != 'posts' %}
+    {%- set related = collections[tag] -%}
+    <li><a href="{{ ('/tags/' + tag | slug) | url}}">{{ tag }}</a> ({{ related | length }})</li>{% endif %}{% endfor %}
+    <li id="all-tags"><a href="{{ '/tags/' | url }}">All Tags</a></li>
+  </ul>
+</aside>
+
+<main>
+  <header>
+    <h1>{{ title }}</h1>{% if cover_image %}
+    <img alt="{{ cover_image_alt or '' }}" src="{{ cover_image }}">{% endif %}
+  </header>
+  {{ content | safe }}
+</main>
