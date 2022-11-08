@@ -1,0 +1,49 @@
+:root {
+  /* theme */
+  --primary-color-accent: var(--blue-grey-100);
+  --primary-color-darker: var(--purple-a700);
+  --primary-color-lighter: var(--purple-a200);
+  --primary-color: var(--purple-a400);
+  --primary-lines-color: #ccc;
+  --primary-text-color: var(--grey-200);
+
+  /* Text colors */
+  --sidebar-tag-background-color: var(--code-button-focus-background);
+  --text-color: white;
+  --text-contrast-color: var(--contrast-color-light);
+
+  /* background-colors */
+  --footer-background: #151515;
+  --page-background: var(--near-black);
+
+  /* code blocks */
+  --code-button-focus-background: #333;
+  --code-button-focus-color: white;
+  --code-button-background: var(--page-background);
+  --code-tabs-tabs-background: transparent;
+
+  /* markdown */
+  --markdown-blockquote-color: var(--blue-100);
+  --markdown-link-color: var(--pink-a200);
+  --markdown-link-decoration: var(--pink-900);
+  --markdown-code-background-color: var(--grey-900);
+  --markdown-octicon-link: white;
+  --markdown-pre-background-color: var(--grey-900);
+  --markdown-syntax-attr-name-color: var(--light-blue-500);
+  --markdown-syntax-background-color: var(--grey-900);
+  --markdown-syntax-boolean-color: var(--light-blue-300);
+  --markdown-syntax-class-name-color: var(--deep-orange-200);
+  --markdown-syntax-color: white;
+  --markdown-syntax-comment-color: var(--light-green-a400);
+  --markdown-syntax-function-color: var(--cyan-400);
+  --markdown-syntax-keyword-color: var(--light-blue-300);
+  --markdown-syntax-number-color: var(--light-blue-300);
+  --markdown-syntax-operator-color: var(--light-blue-300);
+  --markdown-syntax-punctuation-color: var(--cyan-600);
+  --markdown-syntax-string-color: var(--deep-orange-200);
+  --markdown-syntax-tag-color: var(--cyan-400);
+  --markdown-syntax-variable-color: var(--deep-orange-200);
+  --markdown-table-background-color: var(--grey-900);
+  --markdown-table-border-color: var(--markdown-table-background-color);
+  --markdown-table-row-odd-background-color: var(--blue-grey-900);
+}

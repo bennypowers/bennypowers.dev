@@ -52,13 +52,15 @@
         href="{{ '/assets/main.css' | url }}">
 
   <link rel="stylesheet"
-        async
-        href="{{ '/assets/prism-atom-dark.css' | url }}">
+        media="(prefers-color-scheme: light)"
+        href="{{ '/assets/theme-light.css' | url }}">
 
   <link rel="stylesheet"
-        media="(prefers-color-scheme: light)"
-        async
-        href="{{ '/assets/prism-ghcolors.css' | url }}">
+        media="(prefers-color-scheme: dark)"
+        href="{{ '/assets/theme-dark.css' | url }}">
+
+  <link rel="stylesheet"
+        href="{{ '/assets/prism.css' | url }}">
 
   <link rel="stylesheet"
         href="https://fonts.googleapis.com/css2?family=Overpass&family=Hepta+Slab&family=Fira+Code&family=Noto+Mono&display=swap">
@@ -95,7 +97,7 @@
   </header>{% endif %}
   {{ content | safe }}
   <footer id="footer" class="screen-only">
-      <small id="legal">© {{ datePublished or page.date | formatDate(year='numeric') }} Benny Powers.</small>
+    <small id="legal">© {{ (datePublished or page.date) | formatDate(year='numeric') }} Benny Powers.</small>
   </footer>
   <svg id="icons">
     <defs>{% for icon in collections.icon %}
