@@ -18,15 +18,14 @@
   <meta name="HandheldFriendly" content="true">
   <meta name="description" content="{{ description or 'Benny Powers, Web Developer' }}">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta property="og:title" content="Benny Powers Resume">
+  <meta property="og:title" content="{{ title or 'Benny Powers' }}">
   <meta property="og:site_name" content="Benny Powers, Web Developer">
-  <meta property="og:type" content="profile">
   <meta property="og:locale" content="en_US">
   <meta property="og:url" content="https://bennypowers.dev/">
-  <meta property="og:image" content="https://bennypowers.dev/images/benny.jpg">
-  <meta property="og:image:width" content="400">
-  <meta property="og:image:height" content="400">
-  <meta property="og:image:type" content="image/jpg">
+  <meta property="og:image" content="{{ cover_image or '/assets/images/logo/bp-logo-dark@2x.png' }}">
+  <meta property="og:image:width" content="1024">
+  <meta property="og:image:height" content="1024">
+  <meta property="og:image:type" content="image/png">
   <meta property="profile:first_name" content="Benny">
   <meta property="profile:last_name" content="Powers">
   <meta property="profile:gender" content="male">
@@ -62,7 +61,7 @@
         href="{{ '/assets/prism-ghcolors.css' | url }}">
 
   <link rel="stylesheet"
-        href="https://fonts.googleapis.com/css?family=Hepta+Slab|Libre Franklin|Ubuntu+Mono|Lato:300|Anonymous+Pro:400|Playfair+Display+SC:400">
+        href="https://fonts.googleapis.com/css2?family=Overpass&family=Hepta+Slab&family=Fira+Code&family=Noto+Mono&display=swap">
 
   {% for sheet in stylesheets %}
   <link rel="stylesheet"{% if sheet.media %}
@@ -83,7 +82,8 @@
                    {{ '/assets/images/logo/bp-logo-transparent.png' | url }} 1x"></a>
     <nav>
       <a href="{{'/posts/' | url }}">Posts</a>
-      <a href="{{'/resume/' | url }}">Résumé</a>
+      <a href="{{'/tags/' | url }}">Tags</a>
+      <a href="{{'/resume/' | url }}">C.V.</a>
     </nav>
     <ul id="socials">{% for link in social %}
       <li>
@@ -94,6 +94,9 @@
     </ul>
   </header>{% endif %}
   {{ content | safe }}
+  <footer id="footer" class="screen-only">
+      <small id="legal">© {{ datePublished or page.date | formatDate(year='numeric') }} Benny Powers.</small>
+  </footer>
   <svg id="icons">
     <defs>{% for icon in collections.icon %}
       <g id="{{ icon.fileSlug }}-icon" aria-label="{{ icon.data.title }}">{{ icon.templateContent | safe }}</g>{% endfor %}

@@ -6,10 +6,6 @@ stylesheets:
   - href: /assets/post.css
 ---
 
-<aside id="side-menu">
-  <h2>Tags</h2>
-</aside>
-
 <main>
   <h1>All Tags</h1>
   <ul id="tags-list">{%- for tag, _ in collections -%}{% if not tag.startsWith('resume-') and tag != 'posts' and tag != 'all' %}

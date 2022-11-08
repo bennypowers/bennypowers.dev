@@ -1,7 +1,7 @@
 :root {
   --primary-font: "Libre Franklin", sans-serif;
   --heading-font: "Hepta Slab", serif;
-  --fixed-font: "Anonymous Pro", monospace;
+  --fixed-font: "Anonymous Pro", "Noto Mono", monospace;
   --app-primary-color: #464a5b;
   --app-secondary-color: black;
   --social-icon-size: 28px;

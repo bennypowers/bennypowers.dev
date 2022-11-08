@@ -5,16 +5,13 @@
   --lightness-end: 10%;
   --saturation-start: 60%;
   --saturation-end: 40%;
+  --hue-offset: 0;
   --hue-start: 180;
   --hue-end: 240;
   --primary-hue: var(--hue-start);
-  --magic-hue: calc(var(--primary-hue) * var(--hue-offset, 1));
-  --magic-start: hsl(var(--magic-hue), var(--saturation-start), var(--lightness-start));
-  --magic-end: hsl(var(--magic-hue), var(--saturation-end), var(--lightness-end));
-  --magic: linear-gradient(72deg, var(--magic-start), var(--magic-end));
-  --primary-font: "Fira Code", "Panic Code", "Operator Mono", monospace;
+  --fixed-font: "Fira Code", "Operator Mono", "Noto Mono", monospace;
   --heading-font: "Hepta Slab", serif;
-  --fixed-font: "Anonymous Pro", monospace;
+  --primary-font: "Overpass", sans-serif;
   --background-color: white;
 }
 
@@ -26,6 +23,10 @@
     --saturation-start: 100%;
     --saturation-end: 85%;
   }
+}
+
+html {
+  display: flex;
 }
 
 html,
@@ -41,37 +42,46 @@ body {
 
 body {
   padding: 1em 1.6em;
+  max-width: 1200px;
+  width: 100%;
+  position: relative;
+  margin-inline: auto;
 }
 
 #main-header {
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
   align-items: center;
-  justify-content: space-between;
+  justify-items: center;
 }
 
-#main-header img {
-  height: 40px;
+#main-header img { height: 40px; }
+
+a:visited { --hue-offset: 50; }
+
+main.home h1 { --hue-offset: -120; }
+
+main.home {
+  text-align: center;
+  font-size: 200%;
 }
 
-a,
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
+main.home img {
+  max-height: 200px;
+}
+
+:is(a, h1, h2, h3, h4, h5, h6) {
+  --magic-hue: calc(var(--primary-hue) + var(--hue-offset));
+  --magic-start: hsl(var(--magic-hue) var(--saturation-start) var(--lightness-start));
+  --magic-end: hsl(var(--magic-hue) var(--saturation-end) var(--lightness-end));
+  --magic: linear-gradient(72deg, var(--magic-start), var(--magic-end));
   background: var(--magic);
   background-clip: text;
   -webkit-text-fill-color: transparent;
   -webkit-background-clip: text;
 }
 
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
+:is(h1, h2, h3, h4, h5, h6) {
   font-family: var(--heading-font);
   font-weight: 700;
 }
@@ -85,10 +95,6 @@ a {
 
 a:is(:hover, :focus) {
   text-decoration-thickness: 4px;
-}
-
-a:visited {
-  --hue-offset: 120;
 }
 
 #socials {
@@ -133,4 +139,25 @@ a:visited {
   width: 100%;
   background: none;
   padding: 0;
+}
+
+body code[class*="language-"], pre[class*="language-"] {
+  font-family: var(--fixed-font);
+}
+
+body pre[class*="language-"] {
+  max-width: 100%;
+  overflow-x: scroll;
+}
+
+img {
+  max-width: 100%;
+}
+
+#icons {
+  height: 0.00001px;
+}
+
+#footer {
+  text-align: center;
 }

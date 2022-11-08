@@ -2,30 +2,11 @@
 layout: base.html
 ---
 
-<style>
-  github-repository {
-    margin-bottom: 12px;
-  }
-</style>
-
-<main>
-  <section id="writing">
-    <h2>Writing</h2>
-    <ol>{%- for post in collections.posts | sort(true, false, 'data.date') -%}{% if post.data.published %}
-      <li>
-        <a href="{{ post.url }}">{{ post.data.title }}</a>
-      </li>{% endif %}{%- endfor -%}
-    </ol>
-  </section>
-  <section id="projects">
-    <h2>Select Projects</h2>
-    <github-repository owner-repo="apollo-elements/apollo-elements"></github-repository>
-    <github-repository owner-repo="bennypowers/stripe-elements"></github-repository>
-    <github-repository owner-repo="bennypowers/json-viewer"></github-repository>
-    <github-repository owner-repo="bennypowers/lit-css"></github-repository>
-    <h2>Contributions</h2>
-    <github-repository owner-repo="open-wc/open-wc"></github-repository>
-    <github-repository owner-repo="patternfly/patternfly-elements"></github-repository>
-    <github-repository owner-repo="RedHat-UX/red-hat-design-system"></github-repository>
-  </section>
+<main class="home">
+    <h1>Greetings</h1>
+    <img alt="Ness, from the 90s era SNES classic Earthbound"
+         src="{{ '/assets/images/ness-bike.png' | url }}">
+    <p><a href="https://github.com/bennypowers">Furiously procrastinate</a></p>
+    <p><a href="{{ '/posts' | url }}">Read Something</a></p>
+    <p><a href="https://social.bennypowers.dev">Gawk</a></p>
 </main>

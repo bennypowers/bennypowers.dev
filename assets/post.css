@@ -1,14 +1,33 @@
 body {
   display: grid;
-  grid-template:
-    'head head' max-content
-    'main menu' auto / auto 300px;
   gap: 1em 1.6em;
+  grid-template-rows: min-content auto auto min-content;
+  grid-template-columns: minmax(0, auto);
+  grid-template-areas:
+    'head'
+    'main'
+    'menu'
+    'foot';
+}
+
+@media (min-width: 1000px) {
+  body {
+    grid-template-rows: min-content auto min-content;
+    grid-template-columns: minmax(0, 1fr) 300px;
+    grid-template-areas:
+      'head head'
+      'main menu'
+      'foot foot';
+  }
 }
 
 #side-menu {
   grid-area: menu;
   position: sticky;
 }
+
 #main-header { grid-area: head; }
+
+#main-footer { grid-area: foot; }
+
 main { grid-area: main; }

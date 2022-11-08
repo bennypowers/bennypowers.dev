@@ -1,0 +1,56 @@
+---
+layout: base.html
+---
+
+<main>
+  <h1>{{ h1 | safe or title | safe }}</h1>
+  <ol>{%- for post in (collections[tag] if tag else pagination.items) -%}{% if post.data.published %}
+    <li>
+      <div>
+        <h2><a href="{{ post.url }}">{{ post.data.title }}</a></h2>
+        <time datetime="{{ post.data.datePublished }}">{{ post.data.datePublished | formatDate(month = 'short', day = 'numeric', year = 'numeric') }}</time>
+        <p>{{ post.data.description }}</p>
+      </div>{% if showThumbnails and post.data.cover_image %}
+      <img alt="{{ post.data.cover_image_alt or '' }}" src="{{ post.data.cover_image }}">{% endif %}
+    </li>{% endif %}{%- endfor -%}
+  </ol>
+</main>
+
+{{ content | safe }}
+
+<style>
+
+main img {
+  max-height: 200px;
+}
+
+main li {
+  display: grid;
+  grid-template-columns: auto auto;
+  justify-content: space-between;
+}
+
+main ol {
+  display: flex;
+  flex-flow: column;
+  gap: 1em;
+}
+
+:is(main, #pages) ol {
+  list-style-type: none;
+  padding: 0;
+}
+
+:is(main, #pages) li {
+  margin: 0;
+}
+
+#pages {
+  display: flex;
+  gap: 8px;
+}
+
+#pages ol {
+  display: contents;
+}
+</style>
