@@ -1,16 +1,15 @@
 ---
 title: 'Lets Build Web Components! Part 6: Gluon'
 description: Hit that sweet spot between library cruft and bare browser APIs with Gluon web components.
-cover_image: https://thepracticaldev.s3.amazonaws.com/i/5s5bvccq2tbaij396y7g.png
 published: true
-date: 2018-10-28
+datePublished: 2018-10-28
+cover_image: https://thepracticaldev.s3.amazonaws.com/i/5s5bvccq2tbaij396y7g.png
 tags:
   - web components
   - gluon
   - custom elements
   - javascript
   - html
-  - Let's Build Web Components!
 ---
 
 Component-based <abbr title="user interface">UI</abbr> is all the rage these

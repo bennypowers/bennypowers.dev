@@ -2,6 +2,7 @@ const YAML = require('yaml');
 const esbuildPlugin = require('./_plugins/esbuild.cjs');
 const glitchPlugin = require('./_plugins/glitch.cjs');
 const embedPlugin = require('eleventy-plugin-embed-everything');
+const helmetPlugin = require('eleventy-plugin-helmet');
 const EleventyPluginSyntaxhighlight = require('@11ty/eleventy-plugin-syntaxhighlight');
 /**
  * @param{import('@11ty/eleventy/src/UserConfig.js')} eleventyConfig
@@ -18,8 +19,10 @@ module.exports = function(eleventyConfig) {
   eleventyConfig.addPassthroughCopy('assets');
   eleventyConfig.addPlugin(esbuildPlugin, [ 'github-repository', 'dev-feed' ]);
   eleventyConfig.addPlugin(glitchPlugin);
+  eleventyConfig.addPlugin(helmetPlugin);
   eleventyConfig.addPlugin(embedPlugin, { lite: true });
   eleventyConfig.addPlugin(EleventyPluginSyntaxhighlight);
+
   eleventyConfig.addFilter('formatDate', function(d, opts) {
     if (d instanceof Date) {
       return new Intl.DateTimeFormat('en-US', opts).format(d);
@@ -32,6 +35,7 @@ module.exports = function(eleventyConfig) {
       }
     }
   })
+
   return {
     templateFormats: [ 'md', 'njk', 'html', 'svg' ],
     markdownTemplateEngine: 'njk',

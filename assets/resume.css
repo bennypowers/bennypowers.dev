@@ -9,59 +9,8 @@
   --nav-height: 48px;
   --grid-gap: 35px;
   --section-opacity: 0.5;
-  --lightness-start: 30%;
-  --lightness-end: 20%;
-  --saturation-start: 40%;
-  --saturation-end: 60%;
   --tool-size: 32px;
-  --hue-start: 180;
-  --hue-end: 240;
-  --primary-hue: var(--hue-start);
-  --background-start: hsl(var(--primary-hue), var(--saturation-start), var(--lightness-start));
-  --background-end: hsl(var(--primary-hue), var(--saturation-end), var(--lightness-start));
-  --magic: linear-gradient(72deg, var(--background-start), var(--background-end));
-  --magic-c: var(--background-start);
-}
-
-html {
-  scroll-behavior: smooth;
-}
-
-html,
-body {
-  margin: 0;
-  font-family: var(--primary-font);
-  color: #212121;
-  overscroll-behavior: contain;
-  line-height: 1.3;
-  background: white;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --lightness-start: 80%;
-    --lightness-end: 60%;
-    --saturation-start: 80%;
-    --saturation-end: 100%;
-  }
-
-  html,
-  body {
-    color: white;
-    background: #212131;
-  }
-
-  .technologies svg {
-    fill: white;
-  }
-}
-
-* {
-  box-sizing: border-box;
-}
-
-#print-header {
-  display: none;
+  --background-color: white;
 }
 
 main {
@@ -80,18 +29,9 @@ main {
   padding: 12px;
 }
 
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  font-family: var(--heading-font);
-  font-weight: 700;
-  background: var(--magic);
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  -webkit-background-clip: text;
+
+a {
+  font-style: italic;
 }
 
 h1,
@@ -104,21 +44,6 @@ p {
   margin-top: 0;
   margin-bottom: 0.4rem;
 }
-
-a {
-  color: var(--magic-c);
-  font-style: italic;
-  text-decoration-line: underline;
-  text-decoration-thickness: 1px;
-  text-decoration-color: var(--magic-c);
-  transition: text-decoration-thickness .3s ease-in-out;
-}
-
-a:is(:hover, :focus) {
-  text-decoration-thickness: 4px;
-}
-
-
 
 abbr {
   font-family: var(--fixed-font);
@@ -158,9 +83,16 @@ main > *:not(footer) {
   scroll-snap-align: center;
 }
 
+#print-button {
+  background: none;
+  border: none;
+  color: inherit;
+}
+
 #print-button svg {
   width: 24px;
   height: 24px;
+  fill: currentcolor;
 }
 
 :is(#experience, #open-source) article {
@@ -598,6 +530,15 @@ main > div > a {
 
 #tools-and-technologies  svg {
   fill: currentcolor;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background-color: #111115;
+  }
+  .technologies svg {
+    fill: white;
+  }
 }
 
 @media screen {

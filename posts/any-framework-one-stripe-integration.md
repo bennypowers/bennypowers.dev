@@ -1,8 +1,8 @@
 ---
 title: Any Framework, One Stripe Integration
-published: true
-date: 2020-01-19
 description: Stripe Elements custom elements work across front-end frameworks and even in vanilla HTML and JS.
+published: true
+datePublished: 2020-01-19
 tags:
   - web components
   - html

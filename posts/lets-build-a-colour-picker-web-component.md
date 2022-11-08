@@ -1,8 +1,8 @@
 ---
 title: Let's Build a Colour Picker Web Component
 published: true
+datePublished: 2021-06-09
 cover_image: https://dev-to-uploads.s3.amazonaws.com/uploads/articles/01rg22y3j3s2bw61t8w9.png
-date: 2021-06-09
 tags:
   - web components
   - html

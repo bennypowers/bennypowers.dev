@@ -1,8 +1,8 @@
 ---
 title: Embed a Dev.to User Feed with Web Components
-published: true
-date: 2019-04-08
 description: Let's build a web component to embed a dev.to feed in a page.
+published: true
+datePublished: 2019-04-08
 cover_image: https://thepracticaldev.s3.amazonaws.com/i/vrp6alld6f4hbzycarfi.png
 tags:
   - showdev

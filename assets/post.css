@@ -1,0 +1,14 @@
+body {
+  display: grid;
+  grid-template:
+    'head head' max-content
+    'main menu' auto / auto 300px;
+  gap: 1em 1.6em;
+}
+
+#side-menu {
+  grid-area: menu;
+  position: sticky;
+}
+#main-header { grid-area: head; }
+main { grid-area: main; }

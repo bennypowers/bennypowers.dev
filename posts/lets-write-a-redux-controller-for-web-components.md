@@ -1,7 +1,7 @@
 ---
 title: Let's Write a Redux Controller for Web Components
 published: true
-date: 2022-01-07
+datePublished: 2022-01-07
 tags:
   - javascript
   - redux

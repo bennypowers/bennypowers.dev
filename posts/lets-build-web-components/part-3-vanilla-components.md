@@ -1,15 +1,14 @@
 ---
 title: 'Lets Build Web Components! Part 3: Vanilla Components'
-published: true
-date: 2018-10-05
 description: You don't need a fancy framework or complicated tools to design components and build apps, you just need your web browser!
+datePublished: 2018-10-05
+published: true
 cover_image: https://thepracticaldev.s3.amazonaws.com/i/jleqsxb3kcmh7zjnwagb.png
 tags:
   - web components
   - custom elements
   - javascript
   - html
-  - Let's Build Web Components!
   - polyfills
 ---
 

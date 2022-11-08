@@ -2,6 +2,10 @@
   margin: 1cm 1cm;
 }
 
+.screen-only {
+  display: none !important;
+}
+
 .experience,
 .qualification {
   display: block;
@@ -52,6 +56,20 @@ abbr::after {
   display: inline;
 }
 
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--heading-font);
+  font-weight: 700;
+  background: initial;
+  background-clip: initial;
+  -webkit-text-fill-color: initial;
+  -webkit-background-clip: initial;
+}
+
 h1 {
   margin-bottom: 0;
 }
@@ -72,6 +90,7 @@ h3 {
 }
 
 #identity {
+  position: initial;
   display: grid;
   margin-bottom: 12px;
   grid-template-areas:
@@ -103,7 +122,12 @@ h3 {
   margin-top: 30px;
   grid-area: social;
   display: grid;
-  grid-template-columns: auto auto auto;
+  grid-template-columns: auto auto;
+  gap: 1em;
+}
+
+#social svg {
+  display: none;
 }
 
 #social a {
@@ -125,7 +149,6 @@ h3 {
   justify-content: flex-start;
   padding: 0;
   display: block;
-  page-break-after: always;
   columns: 1;
 }
 
@@ -141,33 +164,6 @@ h3 {
 
 #summary ul li:not(:last-of-type)::after {
   content: ',';
-}
-
-#print-header {
-  display: flex;
-  align-items: baseline;
-}
-
-#print-header h1 {
-  font-size: 1.5rem;
-}
-
-#print-header address {
-  text-align: right;
-  margin-inline-start: auto;
-}
-
-#print-header address div {
-  display: block;
-}
-
-#print-header + address [itemprop="addressCountry"]::after,
-#print-header [itemprop="familyName"]::after {
-  content: ', ';
-}
-
-#print-header [itemprop="jobTitle"] {
-  display: inline;
 }
 
 #tools {
@@ -262,8 +258,8 @@ h3 {
   display: inline;
 }
 
-.screen-only {
-  display: none !important;
+#experience {
+  page-break-before: always;
 }
 
 :is(.experience, .open-source) header h2 {

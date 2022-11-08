@@ -1,9 +1,9 @@
 ---
 title: 'Lets Build Web Components! Part 7: Hybrids'
 description: Web Components are the future, but with a little care and some helpful polyfills, they can be the present as well.
-cover_image: https://thepracticaldev.s3.amazonaws.com/i/e4nqxo9zyspw1552s4b5.png
+datePublished: 2018-10-28
 published: true
-date: 2018-10-28
+cover_image: https://thepracticaldev.s3.amazonaws.com/i/e4nqxo9zyspw1552s4b5.png
 tags:
   - web components
   - hybrids
@@ -11,7 +11,6 @@ tags:
   - javascript
   - html
   - functional programming
-  - Let's Build Web Components!
 ---
 
 Component-based <abbr title="user interface">UI</abbr> is all the rage these

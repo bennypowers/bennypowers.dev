@@ -1,8 +1,8 @@
 ---
 title: 'Lets Build Web Components! Part 4: Polymer Library'
-published: true
-date: 2018-10-14
 description: Learn how to build web components and factor apps with the OG web-components library, Polymer.
+datePublished: 2018-10-14
+published: true
 cover_image: https://thepracticaldev.s3.amazonaws.com/i/4bxajms0ls9ro6jiy6sk.png
 tags:
   - web components
@@ -10,7 +10,6 @@ tags:
   - javascript
   - polymer
   - html
-  - Let's Build Web Components!
 ---
 
 Component-based <abbr title="user interface">UI</abbr> is all the rage these
@@ -213,18 +212,35 @@ braces`}}`.
 ```
 {%endraw%}
 
-In this example, whenever `<some-input>` fires a `input-changed` event, the host element updates the `someProperty` property on `<some-element>`. In <abbr title="JavaScript">JS</abbr> terms, it's a simple assignment: `someElementInstance.someProperty = this.myInput`.
+In this example, whenever `<some-input>` fires a `input-changed` event, the
+host element updates the `someProperty` property on `<some-element>`. In <abbr
+title="JavaScript">JS</abbr> terms, it's a simple assignment:
+`someElementInstance.someProperty = this.myInput`.
 
-If you want to bind to an attribute, instead of a property, append the `$` character to the binding: whenever `myOtherProp` changes, the `some-attribute` on `<some-element>` will update: `someElementInstance.setAttribute('some-attribute', this.myOtherProp)`.
+If you want to bind to an attribute, instead of a property, append the `$`
+character to the binding: whenever `myOtherProp` changes, the `some-attribute`
+on `<some-element>` will update:
+`someElementInstance.setAttribute('some-attribute', this.myOtherProp)`.
 
-Similarly, whenever the `input-changed` custom event fires on `<some-input>`, the `myInput` property on the host component will be set to to event's `detail.value` property.
+Similarly, whenever the `input-changed` custom event fires on `<some-input>`,
+the `myInput` property on the host component will be set to to event's
+`detail.value` property.
 
 -----
-In our `<polymer-lazy-image>` template, we're not using any two-way binding, so we'll stick with square brackets.
 
-The `aria-hidden` attribute presents a small challenge. Polymer binds Boolean values to attribute with `setAttribute(name, '')` and `removeAttribute(name)`. But since `aria-hidden` must take the string literals `"true"` or `"false"`, we can't just bind it to the Boolean value of `intersecting`. The `<img/>` `src` is similarly interesting. Really, we want to set it only after the element has intersected. For that, we'll need to compute the src property on the image based on the state of the `intersecting` property.
+In our `<polymer-lazy-image>` template, we're not using any two-way binding, so
+we'll stick with square brackets.
 
-Polymer templates can include *computed bindings*. These are bound to the return value of the chosen method.
+The `aria-hidden` attribute presents a small challenge. Polymer binds Boolean
+values to attribute with `setAttribute(name, '')` and `removeAttribute(name)`.
+But since `aria-hidden` must take the string literals `"true"` or `"false"`, we
+can't just bind it to the Boolean value of `intersecting`. The `<img/>` `src`
+is similarly interesting. Really, we want to set it only after the element has
+intersected. For that, we'll need to compute the src property on the image
+based on the state of the `intersecting` property.
+
+Polymer templates can include *computed bindings*. These are bound to the
+return value of the chosen method.
 
 ```html
 <img id="image"
@@ -234,9 +250,13 @@ Polymer templates can include *computed bindings*. These are bound to the return
 />
 ```
 
-What's with this function-like syntax inside our binding expressions? That tells Polymer which element method to run and when. It will fire every time it's dependencies (i.e. the 'arguments passed' in the binding expression) are observed to change, updating the binding with the return value.
+What's with this function-like syntax inside our binding expressions? That
+tells Polymer which element method to run and when. It will fire every time
+it's dependencies (i.e. the 'arguments passed' in the binding expression) are
+observed to change, updating the binding with the return value.
 
-Note also that we're binding to the `src` *property* on the image, not it's *attribute*. That's to avoid trying to load an image at URL `"undefined"`.
+Note also that we're binding to the `src` *property* on the image, not it's
+*attribute*. That's to avoid trying to load an image at URL `"undefined"`.
 
 ```js
 computeSrc(intersecting, src) {
@@ -250,9 +270,13 @@ computeImageAriaHidden(intersecting) {
 }
 ```
 
-Don't be misled, though, these aren't JavaScript expressions, so you can't pass in any value you want: `[[computeImageAriaHidden(!intersecting)]]` doesn't work, neither does `[[computeImageAriaHidden(this.getAttribute('aria-hidden'))]]`
+Don't be misled, though, these aren't JavaScript expressions, so you can't pass
+in any value you want: `[[computeImageAriaHidden(!intersecting)]]` doesn't
+work, neither does
+`[[computeImageAriaHidden(this.getAttribute('aria-hidden'))]]`
 
-Now we'll just adjust our property map and styles slightly to account for the changes in our element's API:
+Now we'll just adjust our property map and styles slightly to account for the
+changes in our element's API:
 
 ```js
 static get properties() {
@@ -302,7 +326,9 @@ static get properties() {
 />
 ```
 
-So, we were able to substantially **reduce boilerplate** in our component, and trim down some of the excess logic by including it in our template, albeit with a few somewhat tiresome computed binding helpers.
+So, we were able to substantially **reduce boilerplate** in our component, and
+trim down some of the excess logic by including it in our template, albeit with
+a few somewhat tiresome computed binding helpers.
 
 Here's our completed `<polymer-lazy-image>` module:
 
@@ -469,13 +495,16 @@ class PolymerLazyImage extends PolymerElement {
 customElements.define(tagName, PolymerLazyImage);
 ```
 
-Check out the [diff](http://www.mergely.com/ZC8tDqmJ/?ws=1&cs=1&wl=1&vp=1&rm=1) between the vanilla and Polymer versions, and see the component at work:
+Check out the [diff](http://www.mergely.com/ZC8tDqmJ/?ws=1&cs=1&wl=1&vp=1&rm=1)
+between the vanilla and Polymer versions, and see the component at work:
 
 {% glitch 'polymer-lazy-image', 'app' %}
 
 ## More Polymer Features
 
-Polymer has more to offer than our simple example element can easily demonstrate. A small example is the way Polymer maps all the `id`'d elements in your template to an object called `$`:
+Polymer has more to offer than our simple example element can easily
+demonstrate. A small example is the way Polymer maps all the `id`'d elements in
+your template to an object called `$`:
 
 ```html
 <paper-button id="button">Button!</paper-button>
@@ -490,21 +519,26 @@ connectedCallback() {
 
 ### Advanced Data Binding
 
-Polymer can also bind to host properties from non-polymer elements' events with a special syntax:
+Polymer can also bind to host properties from non-polymer elements' events with
+a special syntax:
 
 ```html
 <video current-time="{%raw%}{{videoTime::timeupdate}}{%endraw%}"/>
 ```
 
-This means "when the `timeupdate` event fires, assign the local `videoTime` property to the video element's `currentTime`".
+This means "when the `timeupdate` event fires, assign the local `videoTime`
+property to the video element's `currentTime`".
 
-In a later iteration of `<polymer-lazy-image>`, we might use these kinds of bindings to synchronize internal `<img>` properties with our own.
+In a later iteration of `<polymer-lazy-image>`, we might use these kinds of
+bindings to synchronize internal `<img>` properties with our own.
 
-For the low-down on Polymer's data-binding system, give [the docs](https://www.polymer-project.org/3.0/docs/devguide/data-binding) a read.
+For the low-down on Polymer's data-binding system, give [the
+docs](https://www.polymer-project.org/3.0/docs/devguide/data-binding) a read.
 
 ### Observers and Computed Properties
 
-Computed properties and bindings are specialized cases of Polymer *observers*. A simple observer looks like this:
+Computed properties and bindings are specialized cases of Polymer *observers*.
+A simple observer looks like this:
 
 ```js
 static get properties() {
@@ -521,7 +555,8 @@ observedChanged(observed, oldVal) {
 }
 ```
 
-You can also define complex observers that take multiple dependencies or deeply observe objects or arrays.
+You can also define complex observers that take multiple dependencies or deeply
+observe objects or arrays.
 
 ```js
 static get properties() {
@@ -567,21 +602,27 @@ computeTheLength(theString) {
 }
 ```
 
-In which case, `theLength` will update according to `computeTheLength` whenever `theString` changes.
+In which case, `theLength` will update according to `computeTheLength` whenever
+`theString` changes.
 
-These computed properties can then be bound to your template like any normal property.
+These computed properties can then be bound to your template like any normal
+property.
 
 ```html
 <span>[[theString]] has [[theLength]] characters</span>
 ```
 
-Read all about Polymer observers at [the docs](https://www.polymer-project.org/3.0/docs/devguide/observers).
+Read all about Polymer observers at [the
+docs](https://www.polymer-project.org/3.0/docs/devguide/observers).
 
 ### Property Descriptors
 
-We've already seen how we can set `reflectToAttribute` and `notify` to affect the outside world when our values update, and how to set up simple observers with the `observer` descriptor.
+We've already seen how we can set `reflectToAttribute` and `notify` to affect
+the outside world when our values update, and how to set up simple observers
+with the `observer` descriptor.
 
-You can also set a default value with `value`, which takes either a literal value or a function.
+You can also set a default value with `value`, which takes either a literal
+value or a function.
 
 ```js
 static get properties() {
@@ -599,13 +640,20 @@ static get properties() {
 }
 ```
 
-**Be careful!** When you want to set a default value with a reference type like `Array` or `Object`, be sure to pass a function, or else *every instance of your element* will share the same reference.
+**Be careful!** When you want to set a default value with a reference type like
+`Array` or `Object`, be sure to pass a function, or else *every instance of
+your element* will share the same reference.
 
-`value` assignments are set once when the component initializes, then not updated again. If you need to dynamically set properties after connecting, use [computed properties](#observers-and-computed-properties) or observers.
+`value` assignments are set once when the component initializes, then not
+updated again. If you need to dynamically set properties after connecting, use
+[computed properties](#observers-and-computed-properties) or observers.
 
 ### Helper Elements
 
-Polymer comes with a few helper elements that you can use in your templates to reduce the amount of imperative JavaScript you need to write. The two most commonly used are `<dom-repeat>` for iterating through lists and outputting DOM, and `<dom-if>` for conditional rendering:
+Polymer comes with a few helper elements that you can use in your templates to
+reduce the amount of imperative JavaScript you need to write. The two most
+commonly used are `<dom-repeat>` for iterating through lists and outputting
+DOM, and `<dom-if>` for conditional rendering:
 
 ```html
 <!-- Will output a new article with h2 and img for each post -->
@@ -633,11 +681,17 @@ import '@polymer/polymer/lib/elements/dom-repeat.js';
 import '@polymer/polymer/lib/elements/dom-if.js';
 ```
 
-For more on the helper elements, see [the Polymer docs](https://www.polymer-project.org/3.0/docs/devguide/templates).
+For more on the helper elements, see [the Polymer
+docs](https://www.polymer-project.org/3.0/docs/devguide/templates).
 
 ## Composing Polymer Apps
 
-Polymer really shines when it comes to factoring whole apps. The Polymer Project pioneered a pretty progressive and patently special (sorry) kind of declarative app structure built largely on HTML elements. The Polymer approach makes "everything an element", leveraging HTML's built-in composability. So for example, there's the `<iron-ajax>` element, which can fetch resources and expose them to Polymer's data binding.
+Polymer really shines when it comes to factoring whole apps. The Polymer
+Project pioneered a pretty progressive and patently special (sorry) kind of
+declarative app structure built largely on HTML elements. The Polymer approach
+makes "everything an element", leveraging HTML's built-in composability. So for
+example, there's the `<iron-ajax>` element, which can fetch resources and
+expose them to Polymer's data binding.
 
 ```html
 <iron-ajax auto
@@ -656,7 +710,9 @@ Polymer really shines when it comes to factoring whole apps. The Polymer Project
 </dom-repeat>
 ```
 
-But in my humble opinion, the best example of this approach comes with the `<app-route>` element and the idea of [encapsulated routing](https://www.polymer-project.org/blog/routing):
+But in my humble opinion, the best example of this approach comes with the
+`<app-route>` element and the idea of [encapsulated
+routing](https://www.polymer-project.org/blog/routing):
 
 ```html
 <!-- <app-shell> template -->

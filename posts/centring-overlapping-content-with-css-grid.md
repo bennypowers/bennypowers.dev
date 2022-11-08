@@ -1,8 +1,8 @@
 ---
 title: Centring Overlapping Content with CSS Grid
-date: 2019-06-28
-published: true
 description: How to overlay content on top of an image or other element simply using CSS Grid.
+published: true
+datePublished: 2019-06-28
 cover_image: https://thepracticaldev.s3.amazonaws.com/i/qxg70fwmu6u3sndtcxz1.jpg
 tags:
   - css

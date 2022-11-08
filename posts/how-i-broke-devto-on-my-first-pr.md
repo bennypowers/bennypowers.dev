@@ -1,8 +1,8 @@
 ---
 title: How I broke Dev.to on my First PR
-published: true
 description: A tale of two face-palms
-date: 2018-09-17
+published: true
+datePublished: 2018-09-17
 tags:
   - beginners
   - devops

@@ -1,7 +1,7 @@
 ---
-date: 2021-06-23
-published: true
 title: What's Not new in React 18
+datePublished: 2021-06-23
+published: true
 tags:
   - javascript
   - react

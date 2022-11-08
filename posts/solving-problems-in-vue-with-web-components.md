@@ -1,8 +1,8 @@
 ---
 title: Solving Problems in Vue with Web Components
-published: true
-date: 2018-10-08
 description: You don't need to give up your frameworks to use web components. You can use them anywhere you can use HTML and JavaScript.
+published: true
+datePublished: 2018-10-08
 cover_image: https://thepracticaldev.s3.amazonaws.com/i/xao0cp7ku9ljs5g4sp8p.png
 tags:
   - web components
