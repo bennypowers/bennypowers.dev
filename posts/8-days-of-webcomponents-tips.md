@@ -103,9 +103,8 @@ automatically 'disables' the inner slot
 
 State management in HTML! 🤯
 
-Check out @Westbrook's blog on the topic:
-
-https://dev.co/westbrook/who-doesnt-love-some-s-3de0/
+Check out [@Westbrook's
+blog](https://dev.to/westbrook/who-doesnt-love-some-s-3de0/) on the topic:
 
 ## 6th night: Better TypeScript Imports 🕯🕯🕯🕯🕯🕯
 

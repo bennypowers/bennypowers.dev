@@ -10,20 +10,6 @@ pagination:
   size: 5
 ---
 
-<main>
-  <h1>Posts</h1>
-  <ol>{%- for post in pagination.items -%}{% if post.data.published %}
-    <li>
-      <div>
-        <h2><a href="{{ post.url }}">{{ post.data.title }}</a></h2>
-        <time datetime="{{ post.data.datePublished }}">{{ post.data.datePublished | formatDate(month = 'short', day = 'numeric', year = 'numeric') }}</time>
-        <p>{{ post.data.description }}</p>
-      </div>{% if post.data.cover_image %}
-      <img alt="{{ post.data.cover_image_alt or '' }}" src="{{ post.data.cover_image }}">{% endif %}
-    </li>{% endif %}{%- endfor -%}
-  </ol>
-</main>
-
 <h2>Pages</h2>
 <nav id="pages">{% if pagination.href.previous %}
   <a href="{{ pagination.href.previous }}">Previous</a>{% else %}Previous{% endif %}

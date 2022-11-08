@@ -3,7 +3,7 @@ layout: base.html
 ---
 
 <main>
-  <h1>{{ h1 | safe or title | safe }}</h1>
+  <h1>{{ h1 | safe if h1 else title | safe }}</h1>
   <ol>{%- for post in (collections[tag] if tag else pagination.items) -%}{% if post.data.published %}
     <li>
       <div>
