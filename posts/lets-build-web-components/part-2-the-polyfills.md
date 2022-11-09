@@ -3,7 +3,7 @@ title: 'Lets Build Web Components! Part 2: The Polyfills'
 description: Web Components are the future, but with a little care and some helpful polyfills, they can be the present as well.
 datePublished: 2018-09-29
 published: true
-cover_image: https://thepracticaldev.s3.amazonaws.com/i/1pbf5o2wj64jhwlrc2m5.png
+coverImage: https://thepracticaldev.s3.amazonaws.com/i/1pbf5o2wj64jhwlrc2m5.png
 tags:
   - web components
   - custom elements

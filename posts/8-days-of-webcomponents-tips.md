@@ -2,7 +2,7 @@
 title: 8 Days of Web Components Tips
 published: true
 datePublished: 2021-12-05
-cover_image: https://dev-to-uploads.s3.amazonaws.com/uploads/articles/jbu8sm54svooogakrb4d.jpg
+coverImage: https://dev-to-uploads.s3.amazonaws.com/uploads/articles/jbu8sm54svooogakrb4d.jpg
 tags:
   - web components
   - html

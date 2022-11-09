@@ -3,7 +3,7 @@ title: Embed a Dev.to User Feed with Web Components
 description: Let's build a web component to embed a dev.to feed in a page.
 published: true
 datePublished: 2019-04-08
-cover_image: https://thepracticaldev.s3.amazonaws.com/i/vrp6alld6f4hbzycarfi.png
+coverImage: https://thepracticaldev.s3.amazonaws.com/i/vrp6alld6f4hbzycarfi.png
 tags:
   - showdev
   - web components
@@ -324,7 +324,7 @@ everything out without adding extraneous `<div>`s.
 ```js
 render() {
   const {
-    cover_image: coverImage,
+coverImage: coverImage,
     description,
     positive_reactions_count: positiveReactionsCount,
     published_at: publishedAt,

@@ -20,8 +20,8 @@ stylesheets:
 
 <main>
   <header>
-    <h1>{{ title }}</h1>{% if cover_image %}
-    <img alt="{{ cover_image_alt or '' }}" src="{{ cover_image }}">{% endif %}
+    <h1>{{ title }}</h1>{% if coverImage %}
+    <img alt="{{ coverImageAlt or '' }}" src="{{ coverImage }}">{% endif %}
   </header>
   {{ content | safe }}
 </main>

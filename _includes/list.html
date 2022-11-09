@@ -10,8 +10,8 @@ layout: base.html
         <h2><a href="{{ post.url }}">{{ post.data.title }}</a></h2>
         <time datetime="{{ post.data.datePublished }}">{{ post.data.datePublished | formatDate(month = 'short', day = 'numeric', year = 'numeric') }}</time>
         <p>{{ post.data.description }}</p>
-      </div>{% if showThumbnails and post.data.cover_image %}
-      <img alt="{{ post.data.cover_image_alt or '' }}" src="{{ post.data.cover_image }}">{% endif %}
+      </div>{% if showThumbnails and post.data.coverImage %}
+      <img alt="{{ post.data.coverImageAlt or '' }}" src="{{ post.data.coverImage }}">{% endif %}
     </li>{% endif %}{%- endfor -%}
   </ol>
 </main>

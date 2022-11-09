@@ -3,7 +3,7 @@ title: 'Lets Build Web Components! Part 1: The Standards'
 description: A step by step guide on how to factor a modern, component-based app using web standards
 datePublished: 2018-09-18
 published: true
-cover_image: https://thepracticaldev.s3.amazonaws.com/i/8poeepzsncvs31ero8a6.png
+coverImage: https://thepracticaldev.s3.amazonaws.com/i/8poeepzsncvs31ero8a6.png
 tags:
   - web components
   - custom elements

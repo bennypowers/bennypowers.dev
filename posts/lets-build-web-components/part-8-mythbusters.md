@@ -3,7 +3,7 @@ title: 'Lets Build Web Components! Part 8: MythBusters Edition'
 description: Web Components are awesome, but perhaps a little misunderstood. This post dispels many myths which have cropped up recently.
 published: true
 datePublished: 2019-02-19
-cover_image: https://thepracticaldev.s3.amazonaws.com/i/qgc03cib7p603aph0o76.png
+coverImage: https://thepracticaldev.s3.amazonaws.com/i/qgc03cib7p603aph0o76.png
 tags:
   - web components
   - custom elements

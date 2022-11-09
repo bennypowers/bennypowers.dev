@@ -3,7 +3,7 @@ title: 'Lets Build Web Components! Part 4: Polymer Library'
 description: Learn how to build web components and factor apps with the OG web-components library, Polymer.
 datePublished: 2018-10-14
 published: true
-cover_image: https://thepracticaldev.s3.amazonaws.com/i/4bxajms0ls9ro6jiy6sk.png
+coverImage: https://thepracticaldev.s3.amazonaws.com/i/4bxajms0ls9ro6jiy6sk.png
 tags:
   - web components
   - custom elements

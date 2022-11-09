@@ -3,7 +3,7 @@ title: 'Lets Build Web Components! Part 7: Hybrids'
 description: Web Components are the future, but with a little care and some helpful polyfills, they can be the present as well.
 datePublished: 2018-10-28
 published: true
-cover_image: https://thepracticaldev.s3.amazonaws.com/i/e4nqxo9zyspw1552s4b5.png
+coverImage: https://thepracticaldev.s3.amazonaws.com/i/e4nqxo9zyspw1552s4b5.png
 tags:
   - web components
   - hybrids

@@ -3,7 +3,7 @@ title: 'Lets Build Web Components! Part 5: LitElement'
 description: Reactive Components without compiling or VDOM Overhead? Say hello to LitElement.
 datePublished: 2018-10-23
 published: true
-cover_image: https://thepracticaldev.s3.amazonaws.com/i/imq3tb3j6fuutrtxyfse.png
+coverImage: https://thepracticaldev.s3.amazonaws.com/i/imq3tb3j6fuutrtxyfse.png
 tags:
   - web components
   - functional programming

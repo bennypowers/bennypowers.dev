@@ -3,7 +3,7 @@ title: 'Lets Build Web Components! Part 6: Gluon'
 description: Hit that sweet spot between library cruft and bare browser APIs with Gluon web components.
 published: true
 datePublished: 2018-10-28
-cover_image: https://thepracticaldev.s3.amazonaws.com/i/5s5bvccq2tbaij396y7g.png
+coverImage: https://thepracticaldev.s3.amazonaws.com/i/5s5bvccq2tbaij396y7g.png
 tags:
   - web components
   - gluon
