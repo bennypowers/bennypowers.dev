@@ -102,31 +102,6 @@ stylesheets:
     </ul>
   </section>
 
-  <section id="qualifications">
-    <h2>Qualifications & Education</h2>{% for file in collections['resume-education'] %}
-    <!-- {{ file.data.shortDescription }} -->
-    <article class="credential" itemscope itemtype="http://schema.org/educationalCredentialAwarded">
-      <h3 itemscope itemtype="https://schema.org/Course">{{ file.data.title }}</h3>
-      {{ file.templateContent | safe }}
-      <dl>{% for credential in file.data.credentials %}
-        <dt>
-          <span itemscope
-                itemprop="issuedBy"
-                itemtype="https://schema.org/{{ credential.institutionType or 'CollegeOrUniversity' }}">
-            <span itemprop="name">{{ credential.institution }}</span>
-            <time datetime="{{ file.data.date }}">{{ credential.date }}</time>
-          </span>
-        </dt>
-        <dd>
-          <a itemprop="educationalCredentialAwarded"
-             href="{{ file.data.href }}"
-             rel="noreferrer"
-             target="_blank">View Credential</a>
-        </dd>{% endfor %}
-      </dl>
-    </article>{% endfor %}
-  </section>
-
   <section id="experience">
     <h2>Experience</h2>{% for file in collections['resume-experience'] | sort(true, false, 'data.startDate') %}{% set position = file.data %}
     <!-- {{ position.organization.name }} -->
@@ -159,6 +134,31 @@ stylesheets:
           </ul>
         </section>
       </div>
+    </article>{% endfor %}
+  </section>
+
+  <section id="qualifications">
+    <h2>Qualifications & Education</h2>{% for file in collections['resume-education'] %}
+    <!-- {{ file.data.shortDescription }} -->
+    <article class="credential" itemscope itemtype="http://schema.org/educationalCredentialAwarded">
+      <h3 itemscope itemtype="https://schema.org/Course">{{ file.data.title }}</h3>
+      {{ file.templateContent | safe }}
+      <dl>{% for credential in file.data.credentials %}
+        <dt>
+          <span itemscope
+                itemprop="issuedBy"
+                itemtype="https://schema.org/{{ credential.institutionType or 'CollegeOrUniversity' }}">
+            <span itemprop="name">{{ credential.institution }}</span>
+            <time datetime="{{ file.data.date }}">{{ credential.date }}</time>
+          </span>
+        </dt>
+        <dd>
+          <a itemprop="educationalCredentialAwarded"
+             href="{{ file.data.href }}"
+             rel="noreferrer"
+             target="_blank">View Credential</a>
+        </dd>{% endfor %}
+      </dl>
     </article>{% endfor %}
   </section>
 

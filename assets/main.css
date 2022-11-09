@@ -95,14 +95,10 @@ body {
 }
 
 #main-header {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  display: flex;
   align-items: center;
-  justify-items: center;
+  justify-content: space-between;
 }
-
-#main-header :first-child { justify-self: start; }
-#main-header :last-child { justify-self: end; }
 #main-header img { height: 40px; }
 
 a:visited { --hue-offset: 50; }
@@ -111,7 +107,7 @@ main.home h1 { --hue-offset: -120; }
 
 main.home {
   text-align: center;
-  font-size: 200%;
+  font-size: 180%;
 }
 
 main.home img {
@@ -216,3 +212,24 @@ code-tabs:focus-within {
   --code-tabs-selected-highlight-color: var(--primary-color) !important;
 }
 
+@media (min-width: 1000px) {
+  #main-header {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    justify-items: center;
+    font-size: 150%;
+  }
+
+  #main-header nav {
+    display: flex;
+    gap: .5em;
+  }
+
+  #main-header :first-child { justify-self: start; }
+  #main-header :last-child { justify-self: end; }
+
+  main.home {
+    text-align: center;
+    font-size: 220%;
+  }
+}

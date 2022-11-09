@@ -56,12 +56,8 @@ abbr::after {
   display: inline;
 }
 
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
+:is(a, h1, h2, h3, h4, h5, h6) {
+  color: initial;
   font-family: var(--heading-font);
   font-weight: 700;
   background: initial;
@@ -123,7 +119,7 @@ h3 {
   grid-area: social;
   display: grid;
   grid-template-columns: auto auto;
-  gap: 1em;
+  column-gap: 1em;
 }
 
 #social svg {
@@ -135,7 +131,7 @@ h3 {
 }
 
 #social a::before {
-  content: attr(aria-label) ': ';
+  content: attr(title) ': ';
   font-style: normal;
 }
 
@@ -163,7 +159,7 @@ h3 {
 }
 
 #summary ul li:not(:last-of-type)::after {
-  content: ',';
+  content: ', ';
 }
 
 #tools {
@@ -210,7 +206,12 @@ h3 {
 }
 
 :is(#experience, #open-source) ul li:not(:last-of-type)::after {
-  content: ',';
+  content: ', ';
+}
+
+:is(.experience, .open-source) ul li {
+  display: inline;
+  width: initial;
 }
 
 :is(#experience, #open-source) article:hover,
@@ -225,9 +226,8 @@ h3 {
   display: none;
 }
 
-:is(#experience, #open-source) .technologies {
-  display: flex;
-  align-items: baseline;
+.technologies {
+  display: block;
 }
 
 :is(#experience, #open-source) .technologies h3 {
@@ -246,7 +246,7 @@ h3 {
 }
 
 #tools ul li {
-  display: inline-block;
+  display: inline;
 }
 
 #tools ul li::before {
@@ -254,7 +254,7 @@ h3 {
 }
 
 #tools ul li:not(:last-of-type)::after {
-  content: ',';
+  content: ', ';
   display: inline;
 }
 
@@ -262,7 +262,7 @@ h3 {
   page-break-before: always;
 }
 
-:is(.experience, .open-source) header h2 {
+:is(.experience, .open-source) header h3 {
   font-size: 1.1rem;
 }
 
@@ -270,11 +270,19 @@ h3 {
   margin-bottom: 10px;
 }
 
-#open-source h2 {
+.credential {
+  display: block;
+}
+
+.credential [itemprop=educationalCredentialAwarded] {
+  display: none;
+}
+
+#open-source h3 {
   font-style: normal;
 }
 
-#open-source h2 a::after {
+#open-source h3 a::after {
   content: attr(href);
   font-style: italic;
   text-decoration: underline;
