@@ -2,14 +2,16 @@ const YAML = require('yaml');
 const esbuildPlugin = require('./_plugins/esbuild.cjs');
 const glitchPlugin = require('./_plugins/glitch.cjs');
 const embedPlugin = require('eleventy-plugin-embed-everything');
+const EleventyPluginDirectoryOutput = require('@11ty/eleventy-plugin-directory-output');
 const EleventyPluginSyntaxhighlight = require('@11ty/eleventy-plugin-syntaxhighlight');
 
 /**
  * @param{import('@11ty/eleventy/src/UserConfig.js')} eleventyConfig
- * @return{import('@11ty/eleventy/src/UserConfig.js')}
+ * @return{*}
  */
 module.exports = function(eleventyConfig) {
   eleventyConfig.ignores.add('README.md');
+  eleventyConfig.setQuietMode(true);
   eleventyConfig.addDataExtension('yaml', x => YAML.parse(x));
   eleventyConfig.addExtension('svg', { compile: x => () => x });
   eleventyConfig.addPassthroughCopy('assets');
@@ -17,6 +19,7 @@ module.exports = function(eleventyConfig) {
   eleventyConfig.addPlugin(glitchPlugin);
   eleventyConfig.addPlugin(embedPlugin, { lite: true });
   eleventyConfig.addPlugin(EleventyPluginSyntaxhighlight);
+  eleventyConfig.addPlugin(EleventyPluginDirectoryOutput);
 
   eleventyConfig.addFilter('formatDate', function(d, opts) {
     if (d instanceof Date) {
