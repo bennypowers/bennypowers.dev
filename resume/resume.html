@@ -143,22 +143,21 @@ stylesheets:
     <article class="credential" itemscope itemtype="http://schema.org/educationalCredentialAwarded">
       <h3 itemscope itemtype="https://schema.org/Course">{{ file.data.title }}</h3>
       {{ file.templateContent | safe }}
-      <dl>{% for credential in file.data.credentials %}
-        <dt>
+      <ul>{% for credential in file.data.credentials %}
+        <li>
           <span itemscope
-                itemprop="issuedBy"
-                itemtype="https://schema.org/{{ credential.institutionType or 'CollegeOrUniversity' }}">
-            <span itemprop="name">{{ credential.institution }}</span>
+                itemprop="educationalCredentialAwarded">
+            <a itemprop="issuedBy"
+               itemtype="https://schema.org/{{ credential.institutionType or 'CollegeOrUniversity' }}"
+               href="{{ file.data.href }}"
+               rel="noreferrer"
+               target="_blank">
+              <span itemprop="name">{{ credential.institution }}</span>
+            </a>&nbsp;
             <time datetime="{{ file.data.date }}">{{ credential.date }}</time>
           </span>
-        </dt>
-        <dd>
-          <a itemprop="educationalCredentialAwarded"
-             href="{{ file.data.href }}"
-             rel="noreferrer"
-             target="_blank">View Credential</a>
-        </dd>{% endfor %}
-      </dl>
+        </li>{% endfor %}
+      </ul>
     </article>{% endfor %}
   </section>
 

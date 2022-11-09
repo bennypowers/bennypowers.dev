@@ -293,10 +293,6 @@ main > div > a {
 
 .technologies {
   margin-top: auto;
-  display: flex;
-  align-items: center;
-  gap: 4px;
-  justify-content: end;
 }
 
 .technologies h3 {
@@ -305,6 +301,17 @@ main > div > a {
 
 .technologies ul {
   display: contents;
+}
+
+.credential ul {
+  display: block;
+  list-style-type: none;
+  padding: 0;
+  width: 100%;
+}
+
+.credential ul li {
+  margin: 0;
 }
 
 #highlights {
@@ -326,13 +333,6 @@ main > div > a {
   display: flex;
   flex-flow: column nowrap;
   margin: 0;
-}
-
-.credential {
-  display: flex;
-  flex-flow: row wrap;
-  justify-content: space-between;
-  align-items: center;
 }
 
 .credential h2 {
