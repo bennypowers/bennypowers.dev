@@ -1,2 +1,4 @@
 layout: post.html
 date: Created
+eleventyComputed:
+  permalink: '{{ (watch or data.published) and data.permalink }}'
