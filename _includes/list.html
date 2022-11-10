@@ -4,8 +4,8 @@ layout: base.html
 
 <main>
   <h1>{{ h1 | safe if h1 else title | safe }}</h1>
-  <ol>{%- for post in (collections[tag] if tag else pagination.items) -%}{% if post.data.published %}
-    <li>
+  <ol>{%- for post in (collections[tag] if tag else pagination.items) -%}{% if watch or post.data.published %}
+    <li{% if watch and not post.data.published %} class="unpublished"{% endif %}>
       <div>
         <h2><a href="{{ post.url }}">{{ post.data.title }}</a></h2>
         <time datetime="{{ post.data.datePublished }}">{{ post.data.datePublished | formatDate(month = 'short', day = 'numeric', year = 'numeric') }}</time>
@@ -53,4 +53,5 @@ main ol {
 #pages ol {
   display: contents;
 }
+
 </style>

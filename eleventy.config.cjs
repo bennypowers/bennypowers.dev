@@ -20,6 +20,7 @@ module.exports = function(eleventyConfig) {
   eleventyConfig.addPlugin(embedPlugin, { lite: true });
   eleventyConfig.addPlugin(EleventyPluginSyntaxhighlight);
   eleventyConfig.addPlugin(EleventyPluginDirectoryOutput);
+  eleventyConfig.addGlobalData('watch', () => process.argv.includes('--watch') || process.argv.includes('--serve'));
 
   eleventyConfig.addFilter('formatDate', function(d, opts) {
     if (d instanceof Date) {
