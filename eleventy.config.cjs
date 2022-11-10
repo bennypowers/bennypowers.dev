@@ -5,6 +5,9 @@ const embedPlugin = require('eleventy-plugin-embed-everything');
 const EleventyPluginDirectoryOutput = require('@11ty/eleventy-plugin-directory-output');
 const EleventyPluginSyntaxhighlight = require('@11ty/eleventy-plugin-syntaxhighlight');
 
+const isWatching = () =>
+  process.argv.includes('--watch') || process.argv.includes('--serve')
+
 /**
  * @param{import('@11ty/eleventy/src/UserConfig.js')} eleventyConfig
  * @return{*}
@@ -20,7 +23,7 @@ module.exports = function(eleventyConfig) {
   eleventyConfig.addPlugin(embedPlugin, { lite: true });
   eleventyConfig.addPlugin(EleventyPluginSyntaxhighlight);
   eleventyConfig.addPlugin(EleventyPluginDirectoryOutput);
-  eleventyConfig.addGlobalData('watch', () => process.argv.includes('--watch') || process.argv.includes('--serve'));
+  eleventyConfig.addGlobalData('watch', isWatching);
 
   eleventyConfig.addFilter('formatDate', function(d, opts) {
     if (d instanceof Date) {
@@ -39,6 +42,7 @@ module.exports = function(eleventyConfig) {
     const g = x => x.data.datePublished;
     return collectionApi
       .getFilteredByGlob('./posts/**/*.md')
+      .filter(x => isWatching() || x.published && x.data.datePublished < new Date())
       .sort((a, b) =>
           g(a) === g(b) ? 0
         : g(a) > g(b) ? 1
