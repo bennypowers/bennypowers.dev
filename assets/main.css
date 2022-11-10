@@ -152,7 +152,6 @@ a:is(:hover, :focus) {
 #socials li,
 #socials a {
   color: currentcolor;
-  display: contents;
 }
 
 #socials svg {
