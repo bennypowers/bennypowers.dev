@@ -3,6 +3,7 @@ layout: base.html
 stylesheets:
   - href: /assets/post.css
 ---
+{% if watch or published %}
 <aside id="side-menu">
   <dl>
     <dt>Published</dt>
@@ -25,3 +26,4 @@ stylesheets:
   </header>
   {{ content | safe }}
 </main>
+{% endif %}

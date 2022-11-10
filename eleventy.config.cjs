@@ -42,7 +42,6 @@ module.exports = function(eleventyConfig) {
     const g = x => x.data.datePublished;
     return collectionApi
       .getFilteredByGlob('./posts/**/*.md')
-      .filter(x => isWatching() || x.published && x.data.datePublished < new Date())
       .sort((a, b) =>
           g(a) === g(b) ? 0
         : g(a) > g(b) ? 1
