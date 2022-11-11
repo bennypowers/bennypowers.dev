@@ -1,9 +1,11 @@
 ---
-title: Build a FACE
+title: Form-Associated Custom Elements
 published: false
 description: |
   Form-Associated Custom Elements are a new web standard by which to build
-  custom interactive form controls like buttons, inputs, checkboxes, etc.
+  custom interactive form controls like buttons, inputs, checkboxes, etc. Get to 
+  know the new spec and build a simple checkbox component in this short 
+  tutorial.
 datePublished: 2022-11-15
 tags:
   - web components
@@ -19,7 +21,7 @@ path forward for design-systems and other custom element authors to more deeply
 integrate with the web platform. In this post, we'll build a simple <abbr
 title="Form-Associated custom element">FACE</abbr> to get a feel for the APIs.
 
-<details open><summary>But before we get to the code, some history (CW standard snark):</summary>
+<details open><summary>But before we get to the code, some history:</summary>
 
 ## How we Got Here
 
@@ -76,18 +78,36 @@ title="customized-built-in-element">CBIE</abbr>s championed by WebKit.
 
 </details>
 
-## Creating a FACE
+## The Workarounds
 
-Form-Associated Custom Elements solves one of the problems that `is` would have
-solved, namely, allowing your web component to participate in native web forms.
-Before FACE, page authors using custom elements had two options:
+Before FACE, page authors using custom elements had two options to submit forms 
+with data from their web components:
 
 1. The "decorator pattern" - slotting native controls into autonomous custom elements
 2. Using JavaScript to manually submit form data
 
+Each of these had their pros and cons.
+
+### The Decorator Pattern
+
+The most versatile workaround for autonomous custom controls involves slotting 
+native controls into the custom element.
+
 ```html
 <x-checkbox><input type="checkbox"></x-checkbox>
 ```
+
+The advantages to this approach include `<noscript>` support and hassle-free 
+form participation. The disadvantages include HTML noise and awkward styling due 
+to the current limitations of `::slotted()`.
+
+### Manually Submitting Forms
+
+Developers working on <abbr title="single page applications">SPAs</abbr> might 
+opt instead to put their native inputs in the shadow DOM and use javascript to 
+submit the form data to a JSON API. Here's a simple example of how that might 
+work:
+
 ```js
 form.addEventListener('submit', function(event) {
   event.preventDefault();
@@ -96,12 +116,14 @@ form.addEventListener('submit', function(event) {
   fetch(action, { method, body });
 })
 ```
+build-a-face/?#how-we-got-herebuild-a-face/?#how-we-got-here
+Given the right abstractions this approach could be quite productive for 
+developers, but ties the controls to javascript.
 
-Each of these had their pros and cons. Styling slotted inputs and could be 
-difficult especially if they are wrapped in `<label>`s, but <abbr title="on the 
-other hand">OTOH</abbr> they "Just Work" with the form. Manually submitting 
-requires extra code, but could allow for faster development given the right 
-abstractions...
+## Creating a FACE
+
+Form-Associated Custom Elements solves one of the problems that `is` would have
+solved, namely, allowing your web component to participate in native web forms.
 
 ```js
 class XCheckbox extends HTMLElement {
@@ -114,17 +136,19 @@ customElements.define('x-checkbox', XCheckbox);
 So what does this give us? Well, right off the bat, that one static class
 boolean adds a number of form-related behaviours to our otherwise plain
 element. The `name`, `form`, and `disabled` attributes now work the same as
-native `<input>` elements. Naming your FACE and specifying a form (by child 
-composition or via `form` attr) adds it to the form's 
-[`HTMLFormControlsCollection`][HTMLFormControlsCollection], as well, if the 
-element or it's containing `<formset>` has the `disabled` attribute, it will 
+native `<input>` elements, and the presence of the `readonly` attribute will 
+prevent the browser from trying to validate your field, although you're still 
+responsible to make the control *actually* non-editable. Naming your FACE and 
+specifying a form (by child composition or via `form` attr) adds it to the 
+form's [`HTMLFormControlsCollection`][HTMLFormControlsCollection], as well, if 
+the element or it's containing `<formset>` has the `disabled` attribute, it will 
 gain the CSS state `:disabled`.
 
 ```html
 <form>
   <fieldset disabled>
     <label for="xcheck">Check?</label>
-    <x-checkbox id="xcheck" name="checkit"></x-checkbox>
+    <x-checkbox id="xcheck" name="checkit" value="checkit"></x-checkbox>
   </fieldset>
 </form>
 ```
@@ -136,36 +160,49 @@ in the example below:
 
 <form id="form">
   <fieldset id="set" disabled>
-    <legend>This fieldset</legend>
+    <legend>This fieldset controls <code>x-checkbox</code></legend>
     <label for="xcheck">Check?</label>
     <x-checkbox id="xcheck" name="checkit"></x-checkbox>
   </fieldset>
-  <fieldset>
-    <legend>Submit to print form state</legend>
-    <input id="toggle"
-           type="checkbox"
-           checked
-           onchange="set.disabled=!set.disabled"/>
-    <label for="toggle">Toggle fieldset's <code>disabled</code> state</label>
-    <button type="submit">Submit</button>
-  </fieldset>
-  <output name="state"></output>
 </form>
+
+<fieldset form="form">
+  <legend>Submit to print form state</legend>
+  <input id="toggle"
+         type="checkbox"
+         checked
+         onchange="set.disabled=!set.disabled">
+  <label for="toggle">Toggle fieldset's <code>disabled</code> state</label>
+  <button type="submit" form="form">Submit</button>
+</fieldset>
+<output name="state" form="form">Awaiting submission...</output>
 
 <script type="module">
 customElements.define('x-checkbox', class XCheckbox extends HTMLElement {
   static formAssociated = true;
 });
 
-form.onsubmit = function(event) {
+form.addEventListener('submit', function(event) {
   event.preventDefault();
   this.elements.state.textContent =
     `xcheck is ${xcheck.matches(':disabled') ? 'disabled' : 'enabled'}`;
-}
+});
 </script>
+
+All of that comes for free, even before implementing any actual custom control 
+behaviour. FACE comes along with another new standard, 
+[`ElementInternals`][ElementInternals], which provides a standard place to 
+implement things like form control validation and accessibility.
+
+## ElementInternals
+
+`HTMLElement` get a new standard method called `attachInternals()` which returns 
+an `ElementInternals` object. This method may only be called on autonomous 
+custom elements and will throw if called on built-ins, customized or otherwise.
 
 [ace]: https://html.spec.whatwg.org/multipage/custom-elements.html#autonomous-custom-element
 [cbie]: https://html.spec.whatwg.org/multipage/custom-elements.html#customized-built-in-element
 [no-cbie]: https://b.webkit.org/show_bug.cgi?id=182671
 [open-web-advocacy]: https://open-web-advocacy.org/
 [HTMLFormControlsCollection]: https://developer.mozilla.org/en-US/docs/Web/API/HTMLFormElement
+[ElementInternals]: https://html.spec.whatwg.org/multipage/custom-elements.html#the-elementinternals-interface
