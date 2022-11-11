@@ -177,16 +177,18 @@ in the example below:
 </fieldset>
 <output name="state" form="form">Awaiting submission...</output>
 
-<script type="module">
-customElements.define('x-checkbox', class XCheckbox extends HTMLElement {
-  static formAssociated = true;
-});
-
+<script type="module" src="{{ '/assets/x-checkbox.js' | url }}"></script>
+<script>
 form.addEventListener('submit', function(event) {
   event.preventDefault();
   this.elements.state.textContent =
-    `xcheck is ${xcheck.matches(':disabled') ? 'disabled' : 'enabled'}`;
-});
+    `xcheck is ${
+      xcheck.checked ? 'checked' : 'unchecked'
+    } and ${
+      xcheck.matches(':disabled') ? 'disabled' : 'enabled'
+    }`;
+  });
+  
 </script>
 
 All of that comes for free, even before implementing any actual custom control 
@@ -198,11 +200,33 @@ implement things like form control validation and accessibility.
 
 `HTMLElement` get a new standard method called `attachInternals()` which returns 
 an `ElementInternals` object. This method may only be called on autonomous 
-custom elements and will throw if called on built-ins, customized or otherwise.
+custom elements and will throw if called on built-ins, customized or otherwise. 
+`ElementInternals` is designed as a catch-all bag of properties and methods for 
+working with custom elements. We can expect expansions to its capabilities in 
+the future, but for now it contains three parts:
+
+1. A reference to the element's shadow root, if it exists
+2. Form-related properties
+3. Accessibility-related properties
+
+You hook your control's custom implementation into it's associated form with 
+`ElementInternals`' form properties. Let's add a `checked` value to our custom 
+checkbox with `internals.setFormValue`:
+
+```js
+#internals = this.attachInternals();
+
+get checked() { return this.hasAttribute('checked'); }
+set checked(x) {
+  this.toggleAttribute('checked', x);
+  this.#internals.getFormValue(x);
+}
+```
 
 [ace]: https://html.spec.whatwg.org/multipage/custom-elements.html#autonomous-custom-element
 [cbie]: https://html.spec.whatwg.org/multipage/custom-elements.html#customized-built-in-element
 [no-cbie]: https://b.webkit.org/show_bug.cgi?id=182671
 [open-web-advocacy]: https://open-web-advocacy.org/
 [HTMLFormControlsCollection]: https://developer.mozilla.org/en-US/docs/Web/API/HTMLFormElement
-[ElementInternals]: https://html.spec.whatwg.org/multipage/custom-elements.html#the-elementinternals-interface
+[ElementInternals]: 
+https://html.spec.whatwg.org/multipage/custom-elements.html#the-elementinternals-interface
