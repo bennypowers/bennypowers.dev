@@ -1,7 +1,10 @@
 const YAML = require('yaml');
-const esbuildPlugin = require('./_plugins/esbuild.cjs');
-const glitchPlugin = require('./_plugins/glitch.cjs');
-const embedPlugin = require('eleventy-plugin-embed-everything');
+const anchor = require('markdown-it-anchor');
+const EsbuildPlugin = require('./_plugins/esbuild.cjs');
+const GlitchPlugin = require('./_plugins/glitch.cjs');
+const EmbedPlugin = require('eleventy-plugin-embed-everything');
+const TableOfContentsPlugin = require('eleventy-plugin-nesting-toc');
+const TimeToReadPlugin = require('eleventy-plugin-time-to-read');
 const EleventyPluginDirectoryOutput = require('@11ty/eleventy-plugin-directory-output');
 const EleventyPluginSyntaxhighlight = require('@11ty/eleventy-plugin-syntaxhighlight');
 
@@ -18,12 +21,17 @@ module.exports = function(eleventyConfig) {
   eleventyConfig.addDataExtension('yaml', x => YAML.parse(x));
   eleventyConfig.addExtension('svg', { compile: x => () => x });
   eleventyConfig.addPassthroughCopy('assets');
-  eleventyConfig.addPlugin(esbuildPlugin, ['github-repository']);
-  eleventyConfig.addPlugin(glitchPlugin);
-  eleventyConfig.addPlugin(embedPlugin, { lite: true });
+  eleventyConfig.addGlobalData('watch', isWatching);
+  eleventyConfig.amendLibrary('md', md => md.use(anchor, {
+    permalink: anchor.permalink.headerLink(),
+  }));
+  eleventyConfig.addPlugin(EsbuildPlugin, ['github-repository']);
+  eleventyConfig.addPlugin(GlitchPlugin);
+  eleventyConfig.addPlugin(EmbedPlugin, { lite: true });
+  eleventyConfig.addPlugin(TableOfContentsPlugin);
+  eleventyConfig.addPlugin(TimeToReadPlugin);
   eleventyConfig.addPlugin(EleventyPluginSyntaxhighlight);
   eleventyConfig.addPlugin(EleventyPluginDirectoryOutput);
-  eleventyConfig.addGlobalData('watch', isWatching);
 
   eleventyConfig.addFilter('formatDate', function(d, opts) {
     if (d instanceof Date) {

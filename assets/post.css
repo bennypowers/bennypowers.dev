@@ -23,7 +23,26 @@ body {
 
 #side-menu {
   grid-area: menu;
+  position: relative;
+}
+
+#side-menu div {
   position: sticky;
+  top: 50px;
+}
+
+#side-menu dl {
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  column-gap: 1em;
+}
+
+#side-menu dd {
+  justify-self: end;
+}
+
+#side-menu h2 {
+  font-size: 100%;
 }
 
 #main-header { grid-area: head; }
