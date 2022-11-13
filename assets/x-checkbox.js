@@ -16,23 +16,24 @@ class XCheckbox extends HTMLElement {
   }
 
   /**
-     * @param {string} name
-     * @param {string} old
-     * @param {string} value
-     */
+   * @param {string} name
+   * @param {string} old
+   * @param {string} value
+   */
   attributeChangedCallback(name, old, value) {
     const checked = value != null;
     this.#internals.setFormValue(String(checked));
     this.shadowRoot.textContent = checked ? '✅' : '❌';
+    this.checked = checked;
   }
 
   /**
-     * @param {Event} event
-     */
+   * @param {Event} event
+   */
   #onClick(event) {
     console.log(event);
     const labels = Array.from(this.#internals.labels);
-    const path = event.composedPath();
+    const path = /** @type {Node[]} */(event.composedPath());
     if (path.every(x => !labels.includes(x)))
       this.checked = !this.checked;
   }
