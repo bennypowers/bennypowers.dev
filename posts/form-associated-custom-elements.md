@@ -10,6 +10,8 @@ datePublished: 2022-11-15
 scripts:
   - src: https://unpkg.com/element-internals-polyfill
     type: module
+stylesheets:
+  - href: /assets/form-associated-custom-elements.css
 abbrs:
   - name: FACE
     title: form-associated custom element
@@ -40,9 +42,12 @@ components, closing gaps between web components, framework components, and
 native browser controls. Before FACE, web component authors had to apply one of 
 a number of [workarounds](#workarounds) each with their own trade-offs.
 
-Teams *developing* FACEs can now
+Teams *developing* FACEs can now implement accessible custom controls with 
+simpler HTML APIs while retaining the benefits of Shadow DOM.
 
-<details open><summary>But before we get to the code, some history:</summary>
+But before we get to the code, some history:
+
+<details open><summary>Skip the history bit</summary>
 
 ## How we Got Here
 
@@ -67,32 +72,33 @@ You use CBIEs like this:
 <button is="x-button">I'm an XButton</button>
 ```
 
-Notice the big differences here: `XButton` the customized built-in extends
-`HTMLButtonElement`, not `HTMLElement`, and when you register it, you have to
-pass both the custom element name `x-button` as well as the `localName` of the
-`button` element it extends. When using it in HTML, the `localName` of the
-element is `button` and the `is` attribute determines which subclass of
+Notice the big differences here: `XButton` the customized built-in extends 
+`HTMLButtonElement`, not `HTMLElement`, and when you register it, you have to 
+pass both the custom element name `x-button` as well as the `localName` of the 
+`button` element it extends. When using it in HTML, the `localName` of the 
+element is `button` and the `is` attribute determines which subclass of 
 `HTMLButtonElement` to upgrade with.
 
-The chief advantage of customized built-ins was that they came with all the
-original features of their base elements, well, built-in. So a custom-element
-author wouldn't need to implement a bunch of stuff to make their custom
-textfield go, rather they could just extend the existing `HTMLInputElement`
-class and get all the necessary and expected functionality (especially crucial
+The chief advantage of customized built-ins was that they came with all the 
+original features of their base elements, well, built-in. So a custom-element 
+author wouldn't need to implement a bunch of stuff to make their custom 
+textfield go, rather they could just extend the existing `HTMLInputElement` 
+class and get all the necessary and expected functionality (especially crucial 
 accessibility features) for free. Typical OOP stuff. So if customized built-ins 
 are so great, how come this post isn't about them and how come we rarely see 
 them? 
 
-Unfortunately, although customized built-ins remain a part of the spec, **you
-should not build them**. The reason for this is discouraging: despite the
-spec's ratification, Apple's WebKit team [stated][no-cbie] that they would
-decline to implement customized built-ins. Since WebKit enjoys an [artificial
-monopoly][open-web-advocacy] on iOS devices, the WebKit team's decision has an
-outsized effect on the industry. Think "US Electoral College", but for web
-browsers. Their decision not to implement makes customized built-ins a
-non-starter. Some prominent web developers (most notably Andrea Giammarchi)
-have advocated permanently adopting a polyfill, but the broader web components
-community has generally acquiesced to WebKit's decision.
+Unfortunately, although customized built-ins remain a part of the spec, **you 
+should not build them**. The reason for this is discouraging: despite the spec's 
+ratification, Apple's WebKit team [stated][no-cbie] that they would decline to 
+implement customized built-ins.
+
+Since WebKit enjoys an [artificial monopoly][open-web-advocacy] on iOS devices, 
+the WebKit team's decision has an outsized effect on the industry. Think "US 
+Electoral College", but for web browsers. Their decision not to implement makes 
+customized built-ins a non-starter. Some prominent web developers (most notably 
+Andrea Giammarchi) have advocated permanently adopting a polyfill, but the 
+broader web components community has generally acquiesced to WebKit's decision.
 
 Which is how FACE came to be, it's the alternative to CBIEs championed by WebKit.
 
@@ -119,7 +125,10 @@ native controls into the custom element.
 
 The advantages to this approach include `<noscript>` support and hassle-free 
 form participation. The disadvantages include HTML noise and awkward styling due 
-to the current limitations of `::slotted()`.
+to the current limitations of `::slotted()`. This is compounded by the 
+requirement to `<label>` elements, leading to stricter HTML requirements, 
+copying nodes into the shadow root, producing hidden light DOM nodes, or other 
+workarounds-for-the-workaround.
 
 ### Manually Submitting Forms
 
@@ -137,11 +146,11 @@ form.addEventListener('submit', function(event) {
 ```
 
 Given the right abstractions this approach could be quite productive for 
-developers, but ties the controls to javascript.
+developers, but ties the controls to JavaScript.
 
 ## Creating a FACE
 
-Form-Associated Custom Elements solves one of the problems that `is` would have
+Form-Associated Custom Elements solves one of the problems that `is` would have 
 solved, namely, allowing your web component to participate in native web forms.
 
 ```js
@@ -152,13 +161,13 @@ class XCheckbox extends HTMLElement {
 customElements.define('x-checkbox', XCheckbox);
 ```
 
-So what does this give us? Well, right off the bat, that one static class
-boolean adds a number of form-related behaviours to our otherwise plain
-element. The `name`, `form`, and `disabled` attributes now work the same as
-native `<input>` elements, and the presence of the `readonly` attribute will 
-prevent the browser from trying to validate your field, although you're still 
+So what does this give us? Well, right off the bat, that one static class 
+boolean adds a number of form-related behaviours to our otherwise plain element. 
+The `name`, `form`, and `disabled` attributes now work the same as native 
+`<input>` elements, and the presence of the `readonly` attribute will prevent 
+the browser from trying to validate your field, although you're still 
 responsible to make the control *actually* non-editable. Naming your FACE and 
-specifying a form (by child composition or via `form` attr) adds it to the 
+specifying a form (by child composition or via `form` attribute) adds it to the 
 form's [`HTMLFormControlsCollection`][HTMLFormControlsCollection], as well, if 
 the element or it's containing `<formset>` has the `disabled` attribute, it will 
 gain the CSS state `:disabled`.
@@ -198,52 +207,105 @@ the future, but for now it contains three parts:
 3. Accessibility-related properties
 
 You hook your control's custom implementation into it's associated form with 
-`ElementInternals`' form properties. Let's add a `checked` value to our custom 
-checkbox with `internals.setFormValue`:
+`ElementInternals`' form properties. Let's start by writing an accessor pair to 
+link our element's `checked` property to the corresponding HTML attribute:
+
+```js
+get checked() { return this.hasAttribute('checked'); }
+set checked(x) { this.toggleAttribute('checked', x); }
+```
+
+Then, we'll store an `ElementInternals` object on a private class field by 
+calling `attachInternals`:
 
 ```js
 #internals = this.attachInternals();
+```
 
-get checked() { return this.hasAttribute('checked'); }
-set checked(x) {
-  this.toggleAttribute('checked', x);
-  this.#internals.getFormValue(x);
+Built-in checkboxes set their value DOM property to either the `value` 
+attribute's value or the string `on`, so let's do that too:
+
+```js
+get value() { this.getAttribute('value') ?? 'on'; }
+set value(v) { this.setAttribute('value', v); }
+```
+
+We'll also create a highly polished aesthetic experience in `connectedCallback` 
+and set up automatic re-renders in `attributeChangedCallback`. 
+```js
+attributeChangedCallback(_, __, value) {
+  this.checked = value != null;
+  this.connectedCallback();
+}
+
+connectedCallback() {
+  this.#container.textContent = this.checked ? '✅' : '❌';
+  this.#internals.setFormValue(this.checked ? this.value : null);
 }
 ```
 
+That `setFormValue` call is the secret sauce of `ElementInternals`. Calling it 
+with a non-nullish value adds our control's value to the form's `FormData` 
+object, whereas calling it with `null` removes the value.
+
+
 ## Simple Checkbox Example
 
-<form id="form">
+<form id="form" method="post">
   <fieldset id="set" disabled>
     <legend>This fieldset controls <code>x-checkbox</code></legend>
-    <label for="xcheck">Check?</label>
-    <x-checkbox id="xcheck" name="checkit"></x-checkbox>
+    <label for="xcheck">XCheckbox value</label>
+    <x-checkbox id="xcheck"
+                name="checkit"
+                value="custom element checked"></x-checkbox>
+    <label for="native-check">Native checkbox value</label>
+    <input id="native-check"
+           name="native"
+           type="checkbox"
+           value="native checkbox checked">
+    <label for="submit">Submit to display form state</label>
+    <button id="submit" type="submit" form="form">Submit</button>
   </fieldset>
 </form>
 
 <fieldset form="form">
-  <legend>Submit to print form state</legend>
-  <input id="toggle"
-         type="checkbox"
-         checked
-         onchange="set.disabled=!set.disabled">
-  <label for="toggle">Toggle fieldset's <code>disabled</code> state</label>
-  <button type="submit" form="form">Submit</button>
+  <legend>Form's <code>xcheck</code> element</legend>
+  <label>Enter x-checkbox value
+    <input id="value"
+           name="valinput"
+           onchange="xcheck.value=this.value">
+  </label>
+  <label for="toggle">Toggle fieldset's <code>disabled</code> state
+    <input id="toggle"
+           type="checkbox"
+           checked
+           onchange="set.disabled=!set.disabled">
+   </label>
+  <label>Allow form to submit via HTTP
+    <input id="preventDefault"
+           type="checkbox">
+  </label>
 </fieldset>
+
 <output name="state" form="form">Awaiting submission...</output>
 
 <script type="module" src="{{ '/assets/x-checkbox.js' | url }}"></script>
 <script>
 form.addEventListener('submit', function(event) {
-  event.preventDefault();
-  this.elements.state.textContent =
-    `xcheck is ${
-      xcheck.checked ? 'checked' : 'unchecked'
-    } and ${
-      xcheck.matches(':disabled') ? 'disabled' : 'enabled'
-    }`;
+  if (!preventDefault.checked) event.preventDefault();
+  const { checkit } = this.elements
+  const { checked, value } = checkit;
+  const disabled = checkit.matches(':disabled');
+  const data = new FormData(this);
+  this.elements.state.innerHTML = `
+    <dl class="settings">${Array.from(data.entries()).map(([name, value]) => `
+      <dt>${name}</dt>
+      <dd>${value}</dd>`).join('')}
+      <dt><code>:disabled</code></dt>
+      <dd>${disabled}</dd>
+    </dl>`;
   });
-  
+set.disabled = toggle.checked;
 </script>
 
 [ace]: https://html.spec.whatwg.org/multipage/custom-elements.html#autonomous-custom-element

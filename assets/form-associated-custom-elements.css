@@ -1,0 +1,13 @@
+.settings {
+  display: grid;
+  grid-template-columns: max-content auto;
+  gap: .2em 1em;
+}
+
+#set {
+  display: grid;
+  grid-template-columns: max-content min-content;
+  align-items: center;
+  justify-items: start;
+  column-gap: 1em;
+}
