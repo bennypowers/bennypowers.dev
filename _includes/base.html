@@ -73,6 +73,12 @@
         href="{{ sheet.href | url }}">
   {% endfor %}
 
+  {% for script in scripts %}
+  <script {% if script.type -%}
+          type="{{ script.type }}"{%- endif -%}
+          src="{{ script.src }}"></script>
+  {% endfor %}
+
   <script type="module" src="{{ '/assets/components.min.js' | url }}"></script>
   <script type="module" src="{{ '/assets/main.js' | url }}"></script>{% if watch %}
   <style>
@@ -112,7 +118,7 @@
       </li>{% endfor %}
     </ul>
   </header>{% endif %}
-  {{ content | safe }}
+  {{ content | abbrs | safe }}
   <footer id="footer" class="screen-only">
     <small id="legal">© {{ (datePublished or page.date) | formatDate(year='numeric') }} Benny Powers.</small>
   </footer>

@@ -33,6 +33,15 @@ module.exports = function(eleventyConfig) {
   eleventyConfig.addPlugin(EleventyPluginSyntaxhighlight);
   eleventyConfig.addPlugin(EleventyPluginDirectoryOutput);
 
+  eleventyConfig.addFilter('abbrs', function(content) {
+    let replaced = content;
+    for (const { name, title } of this.ctx.abbrs ?? []) {
+      if (name && title)
+        replaced = replaced.replaceAll(name, `<abbr title="${title}">${name}</abbr>`)
+    }
+    return replaced;
+  });
+
   eleventyConfig.addFilter('formatDate', function(d, opts) {
     if (d instanceof Date) {
       return new Intl.DateTimeFormat('en-US', opts).format(d);
