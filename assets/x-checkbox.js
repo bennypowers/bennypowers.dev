@@ -10,6 +10,8 @@ class XCheckbox extends HTMLElement {
 
   #internals = this.attachInternals();
 
+  #disabled = this.matches(':disabled');
+
   get #container() { return this.shadowRoot.querySelector('span'); }
 
   get checked() { return this.hasAttribute('checked'); }
@@ -40,14 +42,33 @@ class XCheckbox extends HTMLElement {
   connectedCallback() {
     this.#internals.setFormValue(this.checked ? this.value : null);
     this.#container.textContent = this.checked ? '✅' : '❌';
-    this.#internals.ariaChecked = String(this.checked);
+    if ('ariaChecked' in ElementInternals.prototype)
+      this.#internals.ariaChecked = String(this.checked);
+    else
+      this.setAttribute('aria-checked', String(this.checked));
+  }
+
+  /**
+   * @param {typeof XCheckbox['observedAttributes'][number]} name
+   * @param {string} _old
+   * @param {string} value
+   */
+  attributeChangedCallback(name, _old, value) {
+    switch (name) {
+      case 'checked': this.checked = value != null; break;
+      case 'value': if (value !== this.value) this.value = value; break;
+      case 'required':
+        if (value == null || this.checked)
+          this.#internals.setValidity({})
+        else
+          this.#internals.setValidity({valueMissing: true}, value || 'Must check this box', this.#internals.form);
+    }
+    this.connectedCallback();
   }
 
   formAssociatedCallback(form) {
     console.log('formAssociatedCallback', form);
   }
-
-  #disabled = this.matches(':disabled');
 
   /**
    * @param {boolean} state
@@ -63,24 +84,6 @@ class XCheckbox extends HTMLElement {
 
   formResetCallback(...args) {
     console.log('formResetCallback', ...args);
-  }
-
-  /**
-   * @param {typeof XCheckbox['observedAttributes'][number]} name
-   * @param {string} _old
-   * @param {string} value
-   */
-  attributeChangedCallback(name, _old, value) {
-    switch (name) {
-      case 'checked': this.checked = value != null; break;
-      case 'value': this.value = value; break;
-      case 'required':
-        if (value == null || this.checked)
-          this.#internals.setValidity({})
-        else
-          this.#internals.setValidity({valueMissing: true}, value || 'Must check this box', this.#internals.form);
-    }
-    this.connectedCallback();
   }
 
   #onClick() {

@@ -40,10 +40,10 @@ module.exports = function(eleventyConfig) {
     for (const { name, title } of this.ctx.abbrs ?? []) {
       if (name && title)
         replaced = replaced.replaceAll(name, `<abbr title="${title}">${name}</abbr>`)
-         .replace(
           // shitty workaround for a shitty problem
-          `<a href="https://developer.mozilla.org/en-US/docs/Web/Accessibility/<abbr title="Accessible Rich Internet Applications">ARIA</abbr>/"><abbr title="Accessible Rich Internet Applications">ARIA</abbr></a>`,
-          `<a href="https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/"><abbr title="Accessible Rich Internet Applications">ARIA</abbr></a>`)
+         .replaceAll(
+          `<a href="https://developer.mozilla.org/en-US/docs/Web/Accessibility/<abbr title="Accessible Rich Internet Applications">ARIA</abbr>`,
+          `<a href="https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/`);
     }
     return replaced;
   });

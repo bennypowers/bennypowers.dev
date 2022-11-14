@@ -1,6 +1,7 @@
 ---
 title: Form-Associated Custom Elements
-published: false
+published: true
+datePublished: 2022-11-14
 description: |
   Form-Associated Custom Elements are a new web standard by allow web component 
   authors to build accessible custom interactive form controls like buttons, 
@@ -13,8 +14,6 @@ tldr: |
   Use the new <em>form-associated custom elements</em> and 
   <em><code>ElementInternals</code></em> standards to create accessible custom 
   elements which behave like native HTML form controls.
-
-datePublished: 2022-11-15
 scripts:
   - src: https://unpkg.com/element-internals-polyfill
     type: module
@@ -353,18 +352,21 @@ else
 ```
 
 We'll update our `connectedCallback` to render to the a11y tree as well as the 
-DOM:
+DOM. Like role reflection, we'll apply a workaround for Firefox:
 
 ```js
-this.#internals.ariaChecked = String(this.checked);
+if ('ariaChecked' in ElementInternals.prototype)
+  this.#internals.ariaChecked = String(this.checked);
+else
+  this.setAttribute('aria-checked', String(this.checked));
 ```
-
-## Simple Checkbox Example
 
 Putting it all together, our custom checkbox:
 - implements it's own bespoke UI
 - participates in HTML forms like a native input
 - is accessible to users of assistive technologies
+
+## Simple Checkbox Example
 
 ```html
 <form id="form">
@@ -431,6 +433,8 @@ form.addEventListener('submit', function(event) {
 set.disabled = toggle.checked;
 </script>
 
+Thoughts? Corrections? Comments? Let me know on [mastodon][sbpdi].
+
 [aom]: https://wicg.github.io/aom/explainer.html
 [aria]: https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/
 [elementinternals]: https://html.spec.whatwg.org/multipage/custom-elements.html#the-elementinternals-interface
@@ -440,4 +444,4 @@ set.disabled = toggle.checked;
 [ecma-private]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes/Private_class_fields
 [no-cbie]: https://b.webkit.org/show_bug.cgi?id=182671
 [open-web-advocacy]: https://open-web-advocacy.org/
-
+[sbpdi]: https://social.bennypowers.dev/i
