@@ -7,6 +7,7 @@ const TableOfContentsPlugin = require('eleventy-plugin-nesting-toc');
 const TimeToReadPlugin = require('eleventy-plugin-time-to-read');
 const EleventyPluginDirectoryOutput = require('@11ty/eleventy-plugin-directory-output');
 const EleventyPluginSyntaxhighlight = require('@11ty/eleventy-plugin-syntaxhighlight');
+const { EleventyRenderPlugin } = require('@11ty/eleventy');
 
 const isWatching = () =>
   process.argv.includes('--watch') || process.argv.includes('--serve')
@@ -32,12 +33,17 @@ module.exports = function(eleventyConfig) {
   eleventyConfig.addPlugin(TimeToReadPlugin);
   eleventyConfig.addPlugin(EleventyPluginSyntaxhighlight);
   eleventyConfig.addPlugin(EleventyPluginDirectoryOutput);
+  eleventyConfig.addPlugin(EleventyRenderPlugin);
 
   eleventyConfig.addFilter('abbrs', function(content) {
     let replaced = content;
     for (const { name, title } of this.ctx.abbrs ?? []) {
       if (name && title)
         replaced = replaced.replaceAll(name, `<abbr title="${title}">${name}</abbr>`)
+         .replace(
+          // shitty workaround for a shitty problem
+          `<a href="https://developer.mozilla.org/en-US/docs/Web/Accessibility/<abbr title="Accessible Rich Internet Applications">ARIA</abbr>/"><abbr title="Accessible Rich Internet Applications">ARIA</abbr></a>`,
+          `<a href="https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/"><abbr title="Accessible Rich Internet Applications">ARIA</abbr></a>`)
     }
     return replaced;
   });

@@ -6,14 +6,20 @@ stylesheets:
 {% if watch or published %}
 <aside id="side-menu">
   <div>
-    <dl>
+    <dl id="post-stats">
       <dt>⏲️ Time to read</dt>
       <dd>~ {{ content | timeToRead }}</dd>
       <dt>🌅 Published</dt>
       <dd><time datetime="{{ datePublished }}">{{ datePublished | formatDate(month='short', day='numeric', year='numeric') }}</time></dd>
       <dt>✏️ Last Touched</dt>
       <dd><time datetime="{{ date }}">{{ page.date | formatDate(month='short', day='numeric', year='numeric') }}</time></dd>
-    </dl>
+    </dl>{% if audience or tldr %}
+    <dl id="post-summaries">{% if audience %}
+      <dt>👯 Audience</dt>
+      <dd>{{ audience | safe }}</dd>{% endif %}{% if tldr %}
+      <dt>🙈 tl;dr:</dt>
+      <dd>{{ tldr | safe }}</dd>{% endif %}
+    </dl>{% endif %}
     <h2>Contents</h2>
     {{ content | toc | safe }}
     <h2>Tags</h2>

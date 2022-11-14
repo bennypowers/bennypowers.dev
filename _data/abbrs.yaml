@@ -1,0 +1,14 @@
+- name: OOP
+  title: object-oriented programming
+- name: SPA
+  title: single-page application
+- name: UX
+  title: user experience
+- name: tl;dr
+  title: too long; didn't read
+- name: a11y
+  title: accessibility
+- name: ARIA
+  title: Accessible Rich Internet Applications
+- name: AOM
+  title: Accessibility object model

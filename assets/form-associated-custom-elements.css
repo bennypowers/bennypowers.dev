@@ -11,3 +11,11 @@
   justify-items: start;
   column-gap: 1em;
 }
+
+fieldset[form=form] label {
+  display: block;
+}
+
+output {
+  font-family: var(--fixed-font);
+}

@@ -31,14 +31,20 @@ body {
   top: 50px;
 }
 
-#side-menu dl {
+#post-stats {
   display: grid;
   grid-template-columns: max-content 1fr;
   column-gap: 1em;
+  margin-block-end: 0;
 }
 
-#side-menu dd {
+#post-stats dd {
   justify-self: end;
+  margin: 0;
+}
+
+#post-summaries {
+  margin-block-start: 0;
 }
 
 #side-menu h2 {

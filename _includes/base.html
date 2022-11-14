@@ -76,7 +76,7 @@
   {% for script in scripts %}
   <script {% if script.type -%}
           type="{{ script.type }}"{%- endif -%}
-          src="{{ script.src }}"></script>
+          src="{{ script.src | url }}"></script>
   {% endfor %}
 
   <script type="module" src="{{ '/assets/components.min.js' | url }}"></script>

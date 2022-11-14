@@ -36,6 +36,10 @@ class XCheckbox extends HTMLElement {
     console.log('formAssociatedCallback', form);
   }
 
+  formDisabledCallback(state) {
+    console.log('formDisabledCallback', state);
+  }
+
   formStateRestoreCallback(states) {
     console.log('formStateRestoreCallback', states);
   }
@@ -45,12 +49,20 @@ class XCheckbox extends HTMLElement {
   }
 
   /**
-   * @param {string} _name
+   * @param {typeof XCheckbox['observedAttributes'][number]} name
    * @param {string} _old
    * @param {string} value
    */
-  attributeChangedCallback(_name, _old, value) {
-    this.checked = value != null;
+  attributeChangedCallback(name, _old, value) {
+    switch (name) {
+      case 'checked': this.checked = value != null; break;
+      case 'value': this.value = value; break;
+      case 'required':
+        if (value == null || this.checked)
+          this.#internals.setValidity({})
+        else
+          this.#internals.setValidity({valueMissing: true}, value || 'Must check this box', this.#internals.form);
+    }
     this.connectedCallback();
   }
 

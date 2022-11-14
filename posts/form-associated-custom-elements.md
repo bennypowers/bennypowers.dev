@@ -6,9 +6,19 @@ description: |
   authors to build accessible custom interactive form controls like buttons, 
   inputs, checkboxes, that function just like browser-native inputs. Review the 
   spec and build a simple checkbox component in this short tutorial.
+audience: |
+  Web developers already familiar with the web components specs like custom 
+  elements and shadow DOM.
+tldr: |
+  Use the new <em>form-associated custom elements</em> and 
+  <em><code>ElementInternals</code></em> standards to create accessible custom 
+  elements which behave like native HTML form controls.
+
 datePublished: 2022-11-15
 scripts:
   - src: https://unpkg.com/element-internals-polyfill
+    type: module
+  - src: /assets/x-checkbox.js
     type: module
 stylesheets:
   - href: /assets/form-associated-custom-elements.css
@@ -17,10 +27,6 @@ abbrs:
     title: form-associated custom element
   - name: CBIE
     title: customized built in element
-  - name: OOP
-    title: object-oriented programming
-  - name: SPA
-    title: single-page application
 tags:
   - web components
   - face
@@ -161,6 +167,8 @@ class XCheckbox extends HTMLElement {
 customElements.define('x-checkbox', XCheckbox);
 ```
 
+### A Free Lunch
+
 So what does this give us? Well, right off the bat, that one static class 
 boolean adds a number of form-related behaviours to our otherwise plain element. 
 The `name`, `form`, and `disabled` attributes now work the same as native 
@@ -168,9 +176,9 @@ The `name`, `form`, and `disabled` attributes now work the same as native
 the browser from trying to validate your field, although you're still 
 responsible to make the control *actually* non-editable. Naming your FACE and 
 specifying a form (by child composition or via `form` attribute) adds it to the 
-form's [`HTMLFormControlsCollection`][HTMLFormControlsCollection], as well, if 
-the element or it's containing `<formset>` has the `disabled` attribute, it will 
-gain the CSS state `:disabled`.
+form's [`HTMLFormControlsCollection`][form-controls], as well, if the element or 
+it's containing `<formset>` has the `disabled` attribute, it will gain the CSS 
+state `:disabled`.
 
 ```html
 <form>
@@ -188,38 +196,32 @@ containing fieldset, and the form submits with its value on `checkit`. Removing
 `disabled` from the fieldset also unsets it from the element, without the 
 element author needing to apply any extra code.
 
+We also get some new lifecycle callbacks:
+- `formAssociatedCallback(form: HTMLFormElement)` runs when our element is 
+  associated with a `<form>`, either by being it's child or by setting the 
+  element's `form` attribute to the id of the form.
+- `formDisabledCallback(state: boolean)` runs when the element's `disabled` 
+  state changes, either because it or it's containing fieldset's `disabled` 
+  attribute changed.
+- `formResetCallback()` runs when the element's associated form has it's 
+  `reset()` method called. You can use this e.g. to reset to a default value.
+- `formStateRestoreCallback(reason: 'autocomplete'|'restore')` runs when the 
+  browser autofills the form. It takes a single argument of type 
+  `'autocomplete'|'restore'`, depending on whether the browser called it because 
+  of an autocomplete or a navigation.
+
 All of that comes for free, even before implementing any actual custom control 
-behaviour. FACE comes along with another new standard, 
-[`ElementInternals`][ElementInternals], which provides a standard place to 
-implement things like form control validation and accessibility.
+behaviour. So let's add in the actual checkbox stuff now, just like we would 
+have done before the new standards.
 
-## ElementInternals
+### Customizing the UI
 
-`HTMLElement` get a new standard method called `attachInternals()` which returns 
-an `ElementInternals` object. This method may only be called on autonomous 
-custom elements and will throw if called on built-ins, customized or otherwise. 
-`ElementInternals` is designed as a catch-all bag of properties and methods for 
-working with custom elements. We can expect expansions to its capabilities in 
-the future, but for now it contains three parts:
-
-1. A reference to the element's shadow root, if it exists
-2. Form-related properties
-3. Accessibility-related properties
-
-You hook your control's custom implementation into it's associated form with 
-`ElementInternals`' form properties. Let's start by writing an accessor pair to 
-link our element's `checked` property to the corresponding HTML attribute:
+Let's start by writing an accessor pair to link our element's `checked` property 
+to the corresponding HTML attribute:
 
 ```js
 get checked() { return this.hasAttribute('checked'); }
 set checked(x) { this.toggleAttribute('checked', x); }
-```
-
-Then, we'll store an `ElementInternals` object on a private class field by 
-calling `attachInternals`:
-
-```js
-#internals = this.attachInternals();
 ```
 
 Built-in checkboxes set their value DOM property to either the `value` 
@@ -230,29 +232,89 @@ get value() { this.getAttribute('value') ?? 'on'; }
 set value(v) { this.setAttribute('value', v); }
 ```
 
-We'll also create a highly polished aesthetic experience in `connectedCallback` 
-and set up automatic re-renders in `attributeChangedCallback`. 
-```js
-attributeChangedCallback(_, __, value) {
-  this.checked = value != null;
-  this.connectedCallback();
-}
+We'll add `checked` and `value` to our `observedAttributes` list, then call our 
+`connectedCallback` (providing a highly *aesthetic* UX), in `attributeChangedCallback`.
 
+```js
 connectedCallback() {
   this.#container.textContent = this.checked ? '✅' : '❌';
-  this.#internals.setFormValue(this.checked ? this.value : null);
+}
+
+attributeChangedCallback(name, _, value) {
+  switch (name) {
+    case 'checked': this.checked = value != null; break;
+    case 'value': this.value = value; break;
+  }
+  this.connectedCallback();
 }
 ```
 
-That `setFormValue` call is the secret sauce of `ElementInternals`. Calling it 
-with a non-nullish value adds our control's value to the form's `FormData` 
+Now that our checkbox looks and feels like a checkbox, the last thing to do is 
+to hook into the browser's HTML form lifecycle with another new standard, 
+[`ElementInternals`][elementinternals].
+
+### Form Interactions
+
+Along with FACE, `ElementInternals` gives custom element authors new 
+capabilities. Specifically, element internals are a standard place to implement 
+things like form control validation and accessibility. `ElementInternals` is 
+designed as a catch-all bag of properties and methods for working with custom 
+elements. We can expect expansions to its capabilities in the future, but for 
+now it contains three parts:
+
+1. A reference to the element's shadow root, if it exists
+2. Form-related properties
+3. Accessibility-related properties
+
+`HTMLElement` get a new standard method called `attachInternals()` which returns 
+an `ElementInternals` object. This method may only be called on autonomous 
+custom elements and will throw if called on built-ins, customized or otherwise. 
+You hook your control's custom implementation into it's associated form with 
+`ElementInternals`' form properties.
+
+Let's create our `ElementInternals` object by calling
+`attachInternals`, and store it on a [private class field][ecma-private].
+
+```js
+#internals = this.attachInternals();
+```
+
+Then, in our `connectedCallback`, we'll apply the checkbox' value to it's 
+`FormData` entry:
+
+```js
+this.#internals.setFormValue(this.checked ? this.value : null);
+```
+
+That `setFormValue` call is part of the `ElementInternals` secret sauce. Calling 
+it with a non-nullish value adds our control's value to the form's `FormData` 
 object, whereas calling it with `null` removes the value.
 
+We can also implement form validation in our custom controls with the following 
+internals properties and methods:
+- `willValidate(): boolean` checks whether the element will be validated when 
+  the form submits
+- `setValidity()` sets the element's form validity state
+- `checkValidity()` and `reportValidity()` work just like their native 
+  counterparts.
+
+Custom validations are a big topic so let's save their more in-depth explanation 
+for another day.
+
+### Accessibility
+The other major feature of `ElementInternals` are it's a11y-related properties 
+`role` and `aria*`. Part of the [AOM][aom], we can now set [ARIA][aria] 
+properties imperatively without needing to set `aria-` attributes. These are 
+critical capabilities which previously only had partial workarounds.
 
 ## Simple Checkbox Example
 
-<form id="form" method="post">
-  <fieldset id="set" disabled>
+Putting it all together, our custom checkbox:
+- implements it's own bespoke UI
+- 
+```html
+<form id="form">
+  <fieldset id="set">
     <legend>This fieldset controls <code>x-checkbox</code></legend>
     <label for="xcheck">XCheckbox value</label>
     <x-checkbox id="xcheck"
@@ -264,35 +326,43 @@ object, whereas calling it with `null` removes the value.
            type="checkbox"
            value="native checkbox checked">
     <label for="submit">Submit to display form state</label>
-    <button id="submit" type="submit" form="form">Submit</button>
+    <button id="submit">Submit</button>
+  </fieldset>
+</form>
+```
+
+<form id="form">
+  <fieldset id="set">
+    <legend>This fieldset controls <code>x-checkbox</code></legend>
+    <label for="xcheck">XCheckbox value</label>
+    <x-checkbox id="xcheck"
+                name="checkit"
+                value="custom element checked"></x-checkbox>
+    <label for="native-check">Native checkbox value</label>
+    <input id="native-check"
+           name="native"
+           type="checkbox"
+           value="native checkbox checked">
+    <label for="submit">Submit to display form state</label>
+    <button id="submit">Submit</button>
   </fieldset>
 </form>
 
 <fieldset form="form">
   <legend>Form's <code>xcheck</code> element</legend>
-  <label>Enter x-checkbox value
-    <input id="value"
-           name="valinput"
-           onchange="xcheck.value=this.value">
-  </label>
-  <label for="toggle">Toggle fieldset's <code>disabled</code> state
+  <label>Toggle fieldset's <code>disabled</code> state
     <input id="toggle"
            type="checkbox"
-           checked
            onchange="set.disabled=!set.disabled">
-   </label>
-  <label>Allow form to submit via HTTP
-    <input id="preventDefault"
-           type="checkbox">
+  </label>
+  <label>Form data
+    <output name="state" form="form">Awaiting submission...</output>
   </label>
 </fieldset>
 
-<output name="state" form="form">Awaiting submission...</output>
-
-<script type="module" src="{{ '/assets/x-checkbox.js' | url }}"></script>
 <script>
 form.addEventListener('submit', function(event) {
-  if (!preventDefault.checked) event.preventDefault();
+  event.preventDefault();
   const { checkit } = this.elements
   const { checked, value } = checkit;
   const disabled = checkit.matches(':disabled');
@@ -301,16 +371,18 @@ form.addEventListener('submit', function(event) {
     <dl class="settings">${Array.from(data.entries()).map(([name, value]) => `
       <dt>${name}</dt>
       <dd>${value}</dd>`).join('')}
-      <dt><code>:disabled</code></dt>
-      <dd>${disabled}</dd>
     </dl>`;
   });
 set.disabled = toggle.checked;
 </script>
 
+[aom]: https://wicg.github.io/aom/explainer.html
+[aria]: https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/
+[elementinternals]: https://html.spec.whatwg.org/multipage/custom-elements.html#the-elementinternals-interface
+[form-controls]: https://developer.mozilla.org/en-US/docs/Web/API/HTMLFormElement
 [ace]: https://html.spec.whatwg.org/multipage/custom-elements.html#autonomous-custom-element
 [cbie]: https://html.spec.whatwg.org/multipage/custom-elements.html#customized-built-in-element
+[ecma-private]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes/Private_class_fields
 [no-cbie]: https://b.webkit.org/show_bug.cgi?id=182671
 [open-web-advocacy]: https://open-web-advocacy.org/
-[HTMLFormControlsCollection]: https://developer.mozilla.org/en-US/docs/Web/API/HTMLFormElement
-[ElementInternals]: https://html.spec.whatwg.org/multipage/custom-elements.html#the-elementinternals-interface
+
