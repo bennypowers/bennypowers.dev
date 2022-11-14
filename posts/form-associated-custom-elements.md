@@ -444,4 +444,4 @@ Thoughts? Corrections? Comments? Let me know on [mastodon][sbpdi].
 [ecma-private]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes/Private_class_fields
 [no-cbie]: https://b.webkit.org/show_bug.cgi?id=182671
 [open-web-advocacy]: https://open-web-advocacy.org/
-[sbpdi]: https://social.bennypowers.dev/i
+[sbpdi]: https://social.bennypowers.dev/@i
