@@ -126,7 +126,9 @@ The most versatile workaround for autonomous custom controls involves slotting
 native controls into the custom element.
 
 ```html
-<x-checkbox><input type="checkbox"></x-checkbox>
+<x-checkbox>
+  <input type="checkbox">
+</x-checkbox>
 ```
 
 The advantages to this approach include `<noscript>` support and hassle-free 
@@ -139,7 +141,7 @@ workarounds-for-the-workaround.
 ### Manually Submitting Forms
 
 Developers working on SPAs might opt instead to put their native inputs in the 
-shadow DOM and use javascript to submit the form data to a JSON API. Here's a 
+shadow DOM and use JavaScript to submit the form data to a JSON API. Here's a 
 simple example of how that might work:
 
 ```js
@@ -156,8 +158,12 @@ developers, but ties the controls to JavaScript.
 
 ## Creating a FACE
 
-Form-Associated Custom Elements solves one of the problems that `is` would have 
-solved, namely, allowing your web component to participate in native web forms.
+Form-Associated Custom Elements solves one of the problems that `is` and 
+customized built-in elements [would have solved](#how-we-got-here), namely, 
+allowing your web component to participate in native web forms.
+
+We create a FACE by setting the static `formAssociated` boolean flag and 
+registering the custom element.
 
 ```js
 class XCheckbox extends HTMLElement {
@@ -249,6 +255,35 @@ attributeChangedCallback(name, _, value) {
 }
 ```
 
+And last we'll add some keyboard and pointer interaction
+
+```js
+constructor() {
+  super();
+  this.addEventListener('click', this.#onClick);
+  this.addEventListener('keydown', this.#onKeydown);
+  this.attachShadow({ mode: 'open' })
+    .append(XCheckbox.template.cloneNode(true));
+}
+
+
+#onClick() {
+  this.#toggle();
+}
+
+#onKeydown(event) {
+  switch (event.key) {
+    case ' ':
+      event.preventDefault();
+      this.#toggle();
+  }
+}
+
+#toggle() {
+  this.checked = !this.checked;
+}
+```
+
 Now that our checkbox looks and feels like a checkbox, the last thing to do is 
 to hook into the browser's HTML form lifecycle with another new standard, 
 [`ElementInternals`][elementinternals].
@@ -302,16 +337,35 @@ Custom validations are a big topic so let's save their more in-depth explanation
 for another day.
 
 ### Accessibility
+
 The other major feature of `ElementInternals` are it's a11y-related properties 
 `role` and `aria*`. Part of the [AOM][aom], we can now set [ARIA][aria] 
 properties imperatively without needing to set `aria-` attributes. These are 
 critical capabilities which previously only had partial workarounds.
 
+Let's start by setting the `role` so that screen readers announce our element as a checkbutton. Note that as of this writing Firefox (107) has not yet implemented role reflection, so we'll do some feature detection
+
+```js
+if ('role' in ElementInternals.prototype)
+  this.#internals.role = 'checkbox';
+else
+  this.setAttribute('role', 'checkbox');
+```
+
+We'll update our `connectedCallback` to render to the a11y tree as well as the 
+DOM:
+
+```js
+this.#internals.ariaChecked = String(this.checked);
+```
+
 ## Simple Checkbox Example
 
 Putting it all together, our custom checkbox:
 - implements it's own bespoke UI
-- 
+- participates in HTML forms like a native input
+- is accessible to users of assistive technologies
+
 ```html
 <form id="form">
   <fieldset id="set">
@@ -343,6 +397,10 @@ Putting it all together, our custom checkbox:
            name="native"
            type="checkbox"
            value="native checkbox checked">
+    <label for="formdata">Form data</label>
+    <output id="formdata"
+            name="state"
+            form="form">Awaiting submission...</output>
     <label for="submit">Submit to display form state</label>
     <button id="submit">Submit</button>
   </fieldset>
@@ -354,9 +412,6 @@ Putting it all together, our custom checkbox:
     <input id="toggle"
            type="checkbox"
            onchange="set.disabled=!set.disabled">
-  </label>
-  <label>Form data
-    <output name="state" form="form">Awaiting submission...</output>
   </label>
 </fieldset>
 

@@ -1,7 +1,12 @@
 class XCheckbox extends HTMLElement {
   static formAssociated = true;
 
-  static observedAttributes = ['checked'];
+  static observedAttributes = ['checked', 'value'];
+
+  static template = document.createElement('template');
+  static {
+    this.template.innerHTML = `<span tabindex="0" aria-hidden="true"></span>`;
+  }
 
   #internals = this.attachInternals();
 
@@ -14,9 +19,14 @@ class XCheckbox extends HTMLElement {
 
   constructor() {
     super();
-    this.attachShadow({ mode: 'open' }).innerHTML = `
-      <span tabindex="0"></span>`;
+    if ('role' in ElementInternals.prototype)
+      this.#internals.role = 'checkbox';
+    else // FF 107
+      this.setAttribute('role', 'checkbox');
     this.addEventListener('click', this.#onClick);
+    this.addEventListener('keydown', this.#onKeydown);
+    this.attachShadow({ mode: 'open' })
+      .append(XCheckbox.template.content.cloneNode(true));
     const sheet = new CSSStyleSheet();
     sheet.replaceSync(`
       :host(:disabled) span {
@@ -30,13 +40,20 @@ class XCheckbox extends HTMLElement {
   connectedCallback() {
     this.#internals.setFormValue(this.checked ? this.value : null);
     this.#container.textContent = this.checked ? '✅' : '❌';
+    this.#internals.ariaChecked = String(this.checked);
   }
 
   formAssociatedCallback(form) {
     console.log('formAssociatedCallback', form);
   }
 
+  #disabled = this.matches(':disabled');
+
+  /**
+   * @param {boolean} state
+   */
   formDisabledCallback(state) {
+    this.#disabled = state;
     console.log('formDisabledCallback', state);
   }
 
@@ -67,8 +84,23 @@ class XCheckbox extends HTMLElement {
   }
 
   #onClick() {
-    if (!this.matches(':disabled'))
-      this.checked = !this.checked;
+    if (!this.#disabled)
+      this.#toggle();
+  }
+
+  /**
+   * @param {KeyboardEvent} event
+   */
+  #onKeydown(event) {
+    switch (event.key) {
+      case ' ':
+        event.preventDefault();
+        this.#toggle();
+    }
+  }
+
+  #toggle() {
+    this.checked = !this.checked;
   }
 }
 
