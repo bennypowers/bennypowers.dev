@@ -36,9 +36,9 @@ tags:
   - lit
 ---
 
-Form-Associated Custom Elements are a new web standard by which to build custom
-interactive form controls like buttons, inputs, checkboxes, etc. They present a
-path forward for design-systems and other custom element authors to more deeply
+Form-Associated Custom Elements are a new web standard by which to build custom 
+interactive form controls like buttons, inputs, checkboxes, etc. They present a 
+path forward for design-systems and other custom element authors to more deeply 
 integrate with the web platform. In this post, we'll build a simple FACE to get 
 a feel for the APIs.
 
