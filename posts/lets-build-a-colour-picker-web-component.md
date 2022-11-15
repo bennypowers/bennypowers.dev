@@ -1,8 +1,14 @@
 ---
 title: Let's Build a Colour Picker Web Component
+description: |
+  Build and accessible, web-native colour picker component that works in any 
+  framework with the web components APIs.
 published: true
 datePublished: 2021-06-09
 coverImage: https://dev-to-uploads.s3.amazonaws.com/uploads/articles/01rg22y3j3s2bw61t8w9.png
+coverImageAlt: |
+  screenshot of JavaScript code for colour picker element with demo of element 
+  running
 tags:
   - web components
   - html
@@ -14,54 +20,22 @@ tags:
 Let's build a colour picker web component using HTML, CSS, and a little bit of
 JavaScript. In the end, we'll have a custom element that:
 
-- Displays a colour spectrum using [CSS
-  Gradients](https://developer.mozilla.org/en-US/docs/Web/CSS/gradient/linear-gradient())
-- Tracks the mouse position using a [Reactive
-  Controller](https://lit.dev/docs/composition/controllers/)
-- Updates it's [Shadow
-  DOM](https://developer.mozilla.org/en-US/docs/Web/Web_Components/Using_shadow_DOM)
-  via a small class mixin
-- Fires a [Custom
-  Event](https://developer.mozilla.org/en-US/docs/Web/API/CustomEvent/CustomEvent)
-  when the user clicks or drags
-
-## Contents
-
-1. [Prerequisites](#prerequisites)
-1. [Setting Up](#setting-up)
-1. [Defining our Element](#defining-our-element)
-1. [Styling our Element](#styling-our-element)
-  - [Shadow CSS Q-and-A](#shadow-css-q-and-a)
-  - [Color Picker Styles](#color-picker-styles)
-1. [Tracking the Mouse with a Reactive Controller](#tracking-the-mouse-with-a-reactive-controller)
-  - [Reusable, Composable Controllers](#reusable-composable-controllers)
-  - [Adding Controller Support to our Element](#adding-controller-support-to-our-element)
-  - [Hooking up the Cursor](#hooking-up-the-cursor)
-1. [Firing Events](#firing-events)
-1. [Accessibility](#accessibility)
-1. [Using our Colour Picker](#using-our-colour-picker)
-1. [Next Steps](#next-steps)
-1. [Footnotes](#footnotes)
+- Displays a colour spectrum using [CSS Gradients][css-gradients]
+- Tracks the mouse position using a [Reactive Controller][reactive-controller]
+- Updates it's [Shadow DOM][shadow-dom] via a small class mixin
+- Fires a [Custom Event][custom-event] when the user clicks or drags
 
 ## Prerequisites
 
 To get the most out of this article, you should have a comfortable
 understanding of HTML, CSS, and JavaScript; including:
 
-- How to [load resources with
-  `<link>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/link)
-- Basic [CSS
-  syntax](https://developer.mozilla.org/en-US/docs/Learn/CSS/First_steps/Getting_started)
-- How to use the [DOM
-  API](https://developer.mozilla.org/en-US/docs/Web/API/Document_Object_Model)
-  to query for elements
-- [Object-oriented
-  programming](https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Objects/Object-oriented_JS)
-  for web developers and the [JavaScript `class`
-  keyword](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/class)
-- What a [JavaScript
-  module](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules)
-  is
+- How to [load resources with `<link>`][link-tag]
+- Basic [CSS syntax][css-syntax]
+- How to use the [DOM API][dom] to query for elements
+- [Object-oriented programming][oop] for web developers and the [JavaScript 
+  `class` keyword][es-class]
+- What a [JavaScript module][es-module] is
 
 You don't need to be an expert, but you should have the basics covered. You
 should also be familiar with the concept of component-based UI design and have
@@ -69,15 +43,14 @@ an idea of what a web component is. If you've ever written a component with one
 of the popular JS frameworks, you're good to go. To catch up on what web
 components are, check out my blog series:
 
-[Let's Build Web Components! Part 1: The
-Standards](../lets-build-web-components/part-1-the-standards/) %}
+[Let's Build Web Components! Part 1: The Standards][part-1]
 
 ## Setting Up
 
 Before we define our component, let's set up a project folder to work in and
 spin up a quick dev server to reload the page when we save a file. Paste the
-following script into a BASH terminal on a computer that has [nodejs and npm
-installed](https://nodejs.org/):
+following script into a BASH terminal on a computer that has [nodejs and 
+npm][node] installed:
 
 ```bash
 mkdir ~/color-picker
@@ -145,25 +118,25 @@ customElements.define('color-picker', ColorPicker);
 
 Let's take that file block-by-block.
 
-We start by declaring a `<template>` element to hold our element's HTML. We'll
-add a link to our component's [private CSS](#styling-our-component) and two
-nested `<div>` elements that we'll use later on to enhance our component. By
-using a `<template>`, we make sure the browser does the work of parsing our
-HTML only one time, when the page loads. From then on, we can create as many
-`<color-picker>` elements as we want, but each one will stamp a clone of the
-existing HTML, which is [much faster than parsing it again]().
+We start by declaring a `<template>` element to hold our element's HTML. We'll 
+add a link to our component's [private CSS](#styling-our-component) and two 
+nested `<div>` elements that we'll use later on to enhance our component. By 
+using a `<template>`, we make sure the browser does the work of parsing our HTML 
+only one time, when the page loads. From then on, we can create as many 
+`<color-picker>` elements as we want, but each one will stamp a clone of the 
+existing HTML, which is [much faster than parsing it again][template-perf].
 
-Next we declare our custom element class. In the constructor, we attach a
-[ShadowRoot](https://developer.mozilla.org/en-US/docs/Web/API/ShadowRoot) to
-our element, then stamp the contents of the template we created into it.
+Next we declare our custom element class. In the constructor, we attach a 
+[ShadowRoot][shadow-root] to our element, then stamp the contents of the 
+template we created into it.
 
-Last, we call `customElements.define()`, which assigns the HTML tag name
-`<color-picker>` to custom element class, and instructs the browser to upgrade
+Last, we call `customElements.define()`, which assigns the HTML tag name 
+`<color-picker>` to custom element class, and instructs the browser to upgrade 
 the `<color-picker>` elements already present in the document.
 
-If you save the file, the dev server will reload the page, but we still won't
-see any changes because our element's content is invisible. Let's change that
-by applying some good-old CSS.
+If you save the file, the dev server will reload the page, but we still won't 
+see any changes because our element's content is invisible. Let's change that by 
+applying some good-old CSS.
 
 ## Styling our Element
 
@@ -204,57 +177,54 @@ Open up `color-picker.css` and paste in the following.
 }
 ```
 
-We'll get into the details of our CSS rules shortly ([skip
-ahead](#color-picker-styles)). For now, save the file to see our changes on the
+We'll get into the details of our CSS rules shortly ([skip 
+ahead](#color-picker-styles)). For now, save the file to see our changes on the 
 page. That's more like it. Now our element looks like a colour picker!
 
 ### Shadow CSS Q-and-A
 
-If you're unfamiliar with web components, you might be asking yourself some
+If you're unfamiliar with web components, you might be asking yourself some 
 questions at this point:
 
 #### `:host`
 
 > What the heck is `:host`
 
-The [`:host` CSS
-selector](https://developer.mozilla.org/en-US/docs/Web/CSS/:host()) gets the
-element that hosts the root containing the stylesheet. If that doesn't make any
-sense to you, don't worry, we'll explain more shortly. For now, all you need to
-know is that in this context, `:host` is synonymous with the `color-picker`
-element itself.
+The [`:host` CSS selector][host-selector] gets the element that hosts the root 
+containing the stylesheet. If that doesn't make any sense to you, don't worry, 
+we'll explain more shortly. For now, all you need to know is that in this 
+context, `:host` is synonymous with the `color-picker` element itself.
 
 #### ID Selectors (e.g. `#loupe`)
 
 > ID selectors!? Aren't they a huge CSS no-no?
 
-In the [cascade](https://developer.mozilla.org/en-US/docs/Web/CSS/Specificity),
-ID selectors have an extremely high specificity, which means they'll override
-rules with a lower specificity like classes or element selectors. In
-traditional (global) CSS, this can very quickly lead to unintended
-consequences.
+In the [cascade](https://developer.mozilla.org/en-US/docs/Web/CSS/Specificity), 
+ID selectors have an extremely high specificity, which means they'll override 
+rules with a lower specificity like classes or element selectors. In traditional 
+(global) CSS, this can very quickly lead to unintended consequences.
 
 https://stackoverflow.com/questions/8279132/why-shouldnt-i-use-id-selectors-in-css
 
-Our stylesheet isn't global though, since we `<link>` to it from within a
-`ShadowRoot` instead of from the document, the styles are strongly scoped to
-that root. The browser itself enforces that scoping, not some JavaScript
-library. All that means the styles we define in `color-picker.css` can't 'leak
-out' and affect styles elsewhere on the page, so the selectors we use can be
-very simple. We could even replace that `#loupe` selector with a bare `div`
+Our stylesheet isn't global though, since we `<link>` to it from within a 
+`ShadowRoot` instead of from the document, the styles are strongly scoped to 
+that root. The browser itself enforces that scoping, not some JavaScript 
+library. All that means the styles we define in `color-picker.css` can't 'leak 
+out' and affect styles elsewhere on the page, so the selectors we use can be 
+very simple. We could even replace that `#loupe` selector with a bare `div` 
 selector and it would work just the same.
 
-The shadow root encapsulation also means that the element IDs we're using in
-our template HTML are private. Go ahead and try this in the browser console:
+The shadow root encapsulation also means that the element IDs we're using in our 
+template HTML are private. Go ahead and try this in the browser console:
 
 ```js
 document.getElementById('loupe');
 ```
 
-Without shadow DOM, we should see our `<div id="loupe"></div>` element in the
-console, but we don't. Shadow DOM puts us in complete<sup><a
-href="#inherited-styles">*</a></sup> control of our component's HTML and CSS,
-letting us put whatever HTML and CSS we want inside it without worrying about
+Without shadow DOM, we should see our `<div id="loupe"></div>` element in the 
+console, but we don't. Shadow DOM puts us in complete<sup><a 
+href="#inherited-styles">*</a></sup> control of our component's HTML and CSS, 
+letting us put whatever HTML and CSS we want inside it without worrying about 
 how they affect the rest of the page.
 
 #### CSS-in-JS, BEM, etc.
@@ -263,56 +233,50 @@ how they affect the rest of the page.
 > affect the page? Shouldn't we use BEM, or add JavaScript or a command-line
 > tool to transform those IDs into  unique random class names?
 
-Now that we've learned a little more about Shadow DOM works, we can answer that
-question for ourselves: The Shadow DOM (supported in all browsers) removes the
-need for complicated css-in-js tooling or class naming conventions like BEM. We
-can finally write simple, à la carte selectors in CSS, scoping our work to the
+Now that we've learned a little more about Shadow DOM works, we can answer that 
+question for ourselves: The Shadow DOM (supported in all browsers) removes the 
+need for complicated css-in-js tooling or class naming conventions like BEM. We 
+can finally write simple, à la carte selectors in CSS, scoping our work to the 
 task at hand.
 
 ### Color Picker Styles
 
-Equipped with our knowledge of the Shadow DOM, let's dive into our element's
+Equipped with our knowledge of the Shadow DOM, let's dive into our element's 
 styles.
 
-The business-end of our element's `:host` styles is a pair of
-`linear-gradient()` calls, one which fades from transparent to grey, the other
-which turns [360 degrees around the colour
-wheel](https://developer.mozilla.org/en-US/docs/Web/CSS/color_value/hsl()) in
-10% increments as it moves from the far left of our element to the far right.
-We also threw in a cross-hair cursor and some default dimensions for good
-measure.
+The business-end of our element's `:host` styles is a pair of 
+`linear-gradient()` calls, one which fades from transparent to grey, the other 
+which turns [360 degrees around the colour wheel][hsl] in 10% increments as it 
+moves from the far left of our element to the far right. We also threw in a 
+cross-hair cursor and some default dimensions for good measure.
 
-Our `#loupe` rule gives our colour-picking
-[loupe](https://www.wikiwand.com/en/Loupe) a pleasing circular shape, but -
-crucially - defines its background-color and position in terms of [CSS Custom
-Properties](https://developer.mozilla.org/en-US/docs/Web/CSS/Using_CSS_custom_properties)
-also called *CSS Variables*. This is going to come in handy in the next step
-when we use JavaScript to animate the loupe element. We also nod to the
-browser, letting it know that the `background` and `transform` properties are
-likely to change.
+Our `#loupe` rule gives our colour-picking [loupe][loupe] a pleasing circular 
+shape, but - crucially - defines its background-color and position in terms of 
+[CSS Custom Properties][css-vars] also called *CSS Variables*. This is going to 
+come in handy in the next step when we use JavaScript to animate the loupe 
+element. We also nod to the browser, letting it know that the `background` and 
+`transform` properties are likely to change.
 
 ## Tracking the Mouse with a Reactive Controller
 
-Every component needs HTML, CSS, and JavaScript to handle properties, events,
-and reactivity. We covered HTML and CSS with `<template>`, `ShadowRoot`, and
-`:host`. Now let's move on to reactivity, meaning to update our element's
-state-of-affairs in reaction to some input like user actions or changing
+Every component needs HTML, CSS, and JavaScript to handle properties, events, 
+and reactivity. We covered HTML and CSS with `<template>`, `ShadowRoot`, and 
+`:host`. Now let's move on to reactivity, meaning to update our element's 
+state-of-affairs in reaction to some input like user actions or changing 
 properties.
 
 ### Reusable, Composable Controllers
 
-Oftentimes when writing components, we come across a bit of logic or behaviour
-that repeats itself in multiple places. Things like handling user input, or
-asynchronously fetching data over the network can end up in most if not all of
-the components in a given project. Instead of copy-pasting snippets into our
+Oftentimes when writing components, we come across a bit of logic or behaviour 
+that repeats itself in multiple places. Things like handling user input, or 
+asynchronously fetching data over the network can end up in most if not all of 
+the components in a given project. Instead of copy-pasting snippets into our 
 element definitions, there are better ways to share code across elements.
 
-[JavaScript class
-mixins](https://justinfagnani.com/2015/12/21/real-mixins-with-javascript-classes/)
-are a time-tested way to share code between components. For example you might
-have a component which fetches a file based on it's `src` attribute. A
-`FetchSrcMixin` would let you write that code in one place, then reuse it
-anywhere.
+[JavaScript class mixins][js-mixins] are a time-tested way to share code between 
+components. For example you might have a component which fetches a file based on 
+it's `src` attribute. A `FetchSrcMixin` would let you write that code in one 
+place, then reuse it anywhere.
 
 ```js
 class JSONFetcher extends FetchSrcMixin(HTMLElement) {/*...*/}
@@ -323,19 +287,17 @@ class TextFetcher extends FetchSrcMixins(HTMLElement) {/*...*/}
 <text-fetcher src="othello.txt"></text-fetcher>
 ```
 
-But mixins have a limitation - they have an 'is-a-*' relationship to their
-element class. Adding a mixin to a class means that the result _is_ the
-combination of the base class and the mixin class. Since mixins are functions,
-we can compose them with [function
-composition](https://www.wikiwand.com/en/Function_composition), but if one of
-the composed mixins overrides a class member (e.g. field, method, accessor),
-there could be trouble.
+But mixins have a limitation - they have an 'is-a-*' relationship to their 
+element class. Adding a mixin to a class means that the result _is_ the 
+combination of the base class and the mixin class. Since mixins are functions, 
+we can compose them with [function composition][func-comp], but if one of the 
+composed mixins overrides a class member (e.g. field, method, accessor), there 
+could be trouble.
 
-To solve this problem, the [Lit](https://lit.dev) team recently released a new
-"composition primitive" called [Reactive
-Controllers](https://lit.dev/docs/composition/controllers/), which represent a
-'has-a-*' relationship. A controller is a JavaScript class that contains a
-reference to the host element, which must implement a certain set of methods
+To solve this problem, the [Lit][lit] team recently released a new "composition 
+primitive" called [Reactive Controllers][reactive-controller], which represent a 
+'has-a-*' relationship. A controller is a JavaScript class that contains a 
+reference to the host element, which must implement a certain set of methods 
 called the `ReactiveControllerHost` interface.
 
 In plain terms, that means you can write a controller class and add it to any
@@ -354,26 +316,22 @@ implement the `ReactiveControllerHost` interface.
 |             | Composable | Reusable | Stackable | Independent |
 | ----------- | ---------- | -------- | --------- | ----------- |
 | Mixins      | ✅         | ⚠️        | ❌        | ✅          |
-| Controllers | ✅         | ✅        | ✅        | ❌          |
+| Controllers | ✅         | ✅       | ✅        | ❌          |
 
-Unlike React, though, controllers can be made to work with components from
-different frameworks or custom element classes other than `LitElement`.
-Controllers can work with
-[React](https://www.npmjs.com/package/@lit-labs/react#user-content-usecontroller),
-[Angular](https://stackblitz.com/edit/angular-ivy-uuiqpj?file=src%2Fapp%2Fangular-controller-host.ts),
-[Vue](https://stackblitz.com/edit/vue-qniewc?file=src%2Fcomponents%2FHelloWorld.vue),
-[Haunted](), and others by virtue of some clever glue-code.
+Unlike React, though, controllers can be made to work with components from 
+different frameworks or custom element classes other than `LitElement`. 
+Controllers can work with [React][rc-react], [Angular][rc-ng], [Vue][rc-vue], 
+[Haunted][rc-haunted], and others by virtue of some clever glue-code.
 
-In my [Apollo Elements](https://next.apolloelements.dev) project, I wrote some
-reactive controllers that do GraphQL operations like
-[queries](https://next.apolloelements.dev/api/core/controllers/query/) and
-[mutations](https://next.apolloelements.dev/api/core/controllers/mutation/). I
-wanted to use those controllers in any custom element, so I decided to solve
-that problem with a class mixin called `ControllerHostMixin`. By applying it to
-an element's base class, it adds the bare-minimum required to host a reactive
-controller. If you apply it to a base class that already implements the
-`ReactiveControllerHost` interface, it defers to the superclass, so you could
-safely (if pointlessly) apply it to `LitElement`.
+In my [Apollo Elements][apollo-elements] project, I wrote some reactive 
+controllers that do GraphQL operations like [queries][apollo-queries] and 
+[mutations][apollo-mutations]. I wanted to use those controllers in any custom 
+element, so I decided to solve that problem with a class mixin called 
+`ControllerHostMixin`. By applying it to an element's base class, it adds the 
+bare-minimum required to host a reactive controller. If you apply it to a base 
+class that already implements the `ReactiveControllerHost` interface, it defers 
+to the superclass, so you could safely (if pointlessly) apply it to 
+`LitElement`.
 
 ## Adding Controller Support to our Element
 
@@ -457,26 +415,23 @@ export class MouseController {
 }
 ```
 
-Notice how this module has no imports of its own. Controllers don't have to
-bundle any dependencies, they can be as simple as a single class in a single
+Notice how this module has no imports of its own. Controllers don't have to 
+bundle any dependencies, they can be as simple as a single class in a single 
 module, like we have here. Notice also where we reference the `host` element:
 
-- in the `constructor` by calling `addController()` to register this as one of
+- in the `constructor` by calling `addController()` to register this as one of 
   the element's controllers
 - in `hostConnected` and `hostDisconnected` to run our setup and cleanup code
-- in our MouseEvent handlers, calling `host.requestUpdate()` to update the host
+- in our MouseEvent handlers, calling `host.requestUpdate()` to update the host 
   element
 
-That `host.requestUpdate()` call is especially important, it's how reactive
-controllers inform their hosts that they should re-render. Calling it kicks off
-an asynchronous pipeline which includes a call to the host's `update()` method.
-Read @thepassle 's [formidable deep dive into the LitElement
-lifecycle](https://medium.com/ing-blog/litelement-a-deepdive-into-batched-updates-b9431509fc4f)
-for more details.
+That `host.requestUpdate()` call is especially important, it's how reactive 
+controllers inform their hosts that they should re-render. Calling it kicks off 
+an asynchronous pipeline which includes a call to the host's `update()` method. 
+Read @thepassle 's [formidable deep dive into the LitElement 
+lifecycle][lit-deep-dive] for more details.
 
-https://dev.to/open-wc/litelement-a-deepdive-into-batched-updates-3hh
-
-Let's add the `MouseController` to our element and use `console.log` to observe
+Let's add the `MouseController` to our element and use `console.log` to observe 
 updates. in `color-picker.js`, import the controller:
 
 ```js
@@ -528,15 +483,15 @@ customElements.define('color-picker', ColorPicker);
 
 </details>
 
-After saving, when you move the mouse around the screen, you'll see the mouse'
-position logged to the console. We're now ready to integrate the
+After saving, when you move the mouse around the screen, you'll see the mouse' 
+position logged to the console. We're now ready to integrate the 
 `MouseController`'s reactive properties into our host element.
 
 ### Hooking up the Cursor
 
-We'd like our `#loupe` element to move with the mouse cursor, and for it's
-background color to reflect the colour under the cursor. Edit the `update()`
-method of our element like so, making sure *not to forget the `super.update()`
+We'd like our `#loupe` element to move with the mouse cursor, and for it's 
+background color to reflect the colour under the cursor. Edit the `update()` 
+method of our element like so, making sure *not to forget the `super.update()` 
 call*:
 
 ```js
@@ -554,18 +509,18 @@ update() {
 }
 ```
 
-In short, we get the mouse position from the controller, compare it to the
-element's bounding rectangle, and if the one is within the other, we set the
-`--x`, `--y`, `--hue`, and `--saturation` CSS custom properties, which if you
-recall, control the `transform` and `background` properties on our `#loupe`
+In short, we get the mouse position from the controller, compare it to the 
+element's bounding rectangle, and if the one is within the other, we set the 
+`--x`, `--y`, `--hue`, and `--saturation` CSS custom properties, which if you 
+recall, control the `transform` and `background` properties on our `#loupe` 
 element. Save the file and enjoy the show.
 
 ## Firing Events
 
-Ok, we've done the lion's share of the work, all we have left to do is
-communicate with the outside world. We're going to use the browser's built-in
-message channel to do that. Let's start by defining a private `#pick()` method
-that fires a custom `pick` event, and we'll add a `color` property to our
+Ok, we've done the lion's share of the work, all we have left to do is 
+communicate with the outside world. We're going to use the browser's built-in 
+message channel to do that. Let's start by defining a private `#pick()` method 
+that fires a custom `pick` event, and we'll add a `color` property to our 
 element to hold the most recently selected colour.
 
 ```js
@@ -598,7 +553,7 @@ Add some user feedback by changing the loupe's border colour:
 }
 ```
 
-Let's also let the user scrub around the picker with the mouse down, we'll add
+Let's also let the user scrub around the picker with the mouse down, we'll add 
 some conditions to our update function, right before the super call:
 
 ```js
@@ -660,16 +615,16 @@ customElements.define('color-picker', ColorPicker);
 
 ## Accessibility
 
-We should take our social responsibility as engineers seriously. I'm ashamed to
-admit that I treated accessibility as an afterthought when originally drafting
+We should take our social responsibility as engineers seriously. I'm ashamed to 
+admit that I treated accessibility as an afterthought when originally drafting 
 this post, but hopefully this section can do something to make it better.
 
-Let's add screen reader accessibility to our element. We'll start by giving our
-`loupe` div a `button` role and an aria-label. We could use a `<button>` as
-well with visually hidden text content, but since we've already styled things
-the way we want, I think this is an acceptable use of `role="button"`.
+Let's add screen reader accessibility to our element. We'll start by giving our 
+`loupe` div a `button` role and an aria-label. We could use a `<button>` as well 
+with visually hidden text content, but since we've already styled things the way 
+we want, I think this is an acceptable use of `role="button"`.
 
-Let's also add a `<div role="alert">` which we'll use to announce our chosen
+Let's also add a `<div role="alert">` which we'll use to announce our chosen 
 colour.
 
 ```html
@@ -678,7 +633,7 @@ colour.
 <div id="alert" role="alert" aria-hidden="true"></div>
 ```
 
-Give the alert 'visually hidden' styles, since we'll be setting it's text
+Give the alert 'visually hidden' styles, since we'll be setting it's text 
 content to announce our colour.
 
 ```css
@@ -713,10 +668,10 @@ And we're good, screen readers will now announce the chosen colour.
 
 ## Using our Colour Picker
 
-With our custom element finished, let's hook it up to the document by listening
-for the `pick` event. Edit `index.html` and add an `<output>` element to
-display our picked colour and an inline script to listen for the `pick` event.
-Let's also add some global styles in `style.css`:
+With our custom element finished, let's hook it up to the document by listening 
+for the `pick` event. Edit `index.html` and add an `<output>` element to display 
+our picked colour and an inline script to listen for the `pick` event. Let's 
+also add some global styles in `style.css`:
 
 ```html
 <color-picker></color-picker>
@@ -744,12 +699,12 @@ output {
 
 ## Next Steps
 
-Well we're done! We've met all our goals from above with a few extras laid on
+Well we're done! We've met all our goals from above with a few extras laid on 
 top. You can play with a live example on Glitch:
 
 {% glitch 'controller-host-mixin-color-picker', 'app' %}
 
-You can also follow along with the steps by tracing the commit history on
+You can also follow along with the steps by tracing the commit history on 
 GitHub:
 
 <github-repository owner-repo="bennypowers/controller-host-color-picker"></github-repository>
@@ -768,16 +723,46 @@ Can you improve on the design? Here are some ideas to get your gears turning:
   - How would you rewrite MouseController if you knew that an arbitrary
     multiple number of components in your app would use it?
 
-Show us what you come up with in the comments. If you're looking for a
-production-ready colour picker element, check out @webpadawan's
-[`<vanilla-colorful>`](https://github.com/web-padawan/vanilla-colorful).
+Show us what you come up with in the comments. If you're looking for a 
+production-ready colour picker element, check out @webpadawan's 
+[`<vanilla-colorful>`][vanilla-colorful].
 
 ## Footnotes
 
 ### Inherited Styles
 
-While Shadow DOM does provide strong encapsulation, inherited CSS properties
-are able to 'pierce' the shadow boundary, so things like `color`,
-`font-family`, and any CSS custom properties can reach down into our shadow
-roots and style our private shadow DOM.
+While Shadow DOM does provide strong encapsulation, inherited CSS properties are 
+able to 'pierce' the shadow boundary, so things like `color`, `font-family`, and 
+any CSS custom properties can reach down into our shadow roots and style our 
+private shadow DOM.
 
+[css-gradients]:       https://developer.mozilla.org/en-US/docs/Web/CSS/gradient/linear-gradient()
+[reactive-controller]: https://lit.dev/docs/composition/controllers/
+[shadow-dom]:          https://developer.mozilla.org/en-US/docs/Web/Web_Components/Using_shadow_DOM
+[custom-event]:        https://developer.mozilla.org/en-US/docs/Web/API/CustomEvent/CustomEvent
+[link-tag]:            https://developer.mozilla.org/en-US/docs/Web/HTML/Element/link
+[css-syntax]:          https://developer.mozilla.org/en-US/docs/Learn/CSS/First_steps/Getting_started
+[dom]:                 https://developer.mozilla.org/en-US/docs/Web/API/Document_Object_Model
+[oop]:                 https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Objects/Object-oriented_JS 
+[es-class]:            https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/class
+[es-module]:           https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules
+[part-1]:              ../lets-build-web-components/part-1-the-standards/
+[node]:                https://nodejs.org/
+[shadow-root]:         https://developer.mozilla.org/en-US/docs/Web/API/ShadowRoot
+[template-perf]:       https://www.measurethat.net/Benchmarks/Show/5430/0/different-ways-template-vanilla-js-innerhtml-to-create#latest_results_block 
+[host-selector]:       https://developer.mozilla.org/en-US/docs/Web/CSS/:host()
+[hsl]:                 https://developer.mozilla.org/en-US/docs/Web/CSS/color_value/hsl()
+[loupe]:               https://www.wikiwand.com/en/Loupe
+[css-vars]:            https://developer.mozilla.org/en-US/docs/Web/CSS/Using_CSS_custom_properties
+[js-mixins]:           https://justinfagnani.com/2015/12/21/real-mixins-with-javascript-classes/
+[func-comp]:           https://www.wikiwand.com/en/Function_composition
+[lit]:                 https://lit.dev
+[rc-react]:            https://www.npmjs.com/package/@lit-labs/react#user-content-usecontroller
+[rc-ng]:               https://stackblitz.com/edit/angular-ivy-uuiqpj?file=src%2Fapp%2Fangular-controller-host.ts
+[rc-vue]:              https://stackblitz.com/edit/vue-qniewc?file=src%2Fcomponents%2FHelloWorld.vue
+[rc-haunted]:          https://hauntedhooks.netlify.app/docs/hooks/usecontroller/
+[apollo-elements]:     https://apolloelements.dev
+[apollo-queries]:      https://apolloelements.dev/api/core/controllers/query/
+[apollo-mutations]:    https://apolloelements.dev/api/core/controllers/mutation/
+[lit-deep-dive]:       https://dev.to/open-wc/litelement-a-deepdive-into-batched-updates-3hh
+[vanilla-colorful]:    https://github.com/web-padawan/vanilla-colorful
