@@ -20,7 +20,7 @@ stylesheets:
       <dt>🙈 tl;dr:</dt>
       <dd>{{ tldr | safe }}</dd>{% endif %}
     </dl>{% endif %}
-    <h2>Contents</h2>
+    <h2><a href="#">Contents</a></h2>
     {{ content | toc | safe }}
     <h2>Tags</h2>
     <ul id="tags-list">{% for tag in tags %}{% if tag != 'posts' %}
@@ -34,7 +34,9 @@ stylesheets:
 <main>
   <header>
     <h1>{{ title }}</h1>{% if coverImage %}
-    <img alt="{{ coverImageAlt or '' }}" src="{{ coverImage }}">{% endif %}
+    <img id="cover-image"
+         alt="{{ coverImageAlt or '' }}"
+         src="{{ coverImage }}">{% endif %}
   </header>
   {{ content | safe }}
 </main>

@@ -8,6 +8,7 @@ const TimeToReadPlugin = require('eleventy-plugin-time-to-read');
 const EleventyPluginDirectoryOutput = require('@11ty/eleventy-plugin-directory-output');
 const EleventyPluginSyntaxhighlight = require('@11ty/eleventy-plugin-syntaxhighlight');
 const { EleventyRenderPlugin } = require('@11ty/eleventy');
+const mime = require('mime-types');
 
 const isWatching = () =>
   process.argv.includes('--watch') || process.argv.includes('--serve')
@@ -35,6 +36,7 @@ module.exports = function(eleventyConfig) {
   eleventyConfig.addPlugin(EleventyPluginDirectoryOutput);
   eleventyConfig.addPlugin(EleventyRenderPlugin);
 
+  eleventyConfig.addFilter('mime', url => mime.lookup(url));
   eleventyConfig.addFilter('abbrs', function(content) {
     let replaced = content;
     for (const { name, title } of this.ctx.abbrs ?? []) {

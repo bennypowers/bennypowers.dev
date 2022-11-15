@@ -56,3 +56,10 @@ body {
 #main-footer { grid-area: foot; }
 
 main { grid-area: main; }
+
+#cover-image {
+  width: 100%;
+  object-fit: cover;
+  max-height: 400px;
+  object-position: center;
+}
