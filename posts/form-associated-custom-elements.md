@@ -107,7 +107,8 @@ customized built-ins a non-starter. Some prominent web developers (most notably
 Andrea Giammarchi) have advocated permanently adopting a polyfill, but the 
 broader web components community has generally acquiesced to WebKit's decision.
 
-Which is how FACE came to be, it's the alternative to CBIEs championed by WebKit.
+Which is how FACE came to be, it's the alternative to CBIEs that the WebKit team 
+championed.
 
 </details>
 
@@ -368,6 +369,7 @@ Putting it all together, our custom checkbox:
 - participates in HTML forms like a native input
 - is accessible to users of assistive technologies
 
+
 ## Simple Checkbox Example
 
 ```html
@@ -435,6 +437,33 @@ form.addEventListener('submit', function(event) {
 set.disabled = toggle.checked;
 </script>
 
+## Browser Support and Polyfills
+
+As of initial publication, Chromium (Google Chrome, Microsoft Edge, Brave, Arc) 
+supports the full range of APIs described here. Firefox supports 
+`attachInternals` and `formAssociated` but does not support ARIA and role 
+reflection. WebKit does not support any of the new APIs, but the commits to add 
+support have been merged, so the next Safari Technology Preview is likely to add 
+support.
+
+| Engine   | FACE | `ElementInternals` | AOM Reflection |
+| -------- | ---- | ------------------ | -------------- |
+| Chromium | ✅   | ✅                 | ✅             |
+| Firefox  | ✅   | ✅                 | ❌             |
+| WebKit   | ❌   | ❌                 | ❌             |
+
+The inimitable Caleb D. Williams has kindly published an [ElementInternals 
+polyfill][polyfill] which weighs in at [~6kb over-the-wire][polyfill-6kb]. Since 
+the spec involves hooking into browser stuff which is otherwise unavailable to 
+developers, the polyfill is not 100% spec compliant. For example, ARIA 
+reflection is implemented by adding `aria-` attributes to the host element, 
+where the spec states that they should not be added. The polyfill also adds a 
+workaround for the [custom state][custom-state] part of the spec, which was not 
+covered here.
+
+## Errata
+- <time datetime="2022-11-15">Nov 15</time>: Added info and links to polyfill
+
 Thoughts? Corrections? Comments? Let me know on [mastodon][sbpdi].
 
 [aom]: https://wicg.github.io/aom/explainer.html
@@ -446,4 +475,7 @@ Thoughts? Corrections? Comments? Let me know on [mastodon][sbpdi].
 [ecma-private]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes/Private_class_fields
 [no-cbie]: https://b.webkit.org/show_bug.cgi?id=182671
 [open-web-advocacy]: https://open-web-advocacy.org/
+[polyfill]: https://github.com/calebdwilliams/element-internals-polyfill
+[polyfill-6kb]: https://unpkg.com/element-internals-polyfill
+[custom-state]: https://wicg.github.io/custom-state-pseudo-class/#dom-elementinternals-states
 [sbpdi]: https://social.bennypowers.dev/@i
