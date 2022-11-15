@@ -4,15 +4,15 @@ published: true
 datePublished: 2022-11-14
 coverImage: /assets/images/faces.jpg
 coverImageAlt: autonomous faces. courtesy of stable diffusion
-description: |
-  Form-Associated Custom Elements are a new web standard by allow web component 
+description: >
+  Form-Associated Custom Elements are a new web standard which let web component 
   authors to build accessible custom interactive form controls like buttons, 
   inputs, checkboxes, that function just like browser-native inputs. Review the 
   spec and build a simple checkbox component in this short tutorial.
-audience: |
+audience: >
   Web developers already familiar with the web components specs like custom 
   elements and shadow DOM.
-tldr: |
+tldr: >
   Use the new <em>form-associated custom elements</em> and 
   <em><code>ElementInternals</code></em> standards to create accessible custom 
   elements which behave like native HTML form controls.
