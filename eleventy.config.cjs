@@ -24,9 +24,7 @@ module.exports = function(eleventyConfig) {
   eleventyConfig.addExtension('svg', { compile: x => () => x });
   eleventyConfig.addPassthroughCopy('assets');
   eleventyConfig.addGlobalData('watch', isWatching);
-  eleventyConfig.amendLibrary('md', md => md.use(anchor, {
-    permalink: anchor.permalink.headerLink(),
-  }));
+  eleventyConfig.amendLibrary('md', md => md.use(anchor, { permalink: anchor.permalink.headerLink(), }));
   eleventyConfig.addPlugin(EsbuildPlugin, ['github-repository']);
   eleventyConfig.addPlugin(GlitchPlugin);
   eleventyConfig.addPlugin(EmbedPlugin, { lite: true });

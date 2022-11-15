@@ -10,6 +10,10 @@ body {
     'foot';
 }
 
+#side-menu .table-of-contents {
+  display: none;
+}
+
 @media (min-width: 1000px) {
   body {
     grid-template-rows: min-content auto min-content;
@@ -18,6 +22,31 @@ body {
       'head head'
       'main menu'
       'foot foot';
+  }
+
+  #side-menu .table-of-contents {
+    display: block;
+  }
+}
+
+@media (max-width: 999px) {
+  :not(:is(pre, th)) :is(code, output) {
+    word-break: break-all;
+  }
+
+  th code {
+    word-break: initial;
+  }
+
+  .post main table {
+    max-width: 100%;
+  }
+
+  .post main thead th:not(:empty) {
+    rotate: -45deg;
+    height: 100px;
+    max-width: 2em;
+    translate: 0 20px;
   }
 }
 

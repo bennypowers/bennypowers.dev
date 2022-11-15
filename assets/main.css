@@ -146,23 +146,50 @@ a:is(:hover, :focus) {
   text-decoration-thickness: 4px;
 }
 
-#socials {
-  display: flex;
+.socials {
+  display: none;
   gap: 4px;
   list-style-type: none;
   margin: 0;
   padding: 0;
 }
 
-#socials li,
-#socials a {
+#mobile-nav .socials {
+  display: flex;
+}
+
+.socials li,
+.socials a {
   color: currentcolor;
 }
 
-#socials svg {
+.socials svg {
   fill: currentcolor;
   width: 24px;
   aspect-ratio: 1/1;
+}
+
+#mobile-nav summary {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  list-style: none;
+  width: 40px;
+  height: 40px;
+}
+
+#mobile-nav summary svg {
+  width: 24px;
+  height: 24px;
+  fill: currentcolor;
+}
+
+#mobile-nav-content {
+  position: fixed;
+  inset: 40px 0 auto 0;
+  background: var(--background-color);
+  padding: 40px;
+  border: 1px solid currentColor;
 }
 
 #tags-list {
@@ -217,6 +244,10 @@ code-tabs:focus-within {
 }
 
 @media (min-width: 1000px) {
+  .socials {
+    display: flex;
+  }
+
   #main-header {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -231,6 +262,10 @@ code-tabs:focus-within {
 
   #main-header :first-child { justify-self: start; }
   #main-header :last-child { justify-self: end; }
+
+  #mobile-nav {
+    display: none;
+  }
 
   main.home {
     text-align: center;

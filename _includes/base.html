@@ -103,18 +103,38 @@
              src="{{ '/assets/images/logo/bp-logo-transparent.png' | url }}"
              srcset="{{ '/assets/images/logo/bp-logo-transparent@2x.png' | url }} 2x,
                      {{ '/assets/images/logo/bp-logo-transparent.png' | url }} 1x"></a>
+
       <nav>
         <a href="{{ '/posts/' | url }}">Posts</a>
         <a href="{{ '/tags/' | url }}">Tags</a>
         <a href="{{ '/resume/' | url }}">C.V.</a>
       </nav>
-      <ul id="socials">{% for link in social %}
+
+      <ul class="socials">{% for link in social %}
         <li>
           <a rel="me noreferrer nofollow" target="_blank" href="{{ link.href }}">
             <svg title="{{ link.label }}"><use xlink:href="#{{ link.icon }}-icon"></use></svg>
           </a>
         </li>{% endfor %}
       </ul>
+
+      <details id="mobile-nav">
+        <summary><svg title="Menu"><use xlink:href="#hamburger-icon"></use></svg></summary>
+
+        <div id="mobile-nav-content">
+          <ul class="socials">{% for link in social %}
+            <li>
+              <a rel="me noreferrer nofollow" target="_blank" href="{{ link.href }}">
+                <svg title="{{ link.label }}"><use xlink:href="#{{ link.icon }}-icon"></use></svg>
+              </a>
+            </li>{% endfor %}
+          </ul>
+          <section class="table-of-contents">
+            <h2><a href="#">Contents</a></h2>
+            {{ content | toc | safe }}
+          </section>
+        </div>
+      </details>
     </header>{% endif %}
     {{ content | abbrs | safe }}
     <footer id="footer" class="screen-only">

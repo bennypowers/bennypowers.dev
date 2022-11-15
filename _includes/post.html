@@ -20,8 +20,10 @@ stylesheets:
       <dt>🙈 tl;dr:</dt>
       <dd>{{ tldr | safe }}</dd>{% endif %}
     </dl>{% endif %}
-    <h2><a href="#">Contents</a></h2>
-    {{ content | toc | safe }}
+    <section class="table-of-contents">
+      <h2><a href="#">Contents</a></h2>
+      {{ content | toc | safe }}
+    </section>
     <h2>Tags</h2>
     <ul id="tags-list">{% for tag in tags %}{% if tag != 'posts' %}
       {%- set related = collections[tag] -%}
