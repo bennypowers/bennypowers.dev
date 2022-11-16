@@ -3,7 +3,7 @@ organization:
   name: Red Hat
   href: https://redhat.com
   address: Remote (Israel)
-role: Principal Web Developer
+role: Principal UX Engineer
 startDate: 2021-10
 endDate: Present
 technologies:
