@@ -61,14 +61,21 @@ module.exports = function(eleventyConfig) {
     }
   })
 
-  eleventyConfig.addCollection('posts', (collectionApi) => {
-    const g = x => x.data.datePublished;
+  const getDate = x => x.data.datePublished ?? x.data.date;
+  const byDate = (a, b) =>
+      getDate(a) === getDate(b) ? 0
+    : getDate(a)   > getDate(b) ? 1
+    : -1;
+  eleventyConfig.addCollection('posts', collectionApi => {
     return collectionApi
       .getFilteredByGlob('./posts/**/*.md')
-      .sort((a, b) =>
-          g(a) === g(b) ? 0
-        : g(a) > g(b) ? 1
-        : -1);
+      .sort(byDate);
+  });
+
+  eleventyConfig.addCollection('decks', collectionApi => {
+    return collectionApi
+      .getFilteredByGlob('./decks/*')
+      .sort(byDate);
   });
 
   return {
