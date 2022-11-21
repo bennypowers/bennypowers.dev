@@ -1,0 +1,2 @@
+- show off atom-regex-railroad plugin
+- best thing about atom was its hackability - do YOU know any hackable editors?
