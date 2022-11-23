@@ -29,6 +29,10 @@ ul {
   gap: 1em;
 }
 
+aside ul {
+  display: initial;
+}
+
 h2:not(#atom-refugee) {
   text-align: center;
 }
