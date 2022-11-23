@@ -18,6 +18,7 @@ module.exports = function(eleventyConfig) {
 
   eleventyConfig.addPassthroughCopy('decks/**/*.js');
   eleventyConfig.addPassthroughCopy('decks/**/*.css');
+  eleventyConfig.addPassthroughCopy('decks/**/*.png');
 
   eleventyConfig.addFilter('reveal', function(content, selector) {
     if (!selector) return content;

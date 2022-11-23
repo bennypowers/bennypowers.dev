@@ -15,7 +15,8 @@ stylesheets:
   </div>
   {% for slide in collections.slides %}
   {% if slide.deck == deck %}
-  <slidem-slide>
+    <slidem-slide{% if slide.data.name %}
+        name="{{ slide.data.name }}"{% endif %}>
     {{ slide.templateContent | reveal(slide.data.reveal) | safe }}
   </slidem-slide>
   {% endif %}
