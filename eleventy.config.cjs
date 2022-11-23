@@ -1,7 +1,7 @@
 const YAML = require('yaml');
 const anchor = require('markdown-it-anchor');
-const EsbuildPlugin = require('./_plugins/esbuild.cjs');
 const GlitchPlugin = require('./_plugins/glitch.cjs');
+const DecksPlugin = require('./_plugins/decks.cjs');
 const EmbedPlugin = require('eleventy-plugin-embed-everything');
 const TableOfContentsPlugin = require('eleventy-plugin-nesting-toc');
 const TimeToReadPlugin = require('eleventy-plugin-time-to-read');
@@ -25,7 +25,6 @@ module.exports = function(eleventyConfig) {
   eleventyConfig.addPassthroughCopy('assets');
   eleventyConfig.addGlobalData('watch', isWatching);
   eleventyConfig.amendLibrary('md', md => md.use(anchor, { permalink: anchor.permalink.headerLink(), }));
-  eleventyConfig.addPlugin(EsbuildPlugin, ['github-repository']);
   eleventyConfig.addPlugin(GlitchPlugin);
   eleventyConfig.addPlugin(EmbedPlugin, { lite: true });
   eleventyConfig.addPlugin(TableOfContentsPlugin);
@@ -33,6 +32,7 @@ module.exports = function(eleventyConfig) {
   eleventyConfig.addPlugin(EleventyPluginSyntaxhighlight);
   eleventyConfig.addPlugin(EleventyPluginDirectoryOutput);
   eleventyConfig.addPlugin(EleventyRenderPlugin);
+  eleventyConfig.addPlugin(DecksPlugin);
 
   eleventyConfig.addFilter('mime', url => mime.lookup(url));
   eleventyConfig.addFilter('abbrs', function(content) {
@@ -47,7 +47,6 @@ module.exports = function(eleventyConfig) {
     }
     return replaced;
   });
-
   eleventyConfig.addFilter('formatDate', function(d, opts) {
     if (d instanceof Date) {
       return new Intl.DateTimeFormat('en-US', opts).format(d);
@@ -61,14 +60,16 @@ module.exports = function(eleventyConfig) {
     }
   })
 
-  eleventyConfig.addCollection('posts', (collectionApi) => {
-    const g = x => x.data.datePublished;
+  const getDate = x => x.data.datePublished ?? x.data.date;
+  const byDate = (a, b) =>
+      getDate(a) === getDate(b) ? 0
+    : getDate(a)   > getDate(b) ? 1
+    : -1;
+
+  eleventyConfig.addCollection('posts', collectionApi => {
     return collectionApi
       .getFilteredByGlob('./posts/**/*.md')
-      .sort((a, b) =>
-          g(a) === g(b) ? 0
-        : g(a) > g(b) ? 1
-        : -1);
+      .sort(byDate);
   });
 
   return {

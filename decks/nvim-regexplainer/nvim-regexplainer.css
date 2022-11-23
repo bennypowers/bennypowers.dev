@@ -1,0 +1,84 @@
+:root {
+  --deck-primary-background: black;
+  --deck-secondary-background: rebeccapurple;
+  --deck-primary-color: white;
+  --deck-secondary-color: white;
+}
+
+slidem-slide {
+  --background: var(--deck-primary-background);
+}
+
+slidem-slide::part(container) {
+  background: var(--background);
+}
+
+:is(a, h1, h2, h3, h4, h5) {
+  -webkit-text-fill-color: initial;
+}
+
+[name=atom] img {
+  position: fixed;
+  inset-inline-end: 1em;
+  inset-block-start: 0;
+}
+
+ul {
+  list-style-type: none;
+  display: grid;
+  gap: 1em;
+}
+
+aside ul {
+  display: initial;
+}
+
+h2:not(#atom-refugee) {
+  text-align: center;
+}
+
+slidem-slide:not([name=atom])::part(content) {
+  display:flex;
+  flex-flow: column;
+  align-items: center;
+  justify-content: center;
+}
+
+slidem-slide[name=atom]::part(content) {
+  display:flex;
+  flex-flow: column;
+  align-items: start;
+  justify-content: center;
+}
+
+[name=title] p {
+  margin-block-start: 2em;
+}
+
+[name=credits] svg {
+  height: 1em;
+  width: 1em;
+}
+
+[name=credits] section {
+  background: #212121;
+  border-radius: 24px;
+  padding: 1em 1.6em;
+  margin-block-start: 1em;
+}
+
+[name=credits] section header {
+  font-weight: bold;
+}
+
+dl {
+  display: grid;
+  gap: 1em .6em;
+  grid-template-columns: min-content auto;
+}
+
+dd {
+  display: flex;
+  align-items: center;
+  gap: .5em;
+}
