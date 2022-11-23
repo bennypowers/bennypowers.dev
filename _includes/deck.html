@@ -1,0 +1,24 @@
+---
+layout: html.html
+scripts:
+  - src: /assets/decks.min.js
+    type: module
+  - src: /assets/deck.js
+    type: module
+stylesheets:
+  - href: /assets/deck.css
+---
+<main>
+<slidem-deck>
+  <div slot="progress" style="display: contents">
+    <sl-progress-bar id="slides-progress" indeterminate></sl-progress-bar>
+  </div>
+  {% for slide in collections.slides %}
+  {% if slide.deck == deck %}
+  <slidem-slide>
+    {{ slide.templateContent | reveal(slide.data.reveal) | safe }}
+  </slidem-slide>
+  {% endif %}
+  {% endfor %}
+</slidem-deck>
+</main>
