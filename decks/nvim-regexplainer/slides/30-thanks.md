@@ -1,8 +1,9 @@
 ---
 reveal: li
 ---
-# Contributions Welcome
+## Contributions Welcome
 
+- Graphic output
 - Negative Lookbehind
 - Refactoring
 - Tests

@@ -1,14 +1,14 @@
 ---
 reveal: li
+name: atom
 ---
-# Atom Refugee
+## Atom Refugee
 
 - Hackability
-- do _YOU_ know any hackable editors?
-- `atom-regex-railroad`
-- ![screenshot of atom-regex-railroad plugin, showing the plugin graphically 
-  illustrating the contents of a regular expression which appears in the main 
-  buffer of the editor](atom-regex-railroad.png)
+- `atom-regex-railroad` ![screenshot of atom-regex-railroad plugin, showing the 
+  plugin graphically illustrating the contents of a regular expression which 
+  appears in the main buffer of the editor](atom-regex-railroad.png)
+- Do _YOU_ know any hackable editors?
 
 <aside slot="presenter">
 
@@ -20,3 +20,4 @@ Atom was my daily driver for years
 - A graphical representation of your regexp when cursor
 
 </aside>
+
