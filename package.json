@@ -5,7 +5,7 @@
   "main": "index.html",
   "type": "module",
   "scripts": {
-    "postInstall": "patch-package",
+    "postinstall": "patch-package",
     "build": "eleventy",
     "start": "eleventy --serve"
   },
