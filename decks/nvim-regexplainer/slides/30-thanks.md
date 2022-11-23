@@ -1,6 +1,5 @@
 ---
-attrs:
- - reveal
+reveal: li
 ---
 # Contributions Welcome
 

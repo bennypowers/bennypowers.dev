@@ -4,3 +4,15 @@
   --deck-primary-color: white;
   --deck-secondary-color: white;
 }
+
+slidem-slide {
+  --background: var(--deck-primary-background);
+}
+
+slidem-slide::part(container) {
+  background: var(--background);
+}
+
+:is(a, h1, h2, h3, h4, h5) {
+  -webkit-text-fill-color: initial;
+}

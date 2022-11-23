@@ -1,7 +1,7 @@
 - 🌘 Moon-Oriented Programming
 - 🐒 Climbing Trees
 
-<section slot="notes">
+<aside slot="presenter">
 
 Moving to NeoVim was a learning experience
 I was used to the keybindings from atom's `vim-mode-plus`
@@ -20,4 +20,4 @@ Treesitter!
 - Occasional Parser bugs (negative lookbehind)
 - Missing APIs (user queries)
 
-</section>
+</aside>
