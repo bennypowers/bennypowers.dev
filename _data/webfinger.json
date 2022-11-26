@@ -1,0 +1,23 @@
+{
+  "subject": "acct:i@social.bennypowers.dev",
+  "aliases": [
+    "https://social.bennypowers.dev/@i",
+    "https://social.bennypowers.dev/users/i"
+  ],
+  "links": [
+    {
+      "rel": "http://webfinger.net/rel/profile-page",
+      "type": "text/html",
+      "href": "https://social.bennypowers.dev/@i"
+    },
+    {
+      "rel": "self",
+      "type": "application/activity+json",
+      "href": "https://social.bennypowers.dev/users/i"
+    },
+    {
+      "rel": "http://ostatus.org/schema/1.0/subscribe",
+      "template": "https://social.bennypowers.dev/authorize_interaction?uri={uri}"
+    }
+  ]
+}
