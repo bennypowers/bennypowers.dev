@@ -6,8 +6,7 @@ module.exports = function(eleventyConfig) {
     const slides = collectionApi
       .getFilteredByGlob('./decks/*/slides/*.md')
       .map(x => Object.assign(x, {
-        deck: x.url.split('/').at(2),
-        permalink: false,
+        deck: x.data.page.filePathStem.split('/').at(2),
       }))
       .sort((a, b) =>
           a.inputPath < b.inputPath ? -1
