@@ -7,6 +7,9 @@ name: intro
 - I Have Two Problems
 - ![const [, pkg] = spec.match(/@patternfly\/pfe-([-\w]+)\/?(.*)/) ?? 
   [];][regex-glaze]
+  ```js
+  const [, pkg] = spec.match(/@patternfly\/pfe-([-\w]+)\/?(.*)/) ?? [];
+  ```
 
 <aside slot="notes">
 
