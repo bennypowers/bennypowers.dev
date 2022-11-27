@@ -18,19 +18,19 @@ layout: html.html
   <ul class="socials">{% for link in social %}
     <li>
       <a rel="me noreferrer nofollow" target="_blank" href="{{ link.href }}">
-        <svg title="{{ link.label }}"><use xlink:href="#{{ link.icon }}-icon"></use></svg>
+        {% icon link.icon, title=link.label %}
       </a>
     </li>{% endfor %}
   </ul>
 
   <details id="mobile-nav">
-    <summary><svg title="Menu"><use xlink:href="#hamburger-icon"></use></svg></summary>
+    <summary>{% icon 'hamburger', title="Menu" %}</summary>
 
     <div id="mobile-nav-content">
       <ul class="socials">{% for link in social %}
         <li>
           <a rel="me noreferrer nofollow" target="_blank" href="{{ link.href }}">
-            <svg title="{{ link.label }}"><use xlink:href="#{{ link.icon }}-icon"></use></svg>
+            {% icon link.icon, title=link.label %}
           </a>
         </li>{% endfor %}
       </ul>

@@ -8,8 +8,7 @@ name: credits
 <header>Benny Powers</header>
 <dl>
   <dt>💼</dt>
-  <dd>Principal UX Engineer @ <svg><use 
-  xlink:href="#redhat-icon"></use></svg></dd>
+  <dd>Principal UX Engineer @ {% icon 'redhat', title="Red Hat" %}</dd>
 
   <dt>🐘</dt>
   <dd>

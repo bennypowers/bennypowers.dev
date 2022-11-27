@@ -20,16 +20,14 @@ technologies:
   - a11y
 ---
 
-In June of 2016, was brought on board to manage WordPress projects, and soon
-became the lead developer for special projects and apps. Designed and coded
-several apps using [polymerfire](http://github.com/firebase/polymerfire). My
-experience with <abbr title="accessibility">a11y</abbr>; and <abbr title="User
-Experience">UX</abbr> and graphic design contributed to the success of a number
-of projects.
+In June of 2016, was brought on board to manage WordPress projects, and soon 
+became the lead developer for special projects and apps. Designed and coded 
+several apps using [polymerfire](http://github.com/firebase/polymerfire). My 
+experience with a11y, UX, and graphic design contributed to the success of a 
+number of projects.
 
-Led a number of initiatives at the company to improve the company's agility and
-scalability, including <abbr title="continuous integration / continuous
-deployment">CI/CD</abbr> pipelines, Slack, GitLab, and a trello-based sales
+Led a number of initiatives at the company to improve the company's agility and 
+scalability, including <abbr title="continuous integration / continuous 
+deployment">CI/CD</abbr> pipelines, Slack, GitLab, and a trello-based sales 
 funnel.
-
 

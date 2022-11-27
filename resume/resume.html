@@ -26,10 +26,10 @@ stylesheets:
        title="{{ link.label }}"
        target="_blank"
        rel="me noreferrer nofollow">
-      <svg><use xlink:href="#{{ link.icon }}-icon"/></svg>
+      {% icon link.icon %}
     </a>{% endfor %}
-    <button id="print-button" class="screen-only">
-      <svg aria-label="Print This Page"><use xlink:href="#print-icon"/></svg>
+    <button id="print-button" class="screen-only" aria-label="print this page" title="Print this page">
+      {% icon 'print', 'aria-hidden'='true' %}
     </button>
   </section>
 
@@ -80,7 +80,7 @@ stylesheets:
     <h2>Highlights</h2>
     <ul>
       <li>Mobile Web Specialist</li>
-      <li>Standards and <abbr title="accessibility">a11y</abbr></li>
+      <li>Standards and a11y</li>
       <li>Functional Programming</li>
       <li>Web Components</li>
       <li>Contributor to Open Source</li>
@@ -97,7 +97,7 @@ stylesheets:
     <ul id="tools-and-technologies">{% for buzzword in buzzwords %}
       {%- set icon = icons[buzzword.icon or buzzword] | first -%}
       <li itemprop="knowsAbout" title="{{ buzzword.title or icon.data.title }}">
-        <svg aria-label="{{ icon.data.title }}"><use xlink:href="#{{ buzzword.icon or buzzword }}-icon"/></svg>
+        {% icon buzzword.icon or buzzword, 'aria-hidden'='true' %}
       </li>{% endfor %}
     </ul>
   </section>
@@ -129,7 +129,7 @@ stylesheets:
           <h3 itemprop="name">Technologies</h3>
             <ul>{% for technology in position.technologies %}{%- set icon = ((icons[technology] or []) | first) or [] | first -%}
             <li itemprop="itemListElement" title="{{ icon.data.title }}">
-              <svg><use xlink:href="#{{ technology }}-icon"/></svg>
+              {% icon technology, 'aria-hidden'=true %}
             </li>{% endfor %}
           </ul>
         </section>

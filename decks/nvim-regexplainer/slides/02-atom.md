@@ -2,7 +2,7 @@
 reveal: li, p
 name: atom
 ---
-## Atom Refugee <svg><use xlink:href="#atom-icon"></use></svg>
+## Atom Refugee {% icon 'atom', title='Atom Editor icon' %}
 
 - 🧰 Hackability 🔌 Plugins 🐿️ TreeSitter
 - `atom-regex-railroad` ![screenshot of atom-regex-railroad plugin, showing the 
