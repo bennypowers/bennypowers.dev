@@ -23,6 +23,7 @@ module.exports = function(eleventyConfig) {
   eleventyConfig.addDataExtension('yaml', x => YAML.parse(x));
   eleventyConfig.addExtension('svg', { compile: x => () => x });
   eleventyConfig.addPassthroughCopy('assets');
+  eleventyConfig.addPassthroughCopy({ 'webfinger.json': '.well-known/webfinger' });
   eleventyConfig.addGlobalData('watch', isWatching);
   eleventyConfig.amendLibrary('md', md => md.use(anchor, { permalink: anchor.permalink.headerLink(), }));
   eleventyConfig.addPlugin(GlitchPlugin);
