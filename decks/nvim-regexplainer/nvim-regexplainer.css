@@ -1,6 +1,6 @@
 :root {
-  --deck-primary-background: var(--mantle);
-  --deck-secondary-background: var(--crust);
+  --deck-primary-background: var(--crust);
+  --deck-secondary-background: var(--mantle);
   --deck-primary-color: var(--text);
   --deck-secondary-color: var(--subtext1);
 
@@ -91,6 +91,20 @@ slidem-slide dd a {
   display: grid;
   place-items: center;
   gap: 1em;
+}
+
+[name=oh-no] p { display: contents; }
+
+[name=oh-no] img:nth-of-type(2) {
+  position: absolute;
+  scale: .75;
+  rotate: 15deg;
+}
+
+[name=oh-no] img:nth-of-type(3) {
+  position: absolute;
+  scale: .85;
+  rotate: -7deg;
 }
 
 [name=code] li:first-child {
