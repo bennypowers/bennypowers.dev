@@ -17,7 +17,7 @@ function addRevealAttrs(content, selector) {
   if (!selector) return content;
   const $ = cheerio.load(content);
   $(selector).each(function() {
-    const closest = $(this).closest('[slot="presenter"]');
+    const closest = $(this).closest('[slot="notes"]');
     if (!closest.length)
       $(this).attr('reveal', '');
   });

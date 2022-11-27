@@ -1,5 +1,5 @@
 diff --git a/node_modules/slidem/slidem-deck.js b/node_modules/slidem/slidem-deck.js
-index 503d779..5ed86df 100644
+index 503d779..26fefb1 100644
 --- a/node_modules/slidem/slidem-deck.js
 +++ b/node_modules/slidem/slidem-deck.js
 @@ -4,7 +4,8 @@ import { onRouteChange, currentPath, currentQuery, currentHash } from '../@gluon
@@ -12,7 +12,73 @@ index 503d779..5ed86df 100644
    /* SLIDEM GLOBAL STYLES */
    body {
      margin: 0;
-@@ -71,18 +72,246 @@ const styleText = document.createTextNode(`
+@@ -17,72 +18,279 @@ const styleText = document.createTextNode(`
+ 
+   /* Keyframes are defined here to patch a scoping bug in Chrome */
+   @keyframes slidem-fade-in {
+-    from {
+-      opacity: 0;
+-    }
+-    to {
+-      opacity: 1;
+-    }
++    from { opacity: 0; }
++    to { opacity: 1; }
+   }
+ 
+   @keyframes slidem-fade-out {
+-    from {
+-      opacity: 1;
+-    }
+-    to {
+-      opacity: 0;
+-    }
++    from { opacity: 1; }
++    to { opacity: 0; }
+   }
+ 
+   @keyframes slidem-slide-in-forward {
+-    from {
+-      transform: translateX(100vw);
+-    }
+-    to {
+-      transform: translateX(0);
+-    }
++    from { translate: 100vw 0; }
++    to { translate: 0 0; }
+   }
+ 
+   @keyframes slidem-slide-in-backward {
+-    from {
+-      transform: translateX(0);
+-    }
+-    to {
+-      transform: translateX(100vw);
+-    }
++    from { translate: 0 0; }
++    to { translate: 100vw 0; }
+   }
+ 
+   @keyframes slidem-slide-out-forward {
+-    from {
+-      transform: translateX(0);
+-    }
+-    to {
+-      transform: translateX(-100vw);
+-    }
++    from { translate: 0 0; }
++    to { translate: -100vw 0; }
+   }
+ 
+   @keyframes slidem-slide-out-backward {
+-    from {
+-      transform: translateX(-100vw);
+-    }
+-    to {
+-      transform: translateX(0);
+-    }
++    from { translate: -100vw 0; }
++    to { translate: 0 0; }
    }
  `);
  
@@ -23,231 +89,234 @@ index 503d779..5ed86df 100644
 +
 +const styleSheet = new CSSStyleSheet();
 +styleSheet.replaceSync(`
++  :host {
++    /* inset for active slide */
++    --active-inset-block-start: calc(25% - 20px);
++    --active-inset-block-end: calc(25% - 20px);
++    --active-inset-inline-start: calc(5% - 20px);
++    --active-inset-inline-end: calc(45% - 20px);
++
++    /* inset for next slide */
++    --presenter-inset-block-start: calc(32.5% - 20px);
++    --presenter-inset-block-end: calc(32.5% - 20px);
++    --presenter-inset-inline-start: calc(60.5% - 20px);
++    --presenter-inset-inline-end: calc(4.5% - 20px);
++  }
++
 +  @keyframes slidem-fade-in {
-+      from { opacity: 0; }
-+      to { opacity: 1; }
-+    }
++    from { opacity: 0; }
++    to { opacity: 1; }
++  }
 +
-+    @keyframes slidem-fade-out {
-+      from { opacity: 1; }
-+      to { opacity: 0; }
-+    }
++  @keyframes slidem-fade-out {
++    from { opacity: 1; }
++    to { opacity: 0; }
++  }
 +
-+    @keyframes slidem-slide-in-forward {
-+      from { translate: 100vw 0; }
-+      to { translate: 0 0; }
-+    }
++  @keyframes slidem-slide-in-forward {
++    from { translate: 100vw 0; }
++    to { translate: 0 0; }
++  }
 +
-+    @keyframes slidem-slide-in-backward {
-+      from { translate: 0 0; }
-+      to { translate: 100vw 0; }
-+    }
++  @keyframes slidem-slide-in-backward {
++    from { translate: 0 0; }
++    to { translate: 100vw 0; }
++  }
 +
-+    @keyframes slidem-slide-out-forward {
-+      from { translate: 0 0; }
-+      to { translate: -100vw 0; }
-+    }
++  @keyframes slidem-slide-out-forward {
++    from { translate: 0 0; }
++    to { translate: -100vw 0; }
++  }
 +
-+    @keyframes slidem-slide-out-backward {
-+      from { translate: -100vw 0; }
-+      to { translate: 0 0; }
-+    }
++  @keyframes slidem-slide-out-backward {
++    from { translate: -100vw 0; }
++    to { translate: 0 0; }
++  }
 +
-+    :host {
-+      display: block;
-+      overflow: hidden;
-+      position: absolute;
-+      top: 0;
-+      left: 0;
-+      bottom: 0;
-+      right: 0;
-+      font-family: 'sans-serif';
-+      font-size: 56px;
-+      line-height: 1;
-+    }
++  :host {
++    display: block;
++    overflow: hidden;
++    position: absolute;
++    inset: 0 0 0 0;
++    font-family: 'sans-serif';
++    font-size: 56px;
++    line-height: 1;
++  }
 +
-+    .slides ::slotted(*) {
-+      position: absolute;
-+      top: 0;
-+      right: 0;
-+      bottom: 0;
-+      left: 0;
-+      animation-duration: 0.4s;
-+      animation-fill-mode: both;
-+      animation-timing-function: ease-in-out;
-+    }
++  .slides ::slotted(*) {
++    position: absolute;
++    inset: 0 0 0 0;
++    animation-duration: 0.4s;
++    animation-fill-mode: both;
++    animation-timing-function: ease-in-out;
++  }
 +
-+    .slides ::slotted(:not([active]):not([previous]):not([next])) {
-+      display: none;
-+    }
++  .slides ::slotted(:not([active]):not([previous]):not([next])) {
++    display: none;
++  }
 +
-+    :host(:not([presenter])) .slides ::slotted([next]:not([previous])) {
-+      display: none;
-+    }
++  :host(:not([presenter])) .slides ::slotted([next]:not([previous])) {
++    display: none;
++  }
 +
-+    #progress {
-+      position: absolute;
-+      bottom: 0px;
-+      left: 0;
-+      right: 0;
-+      height: 50px;
-+      text-align: center;
-+      display: flex;
-+      flex-flow: row;
-+      justify-content: center;
-+      z-index: 10;
-+    }
++  #progress {
++    position: absolute;
++    inset-block-end: 0;
++    inset-inline-start: 0;
++    inset-inline-end: 0;
++    height: 50px;
++    text-align: center;
++    display: flex;
++    flex-flow: row;
++    justify-content: center;
++    z-index: 10;
++  }
 +
-+    #progress div {
-+      height: 8px;
-+      width: 8px;
-+      border-radius: 50%;
-+      border: 2px solid white;
-+      margin-left: 6px;
-+      margin-right: 6px;
-+      background: transparent;
-+      transition: background 0.2s, transform 0.2s;
-+    }
++  #progress div {
++    height: 8px;
++    width: 8px;
++    border-radius: 50%;
++    border: 2px solid white;
++    margin-left: 6px;
++    margin-right: 6px;
++    background: transparent;
++    transition: background 0.2s, scale 0.2s;
++  }
 +
-+    #progress div.active {
-+      background: white;
-+      transform: scale(1.3);
-+    }
++  #progress div.active {
++    background: white;
++    scale: 1.3
++  }
 +
-+    :host([progress="dark"]) #progress div {
-+      border: 2px solid black;
-+    }
++  :host([progress="dark"]) #progress div {
++    border: 2px solid black;
++  }
 +
-+    :host([progress="dark"]) #progress div.active {
-+      background: black;
-+    }
++  :host([progress="dark"]) #progress div.active {
++    background: black;
++  }
 +
-+    :host([progress="none"]) #progress {
-+      display: none;
-+    }
++  :host([progress="none"]) #progress {
++    display: none;
++  }
 +
-+    #timer {
-+      display: none;
-+      position: absolute;
-+      top: 5%;
-+      right: 5%;
-+      color: white;
-+      font-size: 4vw;
-+      font-weight: bold;
-+      font-family: Helvetica, Arial, sans-serif;
-+    }
++  #timer {
++    display: none;
++    position: absolute;
++    inset-block-start: 5%;
++    inset-inline-end: 5%;
++    color: white;
++    font-size: 4vw;
++    font-weight: bold;
++    font-family: Helvetica, Arial, sans-serif;
++  }
 +
-+    :host([presenter]) #timer {
-+      display: inline;
-+    }
++  :host([presenter]) #timer {
++    display: inline;
++  }
 +
-+    :host([presenter]) {
-+      background: black;
-+    }
++  :host([presenter]) {
++    background: black;
++  }
 +
-+    /* White box around active slide */
-+    :host([presenter])::before {
-+      display: block;
-+      position: absolute;
-+      content: '';
-+      top: calc(25% - 20px);
-+      right:  calc(45% - 20px);
-+      bottom:  calc(25% - 20px);
-+      left:  calc(5% - 20px);
-+      border: 2px solid white;
-+    }
++  /* White box around active slide */
++  :host([presenter])::before,
++  :host([presenter])::after {
++    display: block;
++    position: absolute;
++    content: '';
++    border: 2px solid white;
++  }
 +
-+    /* White box around next slide */
-+    :host([presenter])::after {
-+      display: block;
-+      position: absolute;
-+      content: '';
-+      top: calc(32.5% - 20px);
-+      right: calc(4.5% - 20px);
-+      bottom: calc(32.5% - 20px);
-+      left: calc(60.5% - 20px);
-+      border: 2px solid white;
-+    }
++  :host([presenter])::before {
++    inset-block: var(--active-inset-block-start) var(--active-inset-block-end);
++    inset-inline: var(--active-inset-inline-start) var(--active-inset-inline-end);
++  }
 +
-+    :host([presenter]) .slides ::slotted(*) {
-+      animation: none !important; /* Block user-configured animations */
-+    }
++  /* White box around next slide */
++  :host([presenter])::after {
++    inset-block: var(--presenter-inset-block-start) var(--presenter-inset-block-end);
++    inset-inline: var(--presenter-inset-inline-start) var(--presenter-inset-inline-end);
++  }
 +
-+    :host([presenter]) .slides ::slotted([previous]:not([next])) {
-+      display: none;
-+    }
++  :host([presenter]) .slides ::slotted(*) {
++    animation: none !important; /* Block user-configured animations */
++  }
 +
-+    :host([presenter]) .slides ::slotted([active]) {
-+      transform: translate(-20%, 0) scale(0.5) !important; /* Force presenter layout */
-+    }
++  :host([presenter]) .slides ::slotted([previous]:not([next])) {
++    display: none;
++  }
 +
-+    :host([presenter]) .slides ::slotted([next]) {
-+      transform: translate(28%, 0) scale(0.35) !important; /* Force presenter layout */
-+    }
++  :host([presenter]) .slides ::slotted([active]) {
++    translate: -20% 0;
++    scale: 0.5 !important; /* Force presenter layout */
++  }
 +
-+    :host([presenter]) #progress {
-+      transform: translate(-20%, 25vh) scale(0.5);
-+    }
++  :host([presenter]) .slides ::slotted([next]) {
++    translate: 28% 0;
++    scale: 0.35 !important; /* Force presenter layout */
++  }
 +
-+    #notes {
-+      font-size: 18px;
-+      position: absolute;
-+      bottom: 10vh;
-+      left: 4vw;
-+    }
++  :host([presenter]) #progress {
++    translate: -20% 25vh;
++    scale: 0.5;
++  }
 +
-+    :host(:not([presenter])) #notes,
-+    #notes ::slotted(*) {
-+      display: none;
-+    }
++  #notes {
++    font-size: 18px;
++    position: absolute;
++    inset-block-start: calc(var(--presenter-inset-block-start) + var(--presenter-inset-block-end) + 80px);
++    inset-inline-start: var(--presenter-inset-inline-start);
++  }
 +
-+    :host([presenter]) #notes ::slotted([active]) {
-+      display: block;
-+    }
++  :host(:not([presenter])) #notes,
++  #notes ::slotted(:not([active])) {
++    display: none !important;
++  }
 +
-+    .slides ::slotted([active]) {
-+      z-index: 2;
-+    }
++  .slides ::slotted([active]) {
++    z-index: 2;
++  }
 +
-+    .slides ::slotted([previous]) {
-+      z-index: 0;
-+    }
++  .slides ::slotted([previous]) {
++    z-index: 0;
++  }
 +
-+    .slides ::slotted([fade-in][active].animate-forward) {
-+      animation-name: slidem-fade-in;
-+    }
++  .slides ::slotted([fade-in][active].animate-forward) {
++    animation-name: slidem-fade-in;
++  }
 +
-+    .slides ::slotted([fade-in][previous].animate-backward) {
-+      animation-name: slidem-fade-out;
-+      z-index: 3;
-+    }
++  .slides ::slotted([fade-in][previous].animate-backward) {
++    animation-name: slidem-fade-out;
++    z-index: 3;
++  }
 +
-+    .slides ::slotted([fade-out][active].animate-backward) {
-+      animation-name: slidem-fade-in;
-+    }
++  .slides ::slotted([fade-out][active].animate-backward) {
++    animation-name: slidem-fade-in;
++  }
 +
-+    .slides ::slotted([fade-out][previous].animate-forward) {
-+      animation-name: slidem-fade-out;
-+      z-index: 3;
-+    }
++  .slides ::slotted([fade-out][previous].animate-forward) {
++    animation-name: slidem-fade-out;
++    z-index: 3;
++  }
 +
-+    .slides ::slotted([slide-in][active].animate-forward) {
-+      animation-name: slidem-slide-in-forward;
-+    }
++  .slides ::slotted([slide-in][active].animate-forward) {
++    animation-name: slidem-slide-in-forward;
++  }
 +
-+    .slides ::slotted([slide-in][previous].animate-backward) {
-+      animation-name: slidem-slide-in-backward;
-+      z-index: 3;
-+    }
++  .slides ::slotted([slide-in][previous].animate-backward) {
++    animation-name: slidem-slide-in-backward;
++    z-index: 3;
++  }
 +
-+    .slides ::slotted([slide-out][active].animate-backward) {
-+      animation-name: slidem-slide-out-backward;
-+    }
++  .slides ::slotted([slide-out][active].animate-backward) {
++    animation-name: slidem-slide-out-backward;
++  }
 +
-+    .slides ::slotted([slide-out][previous].animate-forward) {
-+      animation-name: slidem-slide-out-forward;
-+      z-index: 3;
-+    }
++  .slides ::slotted([slide-out][previous].animate-forward) {
++    animation-name: slidem-slide-out-forward;
++    z-index: 3;
++  }
 +`);
  
  export class SlidemDeck extends GluonElement {
@@ -260,12 +329,12 @@ index 503d779..5ed86df 100644
 -      <div id="progress"></div>
 -      <div id="timer"></div>
 +      <div id="progress" part="progress"><slot name="progress" id="progressSlot"></slot></div>
-+      <div id="notes" part="notes"><slot name="presenter"></slot></div>
++      <div id="notes" part="notes"><slot name="notes"></slot></div>
 +      <div id="timer" part="timer"></div>
        <gluon-keybinding id="timerToggle" key="t"></gluon-keybinding>
        <gluon-keybinding id="presenterToggle" key="p"></gluon-keybinding>
        <div id="forward">
-@@ -97,215 +326,6 @@ export class SlidemDeck extends GluonElement {
+@@ -97,215 +305,6 @@ export class SlidemDeck extends GluonElement {
          <gluon-keybinding key="Left"></gluon-keybinding>
          <slot name="backward"></slot>
        </div>
@@ -481,7 +550,7 @@ index 503d779..5ed86df 100644
      `;
    }
  
-@@ -321,8 +341,15 @@ export class SlidemDeck extends GluonElement {
+@@ -321,8 +320,15 @@ export class SlidemDeck extends GluonElement {
      }
    }
  
@@ -497,7 +566,7 @@ index 503d779..5ed86df 100644
  
      // Initialize presenter mode based on the '?presenter' query being present
      this.presenter = currentQuery() === 'presenter';
-@@ -350,8 +377,12 @@ export class SlidemDeck extends GluonElement {
+@@ -350,8 +356,12 @@ export class SlidemDeck extends GluonElement {
      this.slides = Array.from(this.children).filter(item => !item.hasAttribute('slot'));
  
      // Create dots for progress bar
@@ -505,14 +574,14 @@ index 503d779..5ed86df 100644
 -      this.$.progress.appendChild(document.createElement('div'));
 +    this.slides.forEach((slide, i) => {
 +      this.$.progressSlot.appendChild(document.createElement('div'));
-+      slide.querySelectorAll('[slot="presenter"]').forEach(note => {
++      slide.querySelectorAll('[slot="notes"]').forEach(note => {
 +        note.setAttribute('slide', i + 1);
 +        this.appendChild(note);
 +      });
      });
  
      /**
-@@ -360,24 +391,43 @@ export class SlidemDeck extends GluonElement {
+@@ -360,24 +370,43 @@ export class SlidemDeck extends GluonElement {
       * Handles route changes and displays / animates the slides by changing classes and attributes
       */
      onRouteChange(() => {
@@ -562,7 +631,7 @@ index 503d779..5ed86df 100644
          }
        }
  
-@@ -398,11 +448,11 @@ export class SlidemDeck extends GluonElement {
+@@ -398,11 +427,11 @@ export class SlidemDeck extends GluonElement {
        if (this.previousSlide !== undefined) {
          this.slides[this.previousSlide].removeAttribute('active');
          this.slides[this.previousSlide].setAttribute('previous', '');
@@ -576,7 +645,7 @@ index 503d779..5ed86df 100644
  
        this.previousSlide = this.currentSlide;
      });
-@@ -411,6 +461,10 @@ export class SlidemDeck extends GluonElement {
+@@ -411,6 +440,10 @@ export class SlidemDeck extends GluonElement {
        path = window.history.pushState({}, '', `${path}${(query && '?' + query) || ''}${(hash && '#' + hash) || ''}`);
        window.dispatchEvent(new Event('location-changed'));
        localStorage.setItem('location', currentHash());
@@ -587,7 +656,7 @@ index 503d779..5ed86df 100644
      };
  
      /**
-@@ -419,16 +473,16 @@ export class SlidemDeck extends GluonElement {
+@@ -419,16 +452,16 @@ export class SlidemDeck extends GluonElement {
       * The 'forward' and 'backward' elements handle click events and navigate to the next/previous step/slide
       */
      this.$.forward.onclick = () => {
@@ -608,13 +677,13 @@ index 503d779..5ed86df 100644
        } else if (this.currentSlide > 0) {
          changeLocation({ hash: `slide-${this.currentSlide}/step-${(this.slides[this.currentSlide - 1].steps || 0) + 1}` });
        }
-@@ -551,3 +605,4 @@ const __timer = begin => {
+@@ -551,3 +584,4 @@ const __timer = begin => {
  };
  
  customElements.define(SlidemDeck.is, SlidemDeck);
 +
 diff --git a/node_modules/slidem/slidem-slide-base.js b/node_modules/slidem/slidem-slide-base.js
-index a36279d..afc0f50 100644
+index a36279d..970d9ae 100644
 --- a/node_modules/slidem/slidem-slide-base.js
 +++ b/node_modules/slidem/slidem-slide-base.js
 @@ -1,102 +1,104 @@
@@ -687,7 +756,7 @@ index a36279d..afc0f50 100644
 +  @keyframes zoom-in {
 +    from {
 +      opacity: 0;
-+      transform: scale(0);
++      scale: 0;
      }
 -
 -    @keyframes zoom-out {
@@ -701,7 +770,7 @@ index a36279d..afc0f50 100644
 -      }
 +    to {
 +      opacity: 1;
-+      transform: scale(var(--slidem-content-scale, 1));
++      scale: var(--slidem-content-scale, 1);
      }
 +  }
  
@@ -710,14 +779,14 @@ index a36279d..afc0f50 100644
 +  @keyframes zoom-out {
 +    from {
 +      opacity: 1;
-+      transform: scale(var(--slidem-content-scale, 1));
++      scale: var(--slidem-content-scale, 1);
      }
 -
 -    :host([zoom-in][previous].animate-backward) #content {
 -      animation-name: zoom-out;
 +    to {
 +      opacity: 0;
-+      transform: scale(0);
++      scale: 0;
      }
 +  }
  
@@ -849,7 +918,7 @@ index a36279d..afc0f50 100644
    set step(step) {
      this.setAttribute('step', step);
    }
-@@ -143,17 +164,18 @@ export class SlidemSlideBase extends GluonElement {
+@@ -143,27 +164,29 @@ export class SlidemSlideBase extends GluonElement {
      return Number(this.getAttribute('step')) || 1;
    }
  
@@ -876,13 +945,21 @@ index a36279d..afc0f50 100644
      const documentStyle = window.getComputedStyle(document.documentElement);
      const width = Number((documentStyle.getPropertyValue('--slidem-content-width') || '1760px').slice(0, -2));
      const height = Number((documentStyle.getPropertyValue('--slidem-content-height') || '990px').slice(0, -2));
-@@ -167,3 +189,4 @@ export class SlidemSlideBase extends GluonElement {
+     const scale = Math.min(window.innerHeight / 1.09 / height, window.innerWidth / 1.09 / width);
+     if (scale < 1) {
+       document.documentElement.style.setProperty('--slidem-content-scale', scale);
+-      this.$.content && (this.$.content.style.transform = `scale(${scale})`);
++      this.$.content?.style?.setProperty('scale', scale);
+     } else {
+       document.documentElement.style.setProperty('--slidem-content-scale', 1);
+-      this.$.content && (this.$.content.style.transform = `scale(1)`);
++      this.$.content?.style?.setProperty('scale', 1);
      }
    }
  }
 +
 diff --git a/node_modules/slidem/slidem-slide.js b/node_modules/slidem/slidem-slide.js
-index 4cdc5a1..23ab052 100644
+index 4cdc5a1..08359c7 100644
 --- a/node_modules/slidem/slidem-slide.js
 +++ b/node_modules/slidem/slidem-slide.js
 @@ -1,6 +1,7 @@
@@ -920,7 +997,7 @@ index 4cdc5a1..23ab052 100644
        } else if (background.match(/^(http|\/|\.)/)) {
          let image = `url(${background})`;
          const darken = this.getAttribute('darken-background');
-@@ -43,11 +37,11 @@ export class SlidemSlide extends SlidemSlideBase {
+@@ -43,42 +37,37 @@ export class SlidemSlide extends SlidemSlideBase {
          }
          this.style.backgroundImage = image;
        } else {
@@ -932,9 +1009,33 @@ index 4cdc5a1..23ab052 100644
 -    this.textNodes = Array.from(this.querySelectorAll('h1, h2, h3, h4, h5, h6, p, li, span'));
 +    this.textNodes = Array.from(this.querySelectorAll('h1, h2, h3, h4, h5, h6, p, li, span, em, strong, small'));
      this.textNodes.forEach(textNode => {
-       if (textNode.getAttribute('font-size') !== null) {
+-      if (textNode.getAttribute('font-size') !== null) {
++      if (textNode.hasAttribute('font-size')) {
          textNode.style.fontSize = textNode.getAttribute('font-size');
-@@ -72,13 +66,8 @@ export class SlidemSlide extends SlidemSlideBase {
+       }
+-      if (textNode.getAttribute('bold') !== null) {
++      if (textNode.hasAttribute('bold')) {
+         textNode.style.fontWeight = 'bold';
+       }
+-      if (textNode.getAttribute('underline') !== null) {
++      if (textNode.hasAttribute('underline')) {
+         textNode.style.textDecoration = 'underline';
+       }
+-      if (textNode.getAttribute('italic') !== null) {
++      if (textNode.hasAttribute('italic')) {
+         textNode.style.fontStyle = 'italic';
+       }
+-      if (textNode.getAttribute('uppercase') !== null) {
++      if (textNode.hasAttribute('uppercase')) {
+         textNode.style.textTransform = 'uppercase';
+       }
+-      if (textNode.getAttribute('center') !== null) {
++      if (textNode.hasAttribute('center')) {
+         textNode.style.textAlign = 'center';
+       }
+-      if (textNode.getAttribute('line-height') !== null) {
++      if (textNode.hasAttribute('line-height')) {
+         textNode.style.lineHeight = textNode.getAttribute('line-height');
        }
        const color = textNode.getAttribute('color');
        if (color !== null) {
@@ -950,7 +1051,7 @@ index 4cdc5a1..23ab052 100644
          } else {
            textNode.style.color = color;
          }
-@@ -103,6 +92,8 @@ export class SlidemSlide extends SlidemSlideBase {
+@@ -103,14 +92,16 @@ export class SlidemSlide extends SlidemSlideBase {
  
    attributeChangedCallback(attr, oldVal, newVal) {
      super.attributeChangedCallback(attr, oldVal, newVal);
@@ -958,7 +1059,17 @@ index 4cdc5a1..23ab052 100644
 +      this.dispatchEvent(new Event('activated'));
      if (attr === 'active' || attr === 'next') {
        if (newVal !== null) {
-         this.__rescale();
+-        this.__rescale();
++        this.#rescale();
+       }
+     }
+   }
+ 
+-  __rescale() {
++  #rescale() {
+     requestAnimationFrame(() => {
+       this.textNodes.forEach(textNode => {
+         if (textNode.getAttribute('fit') !== null) {
 @@ -126,3 +117,4 @@ export class SlidemSlide extends SlidemSlideBase {
  }
  
