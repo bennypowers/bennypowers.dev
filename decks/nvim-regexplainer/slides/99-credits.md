@@ -7,15 +7,15 @@ name: credits
 <section>
 <header>Benny Powers</header>
 <dl>
-  <dt>💼</dt>
+  <dt><abbr title="day job">💼</abbr></dt>
   <dd>Principal UX Engineer @ {% icon 'redhat', title="Red Hat" %}</dd>
 
-  <dt>🐘</dt>
+  <dt><abbr title="mastodon">🐘</abbr></dt>
   <dd>
-    <a rel="me" href="https://social.bennypowers.dev/@i">@i@social.bennypowers.dev</a>
+    <a rel="me" href="https://social.bennypowers.dev/@i">@bp@bennypowers.dev</a>
   </dd>
 
-  <dt>🐙</dt>
+  <dt><abbr title="github">🐙</abbr></dt>
   <dd>
     <a rel="me"href="https://github.com/bennypowers">github.com/bennypowers</a>
   </dd>

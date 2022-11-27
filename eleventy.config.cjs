@@ -18,7 +18,8 @@ const PostsPlugin = require('./_plugins/posts.cjs');
 module.exports = function(eleventyConfig) {
   eleventyConfig.ignores.add('README.md');
   eleventyConfig.setQuietMode(true);
-  eleventyConfig.amendLibrary('md', md => md.use(anchor, { permalink: anchor.permalink.headerLink(), }));
+  eleventyConfig.amendLibrary('md', md =>
+    md.use(anchor, { permalink: anchor.permalink.headerLink(), }));
   eleventyConfig.addDataExtension('yaml', x => YAML.parse(x));
   eleventyConfig.addPassthroughCopy('assets');
   eleventyConfig.addPassthroughCopy({ 'webfinger.json': '.well-known/webfinger' });
@@ -30,9 +31,14 @@ module.exports = function(eleventyConfig) {
   eleventyConfig.addPlugin(EmbedPlugin, { lite: true });
   eleventyConfig.addPlugin(TableOfContentsPlugin);
   eleventyConfig.addPlugin(TimeToReadPlugin);
-  eleventyConfig.addPlugin(EleventyPluginSyntaxhighlight);
   eleventyConfig.addPlugin(EleventyPluginDirectoryOutput);
   eleventyConfig.addPlugin(EleventyRenderPlugin);
+  eleventyConfig.addPlugin(EleventyPluginSyntaxhighlight, {
+    init({ Prism }) {
+      const loadLanguages = require('prismjs/components/index')
+      loadLanguages(['regex'])
+    }
+  });
   return {
     templateFormats: [ 'md', 'njk', 'html', 'svg' ],
     markdownTemplateEngine: 'njk',

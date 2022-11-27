@@ -7,5 +7,6 @@ description: >
   How and Why I built the neovim plugin `nvim-regexplainer`, and what I learned
   from the process: lua, nvim APIs, and more.
 stylesheets:
-  - href: '/decks/nvim-regexplainer/nvim-regexplainer.css'
+  - href: /assets/catppuccin-mocha.css
+  - href: /decks/nvim-regexplainer/nvim-regexplainer.css
 ---
