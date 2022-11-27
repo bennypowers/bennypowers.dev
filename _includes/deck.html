@@ -10,9 +10,7 @@ stylesheets:
 ---
 <main>
 <slidem-deck>
-  <div slot="progress" style="display: contents">
-    <sl-progress-bar id="slides-progress" indeterminate></sl-progress-bar>
-  </div>
+  <sl-progress-bar slot="progress" id="slides-progress" indeterminate></sl-progress-bar>
   {% for slide in collections.slides %}
   {% if slide.deck == deck %}
     <slidem-slide{% if slide.data.name %}
