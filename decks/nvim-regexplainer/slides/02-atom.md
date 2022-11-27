@@ -1,16 +1,15 @@
 ---
-reveal: li
+reveal: li, p
 name: atom
 ---
-## Atom Refugee
+## Atom Refugee <svg><use xlink:href="#atom-icon"></use></svg>
 
-- Hackability
+- 🧰 Hackability 🔌 Plugins 🐿️ TreeSitter
 - `atom-regex-railroad` ![screenshot of atom-regex-railroad plugin, showing the 
   plugin graphically illustrating the contents of a regular expression which 
   appears in the main buffer of the editor](atom-regex-railroad.png)
-- Do _YOU_ know any hackable editors?
 
-<aside slot="presenter">
+<aside slot="notes">
 
 Atom was my daily driver for years
 - I loved it's hackability

@@ -17,42 +17,72 @@ slidem-slide::part(container) {
   -webkit-text-fill-color: initial;
 }
 
-[name=atom] img {
-  position: fixed;
-  inset-inline-end: 1em;
-  inset-block-start: 0;
-}
-
-ul {
-  list-style-type: none;
-  display: grid;
-  gap: 1em;
+:is(a, h1, h2, h3, h4, h5) svg {
+  width: 1em;
+  height: 1em;
 }
 
 aside ul {
   display: initial;
 }
 
-h2:not(#atom-refugee) {
+h2 {
   text-align: center;
 }
 
-slidem-slide:not([name=atom])::part(content) {
+slidem-slide::part(content) {
   display:flex;
   flex-flow: column;
   align-items: center;
   justify-content: center;
 }
 
-slidem-slide[name=atom]::part(content) {
-  display:flex;
-  flex-flow: column;
-  align-items: start;
-  justify-content: center;
+ul {
+  padding: 0;
+  list-style-type: none;
+  display: grid;
+  gap: 1em;
+}
+
+dl {
+  display: grid;
+  gap: 1em .6em;
+  grid-template-columns: min-content auto;
+}
+
+dd {
+  display: flex;
+  align-items: center;
+  gap: .5em;
 }
 
 [name=title] p {
-  margin-block-start: 2em;
+  position: absolute;
+  inset-block-end: 0;
+  font-size: 16px;
+}
+
+[name=intro] ul {
+  place-items: center;
+}
+
+[name=atom] li {
+  display: grid;
+  place-items: center;
+  gap: 1em;
+}
+
+[name=code] li:first-child {
+  position: relative;
+}
+
+[name=code] li:first-child {
+  height: 2em;
+}
+
+[name=code] li:first-child img {
+  top: 0;
+  position: absolute;
 }
 
 [name=credits] svg {
@@ -69,16 +99,4 @@ slidem-slide[name=atom]::part(content) {
 
 [name=credits] section header {
   font-weight: bold;
-}
-
-dl {
-  display: grid;
-  gap: 1em .6em;
-  grid-template-columns: min-content auto;
-}
-
-dd {
-  display: flex;
-  align-items: center;
-  gap: .5em;
 }

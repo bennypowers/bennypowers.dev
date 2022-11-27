@@ -3,11 +3,7 @@
 - 🌘 Moon-Oriented Programming
 - 🐒 Climbing Trees
 
-<aside slot="presenter">
-
-**NeoVim**: a learning experience.
-Used to atom's `vim-mode-plus`
-But the userland is *different* from HTML/CSS/JSS
+<aside slot="notes">
 
 **LUA!**:
 No parentheses ever!
@@ -23,3 +19,5 @@ Occasional Parser bugs (negative lookbehind).
 Missing APIs (user queries).
 
 </aside>
+
+[template]: plugin-template.png
