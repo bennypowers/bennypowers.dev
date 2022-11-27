@@ -1,6 +1,5 @@
 ---
 name: credits
-reveal: img:not(:first-of-type)
 ---
 
 ## Thanks
