@@ -1,8 +1,8 @@
 {
   "subject": "acct:bp@social.bennypowers.dev",
   "aliases": [
-    "https://bennypowers.dev/@bp",
-    "https://bennypowers.dev/users/bp"
+    "https://social.bennypowers.dev/@bp",
+    "https://social.bennypowers.dev/users/bp"
   ],
   "links": [
     {
