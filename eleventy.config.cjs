@@ -21,7 +21,6 @@ module.exports = function(eleventyConfig) {
   eleventyConfig.amendLibrary('md', md => md.use(anchor, { permalink: anchor.permalink.headerLink(), }));
   eleventyConfig.addDataExtension('yaml', x => YAML.parse(x));
   eleventyConfig.addPassthroughCopy('assets');
-  eleventyConfig.addPassthroughCopy('.well-known');
   eleventyConfig.addPlugin(PostsPlugin);
   eleventyConfig.addPlugin(IconsPlugin);
   eleventyConfig.addPlugin(FiltersPlugin);

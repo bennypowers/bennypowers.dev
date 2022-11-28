@@ -1,4 +1,6 @@
-
+[[redirects]]
+from = "/.well-known/host-meta"
+to = "https://social.bennypowers.dev/.well-known/host-meta"
 
 [[edge_functions]]
 function = "webfinger"
