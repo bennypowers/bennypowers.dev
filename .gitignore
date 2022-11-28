@@ -61,3 +61,6 @@ typings/
 .next
 
 _site
+
+# Local Netlify folder
+.netlify
