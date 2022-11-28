@@ -2,7 +2,9 @@
   "subject": "acct:i@social.bennypowers.dev",
   "aliases": [
     "https://social.bennypowers.dev/@i",
-    "https://social.bennypowers.dev/users/i"
+    "https://social.bennypowers.dev/users/i",
+    "https://bennypowers.dev/@bp",
+    "https://bennypowers.dev/users/bp"
   ],
   "links": [
     {

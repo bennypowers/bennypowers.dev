@@ -18,11 +18,10 @@ const PostsPlugin = require('./_plugins/posts.cjs');
 module.exports = function(eleventyConfig) {
   eleventyConfig.ignores.add('README.md');
   eleventyConfig.setQuietMode(true);
-  eleventyConfig.amendLibrary('md', md =>
-    md.use(anchor, { permalink: anchor.permalink.headerLink(), }));
+  eleventyConfig.amendLibrary('md', md => md.use(anchor, { permalink: anchor.permalink.headerLink(), }));
   eleventyConfig.addDataExtension('yaml', x => YAML.parse(x));
   eleventyConfig.addPassthroughCopy('assets');
-  eleventyConfig.addPassthroughCopy({ 'webfinger.json': '.well-known/webfinger' });
+  eleventyConfig.addPassthroughCopy('.well-known');
   eleventyConfig.addPlugin(PostsPlugin);
   eleventyConfig.addPlugin(IconsPlugin);
   eleventyConfig.addPlugin(FiltersPlugin);
@@ -33,12 +32,7 @@ module.exports = function(eleventyConfig) {
   eleventyConfig.addPlugin(TimeToReadPlugin);
   eleventyConfig.addPlugin(EleventyPluginDirectoryOutput);
   eleventyConfig.addPlugin(EleventyRenderPlugin);
-  eleventyConfig.addPlugin(EleventyPluginSyntaxhighlight, {
-    init({ Prism }) {
-      const loadLanguages = require('prismjs/components/index')
-      loadLanguages(['regex'])
-    }
-  });
+  eleventyConfig.addPlugin(EleventyPluginSyntaxhighlight, { init() { require('prismjs/components/index')(['regex']) } });
   return {
     templateFormats: [ 'md', 'njk', 'html', 'svg' ],
     markdownTemplateEngine: 'njk',
