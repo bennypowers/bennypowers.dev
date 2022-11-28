@@ -13,6 +13,10 @@
   --markdown-syntax-class-name-color: var(--maroon);
 }
 
+#slides-progress {
+  --indicator-color: var(--teal);
+}
+
 slidem-slide {
   --background: var(--deck-primary-background);
 }
@@ -107,19 +111,49 @@ slidem-slide dd a {
   rotate: -7deg;
 }
 
-[name=code] li:first-child {
-  position: relative;
+[name=code]::part(content) {
+  display: grid;
+  gap: 20px;
+  grid-template-columns: 1fr 1.6fr;
+  grid-template-areas:
+    'code code'
+    'tree text';
 }
 
-[name=code] li:first-child {
-  height: 2em;
+[name=code] p:first-of-type {
+  display: contents;
 }
 
-[name=code] li:first-child :is(img, pre) {
+[name=code] pre {
+  grid-area: code;
+  align-self: start;
+  width: 100%;
+}
+
+[name=code] pre:nth-child(2) {
   position: absolute;
-  max-width: initial;
-  left: -30%;
-  font-size: 75%;
+}
+
+[name=code] p:not(:first-of-type) {
+  grid-area: text;
+  place-self: center start;
+  font-weight: bolder;
+}
+
+[name=code] p:not(:first-of-type)::before {
+  content: '}';
+  font-size: 500%;
+  font-weight: 100;
+  display: inline-block;
+  vertical-align: middle;
+  margin-block-end: 40px;
+  margin-inline-end: 20px;
+}
+
+[name=code] img {
+  grid-area: tree;
+  /* height: 90%; */
+  align-self: end;
 }
 
 [name=credits] svg {
