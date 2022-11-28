@@ -478,4 +478,4 @@ Thoughts? Corrections? Comments? Let me know on [mastodon][sbpdi].
 [polyfill]: https://github.com/calebdwilliams/element-internals-polyfill
 [polyfill-6kb]: https://unpkg.com/element-internals-polyfill
 [custom-state]: https://wicg.github.io/custom-state-pseudo-class/#dom-elementinternals-states
-[sbpdi]: https://social.bennypowers.dev/@i
+[sbpdi]: https://social.bennypowers.dev/@bp
