@@ -1,5 +1,4 @@
-![screenshot of nvim plugin template git repo, cursor hovers on "use this 
-template"][template]
+![screenshot of nvim plugin template git repo, cursor hovers on "use this template"][template]
 
 <aside slot="notes">
 
