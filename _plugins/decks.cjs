@@ -41,11 +41,9 @@ async function bundleSlidemDependencies(e) {
     ],
     stdin: {
       sourcefile: 'components.js',
-      resolveDir: path.join(__dirname, '..', 'node_modules'),
+      resolveDir: path.join(process.cwd(), 'node_modules'),
       contents: `
-import 'slidem/slidem-deck.js';
-import 'slidem/slidem-slide.js';
-import 'slidem/slidem-video-slide.js';
+import 'slidem';
 import '@shoelace-style/shoelace/dist/components/progress-bar/progress-bar.js';
 `,
     },
