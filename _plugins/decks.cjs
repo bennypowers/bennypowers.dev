@@ -87,7 +87,12 @@ module.exports = function decksPlugin(eleventyConfig, {
     'webp',
   ]
 } = {}) {
-  const assignDeck = x => Object.assign(x, { deck: x.data.page.filePathStem.split('/').at(2) });
+  const assignMetadata = x => Object.assign(x, {
+    deck: x.data.page.filePathStem.split('/').at(2),
+    data: Object.assign(x.data, {
+      name: x.data.name ?? path.basename(x.data.page.filePathStem).replace(/^\d+-/, '')
+    }),
+  });
 
   const byInputPath = (a, b) =>
       a.inputPath < b.inputPath ? -1
@@ -100,16 +105,16 @@ module.exports = function decksPlugin(eleventyConfig, {
   /** Get all the slides, sort and assign their deck id */
   eleventyConfig.addCollection('slides', collectionApi => collectionApi
     .getFilteredByGlob(`./${decksDir}/*/slides/*`)
-    .map(assignDeck)
+    .map(assignMetadata)
     .sort(byInputPath));
 
   /** Add the `reveal` attribute to all elements matching the selector */
   eleventyConfig.addFilter('reveal', addRevealAttrs);
 
-  eleventyConfig.addGlobalData('DECKS_src_dir', () => __dirname);
+  eleventyConfig.addGlobalData('DECKS_srcDir', () => __dirname);
 
   eleventyConfig.on('eleventy.before', async function copyDeckLayout({ dir }) {
-    const SRC_DIR = eleventyConfig.globalData.DECKS_src_dir();
+    const SRC_DIR = eleventyConfig.globalData.DECKS_srcDir();
     const INPUT = path.join(SRC_DIR, 'decks', 'templates', 'deck.html');
     const OUTPUT = path.join(process.cwd(), dir.includes, 'deck.html');
     await fs.cp(INPUT, OUTPUT, {force: true});
