@@ -1,7 +1,7 @@
 ---
 reveal: li, p
 ---
-## Atom Refugee {% icon 'atom', title='Atom Editor icon' %}
+## Atom Expat {% icon 'atom', title='Atom Editor icon' %}
 
 - 🧰 Hackability 🔌 Plugins 🐿️ TreeSitter
 - `atom-regex-railroad` ![screenshot of atom-regex-railroad plugin, showing the 
