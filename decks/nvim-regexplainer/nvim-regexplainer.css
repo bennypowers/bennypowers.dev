@@ -3,8 +3,10 @@
   --deck-secondary-background: var(--mantle);
   --deck-primary-color: var(--text);
   --deck-secondary-color: var(--subtext1);
+  --fixed-font: "Fira Code", "Operator Mono", "Noto Mono", monospace;
 
   --markdown-syntax-color: var(--text);
+  --markdown-syntax-comment-color: var(--surface2);
   --markdown-code-background-color: var(--base);
   --markdown-syntax-keyword-color: var(--mauve);
   --markdown-syntax-background-color: var(--base);
@@ -32,6 +34,23 @@ slidem-slide::part(container) {
   background: var(--background);
 }
 
+slidem-slide::part(content) {
+  display:flex;
+  flex-flow: column;
+  align-items: center;
+  justify-content: center;
+}
+
+slidem-slide a[href^="http"] {
+  color: var(--blue);
+  text-decoration: underline;
+  text-decoration-thickness: 5px;
+}
+
+slidem-slide a[href^="#"] {
+  pointer-events: none;
+}
+
 :is(a, h1, h2, h3, h4, h5) {
   -webkit-text-fill-color: initial;
 }
@@ -41,19 +60,16 @@ slidem-slide::part(container) {
   height: 1em;
 }
 
+pre[class*=language-] {
+  border-radius: 16px;
+}
+
 aside ul {
   display: initial;
 }
 
 h2 {
   text-align: center;
-}
-
-slidem-slide::part(content) {
-  display:flex;
-  flex-flow: column;
-  align-items: center;
-  justify-content: center;
 }
 
 ul {
@@ -75,7 +91,7 @@ dd {
   gap: .5em;
 }
 
-slidem-slide dd a {
+dd a {
   color: var(--sapphire);
   text-decoration: underline;
 }
@@ -118,7 +134,12 @@ slidem-slide dd a {
   rotate: -7deg;
 }
 
-[name=code]::part(content) {
+[name=do-you] h2 { font-weight: 100; }
+[name=do-you] em { font-weight: 900; }
+[name=doing-nvim] ul { text-align: center; }
+[name=doing-nvim] li { margin: 0; }
+
+[name=treesitter]::part(content) {
   display: grid;
   gap: 20px;
   grid-template-columns: 1fr 1.6fr;
@@ -127,27 +148,27 @@ slidem-slide dd a {
     'tree text';
 }
 
-[name=code] p:first-of-type {
+[name=treesitter] p:first-of-type {
   display: contents;
 }
 
-[name=code] pre {
+[name=treesitter] pre {
   grid-area: code;
   align-self: start;
   width: 100%;
 }
 
-[name=code] pre:nth-child(2) {
+[name=treesitter] pre:nth-child(2) {
   position: absolute;
 }
 
-[name=code] p:not(:first-of-type) {
+[name=treesitter] p:not(:first-of-type) {
   grid-area: text;
   place-self: center start;
   font-weight: bolder;
 }
 
-[name=code] p:not(:first-of-type)::before {
+[name=treesitter] p:not(:first-of-type)::before {
   content: '}';
   font-size: 500%;
   font-weight: 100;
@@ -157,10 +178,18 @@ slidem-slide dd a {
   margin-inline-end: 20px;
 }
 
-[name=code] img {
+[name=treesitter] img {
   grid-area: tree;
   /* height: 90%; */
   align-self: end;
+}
+
+[name=components] pre {
+  position: absolute;
+  inset-block-start: 0;
+  margin-block-start: 0;
+  max-height: 100%;
+  overflow-y: scroll;
 }
 
 [name=credits] svg {

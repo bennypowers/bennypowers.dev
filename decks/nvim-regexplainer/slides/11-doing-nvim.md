@@ -1,7 +1,7 @@
 ## Doing NeoVim
 
-- 🌘 Moon-Oriented Programming
-- 🐒 Climbing Trees
+- 🌘 Moon-Oriented Programming 🖥️
+- 🐒 Climbing Trees 🌴
 
 <aside slot="notes">
 

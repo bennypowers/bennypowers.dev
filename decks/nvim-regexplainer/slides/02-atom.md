@@ -1,6 +1,5 @@
 ---
 reveal: li, p
-name: atom
 ---
 ## Atom Refugee {% icon 'atom', title='Atom Editor icon' %}
 

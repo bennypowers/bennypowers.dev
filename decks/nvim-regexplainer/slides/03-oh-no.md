@@ -1,5 +1,4 @@
 ---
-name: oh-no
 reveal: img:not(:first-of-type)
 ---
 ![Headline: GitHub's new CEO promises to save Atom post-Microsoft acquisition][oh-no]

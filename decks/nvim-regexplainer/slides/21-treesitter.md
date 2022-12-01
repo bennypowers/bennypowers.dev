@@ -1,6 +1,5 @@
 ---
 reveal: pre:not(:first-of-type), img, p:not(:first-of-type)
-name: code
 ---
 
 ```lua

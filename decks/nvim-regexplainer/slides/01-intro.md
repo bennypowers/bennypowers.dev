@@ -1,6 +1,5 @@
 ---
 reveal: li
-name: intro
 ---
 ## 👋
 
