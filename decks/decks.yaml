@@ -1,0 +1,7 @@
+origin: https://bennypowers.dev
+author: Benny Powers
+stylesheets:
+  - href: /assets/prism.css
+  - href: https://fonts.googleapis.com/css2?family=Overpass&family=Hepta+Slab&family=Fira+Code&family=Noto+Mono&display=swap
+eleventyComputed:
+  copyright: "© {{ (datePublished or page.date) | formatDate(year='numeric') }} Benny Powers."

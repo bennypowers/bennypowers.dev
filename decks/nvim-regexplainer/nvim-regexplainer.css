@@ -4,13 +4,20 @@
   --deck-primary-color: var(--text);
   --deck-secondary-color: var(--subtext1);
 
+  --markdown-syntax-color: var(--text);
   --markdown-code-background-color: var(--base);
   --markdown-syntax-keyword-color: var(--mauve);
   --markdown-syntax-background-color: var(--base);
   --markdown-syntax-function-color: var(--blue);
   --markdown-syntax-regex-color: var(--peach);
   --markdown-syntax-punctuation-color: var(--subtext1);
+  --markdown-syntax-operator-color: var(--sky);
   --markdown-syntax-class-name-color: var(--maroon);
+  --markdown-syntax-number-color: var(--yellow);
+}
+
+body {
+  color: var(--text);
 }
 
 #slides-progress {
