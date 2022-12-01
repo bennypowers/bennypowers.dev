@@ -1,12 +1,6 @@
-const path = require('path');
+const fs = require('node:fs/promises');
+const path = require('node:path');
 const cheerio = require('cheerio');
-
-const assignDeck = x => Object.assign(x, { deck: x.data.page.filePathStem.split('/').at(2) });
-
-const byInputPath = (a, b) =>
-    a.inputPath < b.inputPath ? -1
-  : a.inputPath > b.inputPath ? 1
-  : 0;
 
 /**
  * @param {string} content HTML content of the page
@@ -27,7 +21,6 @@ function addRevealAttrs(content, selector) {
 /** Bundle Slidem deck dependencies */
 async function bundleSlidemDependencies(e) {
   console.log('[decks]: bundling with esbuild');
-
   const { build } = await import('esbuild');
   const { minifyHTMLLiteralsPlugin } = await import('esbuild-plugin-minify-html-literals')
   await build({
@@ -50,8 +43,9 @@ async function bundleSlidemDependencies(e) {
       sourcefile: 'components.js',
       resolveDir: path.join(__dirname, '..', 'node_modules'),
       contents: `
-import 'slidem';
+import 'slidem/slidem-deck.js';
 import 'slidem/slidem-slide.js';
+import 'slidem/slidem-video-slide.js';
 import '@shoelace-style/shoelace/dist/components/progress-bar/progress-bar.js';
 `,
     },
@@ -72,7 +66,7 @@ import '@shoelace-style/shoelace/dist/components/progress-bar/progress-bar.js';
  * @example
  * ```tree
  * decks
- * └── 11ty-decks
+ * └── 11ty-deck
  *     ├── deck-graphic.svg
  *     └── slides
  *         ├── 00-title-card.md
@@ -85,16 +79,23 @@ import '@shoelace-style/shoelace/dist/components/progress-bar/progress-bar.js';
 module.exports = function decksPlugin(eleventyConfig, {
   decksDir = 'decks',
   assetsExtensions = [
-    'js',
     'css',
+    'jpeg',
+    'jpg',
+    'js',
+    'mp4',
     'png',
     'svg',
     'webp',
-    'jpg',
-    'jpeg',
-    'mp4',
   ]
 } = {}) {
+  const assignDeck = x => Object.assign(x, { deck: x.data.page.filePathStem.split('/').at(2) });
+
+  const byInputPath = (a, b) =>
+      a.inputPath < b.inputPath ? -1
+    : a.inputPath > b.inputPath ? 1
+    : 0;
+
   for (const ext of assetsExtensions)
     eleventyConfig.addPassthroughCopy(`${decksDir}/**/*.${ext}`);
 
@@ -106,6 +107,15 @@ module.exports = function decksPlugin(eleventyConfig, {
 
   /** Add the `reveal` attribute to all elements matching the selector */
   eleventyConfig.addFilter('reveal', addRevealAttrs);
+
+  eleventyConfig.addGlobalData('DECKS_src_dir', () => __dirname);
+
+  eleventyConfig.on('eleventy.before', async function copyDeckLayout({ dir }) {
+    const SRC_DIR = eleventyConfig.globalData.DECKS_src_dir();
+    const INPUT = path.join(SRC_DIR, 'decks', 'templates', 'deck.html');
+    const OUTPUT = path.join(process.cwd(), dir.includes, 'deck.html');
+    await fs.cp(INPUT, OUTPUT, {force: true});
+  });
 
   /** bundle slidem deck dependencies */
   eleventyConfig.on('eleventy.before', bundleSlidemDependencies);

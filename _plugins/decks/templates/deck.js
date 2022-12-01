@@ -23,37 +23,12 @@ document.body.addEventListener('keydown', event => {
       else
         document.body.requestFullscreen();
       return true;
-    case 'j':
-    case 'l':
-    case 'RightArrow':
-    case 'DownArrow':
-    case 'PageDown':
-    case 'End':
-    case 'Enter':
-    case ' ':
-      deck.$.forward.click();
-      return true;
-    case 'h':
-    case 'k':
-    case 'LeftArrow':
-    case 'UpArrow':
-    case 'Home':
-    case 'PageUp':
-    case 'Backspace':
-      deck.$.backward.click();
-      return true;
-    case 'p':
-      deck.$.presenterToggle.click();
-      return true;
-    case 't':
-      deck.$.timerToggle.click();
-      return true;
     default:
       return true;
   }
 });
 
-window.addEventListener('location-changed', event => {
+deck.addEventListener('change', event => {
   const curr = deck.currentSlide + 1;
   const total = deck.slides.length;
   const oneSlide = (1 / total) * 100;
@@ -66,3 +41,4 @@ window.addEventListener('location-changed', event => {
 
 await customElements.whenDefined('slidem-deck');
 progress.indeterminate = false;
+

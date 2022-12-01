@@ -64,3 +64,5 @@ _site
 
 # Local Netlify folder
 .netlify
+
+_includes/deck.html
