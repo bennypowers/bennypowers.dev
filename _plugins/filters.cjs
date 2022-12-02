@@ -1,5 +1,3 @@
-const mime = require('mime-types');
-
 /**
  * @param {string} content
  * @return {string}
@@ -43,7 +41,6 @@ function formatDate(d, opts) {
 
 /** @param{import('@11ty/eleventy/src/UserConfig.js')} eleventyConfig */
 module.exports = function(eleventyConfig) {
-  eleventyConfig.addFilter('mime', url => mime.lookup(url));
   eleventyConfig.addFilter('abbrs', abbrs);
   eleventyConfig.addFilter('formatDate', formatDate);
 };

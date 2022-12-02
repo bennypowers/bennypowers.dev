@@ -2,6 +2,7 @@ const YAML = require('yaml');
 const anchor = require('markdown-it-anchor');
 const { EleventyRenderPlugin } = require('@11ty/eleventy');
 
+const DecksPlugin = require('eleventy-plugin-slide-decks');
 const EmbedPlugin = require('eleventy-plugin-embed-everything');
 const TableOfContentsPlugin = require('eleventy-plugin-nesting-toc');
 const TimeToReadPlugin = require('eleventy-plugin-time-to-read');
@@ -9,7 +10,6 @@ const EleventyPluginDirectoryOutput = require('@11ty/eleventy-plugin-directory-o
 const EleventyPluginSyntaxhighlight = require('@11ty/eleventy-plugin-syntaxhighlight');
 
 const GlitchPlugin = require('./_plugins/glitch.cjs');
-const DecksPlugin = require('./_plugins/decks.cjs');
 const IconsPlugin = require('./_plugins/icons.cjs');
 const FiltersPlugin = require('./_plugins/filters.cjs');
 const PostsPlugin = require('./_plugins/posts.cjs');
