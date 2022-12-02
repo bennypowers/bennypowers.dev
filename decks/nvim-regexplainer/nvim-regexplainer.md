@@ -1,10 +1,10 @@
 ---
 layout: deck.html
 deck: nvim-regexplainer
-title: Building Regexplainer Neovim Plugin
+title: Regexplainer
 date: 2022-12-10
-description: >
-  How and Why I built the neovim plugin `nvim-regexplainer`, and what I learned
+description: >-
+  How and why I built the neovim plugin `nvim-regexplainer`, and what I learned
   from the process: lua, nvim APIs, and more.
 icons:
   - rel: icon
