@@ -15,3 +15,10 @@ local regexp_node = do_awful_hacks(cursor_node)
 Everything we need
 
 [ts-playground]: ts-playground.png
+
+<section slot="notes">
+
+- do hacks to cross between host language and regex trees
+- there's lots of room for improvement here
+
+</section>
