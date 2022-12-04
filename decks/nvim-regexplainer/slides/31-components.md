@@ -4,8 +4,9 @@ reveal: pre
 ## Components
 
 - Combine sequential `pattern_character`s
-- Track nesting levels
+- Track capture groups and nesting levels
 - Translate control chars / quantifiers
+- Try to handle negative lookbehinds
 
 ```json
 {

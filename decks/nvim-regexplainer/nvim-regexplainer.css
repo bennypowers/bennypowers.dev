@@ -194,6 +194,7 @@ dd {
   & img {
     grid-area: tree;
     align-self: end;
+    scale: 0.9;
   }
 }
 
@@ -208,6 +209,7 @@ dd {
 }
 
 [name="buffers"] {
+  background: var(--base);
   & ul {
     display: grid;
     grid-template: 1fr 1fr / 1fr 1fr;

@@ -3,7 +3,7 @@ reveal: li
 ---
 ## Contributions Welcome
 
-- Graphic output
-- Negative Lookbehind
-- Refactoring
-- Tests
+- 💻 Graphic output
+- 👀 Negative Lookbehind
+- 🔨 Refactoring
+- 🥼 Tests

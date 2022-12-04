@@ -5,7 +5,7 @@ name: credits
 ## Thanks
 
 <section>
-<header>Benny Powers</header>
+<header><h3>Benny Powers</h3></header>
 <dl>
   <dt><abbr title="day job">💼</abbr></dt>
   <dd>Principal UX Engineer @ {% icon 'redhat', title="Red Hat" %}</dd>
