@@ -4,7 +4,6 @@
   --deck-primary-color: var(--text);
   --deck-secondary-color: var(--subtext1);
   --fixed-font: "Fira Code", "Operator Mono", "Noto Mono", monospace;
-
   --markdown-syntax-color: var(--text);
   --markdown-syntax-comment-color: var(--surface2);
   --markdown-code-background-color: var(--base);
@@ -28,48 +27,40 @@ body {
 
 slidem-slide {
   --background: var(--deck-primary-background);
-}
 
-slidem-slide::part(container) {
-  background: var(--background);
-}
+  &::part(container) {
+    background: var(--background);
+  }
 
-slidem-slide::part(content) {
-  display:flex;
-  flex-flow: column;
-  align-items: center;
-  justify-content: center;
-}
+  &::part(content) {
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    justify-content: center;
+  }
 
-slidem-slide a[href^="http"] {
-  color: var(--blue);
-  text-decoration: underline;
-  text-decoration-thickness: 5px;
-}
+  & a[href^="http"] {
+    color: var(--blue);
+    text-decoration: underline;
+    text-decoration-thickness: 5px;
+  }
 
-slidem-slide a[href^="#"] {
-  pointer-events: none;
+  & a[href^="#"] {
+    pointer-events: none;
+  }
 }
 
 :is(a, h1, h2, h3, h4, h5) {
   -webkit-text-fill-color: initial;
+
+  & svg {
+    width: 1em;
+    height: 1em;
+  }
 }
 
-:is(a, h1, h2, h3, h4, h5) svg {
-  width: 1em;
-  height: 1em;
-}
-
-pre[class*=language-] {
+pre[class*="language-"] {
   border-radius: 16px;
-}
-
-aside ul {
-  display: initial;
-}
-
-h2 {
-  text-align: center;
 }
 
 ul {
@@ -77,133 +68,166 @@ ul {
   list-style-type: none;
   display: grid;
   gap: 1em;
+
+  aside & {
+    display: initial;
+  }
+}
+
+h2 {
+  text-align: center;
 }
 
 dl {
   display: grid;
-  gap: 1em .6em;
+  gap: 1em 0.6em;
   grid-template-columns: min-content auto;
 }
 
 dd {
   display: flex;
   align-items: center;
-  gap: .5em;
+  gap: 0.5em;
+
+  & a {
+    color: var(--sapphire);
+    text-decoration: underline;
+  }
 }
 
-dd a {
-  color: var(--sapphire);
-  text-decoration: underline;
+[name="title"] {
+  & h1 {
+    font-weight: 900;
+
+    & span {
+      font-weight: 100;
+    }
+  }
+
+  & p {
+    position: absolute;
+    inset-block-end: 0;
+    font-size: 16px;
+  }
 }
 
-[name=title] h1 {
-  font-weight: 900;
-}
-
-[name=title] h1 span {
-  font-weight: 100;
-}
-
-[name=title] p {
-  position: absolute;
-  inset-block-end: 0;
-  font-size: 16px;
-}
-
-[name=intro] ul {
+[name="intro"] ul {
   place-items: center;
 }
 
-[name=atom] li {
+[name="atom"] li {
   display: grid;
   place-items: center;
   gap: 1em;
 }
 
-[name=oh-no] p { display: contents; }
+[name="oh-no"] {
+  & p { display: contents; }
 
-[name=oh-no] img:nth-of-type(2) {
-  position: absolute;
-  scale: .75;
-  rotate: 15deg;
+  & img {
+    &:nth-of-type(2) {
+      position: absolute;
+      scale: 0.75;
+      rotate: 15deg;
+    }
+
+    &:nth-of-type(3) {
+      position: absolute;
+      scale: 0.85;
+      rotate: -7deg;
+    }
+  }
 }
 
-[name=oh-no] img:nth-of-type(3) {
-  position: absolute;
-  scale: .85;
-  rotate: -7deg;
+[name="do-you"] {
+  & h2 { font-weight: 100; }
+  & em { font-weight: 900; }
 }
 
-[name=do-you] h2 { font-weight: 100; }
-[name=do-you] em { font-weight: 900; }
-[name=doing-nvim] ul { text-align: center; }
-[name=doing-nvim] li { margin: 0; }
-
-[name=treesitter]::part(content) {
-  display: grid;
-  gap: 20px;
-  grid-template-columns: 1fr 1.6fr;
-  grid-template-areas:
-    'code code'
-    'tree text';
+[name="doing-nvim"] {
+  & ul { text-align: center; }
+  & li { margin: 0; }
 }
 
-[name=treesitter] p:first-of-type {
-  display: contents;
+[name="treesitter"] {
+  &::part(content) {
+    display: grid;
+    gap: 20px;
+    grid-template-columns: 1fr 1.6fr;
+    grid-template-areas:
+      "code code"
+      "tree text";
+  }
+
+  & p {
+    &:first-of-type {
+      display: contents;
+    }
+
+    &:not(:first-of-type) {
+      grid-area: text;
+      place-self: center start;
+      font-weight: bolder;
+
+      &:before {
+        content: "}";
+        font-size: 500%;
+        font-weight: 100;
+        display: inline-block;
+        vertical-align: middle;
+        margin-block-end: 40px;
+        margin-inline-end: 20px;
+      }
+    }
+  }
+
+  & pre {
+    grid-area: code;
+    align-self: start;
+    width: 100%;
+
+    &:nth-child(2) {
+      position: absolute;
+    }
+  }
+
+  & img {
+    grid-area: tree;
+    align-self: end;
+  }
 }
 
-[name=treesitter] pre {
-  grid-area: code;
-  align-self: start;
-  width: 100%;
+[name="components"] {
+  & pre {
+    position: absolute;
+    inset-block-start: 0;
+    margin-block-start: 0;
+    max-height: 100%;
+    overflow-y: scroll;
+  }
 }
 
-[name=treesitter] pre:nth-child(2) {
-  position: absolute;
+[name="buffers"] {
+  & ul {
+    display: grid;
+    grid-template: 1fr 1fr / 1fr 1fr;
+  }
 }
 
-[name=treesitter] p:not(:first-of-type) {
-  grid-area: text;
-  place-self: center start;
-  font-weight: bolder;
-}
+[name="credits"] {
+  & svg {
+    height: 1em;
+    width: 1em;
+  }
 
-[name=treesitter] p:not(:first-of-type)::before {
-  content: '}';
-  font-size: 500%;
-  font-weight: 100;
-  display: inline-block;
-  vertical-align: middle;
-  margin-block-end: 40px;
-  margin-inline-end: 20px;
-}
+  & section {
+    background: var(--base);
+    border-radius: 24px;
+    padding: 1em 1.6em;
+    margin-block-start: 1em;
 
-[name=treesitter] img {
-  grid-area: tree;
-  /* height: 90%; */
-  align-self: end;
-}
-
-[name=components] pre {
-  position: absolute;
-  inset-block-start: 0;
-  margin-block-start: 0;
-  max-height: 100%;
-  overflow-y: scroll;
-}
-
-[name=credits] svg {
-  height: 1em;
-  width: 1em;
-}
-
-[name=credits] section {
-  background: var(--base);
-  border-radius: 24px;
-  padding: 1em 1.6em;
-  margin-block-start: 1em;
-}
-
-[name=credits] section header {
-  font-weight: bold;
+    & header {
+      font-weight: bold;
+    }
+  }
 }

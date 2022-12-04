@@ -13,6 +13,7 @@ const GlitchPlugin = require('./_plugins/glitch.cjs');
 const IconsPlugin = require('./_plugins/icons.cjs');
 const FiltersPlugin = require('./_plugins/filters.cjs');
 const PostsPlugin = require('./_plugins/posts.cjs');
+const PostCSSPlugin = require('./_plugins/postcss.cjs');
 
 /** @param{import('@11ty/eleventy/src/UserConfig.js')} eleventyConfig */
 module.exports = function(eleventyConfig) {
@@ -24,8 +25,9 @@ module.exports = function(eleventyConfig) {
   eleventyConfig.addPlugin(PostsPlugin);
   eleventyConfig.addPlugin(IconsPlugin);
   eleventyConfig.addPlugin(FiltersPlugin);
-  eleventyConfig.addPlugin(DecksPlugin);
+  eleventyConfig.addPlugin(DecksPlugin, { assetsExtensions: ['png', 'svg']});
   eleventyConfig.addPlugin(GlitchPlugin);
+  eleventyConfig.addPlugin(PostCSSPlugin);
   eleventyConfig.addPlugin(EmbedPlugin, { lite: true });
   eleventyConfig.addPlugin(TableOfContentsPlugin);
   eleventyConfig.addPlugin(TimeToReadPlugin);
@@ -33,7 +35,7 @@ module.exports = function(eleventyConfig) {
   eleventyConfig.addPlugin(EleventyRenderPlugin);
   eleventyConfig.addPlugin(EleventyPluginSyntaxhighlight, { init() { require('prismjs/components/index')(['regex']) } });
   return {
-    templateFormats: [ 'md', 'njk', 'html', 'svg' ],
+    templateFormats: [ 'md', 'njk', 'html', 'svg', 'css' ],
     markdownTemplateEngine: 'njk',
     htmlTemplateEngine: 'njk',
   };
