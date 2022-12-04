@@ -2,6 +2,8 @@
 reveal: pre:not(:first-of-type), img, p:not(:first-of-type)
 ---
 
+## Components
+
 ```lua
 local cursor_node = ts_utils.get_node_at_cursor()
 ```

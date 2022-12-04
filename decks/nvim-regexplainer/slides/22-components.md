@@ -1,12 +1,11 @@
 ---
 reveal: pre
 ---
-## Components
 
-- Combine sequential `pattern_character`s
-- Track capture groups and nesting levels
-- Translate control chars / quantifiers
-- Try to handle negative lookbehinds
+1. Combine sequential `pattern_character`s
+1. Track capture groups and nesting levels
+1. Translate control chars / quantifiers
+1. Try to handle negative lookbehinds
 
 ```json
 {

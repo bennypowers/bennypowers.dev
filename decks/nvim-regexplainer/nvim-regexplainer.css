@@ -15,9 +15,6 @@
   --markdown-syntax-operator-color: var(--sky);
   --markdown-syntax-class-name-color: var(--maroon);
   --markdown-syntax-number-color: var(--yellow);
-}
-
-body {
   color: var(--text);
 }
 
@@ -63,15 +60,19 @@ pre[class*="language-"] {
   border-radius: 16px;
 }
 
+ol,
 ul {
   padding: 0;
-  list-style-type: none;
   display: grid;
   gap: 1em;
 
   aside & {
     display: initial;
   }
+}
+
+ul {
+  list-style-type: none;
 }
 
 h2 {
@@ -82,16 +83,16 @@ dl {
   display: grid;
   gap: 1em 0.6em;
   grid-template-columns: min-content auto;
-}
 
-dd {
-  display: flex;
-  align-items: center;
-  gap: 0.5em;
+  & dd {
+    display: flex;
+    align-items: center;
+    gap: 0.5em;
 
-  & a {
-    color: var(--sapphire);
-    text-decoration: underline;
+    & a {
+      color: var(--sapphire);
+      text-decoration: underline;
+    }
   }
 }
 
@@ -149,15 +150,30 @@ dd {
   & li { margin: 0; }
 }
 
+[name=code] {
+  & li {
+    font-weight: bolder;
+    text-align: center;
+    & blockquote {
+      font-weight: lighter;
+      margin: 0;
+    }
+  }
+}
+
 [name="treesitter"] {
+  background: var(--base);
   &::part(content) {
     display: grid;
     gap: 20px;
     grid-template-columns: 1fr 1.6fr;
     grid-template-areas:
+      "head head"
       "code code"
       "tree text";
   }
+
+  & h2 { grid-area: head; }
 
   & p {
     &:first-of-type {
@@ -198,6 +214,27 @@ dd {
   }
 }
 
+[name="renderers"] {
+  &::part(content) {
+    position: relative;
+    display: grid;
+    gap: 1em;
+    grid-template:
+      'head' min-content
+      'pre' 100% / 100%;
+  }
+
+  & h2 {
+    grid-area: head;
+  }
+
+  & pre {
+    position: absolute;
+    grid-area: pre;
+    width: 100%;
+  }
+}
+
 [name="components"] {
   & pre {
     position: absolute;
@@ -210,6 +247,7 @@ dd {
 
 [name="buffers"] {
   background: var(--base);
+
   & ul {
     display: grid;
     grid-template: 1fr 1fr / 1fr 1fr;
