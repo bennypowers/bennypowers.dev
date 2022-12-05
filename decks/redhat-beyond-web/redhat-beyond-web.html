@@ -1,0 +1,25 @@
+---
+layout: deck.html
+deck: redhat-beyond-web
+title: Introduction to Web Technologies
+date: 2022-12-11
+description: >-
+  A comprehensive introduction to the technologies which power the web: HTML, 
+  HTTP, CSS, and JavaScript.
+icons:
+  - rel: shortcut icon
+    href: redhat.svg
+stylesheets:
+  - href: https://static.redhat.com/libs/redhat/redhat-font/2/webfonts/red-hat-font.css
+  - href: /assets/redhat-deck/redhat-theme.css
+  - href: redhat-beyond-web.css
+  - href: global.css
+---
+
+<svg id="icons">
+  <defs>{% for icon in collections.icon %}
+    <g id="{{ icon.fileSlug }}-icon" aria-label="{{ icon.data.title }}">{{ icon.templateContent | safe }}</g>{% endfor %}
+  </defs>
+</svg>
+
+<script type="module" src="{{ '/assets/redhat-deck/redhat-theme.js' | url }}"></script>

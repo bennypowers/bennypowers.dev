@@ -1,0 +1,21 @@
+pre[class^="language-"] {
+  font-size: 75%;
+}
+
+:not(a, h1, h2, h3, h4, h5, h6) > code:not([class]) {
+  padding: 0.05em 0.1em;
+}
+
+[name=www-html] img {
+  float: right;
+  height: 260px;
+}
+
+:is(
+  [name=tree],
+  [name=landmarks]
+) pre {
+  position: absolute;
+  inset-block: 0;
+  width: 100%;
+}
