@@ -1,5 +1,8 @@
 const YAML = require('yaml');
+
+const attrs = require('markdown-it-attrs');
 const anchor = require('markdown-it-anchor');
+
 const { EleventyRenderPlugin } = require('@11ty/eleventy');
 
 const DecksPlugin = require('eleventy-plugin-slide-decks');
@@ -14,20 +17,25 @@ const IconsPlugin = require('./_plugins/icons.cjs');
 const FiltersPlugin = require('./_plugins/filters.cjs');
 const PostsPlugin = require('./_plugins/posts.cjs');
 const PostCSSPlugin = require('./_plugins/postcss.cjs');
+const RedHatDeckPlugin = require('./_plugins/redhat-deck.cjs');
 
 /** @param{import('@11ty/eleventy/src/UserConfig.js')} eleventyConfig */
 module.exports = function(eleventyConfig) {
   eleventyConfig.ignores.add('README.md');
   eleventyConfig.setQuietMode(true);
-  eleventyConfig.amendLibrary('md', md => md.use(anchor, { permalink: anchor.permalink.headerLink(), }));
+  eleventyConfig.amendLibrary('md', /**@param{import('markdown-it')}md*/md =>
+    md.set({ breaks: false })
+      .use(attrs, { allowedAttributes: ['id', 'slot', /^data-.*$/], })
+      .use(anchor, { permalink: anchor.permalink.headerLink(), }));
   eleventyConfig.addDataExtension('yaml', x => YAML.parse(x));
   eleventyConfig.addPassthroughCopy('assets');
   eleventyConfig.addPlugin(PostsPlugin);
   eleventyConfig.addPlugin(IconsPlugin);
   eleventyConfig.addPlugin(FiltersPlugin);
-  eleventyConfig.addPlugin(DecksPlugin, { assetsExtensions: ['png', 'svg']});
+  eleventyConfig.addPlugin(DecksPlugin, { assetsExtensions: ['jpg', 'png', 'webp', 'svg', 'js']});
+  eleventyConfig.addPlugin(RedHatDeckPlugin);
   eleventyConfig.addPlugin(GlitchPlugin);
-  eleventyConfig.addPlugin(PostCSSPlugin);
+  eleventyConfig.addPlugin(PostCSSPlugin, { exclude: /_plugins/ });
   eleventyConfig.addPlugin(EmbedPlugin, { lite: true });
   eleventyConfig.addPlugin(TableOfContentsPlugin);
   eleventyConfig.addPlugin(TimeToReadPlugin);

@@ -3,6 +3,7 @@ const env = require('postcss-preset-env');
 
 const processor = new Processor([
   env({
+    stage: false,
     features: {
       "nesting-rules": true,
     }
@@ -18,13 +19,14 @@ module.exports = function(eleventyConfig, options) {
   eleventyConfig.addExtension('css', {
     outputFileExtension: 'css',
     compile(input, from) {
+      if (options.exclude && from.match(options.exclude)) return () => input;
       return async function({ page }) {
         try {
           const to = page.outputPath;
           const result = await processor.process(input, { from, to });
           return result.css;
         } catch(e) {
-          console.error(e)
+          // console.error(e)
         }
       }
     }
