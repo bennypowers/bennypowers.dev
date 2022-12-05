@@ -1,0 +1,239 @@
+diff --git a/node_modules/slidem/build.js b/node_modules/slidem/build.js
+new file mode 100644
+index 0000000..a555b04
+--- /dev/null
++++ b/node_modules/slidem/build.js
+@@ -0,0 +1,56 @@
++import { readdir, readFile } from 'node:fs/promises';
++import { build } from 'esbuild';
++import { fileURLToPath } from 'node:url';
++import { resolve, dirname } from 'node:path';
++import { importAssertPlugin } from 'esbuild-plugin-import-assertions';
++
++const r = path => fileURLToPath(new URL(path, import.meta.url));
++
++export async function run(watch = process.argv.includes('start')) {
++  const LICENSE = await readFile(r('./LICENSE'), 'utf8')
++  for (const file of await readdir(r('./src/'))) {
++    if (file.endsWith('.js')) {
++      await build({
++        entryPoints: [r(`./src/${file}`)],
++        outdir: '.',
++        banner: { js: `/**\n * @license\n${LICENSE}\n*/`, },
++        format: 'esm',
++        sourcemap: true,
++        bundle: true,
++        watch,
++        loader: {
++          '.css': 'js',
++          '.html': 'js',
++        },
++        plugins: [
++          importAssertPlugin,
++          {
++            name: 'html-template',
++            setup(api) {
++              api.onResolve({ filter: /\.html$/ }, args => ({
++                path: resolve(dirname(args.importer), args.path),
++                namespace: 'html-template',
++              }));
++
++              api.onLoad({ filter: /\.html$/, namespace: 'html-template' }, async args => ({
++                contents: `\
++  const template = document.createElement('template');
++  template.innerHTML = \`${await readFile(args.path, 'utf8')}\`;
++  export default template;`,
++                loader: 'ts',
++              }));
++            }
++          }
++        ]
++      })
++    }
++  }
++}
++
++
++if (import.meta.url.startsWith('file:')) { // (A)
++  const modulePath = fileURLToPath(import.meta.url);
++  if (process.argv[1] === modulePath) { // (B)
++    await run();
++  }
++}
+diff --git a/node_modules/slidem/slidem-deck.js b/node_modules/slidem/slidem-deck.js
+index fb0f471..29405f8 100644
+--- a/node_modules/slidem/slidem-deck.js
++++ b/node_modules/slidem/slidem-deck.js
+@@ -52,7 +52,7 @@ var __privateMethod = (obj, member, method) => {
+   return method;
+ };
+ 
+-// assert-css:/home/ruphin/dev/slidem/src/slidem-deck-global.css
++// assert-css:/home/bennyp/Developer/slidem/src/slidem-deck-global.css
+ var sheet = new CSSStyleSheet();
+ sheet.replace(`/* SLIDEM GLOBAL STYLES */
+ body {
+@@ -126,7 +126,7 @@ slidem-slide a {
+ `);
+ var slidem_deck_global_default = sheet;
+ 
+-// assert-css:/home/ruphin/dev/slidem/src/slidem-deck.css
++// assert-css:/home/bennyp/Developer/slidem/src/slidem-deck.css
+ var sheet2 = new CSSStyleSheet();
+ sheet2.replace(`:host {
+   /* inset for active slide */
+@@ -360,7 +360,7 @@ sheet2.replace(`:host {
+ `);
+ var slidem_deck_default = sheet2;
+ 
+-// html-template:/home/ruphin/dev/slidem/src/slidem-deck.html
++// html-template:/home/bennyp/Developer/slidem/src/slidem-deck.html
+ var template = document.createElement("template");
+ template.innerHTML = `<div id="slides" part="slides">
+   <slot></slot>
+@@ -389,14 +389,17 @@ var slidem_deck_default2 = template;
+ // src/slidem-deck.js
+ document.adoptedStyleSheets = [...document.adoptedStyleSheets, slidem_deck_global_default];
+ var STATE_RE = /^#(?:slide-(?<slide>\d+))?(?:\/step-(?<step>\d+|Infinity))?/;
+-var _instances, _timer, _changeLocation, changeLocation_fn, _timerInterval, _originalTitle, _$$, $$_fn, _init, init_fn, _untilDefined, untilDefined_fn, _onKeyup, onKeyup_fn, _updateTitle, updateTitle_fn, _onRouteChange, onRouteChange_fn, _updateNotes, updateNotes_fn;
++function isInInputLike(event) {
++  return event.composedPath().some((node) => node instanceof HTMLInputElement || node.hasAttribute?.("contenteditable"));
++}
++var _instances, _timer, _changeLocation, changeLocation_fn, _timerInterval, _originalTitle, _$$, $$_fn, _init, init_fn, _untilDefined, untilDefined_fn, _onKeydown, onKeydown_fn, _updateTitle, updateTitle_fn, _onRouteChange, onRouteChange_fn, _updateNotes, updateNotes_fn;
+ var _SlidemDeck = class extends HTMLElement {
+   constructor() {
+     super();
+     __privateAdd(this, _$$);
+     __privateAdd(this, _init);
+     __privateAdd(this, _untilDefined);
+-    __privateAdd(this, _onKeyup);
++    __privateAdd(this, _onKeydown);
+     __privateAdd(this, _updateTitle);
+     __privateAdd(this, _onRouteChange);
+     __privateAdd(this, _updateNotes);
+@@ -426,9 +429,9 @@ var _SlidemDeck = class extends HTMLElement {
+         }
+       }
+     });
+-    window.addEventListener("keyup", (e) => __privateGet(_SlidemDeck, _instances).forEach((i) => {
++    window.addEventListener("keydown", (e) => __privateGet(_SlidemDeck, _instances).forEach((i) => {
+       var _a;
+-      return __privateMethod(_a = i, _onKeyup, onKeyup_fn).call(_a, e);
++      return __privateMethod(_a = i, _onKeydown, onKeydown_fn).call(_a, e);
+     }));
+     let touchX;
+     let touchY;
+@@ -568,9 +571,11 @@ _untilDefined = new WeakSet();
+ untilDefined_fn = async function() {
+   await Promise.all(this.slides.filter((slide) => slide.localName.includes("-")).map((slide) => customElements.whenDefined(slide.localName)));
+ };
+-_onKeyup = new WeakSet();
+-onKeyup_fn = function({ key }) {
+-  switch (key) {
++_onKeydown = new WeakSet();
++onKeydown_fn = function(event) {
++  if (isInInputLike(event))
++    return;
++  switch (event.key) {
+     case "PageDown":
+     case "ArrowRight":
+     case "j":
+diff --git a/node_modules/slidem/slidem-slide-base.js b/node_modules/slidem/slidem-slide-base.js
+index b53b012..dcdf7ef 100644
+--- a/node_modules/slidem/slidem-slide-base.js
++++ b/node_modules/slidem/slidem-slide-base.js
+@@ -52,7 +52,7 @@ var __privateMethod = (obj, member, method) => {
+   return method;
+ };
+ 
+-// assert-css:/home/ruphin/dev/slidem/src/slidem-slide-base.css
++// assert-css:/home/bennyp/Developer/slidem/src/slidem-slide-base.css
+ var sheet = new CSSStyleSheet();
+ sheet.replace(`:host {
+   display: flex;
+@@ -129,7 +129,7 @@ sheet.replace(`:host {
+ `);
+ var slidem_slide_base_default = sheet;
+ 
+-// html-template:/home/ruphin/dev/slidem/src/slidem-slide-base.html
++// html-template:/home/bennyp/Developer/slidem/src/slidem-slide-base.html
+ var template = document.createElement("template");
+ template.innerHTML = `<div id="container">
+   <div id="content" part="content">
+diff --git a/node_modules/slidem/slidem-slide.js b/node_modules/slidem/slidem-slide.js
+index b947ae0..b590c7c 100644
+--- a/node_modules/slidem/slidem-slide.js
++++ b/node_modules/slidem/slidem-slide.js
+@@ -52,7 +52,7 @@ var __privateMethod = (obj, member, method) => {
+   return method;
+ };
+ 
+-// assert-css:/home/ruphin/dev/slidem/src/slidem-slide-base.css
++// assert-css:/home/bennyp/Developer/slidem/src/slidem-slide-base.css
+ var sheet = new CSSStyleSheet();
+ sheet.replace(`:host {
+   display: flex;
+@@ -129,7 +129,7 @@ sheet.replace(`:host {
+ `);
+ var slidem_slide_base_default = sheet;
+ 
+-// html-template:/home/ruphin/dev/slidem/src/slidem-slide-base.html
++// html-template:/home/bennyp/Developer/slidem/src/slidem-slide-base.html
+ var template = document.createElement("template");
+ template.innerHTML = `<div id="container">
+   <div id="content" part="content">
+diff --git a/node_modules/slidem/slidem-video-slide.js b/node_modules/slidem/slidem-video-slide.js
+index 0bc194a..2b75754 100644
+--- a/node_modules/slidem/slidem-video-slide.js
++++ b/node_modules/slidem/slidem-video-slide.js
+@@ -52,7 +52,7 @@ var __privateMethod = (obj, member, method) => {
+   return method;
+ };
+ 
+-// assert-css:/home/ruphin/dev/slidem/src/slidem-slide-base.css
++// assert-css:/home/bennyp/Developer/slidem/src/slidem-slide-base.css
+ var sheet = new CSSStyleSheet();
+ sheet.replace(`:host {
+   display: flex;
+@@ -129,7 +129,7 @@ sheet.replace(`:host {
+ `);
+ var slidem_slide_base_default = sheet;
+ 
+-// html-template:/home/ruphin/dev/slidem/src/slidem-slide-base.html
++// html-template:/home/bennyp/Developer/slidem/src/slidem-slide-base.html
+ var template = document.createElement("template");
+ template.innerHTML = `<div id="container">
+   <div id="content" part="content">
+@@ -241,7 +241,7 @@ __publicField(SlidemSlideBase, "observedAttributes", [
+ ]);
+ __privateAdd(SlidemSlideBase, _instances, /* @__PURE__ */ new Set());
+ 
+-// assert-css:/home/ruphin/dev/slidem/src/slidem-video-slide.css
++// assert-css:/home/bennyp/Developer/slidem/src/slidem-video-slide.css
+ var sheet2 = new CSSStyleSheet();
+ sheet2.replace(`:host {
+   background: black;
+@@ -256,7 +256,7 @@ video {
+ `);
+ var slidem_video_slide_default = sheet2;
+ 
+-// html-template:/home/ruphin/dev/slidem/src/slidem-video-slide.html
++// html-template:/home/bennyp/Developer/slidem/src/slidem-video-slide.html
+ var template2 = document.createElement("template");
+ template2.innerHTML = `<video controls id="video"></video>
+ `;
+diff --git a/node_modules/slidem/web-dev-server.config.js b/node_modules/slidem/web-dev-server.config.js
+new file mode 100644
+index 0000000..2bd1f9c
+--- /dev/null
++++ b/node_modules/slidem/web-dev-server.config.js
+@@ -0,0 +1,9 @@
++import { run } from './build.js';
++
++run(true);
++
++export default {
++  open: true,
++  watch: true,
++  appIndex: 'index.html',
++}

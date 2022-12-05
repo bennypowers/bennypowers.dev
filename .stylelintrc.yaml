@@ -3,8 +3,6 @@ ignoreFiles:
   - node_modules/**/*
 
 rules:
-  csstools/use-nesting: always
-   
   alpha-value-notation: number # TODO: fix for `percentage` in tokens
   color-hex-length: long
   color-function-notation: legacy # TODO: fix for `modern` in tokens
@@ -44,3 +42,9 @@ rules:
 plugins:
   - stylelint-use-nesting
 
+overrides:
+  - files:
+    - decks/nvim-regexplainer/*.css
+    rules:
+      csstools/use-nesting: always
+   
