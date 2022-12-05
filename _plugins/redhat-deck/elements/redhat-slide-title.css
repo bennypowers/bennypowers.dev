@@ -1,0 +1,50 @@
+:host {
+  color: var(--rh-color-text-primary-on-dark);
+}
+
+#container {
+  background: var(--rh-color-brand-red-on-light);
+}
+
+#content {
+  display: grid;
+  grid-template-rows: min-content 1fr;
+}
+
+#product-logo {
+  margin-inline-start: 10%;
+  max-height: var(--rh-size-icon-06);
+}
+
+#title-container {
+  padding:
+    var(--rh-space-3xl)
+    var(--rh-space-7xl);
+  display: flex;
+  flex-direction: column;
+}
+
+#slide-footer {
+  background: var(--rh-color-surface-lightest);
+  color: var(--rh-color-text-primary-on-light);
+}
+
+::slotted(:is(h1, h2, h3, h4, h5)) {
+  margin: 0;
+}
+
+::slotted(h1) {
+  font-size: calc(var(--rh-font-size-heading-2xl) * 2);
+}
+
+#presenter {
+  margin-block-start: auto;
+  display: grid;
+  gap: var(--rh-space-4xl);
+  font-size: var(--rh-font-size-body-text-lg);
+}
+
+#presenter ::slotted([slot="presenter"]) {
+  display: grid;
+  gap: var(--rh-space-lg);
+}
