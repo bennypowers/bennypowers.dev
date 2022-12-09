@@ -9,3 +9,4 @@ is: redhat-slide-divider
 > environment.
 {% endquote %}
 
+![gears in a machine](gears.jpg) {slot=image}

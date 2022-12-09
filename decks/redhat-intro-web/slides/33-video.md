@@ -10,7 +10,7 @@ use `<video>` to play user content.
 </video>
 ```
 
-<video controls preload="auto" poster="https://peach.blender.org/wp-content/uploads/watchtrailer.gif" width="500">
-  <source type="video/ogg" src="http://download.blender.org/peach/trailer/trailer_400p.ogg">
-  <source type="video/mov" src="http://download.blender.org/peach/trailer/trailer_480p.mov">
+<video controls preload="metadata" poster="https://peach.blender.org/wp-content/uploads/watchtrailer.gif" width="500">
+  <source type="video/ogg" src="https://download.blender.org/peach/trailer/trailer_400p.ogg">
+  <source type="video/mov" src="https://download.blender.org/peach/trailer/trailer_480p.mov">
 </video>

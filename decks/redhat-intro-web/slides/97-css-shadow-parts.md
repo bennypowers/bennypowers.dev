@@ -13,6 +13,7 @@ Light CSS:
 ```css
 x-element::part(content) {
   background: red;
+  padding: 2em;
 }
 ```
 
