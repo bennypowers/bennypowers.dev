@@ -5,40 +5,25 @@
   --s6: calc(var(--s4) + var(--rh-space-2xl));
 }
 
-#container {
-  display: grid;
-  height: 100vh;
-  grid-template:
-    "head" var(--s6)
-    "body" auto
-    "foot" var(--s6) / 1fr;
-}
-
 #content {
   position: relative;
-  grid-area: body;
-  height: calc(100% + 20% * var(--slidem-content-scale)) !important;
-  overflow-y: scroll;
-  overflow-x: hidden;
-  width: 100%;
-  translate: 0 calc(-5% * var(--slidem-content-scale));
 }
 
 ol {
   padding-inline-start: 2em;
 }
 
-#slide-header { grid-area: head; }
-#slide-footer { grid-area: foot; }
-
-#slide-header,
-#slide-footer {
-  position: relative;
-  height: 100%;
+#slide-header, #slide-footer {
+  position: absolute;
+  z-index: 2;
+  inset-inline: 0;
   display: flex;
   align-items: center;
   padding-inline: var(--s4);
 }
+
+#slide-header { inset-block-start: 0; }
+#slide-footer { inset-block-end: 0; }
 
 #slide-header ::slotted([slot="heading"]) {
   margin: 0;

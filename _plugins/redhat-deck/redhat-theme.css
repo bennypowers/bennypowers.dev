@@ -3,10 +3,7 @@
   --deck-secondary-background: var(--rh-color-surface--light);
   --deck-primary-color: var(--rh-color-brand-red);
   --deck-secondary-color: var(--rh-color-accent-brand-on-light);
-  /* --slidem-content-height: 1200px; */
-
   --fixed-font: var(--rh-font-family-code);
-
   --markdown-syntax-color: var(--rh-color-text-primary-on-light);
   --markdown-syntax-comment-color: var(--surface2);
   --markdown-code-background-color: var(--base);
@@ -30,7 +27,8 @@ slidem-deck {
   line-height: inherit;
 }
 
-p, pre[class^="language-"] {
+p,
+pre[class^="language-"] {
   margin-block: var(--rh-space-lg);
 }
 
@@ -45,6 +43,10 @@ p, pre[class^="language-"] {
 :is(h1, h2, h3, h4, h5, h6) {
   font-family: var(--rh-font-family-heading);
   margin-block: var(--rh-space-xl);
+}
+
+rh-alert :is(h1, h2, h3, h4, h5, h6) {
+  margin-block: 0;
 }
 
 a {
@@ -102,8 +104,8 @@ redhat-slide-divider [slot="image"] {
   grid-template: 1fr / 1fr;
   object-fit: contain;
   object-position: center;
-  max-width: 584px;
-  max-height: 240px;
+  max-width: 16em;
+  max-height: 7em;
   translate: calc(-1 * var(--rh-space-3xl));
   overflow: hidden;
   scale: 1.2;

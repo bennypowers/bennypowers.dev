@@ -5,7 +5,7 @@
   grid-template-rows:
     var(--s6)
     1fr
-    1fr
+    2fr
     var(--s6);
   grid-template-columns: 5fr 3fr;
   grid-template-areas:
@@ -18,9 +18,9 @@
 #slide-header { grid-column: head / aside; }
 #slide-footer { grid-column: foot / aside; }
 #content { display: contents; }
-#title { grid-area: title }
+#title { grid-area: title; }
 #image { grid-area: image; }
-#aside { grid-area: aside; height: 100%; }
+#aside { grid-area: aside; height: 100vh; }
 
 #title {
   color: var(--heading-color, var(--rh-color-brand-red-on-light));
@@ -47,6 +47,5 @@
   --color: var(--rh-color-primary-on-light);
   --aside-background: var(--rh-color-surface-lightest);
   --aside-color: var(--rh-color-primary-on-light);
-  --heading-color: var(--rh-color-primary-on-dark)
+  --heading-color: var(--rh-color-primary-on-dark);
 }
-

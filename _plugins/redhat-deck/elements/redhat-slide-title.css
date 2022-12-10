@@ -1,8 +1,5 @@
 :host {
   color: var(--rh-color-text-primary-on-dark);
-}
-
-#container {
   background: var(--rh-color-brand-red-on-light);
 }
 
