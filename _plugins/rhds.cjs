@@ -82,16 +82,16 @@ module.exports = function(eleventyConfig) {
     ];
 
     const LIT_DEPS = [
-      'lit@2.4.0',
-      'lit@2.4.0/async-directive.js',
-      'lit@2.4.0/decorators.js',
-      'lit@2.4.0/directive-helpers.js',
-      'lit@2.4.0/directive.js',
-      'lit@2.4.0/directives/class-map.js',
-      'lit@2.4.0/directives/if-defined.js',
-      'lit@2.4.0/experimental-hydrate-support.js',
-      'lit@2.4.0/experimental-hydrate.js',
-      'lit@2.4.0/static-html.js',
+      'lit',
+      'lit/async-directive.js',
+      'lit/decorators.js',
+      'lit/directive-helpers.js',
+      'lit/directive.js',
+      'lit/directives/class-map.js',
+      'lit/directives/if-defined.js',
+      'lit/experimental-hydrate-support.js',
+      'lit/experimental-hydrate.js',
+      'lit/static-html.js',
     ];
 
     const CDN_DEPS = [
