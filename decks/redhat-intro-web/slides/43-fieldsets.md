@@ -1,7 +1,8 @@
 ## HTML Forms {slot=heading}
 
-Form fields can be grouped into **fieldsets** which have a `<legend>` and can be 
-*disabled*.
+Form fields can be grouped into **fieldsets**. Fieldsets can have a `<legend>` 
+to describe their contents, and if they are *disabled*, it disables all of its 
+children.
 
 <form id="fieldsets">
 

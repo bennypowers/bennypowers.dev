@@ -1,5 +1,7 @@
 ## What is CSS? {slot=heading}
 
+### CSS Grid
+
 **CSS Grid** is a powerful feature which makes much of legacy CSS frameworks 
 like bootstrap obsolete. Flexbox works primarily along a single dimension. For 
 two-dimensional grid layouts, use `display: grid;`. 

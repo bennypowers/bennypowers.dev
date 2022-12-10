@@ -1,7 +1,8 @@
 ## What is CSS? {slot=heading}
 
-Colours in CSS can be represented multiple ways.
+### Colours
 
+Colours in CSS can be represented multiple ways.
 
 Hex Values
 : <code>#<span style="color:red">FF</span><span 
@@ -17,12 +18,6 @@ HSL function
 : ```css
   hsl(360deg 100% 100% / 100%);
   ```
-
-HSL function
-: ```css
-  hsl(360deg 100% 100% / 100%);
-  ```
-
 
 [Named Colours][named]
 : ```css

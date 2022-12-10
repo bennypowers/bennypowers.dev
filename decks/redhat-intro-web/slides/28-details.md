@@ -5,6 +5,8 @@ style:
 ---
 ## Semantic HTML {slot="heading"}
 
+### Disclosure Widgets
+
 HTML is enough to write entire apps. `<details>` and `<summary>` can hide or 
 show content by activating the disclosure widget. Add the `open` boolean 
 attribute to make them open by default.

@@ -3,7 +3,7 @@
 }
 
 rh-alert {
-  --rh-font-size-body-text-sm: calc(0.875rem * 2);
+  --rh-font-size-body-text-sm: calc(0.875rem * 3);
   --rh-font-size-body-text-2xl: calc(0.875rem * 3);
 }
 
@@ -34,11 +34,15 @@ label {
 }
 
 .revealer pre[reveal] {
-  inset-block-start: -1em;
+  inset-block-start: calc(-1 * var(--rh-space-lg));
 }
 
 .revealer pre {
   font-size: 80%;
+}
+
+[reveal]:not([current]) {
+  pointer-events: none;
 }
 
 [name="form-attrs"] pre.language-http {
@@ -57,10 +61,6 @@ label {
   & div > div > ul {
     margin-block-start: 0;
   }
-}
-
-[reveal]:not([current]) {
-  pointer-events: none;
 }
 
 [name="form-controls"] pre.language-html {
@@ -92,6 +92,10 @@ label {
 
 [name="conditionals"] pre {
   margin: 0;
+}
+
+[name="classes"] .revealer [past] {
+  opacity: 0;
 }
 
 [name="color"] dl {
@@ -183,6 +187,13 @@ label {
 
 [src="coffee-notebook.jpg"] {
   translate: 40px -50px;
+}
+
+[src="var-venn.svg"] {
+  position: relative;
+  z-index: 2;
+  float: right;
+  width: 580px;
 }
 
 [src="dom.png"] {

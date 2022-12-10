@@ -1,8 +1,10 @@
 ## What is CSS? {slot=heading}
 
+### The Cascade
+
 CSS Rules *cascade*, meaning they layer onto each other in the order they are 
-declared. The cascade and *specificity* This is how conflicts are resolved in 
-stylesheets
+declared. The cascade and *selector specificity* determine how conflicts are 
+resolved in stylesheets.
 
 ```css
 h1, h2 {

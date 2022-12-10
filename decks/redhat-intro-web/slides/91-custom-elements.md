@@ -6,8 +6,9 @@ class: smaller-syntax
 ### Custom Elements
 
 In the <abbr title="document object model">DOM</abbr>, each element relates to a 
-specific class. **Custom Elements** are HTML tags containing a hyphen which 
-relate to a user-defined JavaScript class.
+specific class. **Custom Elements** are HTML tags containing a hyphen which are 
+linked to a user-defined JavaScript class through the `customElements` 
+namespace.
 
 ```js
 class FancyElement extends HTMLElement {

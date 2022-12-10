@@ -1,5 +1,7 @@
 ## Semantic HTML {slot="heading"}
 
+### Some Interesting Elements
+
 HTML already comes with a number of interesting built-in elements:
 
 <div style="position: relative;">

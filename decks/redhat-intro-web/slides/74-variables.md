@@ -7,8 +7,9 @@ reveal: .revealer > :not(:first-child)
 ### Variables
 
 ![venn diagram: var and let are reassignable, let and const are 
-block-scoped](var-venn.svg){style="float:right;width:580px;"}
+block-scoped](var-venn.svg)
 JavaScript variables are declared with `var`, `let`, or `const`.
+Primitive types (`string`, `number`, `boolean`) equate by value.
 Object types are assigned and compared by *reference*, not by value.
 
 <div class="revealer">

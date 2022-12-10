@@ -2,12 +2,12 @@
 
 ### Events
 
-`Node` inherits from `EventTarget` which implements `addEventListener(name, 
-callback)`, `removeEventListener(name, callback)`, and `dispatchEvent(event)`.
+![Node inherits from EventTarget](events.svg)
 
-- click
-- scroll
-- mouseenter / mouseleave
+- click / tap / scroll / mouseenter / mouseleave
+- keyup / keydown
 - focus / blur
 - dragstart / dragstop / drop
-- keyup / keydown
+
+Events have `target` and `path` properties which provide rich detail about the 
+state of the DOM.

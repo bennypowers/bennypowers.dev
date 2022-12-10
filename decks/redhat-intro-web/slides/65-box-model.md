@@ -3,6 +3,8 @@ reveal: img
 ---
 ## What is CSS? {slot=heading}
 
+### Box Model
+
 CSS' box model defines elements' dimensions and positions. Each elements is 
 surrounded by a box. Boxes have a **margin** separating it from other boxes, a 
 **border** surrounding itself, **padding** separating content from the border, and the 

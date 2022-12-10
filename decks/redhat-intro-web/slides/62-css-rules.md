@@ -1,5 +1,7 @@
 ## What is CSS? {slot=heading}
 
+### Syntax
+
 Stylesheets are made up of **rules**. Each rule has a **selector list** of one 
 or more selectors, followed by a set of curly braces `{ }`. Inside the braces is 
 a list of **declarations**, separated by semicolons `;`. Each declaration has a 

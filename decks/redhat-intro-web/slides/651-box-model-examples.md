@@ -1,5 +1,7 @@
 ## What is CSS? {slot=heading}
 
+### Block and Inline
+
 ```html
 <p>
   Paragraphs have block display,
