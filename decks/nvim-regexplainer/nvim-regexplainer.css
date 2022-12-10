@@ -24,6 +24,15 @@
   --indicator-color: var(--teal);
 }
 
+slidem-deck::part(notes) {
+  inset-inline-start: 120px;
+  inset-block-start: 180px;
+  max-width: 850px;
+  font-size: 60%;
+  background: #00000077;
+  z-index: 2;
+}
+
 slidem-slide {
   --background: var(--deck-primary-background);
 
@@ -36,15 +45,6 @@ slidem-slide {
     flex-flow: column;
     align-items: center;
     justify-content: center;
-  }
-
-  &::part(notes) {
-    inset-inline-start: 120px;
-    inset-block-start: 180px;
-    max-width: 850px;
-    font-size: 60%;
-    background: #00000077;
-    z-index: 2;
   }
 
   & a[href^="http"] {
