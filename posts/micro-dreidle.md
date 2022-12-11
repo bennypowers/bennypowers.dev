@@ -226,14 +226,17 @@ input.onLogoEvent(TouchButtonEvent.Pressed, sevivon);
 
 Take it for a spin (🥁) in the simulator:
 
-<div 
-style="position:relative;height:0;padding-bottom:81.97%;overflow:hidden;"><iframe 
-style="position:absolute;top:0;left:0;width:100%;height:100%;" 
-src="https://makecode.microbit.org/---run?id=_bKbXU14odghK" 
-allowfullscreen="allowfullscreen" sandbox="allow-popups allow-forms 
-allow-scripts allow-same-origin" frameborder="0"></iframe></div>
+<div style="position:relative;height:0;padding-bottom:81.97%;overflow:hidden;">
+  <iframe style="position:absolute;top:0;left:0;width:100%;height:100%;"
+          src="https://makecode.microbit.org/---run?id=_bKbXU14odghK"
+          allowfullscreen="allowfullscreen"
+          sandbox="allow-popups allow-forms allow-scripts allow-same-origin"
+          frameborder="0"></iframe>
+</div>
 
 Or take a look at a [blocks version for younger kids][blocks].
+
+Happy Hannukah!
 
 [mc]: https://makecode.microbit.org
 [mb]: https://microbit.org
