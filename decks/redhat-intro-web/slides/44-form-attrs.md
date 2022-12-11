@@ -3,6 +3,8 @@ reveal: pre:nth-of-type(2)
 ---
 ## HTML Forms {slot=heading}
 
+### HTTP Forms
+
 Forms can have an **action** and a **method**, which determines how and where 
 they send their contents.
 

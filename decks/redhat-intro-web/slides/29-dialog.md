@@ -4,6 +4,8 @@ reveal: pre
 ---
 ## Semantic HTML {slot="heading"}
 
+### Dialogs
+
 <div class="revealer">
 
 The `<dialog>` element is a web-native way to  present information to the user 

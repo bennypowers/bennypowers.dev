@@ -3,6 +3,8 @@ reveal: pre:nth-of-type(2)
 ---
 ## Embedded Content {slot=heading}
 
+### Images
+
 The `<img>` element embeds an image in the page. It must have an `alt` attribute 
 that describes its contents, unless solely for decoration. It's a **void** 
 element with no content. Use `loading="lazy"` to defer loading the image.

@@ -1,5 +1,7 @@
 ## Embedded Content {slot=heading}
 
+### Video
+
 The `<video>` element provides video playback on web pages. Sites like YouTube 
 use `<video>` to play user content.
 

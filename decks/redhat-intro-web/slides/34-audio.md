@@ -1,5 +1,6 @@
 ## Embedded Content {slot=heading}
 
+### Audio
 The `<audio>` element provides sound playback on web pages. Like `<video>`, you 
 can provide multiple sources
 
