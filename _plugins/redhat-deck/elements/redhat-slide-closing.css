@@ -3,6 +3,7 @@
   height: 100vh;
   background-image: url("/assets/redhat-deck/technologies.png");
   background-size: contain;
+  background-repeat: none;
   padding: 0;
   display: block;
   color: white;
