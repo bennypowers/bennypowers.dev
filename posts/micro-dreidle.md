@@ -149,9 +149,9 @@ function sevivon() {
 input.onLogoEvent(TouchButtonEvent.Pressed, sevivon);
 ```
 
-This way, if any of Antiochus' Nazi thugs try to interuppt our holy game of 
+This way, if any of Antiochus' Nazi thugs try to interrupt our holy game of 
 craps, we'll just tap the logo again and again until they're driven away by 
-sheer bloopety bleepety annoyance. Brilliance!
+sheer *bloopety* *bleepety* annoyance. Brilliance!
 
 <details>
 
