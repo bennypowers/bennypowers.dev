@@ -12,6 +12,7 @@ const TableOfContentsPlugin = require('eleventy-plugin-nesting-toc');
 const TimeToReadPlugin = require('eleventy-plugin-time-to-read');
 const EleventyPluginDirectoryOutput = require('@11ty/eleventy-plugin-directory-output');
 const EleventyPluginSyntaxhighlight = require('@11ty/eleventy-plugin-syntaxhighlight');
+const EleventyPluginRSS = require('@11ty/eleventy-plugin-rss');
 
 const GlitchPlugin = require('./_plugins/glitch.cjs');
 const IconsPlugin = require('./_plugins/icons.cjs');
@@ -46,6 +47,7 @@ module.exports = function(eleventyConfig) {
   eleventyConfig.addPlugin(TimeToReadPlugin);
   eleventyConfig.addPlugin(EleventyPluginDirectoryOutput);
   eleventyConfig.addPlugin(EleventyRenderPlugin);
+  eleventyConfig.addPlugin(EleventyPluginRSS);
   eleventyConfig.addPlugin(EleventyPluginSyntaxhighlight, { init() { require('prismjs/components/index')(['regex']) } });
   return {
     templateFormats: [ 'md', 'njk', 'html', 'svg', 'css' ],
