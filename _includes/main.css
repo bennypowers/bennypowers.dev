@@ -57,10 +57,8 @@
   --primary-font: "Overpass", sans-serif;
   --background-color: white;
   --text-color: black;
-}
 
-@media (prefers-color-scheme: dark) {
-  :root {
+  @media (prefers-color-scheme: dark) {
     --background-color: #111115;
     --text-color: white;
     --lightness-start: 80%;
@@ -233,10 +231,6 @@ body pre[class*="language-"] {
   overflow-x: scroll;
 }
 
-#icons {
-  height: 0.00001px;
-}
-
 #footer {
   text-align: center;
   margin-block-start: auto;
@@ -276,4 +270,14 @@ code-tabs:focus-within {
     text-align: center;
     font-size: 220%;
   }
+}
+
+#icon-sprite-sheet {
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  height: 1px;
+  overflow: hidden;
+  position: absolute;
+  white-space: nowrap;
+  width: 1px;
 }

@@ -27,12 +27,6 @@ preconnect:
 
 <script type="importmap">{{ importMap | dump | safe }}</script>
 
-<svg id="icons">
-  <defs>{% for icon in collections.icon %}
-    <g id="{{ icon.fileSlug }}-icon" aria-label="{{ icon.data.title }}">{{ icon.templateContent | safe }}</g>{% endfor %}
-  </defs>
-</svg>
-
 <script type="module" src="{{ '/assets/redhat-deck/redhat-theme.js' | url }}"></script>
 <script type="module">import '@rhds/elements';</script>
 <script>
@@ -55,3 +49,10 @@ preconnect:
         polyfillDeclarativeShadowDom(document);
     }
 </script>
+
+<svg id="icon-sprite-sheet">
+  <defs>{% for icon in collections.icon %}{% if page.icons and page.icons.has(icon.fileSlug) %}
+    <g id="{{ icon.fileSlug }}-icon">{{ icon.content | safe }}</g>{% endif %}{% endfor %}
+  </defs>
+</svg>
+

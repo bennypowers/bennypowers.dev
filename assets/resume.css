@@ -29,7 +29,6 @@ main {
   padding: 12px;
 }
 
-
 a {
   font-style: italic;
 }
@@ -48,7 +47,6 @@ p {
 abbr {
   font-family: var(--fixed-font);
   text-decoration: none !important;
-  -webkit-text-decoration: none !important;
 }
 
 header img {
@@ -121,15 +119,6 @@ main > div > a {
   text-decoration: none;
 }
 
-#icons {
-  width: 0;
-  height: 0;
-  margin: 0;
-  padding: 0;
-  left: -100000px;
-  position: absolute;
-}
-
 .qualification-badge {
   position: absolute;
   top: 0;
@@ -199,9 +188,9 @@ main > div > a {
   width: auto;
 }
 
-:is(.experience, .open-source):not(:last-of-type)::after {
-  content: '';
-  border-bottom: 1px solid currentColor;
+:is(.experience, .open-source):not(:last-of-type):after {
+  content: "";
+  border-bottom: 1px solid currentcolor;
   width: 80%;
   margin: var(--grid-gap) auto;
 }
@@ -211,7 +200,7 @@ main > div > a {
   height: var(--nav-height);
   align-items: center;
   justify-content: space-between;
-  color: #fff;
+  color: #ffffff;
   background-color: var(--app-primary-color);
 }
 
@@ -270,7 +259,7 @@ main > div > a {
   width: 100%;
 }
 
-#identity h1::after {
+#identity h1:after {
   content: none;
   display: none;
 }
@@ -320,8 +309,6 @@ main > div > a {
 
 #highlights ul {
   columns: 2;
-  -webkit-columns: 2;
-  -moz-columns: 2;
   list-style-position: inside;
 }
 
@@ -396,7 +383,7 @@ main > div > a {
 #rest-icon,
 #tdd-icon,
 #unit-testing-icon {
-  fill: currentColor;
+  fill: currentcolor;
 }
 
 #open-source {
@@ -456,8 +443,8 @@ main > div > a {
   body {
     display: grid;
     grid-template-areas:
-        'head main'
-        'foot main';
+      "head main"
+      "foot main";
   }
 
   #footer {
@@ -497,7 +484,7 @@ main > div > a {
     flex-flow: row wrap;
   }
 
-  :is(.experience, .open-source)::after {
+  :is(.experience, .open-source):after {
     display: none;
   }
 
@@ -524,11 +511,11 @@ main > div > a {
   place-self: end;
 }
 
-#tools-and-technologies li::after {
+#tools-and-technologies li:after {
   content: attr(title);
 }
 
-#tools-and-technologies  svg {
+#tools-and-technologies svg {
   fill: currentcolor;
 }
 
@@ -536,6 +523,7 @@ main > div > a {
   :root {
     --background-color: #111115;
   }
+
   .technologies svg {
     fill: white;
   }
@@ -551,4 +539,3 @@ main > div > a {
     fill: cornflowerblue;
   }
 }
-

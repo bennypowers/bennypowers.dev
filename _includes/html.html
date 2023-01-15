@@ -88,7 +88,7 @@ inlineCss:
     {% endfor %}
 
     <script type="module" src="{{ '/assets/main.js' | url }}"></script>{% if watch %}
-    <style>
+    <style data-file="watch.css">
       html :has(body.unpublished) {
         border: 4px solid hotpink;
       }
@@ -111,9 +111,9 @@ inlineCss:
     <footer id="footer" class="screen-only">
       <small id="legal">© {{ (datePublished or page.date) | formatDate(year='numeric') }} Benny Powers.</small>
     </footer>
-    <svg id="icons">
-      <defs>{% for icon in collections.icon %}
-        <g id="{{ icon.fileSlug }}-icon" aria-label="{{ icon.data.title }}">{{ icon.templateContent | safe }}</g>{% endfor %}
+    <svg id="icon-sprite-sheet">
+      <defs>{% for icon in collections.icon %}{% if page.icons and page.icons.has(icon.fileSlug) %}
+        <g id="{{ icon.fileSlug }}-icon">{{ icon.content | safe }}</g>{% endif %}{% endfor %}
       </defs>
     </svg>
   </body>

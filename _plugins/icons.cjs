@@ -8,12 +8,20 @@ module.exports = function(eleventyConfig) {
       permalink() {
         return () => false;
       }
+    },
+    async getData(inputPath) {
+
     }
   });
-  eleventyConfig.addShortcode('icon', function icon(name, attrs = {}) {
-    attrs['aria-label'] ??= attrs.title ?? name;
-    return `<svg${Object.entries(attrs).filter(([k]) => k !== '__keywords').map(([name, value]) =>
-              ` ${name}="${value}"`).join('')}><use aria-hidden="true" xlink:href="#${name}-icon"></use></svg>`;
-  })
+  eleventyConfig.addShortcode('icon', function icon(name, kwargs) {
+    this.ctx.page.icons ||= new Set();
+    this.ctx.page.icons.add(name);
+    const { __keywords, ...attrs } = kwargs ?? {}
+    const attributes =
+      Object.entries(attrs)
+        .map(([name, value]) => ` ${name}="${value}"`)
+        .join('');
+    return `<svg ${attributes}><use href="#${name}-icon"></use></svg>`;
+  });
 };
 

@@ -9,7 +9,7 @@ layout: html.html
          srcset="{{ '/assets/images/logo/bp-logo-transparent@2x.png' | url }} 2x,
                  {{ '/assets/images/logo/bp-logo-transparent.png' | url }} 1x"></a>
 
-  <nav>
+  <nav title="Site nav">
     <a href="{{ '/posts/' | url }}">Posts</a>
     <a href="{{ '/tags/' | url }}">Tags</a>
     <a href="{{ '/resume/' | url }}">C.V.</a>
@@ -17,8 +17,8 @@ layout: html.html
 
   <ul class="socials">{% for link in social %}
     <li>
-      <a rel="me noreferrer nofollow" target="_blank" href="{{ link.href }}">
-        {% icon link.icon, title=link.label %}
+      <a rel="me noreferrer nofollow" target="_blank" href="{{ link.href }}" title="{{ link.label }}">
+        {% icon link.icon %}
       </a>
     </li>{% endfor %}
   </ul>

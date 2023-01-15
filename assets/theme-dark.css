@@ -4,7 +4,7 @@
   --primary-color-darker: var(--purple-a700);
   --primary-color-lighter: var(--purple-a200);
   --primary-color: var(--purple-a400);
-  --primary-lines-color: #ccc;
+  --primary-lines-color: #cccccc;
   --primary-text-color: var(--grey-200);
 
   /* Text colors */
@@ -17,7 +17,7 @@
   --page-background: var(--near-black);
 
   /* code blocks */
-  --code-button-focus-background: #333;
+  --code-button-focus-background: #333333;
   --code-button-focus-color: white;
   --code-button-background: var(--page-background);
   --code-tabs-tabs-background: transparent;
@@ -40,6 +40,8 @@
   --markdown-syntax-number-color: var(--light-blue-300);
   --markdown-syntax-operator-color: var(--light-blue-300);
   --markdown-syntax-punctuation-color: var(--cyan-600);
+  --markdown-syntax-property-color: var(--cyan-400);
+  --markdown-syntax-selector-color: var(--light-blue-500);
   --markdown-syntax-string-color: var(--deep-orange-200);
   --markdown-syntax-tag-color: var(--cyan-400);
   --markdown-syntax-variable-color: var(--deep-orange-200);

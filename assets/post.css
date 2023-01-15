@@ -1,13 +1,13 @@
-body {
+body.post {
   display: grid;
   gap: 1em 1.6em;
   grid-template-rows: min-content auto auto min-content;
   grid-template-columns: minmax(0, auto);
   grid-template-areas:
-    'head'
-    'main'
-    'menu'
-    'foot';
+    "head"
+    "main"
+    "menu"
+    "foot";
 }
 
 #side-menu .table-of-contents {
@@ -15,13 +15,13 @@ body {
 }
 
 @media (min-width: 1000px) {
-  body {
+  body.post {
     grid-template-rows: min-content auto min-content;
     grid-template-columns: minmax(0, 1fr) 300px;
     grid-template-areas:
-      'head head'
-      'main menu'
-      'foot foot';
+      "head head"
+      "main menu"
+      "foot foot";
   }
 
   #side-menu .table-of-contents {
@@ -91,4 +91,5 @@ main { grid-area: main; }
   object-fit: cover;
   max-height: 400px;
   object-position: center;
+  border-radius: 16px;
 }
