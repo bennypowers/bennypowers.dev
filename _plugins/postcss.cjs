@@ -31,4 +31,13 @@ module.exports = function(eleventyConfig, options) {
       }
     }
   });
+  eleventyConfig.addFilter('postcss', async function(input) {
+    try {
+      const result = await processor.process(input);
+      return result.css;
+    } catch(e) {
+      console.error(e);
+      return input
+    }
+  });
 }

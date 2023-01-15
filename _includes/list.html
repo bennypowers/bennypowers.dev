@@ -1,57 +1,21 @@
 ---
 layout: base.html
+inlineCss:
+  - list.css
 ---
 
 <main>
   <h1>{{ h1 | safe if h1 else title | safe }}</h1>
   <ol>{%- for post in (collections[tag] if tag else pagination.items) -%}{% if watch or post.data.published %}
-    <li{% if watch and not post.data.published %} class="unpublished"{% endif %}>
+    <li{% if watch and not post.data.published %} class="unpublished"{% endif %}>{% if showThumbnails and post.data.coverImage %}
+      <img class="thumbnail" alt="{{ post.data.coverImageAlt or '' }}" src="{{ post.data.coverImage }}">{% endif %}
+      <h2><a href="{{ post.url }}">{{ post.data.title }}</a></h2>
       <div>
-        <h2><a href="{{ post.url }}">{{ post.data.title }}</a></h2>
         <time datetime="{{ post.data.datePublished }}">{{ post.data.datePublished | formatDate(month = 'short', day = 'numeric', year = 'numeric') }}</time>
         <p>{{ post.data.description }}</p>
-      </div>{% if showThumbnails and post.data.coverImage %}
-      <img alt="{{ post.data.coverImageAlt or '' }}" src="{{ post.data.coverImage }}">{% endif %}
+      </div>
     </li>{% endif %}{%- endfor -%}
   </ol>
 </main>
 
 {{ content | safe }}
-
-<style>
-
-main img {
-  max-height: 200px;
-}
-
-main li {
-  display: grid;
-  grid-template-columns: auto auto;
-  justify-content: space-between;
-}
-
-main ol {
-  display: flex;
-  flex-flow: column;
-  gap: 1em;
-}
-
-:is(main, #pages) ol {
-  list-style-type: none;
-  padding: 0;
-}
-
-:is(main, #pages) li {
-  margin: 0;
-}
-
-#pages {
-  display: flex;
-  gap: 8px;
-}
-
-#pages ol {
-  display: contents;
-}
-
-</style>

@@ -1,0 +1,34 @@
+main {
+  max-width: 800px;
+  margin-inline: auto;
+}
+
+main img {
+  max-height: 200px;
+}
+
+main ol {
+  display: flex;
+  flex-flow: column;
+  gap: 1em;
+  list-style-type: none;
+  padding: 0;
+}
+
+main li {
+  display: grid;
+  margin: 0;
+  grid-template-areas:
+    "thumb title"
+    "thumb desc";
+  grid-template-columns: auto 1fr;
+  column-gap: 1em;
+}
+
+li h2 { grid-area: title; }
+li img { grid-area: thumb; }
+li div { grid-area: desc; }
+
+.thumbnail {
+  float: left;
+}
