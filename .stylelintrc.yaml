@@ -23,6 +23,7 @@ rules:
   selector-pseudo-element-colon-notation: single
   shorthand-property-no-redundant-values: true
   string-quotes: double
+  csstools/use-nesting: always
   max-line-length:
     - 100
     - ignorePattern: /--rh-font-family-/
@@ -47,4 +48,8 @@ overrides:
     - decks/nvim-regexplainer/*.css
     rules:
       csstools/use-nesting: always
+  - files:
+    - assets/*.css
+    rules:
+      csstools/use-nesting: ignore
    
