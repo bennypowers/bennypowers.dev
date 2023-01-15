@@ -18,7 +18,7 @@
   href: https://il.linkedin.com/in/bennypowers
   icon: linkedin-mono
 
-- label: Twitter
-  href: https://twitter.com/PowersBenny
-  icon: twitter-mono
+- label: RSS
+  href: /feed.xml
+  icon: rss-mono
 
