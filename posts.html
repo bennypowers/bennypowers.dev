@@ -4,14 +4,16 @@ date: Created
 title: Posts
 permalink: "/posts/{{ ('page-' + (pagination.pageNumber + 1) + '/index.html') if pagination.pageNumber else '' }}"
 showThumbnails: true
+inlineCss: 
+  - posts.css
 pagination:
   data: collections.posts
   reverse: true
   size: 5
 ---
 
-<h2>Pages</h2>
-<nav id="pages">{% if pagination.href.previous %}
+<nav id="pages">
+  <h2>Pages</h2>{% if pagination.href.previous %}
   <a href="{{ pagination.href.previous }}">Previous</a>{% else %}Previous{% endif %}
   <ol>{% for entry in pagination.pages %}
     <li>
@@ -21,40 +23,3 @@ pagination:
   </ol>{% if pagination.href.next %}
   <a href="{{ pagination.href.next }}">Next</a>{% else %}Next{% endif %}
 </nav>
-
-<style>
-
-main img {
-  max-height: 200px;
-}
-
-main li {
-  display: grid;
-  grid-template-columns: auto auto;
-  justify-content: space-between;
-}
-
-main ol {
-  display: flex;
-  flex-flow: column;
-  gap: 1em;
-}
-
-:is(main, #pages) ol {
-  list-style-type: none;
-  padding: 0;
-}
-
-:is(main, #pages) li {
-  margin: 0;
-}
-
-#pages {
-  display: flex;
-  gap: 8px;
-}
-
-#pages ol {
-  display: contents;
-}
-</style>

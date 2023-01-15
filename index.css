@@ -1,0 +1,60 @@
+h1 {
+  --hue-offset: -120;
+}
+
+main {
+  --thumbnail-height: 125px;
+
+  text-align: center;
+  font-size: 180%;
+}
+
+#hero {
+  max-height: 200px;
+}
+
+#latest {
+  display: flex;
+  gap: 1em;
+  flex-flow: row wrap;
+  justify-content: center;
+  margin-block-end: 1em;
+
+  & h2 {
+    flex: 1 0 100%;
+    margin-block-end: 0;
+  }
+
+  & ol {
+    list-style-type: none;
+    display: contents;
+
+    & li {
+      max-width: 150px;
+      display: grid;
+      grid-template-areas: "all";
+      place-items: center;
+      font-size: 50%;
+
+      & > * {
+        grid-area: all;
+      }
+
+      & img {
+        opacity: 0.5;
+      }
+
+      & div {
+        z-index: 1;
+      }
+
+      & a {
+        font-weight: 800;
+      }
+
+      & time {
+        font-size: 80%;
+      }
+    }
+  }
+}

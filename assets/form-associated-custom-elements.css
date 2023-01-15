@@ -1,7 +1,7 @@
 .settings {
   display: grid;
   grid-template-columns: max-content auto;
-  gap: .2em 1em;
+  gap: 0.2em 1em;
 }
 
 #set {
@@ -12,7 +12,7 @@
   column-gap: 1em;
 }
 
-fieldset[form=form] label {
+fieldset[form="form"] label {
   display: block;
 }
 

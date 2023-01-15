@@ -1,12 +1,30 @@
 ---
 layout: base.html
+inlineCss:
+  - index.css
 ---
 
 <main class="home">
   <h1>Greetings</h1>
-  <img alt="Ness, from the 90s era SNES classic Earthbound"
+  <img id="hero"
+       alt="Ness, from the 90s era SNES classic Earthbound"
        src="{{ '/assets/images/ness-bike.png' | url }}">
   <p><a href="https://github.com/bennypowers">Furiously procrastinate</a></p>
   <p><a href="{{ '/posts' | url }}">Read Something</a></p>
   <p><a href="https://social.bennypowers.dev">Gawk</a></p>
+
+  <nav id="latest">
+    <h2>Latest</h2>
+    <ol>{% for post in collections.posts | reverse | slice(5) | first %}{% if watch or post.data.published %}
+      <li{% if watch and not post.data.published %} class="unpublished"{% endif %}>
+        {% if post.data.coverImage %}
+        <img class="thumbnail" alt="{{ post.data.coverImageAlt or '' }}" src="{{ post.data.coverImage }}">
+        {% endif %}
+        <div>
+          <a href="{{ post.url }}">{{ post.data.title }}</a>
+          <time datetime="{{ post.data.datePublished }}">{{ post.data.datePublished | formatDate(month = 'short', day = 'numeric', year = 'numeric') }}</time>
+        </div>
+    </li>{% endif %}{%- endfor -%}
+    </ol>
+  </nav>
 </main>

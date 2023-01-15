@@ -98,17 +98,14 @@ body {
 
 img {
   max-width: 100%;
-}
 
-main.home h1 { --hue-offset: -120; }
-
-main.home {
-  text-align: center;
-  font-size: 180%;
-}
-
-main.home img {
-  max-height: 200px;
+  &.thumbnail {
+    border-radius: 16px;
+    height: var(--thumbnail-height, 125px);
+    aspect-ratio: 1.61/1;
+    object-fit: cover;
+    object-position: center;
+  }
 }
 
 #main-header {
@@ -119,9 +116,9 @@ main.home img {
   top: 0;
   background: var(--background-color);
   z-index: 2;
-}
 
-#main-header img { height: 40px; }
+  & img { height: 40px; }
+}
 
 :is(a, h1, h2, h3, h4, h5, h6) {
   --magic-hue: calc(var(--primary-hue) + var(--hue-offset));
@@ -148,12 +145,12 @@ a {
   text-decoration-thickness: 1px;
   text-decoration-color: var(--magic-start);
   transition: text-decoration-thickness 0.3s ease-in-out;
-}
 
-a:visited { --hue-offset: 50; }
+  &:visited { --hue-offset: 50; }
 
-a:is(:hover, :focus) {
-  text-decoration-thickness: 4px;
+  &:is(:hover, :focus) {
+    text-decoration-thickness: 4px;
+  }
 }
 
 .socials {
@@ -162,21 +159,21 @@ a:is(:hover, :focus) {
   list-style-type: none;
   margin: 0;
   padding: 0;
-}
 
-#mobile-nav .socials {
-  display: flex;
-}
+  @nest #mobile-nav & {
+    display: flex;
+  }
 
-.socials li,
-.socials a {
-  color: currentcolor;
-}
+  & li,
+  & a {
+    color: currentcolor;
+  }
 
-.socials svg {
-  fill: currentcolor;
-  width: 24px;
-  aspect-ratio: 1/1;
+  & svg {
+    fill: currentcolor;
+    width: 24px;
+    aspect-ratio: 1/1;
+  }
 }
 
 #mobile-nav summary {
@@ -186,12 +183,12 @@ a:is(:hover, :focus) {
   list-style: none;
   width: 40px;
   height: 40px;
-}
 
-#mobile-nav summary svg {
-  width: 24px;
-  height: 24px;
-  fill: currentcolor;
+  & svg {
+    width: 24px;
+    height: 24px;
+    fill: currentcolor;
+  }
 }
 
 #mobile-nav-content {
@@ -206,24 +203,24 @@ a:is(:hover, :focus) {
   list-style-type: none;
   margin: 0;
   padding: 0.3em 0.6em;
-}
 
-#tags-list li {
-  margin: 0;
-  display: inline-block;
-  border-radius: 1em;
-  background: hsla(0deg 100% 100% / 0.15);
-  padding: 0.3em 0.6em;
-  break-inside: avoid;
-  margin-block-end: 0.3em;
-}
+  & li {
+    margin: 0;
+    display: inline-block;
+    border-radius: 1em;
+    background: hsla(0deg 100% 100% / 0.15);
+    padding: 0.3em 0.6em;
+    break-inside: avoid;
+    margin-block-end: 0.3em;
 
-#tags-list li#all-tags {
-  display: inline-block;
-  margin-block: 1em;
-  width: 100%;
-  background: none;
-  padding: 0;
+    &#all-tags {
+      display: inline-block;
+      margin-block: 1em;
+      width: 100%;
+      background: none;
+      padding: 0;
+    }
+  }
 }
 
 body code[class*="language-"],
@@ -261,15 +258,15 @@ code-tabs:focus-within {
     grid-template-columns: repeat(3, 1fr);
     justify-items: center;
     font-size: 150%;
-  }
 
-  #main-header nav {
-    display: flex;
-    gap: 0.5em;
-  }
+    & nav {
+      display: flex;
+      gap: 0.5em;
+    }
 
-  #main-header :first-child { justify-self: start; }
-  #main-header :last-child { justify-self: end; }
+    & :first-child { justify-self: start; }
+    & :last-child { justify-self: end; }
+  }
 
   #mobile-nav {
     display: none;

@@ -1,0 +1,17 @@
+#pages {
+  width: 800px;
+  text-align: end;
+  justify-content: end;
+  margin-inline: auto;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+#pages h2 {
+  flex: 1 0 100%;
+}
+
+#pages ol {
+  display: contents;
+}
