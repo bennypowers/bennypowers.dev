@@ -17,6 +17,7 @@ const EleventyPluginRSS = require('@11ty/eleventy-plugin-rss');
 const GlitchPlugin = require('./_plugins/glitch.cjs');
 const IconsPlugin = require('./_plugins/icons.cjs');
 const FiltersPlugin = require('./_plugins/filters.cjs');
+const FontsPlugin = require('./_plugins/fonts.cjs');
 const PostsPlugin = require('./_plugins/posts.cjs');
 const PostCSSPlugin = require('./_plugins/postcss.cjs');
 const RedHatDeckPlugin = require('./_plugins/redhat-deck.cjs');
@@ -37,6 +38,7 @@ module.exports = function(eleventyConfig) {
   eleventyConfig.addPlugin(PostsPlugin);
   eleventyConfig.addPlugin(IconsPlugin);
   eleventyConfig.addPlugin(FiltersPlugin);
+  eleventyConfig.addPlugin(FontsPlugin);
   eleventyConfig.addPlugin(DecksPlugin, { assetsExtensions: ['jpg', 'png', 'webp', 'svg', 'js']});
   eleventyConfig.addPlugin(RedHatDeckPlugin);
   eleventyConfig.addPlugin(RHDSPlugin);

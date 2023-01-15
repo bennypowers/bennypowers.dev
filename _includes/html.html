@@ -62,7 +62,7 @@
           href="{{ '/assets/prism.css' | url }}">
 
     <link rel="stylesheet"
-          href="https://fonts.googleapis.com/css2?family=Overpass&family=Hepta+Slab&family=Fira+Code&family=Noto+Mono&display=swap">
+          href="{{ fonts | googleFonts }}">
 
     {% for sheet in stylesheets %}
     <link rel="stylesheet"{% if sheet.media %}
