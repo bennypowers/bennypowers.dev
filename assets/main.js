@@ -51,7 +51,7 @@ class Scroller {
   animateHue() {
     if (this.hasScrollChanged()) {
       const hue = this.hueFromScrollPosition(this.scrollPosition);
-      if (this.lastHue !== hue)
+      if (this.lastHue !== hue && !Number.isNaN(hue) && hue !== Infinity)
         document.documentElement.style.setProperty('--primary-hue', hue.toString());
       this.lastHue = hue;
     }
