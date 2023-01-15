@@ -1,7 +1,5 @@
----
-title: Hamburger
----
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+  <title>Three horizontal lines</title>
   <path fill="none" d="M0 0h16v16H0z"/>
   <path d="M1 9h14V7H1v2zm0 5h14v-2H1v2zM1 2v2h14V2H1z"/>
 </svg>

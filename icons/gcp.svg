@@ -1,7 +1,5 @@
----
-title: Google Cloud Platform
----
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128">
+  <title>Google Cloud Platform</title>
   <defs>
     <radialGradient id="gcp-a" cx="-221.831" cy="139.65" r="90.313" gradientTransform="translate(317.975 -167.306) scale(1.3333)" gradientUnits="userSpaceOnUse">
       <stop offset="0" stop-color="#fff" stop-opacity=".1"/>

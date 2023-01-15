@@ -1,7 +1,5 @@
----
-title: Atom
----
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">
+  <title>Atom</title>
   <defs>
     <linearGradient id="atom-41-a" x1="50%" x2="50%" y1="3.961%" y2="100%">
       <stop offset="0%" stop-color="#FDFDFD"></stop>

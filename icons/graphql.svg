@@ -1,7 +1,5 @@
----
-title: GraphQL
----
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400">
+  <title>GraphQL</title>
   <path transform="rotate(-150 130.337 159.778)" fill="#E535AB" d="M122-.4h16.6v320.3H122z"/>
   <path fill="#E535AB" d="M39.8 272.2h320.3v16.6H39.8z"/>
   <path transform="rotate(-150 130.408 320.545)" fill="#E535AB" d="M37.9 312.2h185v16.6h-185z"/>
