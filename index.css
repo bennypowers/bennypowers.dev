@@ -1,5 +1,11 @@
 h1 {
   --hue-offset: -120;
+
+  font-size: 1.3em;
+
+  @media (min-width: 500px) {
+    font-size: 2em;
+  }
 }
 
 main {
@@ -7,7 +13,7 @@ main {
 
   text-align: center;
   font-size: 180%;
-  max-width: 800px;
+  max-width: min(800px, calc(100vw - 2 * 1.6em));
   margin-inline: auto;
 }
 
@@ -38,17 +44,23 @@ main {
       grid-template-areas: "all";
       place-items: center;
       font-size: 50%;
+      border-radius: 16px;
+      overflow: hidden;
 
       & > * {
         grid-area: all;
       }
 
-      & img {
+      & .thumbnail {
         opacity: 0.5;
+        filter: blur(2px);
+        transition: filter 0.2s ease;
       }
 
       & div {
         z-index: 1;
+        padding-block: .6em;
+        transition: background 0.2s ease;
       }
 
       & a {
@@ -59,6 +71,19 @@ main {
       & time {
         font-size: 80%;
       }
+
+      &:is(:hover, :focus-within) {
+        & .thumbnail {
+          filter: blur(0);
+        }
+        & div {
+          background: black;
+        }
+      }
     }
   }
+}
+
+.table-of-contents {
+  display: none;
 }
