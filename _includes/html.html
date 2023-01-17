@@ -104,6 +104,7 @@ inlineCss:
       }
       </style>{% endif %}{% if inlineCss %}{% for file in inlineCss %}{% set sheet %}{% include file %}{% endset %}
       <style data-file="{{ file }}">{{ sheet | postcss | safe }}</style>{% endfor %}{% endif %}
+      <script data-goatcounter="https://bp-dev.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
     </head>
     <body class="{{ type }}{% if type == 'post' and not published and watch %} unpublished{% endif %}"{%-
           if bodyAttributes %} {{ bodyAttributes }}{% endif %}>
