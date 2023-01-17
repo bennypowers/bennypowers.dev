@@ -59,7 +59,7 @@ main {
 
       & div {
         z-index: 1;
-        padding-block: .6em;
+        padding-block: 0.6em;
         transition: background 0.2s ease;
       }
 
@@ -76,6 +76,7 @@ main {
         & .thumbnail {
           filter: blur(0);
         }
+
         & div {
           background: black;
         }
@@ -86,4 +87,8 @@ main {
 
 .table-of-contents {
   display: none;
+}
+
+[src="/assets/images/sprite-sheet.png"] {
+  image-rendering: optimizespeed;
 }

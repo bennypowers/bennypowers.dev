@@ -10,6 +10,8 @@ tags:
   - html
   - svg
   - performance
+inlineCss:
+  - 11ty-svg-sprites.css
 ---
 
 So you want to put some SVG icons on your [11ty](https://11ty.dev) site, hey? 
@@ -17,11 +19,15 @@ This technique lets you include icons in your posts easily. With a little
 initial investment, adding and using icons should be easy for you and easy on 
 your users.
 
+<div id="examples">
 {% icon '11ty' %}
 {% icon 'svg' %}
 {% icon 'a11y' %}
 {% icon 'html5' %}
+{% icon 'javascript' %}
 {% icon 'jerusalem' %}
+{% icon 'ness' %}
+</div>
 
 ## Step 1: The Collection
 
@@ -51,7 +57,7 @@ optional map of HTML attributes, and works like this:
 
 ```njk {%raw%}
 {% icon 'html5' %}
-{% icon 'svg', "aria-labelledby"="svg-w3c" %}
+{% icon 'svg', 'aria-labelledby'='svg-w3c' %}
 {% icon '11ty', title="eleventy" %}
 ``` {%endraw%}
 
@@ -68,8 +74,8 @@ eleventyConfig.addShortcode('icon', function icon(name, kwargs) {
   const { __keywords, ...attrs } = kwargs ?? {}
   const attributes =
     Object.entries(attrs)
-      .map(([name, value]) => ` ${name}="${value}"`)
-      .join('');
+      .map(([name, value]) => `${name}="${value}"`)
+      .join(' ');
   return `<svg ${attributes}><use href="#${name}-icon"></use></svg>`;
 });
 ```
@@ -124,14 +130,6 @@ out to seriously cut down on your bytes-over-the-wire, depending on how you use
 icons.
 
 If you have any ideas for improvements, let me know on [mastodon][mastodon].
-
-<style>
-main svg {
-  fill: currentcolor;
-  height: 40px;
-  aspect-ratio: 1;
-}
-</style>
 
 [njk]: https://mozilla.github.io/nunjucks/templating.html
 [vishide]: https://www.tpgi.com/the-anatomy-of-visually-hidden/
