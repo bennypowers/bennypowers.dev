@@ -58,7 +58,7 @@ optional map of HTML attributes, and works like this:
 ```njk {%raw%}
 {% icon 'html5' %}
 {% icon 'svg', 'aria-labelledby'='svg-w3c' %}
-{% icon '11ty', title="eleventy" %}
+{% icon '11ty', title='eleventy' %}
 ``` {%endraw%}
 
 By storing a set of icons requested on each `page` object, our sprite sheet will 
@@ -91,15 +91,17 @@ our pages, so let's add our sprite sheet to our base HTML. Put the following
 template: 
 
 ```njk {%raw%}
+{% if page.icons %}
 <svg id="icon-sprite-sheet">
   <defs>
     {% for icon in collections.icon %}
-      {% if page.icons and page.icons.has(icon.fileSlug) %}
+      {% if page.icons.has(icon.fileSlug) %}
         <g id="{{ icon.fileSlug }}-icon">{{ icon.content | safe }}</g>
       {% endif %}
     {% endfor %}
   </defs>
 </svg>
+{% endif %}
 ```{%endraw%}
 
 The `if` nunjucks tag ensures that only icons that had been requested on _this_ 
