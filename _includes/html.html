@@ -111,11 +111,11 @@ inlineCss:
     {{ content | safe }}
     <footer id="footer" class="screen-only">
       <small id="legal">© {{ (datePublished or page.date) | formatDate(year='numeric') }} Benny Powers.</small>
-    </footer>
+    </footer>{% if page.icons %}
     <svg id="icon-sprite-sheet">
-      <defs>{% for icon in collections.icon %}{% if page.icons and page.icons.has(icon.fileSlug) %}
+      <defs>{% for icon in collections.icon %}{% if page.icons.has(icon.fileSlug) %}
         <g id="{{ icon.fileSlug }}-icon">{{ icon.content | safe }}</g>{% endif %}{% endfor %}
       </defs>
-    </svg>
+    </svg>{% endif %}
   </body>
 </html>
