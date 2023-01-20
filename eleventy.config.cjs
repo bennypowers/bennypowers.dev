@@ -22,6 +22,7 @@ const PostsPlugin = require('./_plugins/posts.cjs');
 const PostCSSPlugin = require('./_plugins/postcss.cjs');
 const RedHatDeckPlugin = require('./_plugins/redhat-deck.cjs');
 const RHDSPlugin = require('./_plugins/rhds.cjs');
+const JamPackPlugin = require('./_plugins/jampack.cjs');
 
 /** @param{import('@11ty/eleventy/src/UserConfig.js')} eleventyConfig */
 module.exports = function(eleventyConfig) {
@@ -51,6 +52,7 @@ module.exports = function(eleventyConfig) {
   eleventyConfig.addPlugin(EleventyRenderPlugin);
   eleventyConfig.addPlugin(EleventyPluginRSS);
   eleventyConfig.addPlugin(EleventyPluginSyntaxhighlight, { init() { require('prismjs/components/index')(['regex']) } });
+  eleventyConfig.addPlugin(JamPackPlugin);
   return {
     templateFormats: [ 'md', 'njk', 'html', 'svg', 'css' ],
     markdownTemplateEngine: 'njk',

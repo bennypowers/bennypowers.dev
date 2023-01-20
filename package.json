@@ -26,6 +26,7 @@
     "@11ty/eleventy-plugin-directory-output": "^1.0.1",
     "@11ty/eleventy-plugin-rss": "^1.2.0",
     "@11ty/eleventy-plugin-syntaxhighlight": "^4.2.0",
+    "@divriots/jampack": "^0.5.1",
     "@jspm/generator": "^1.0.0-beta.38",
     "@rhds/elements": "^1.0.0-beta.27",
     "@rhds/tokens": "^1.0.0-beta.9",
