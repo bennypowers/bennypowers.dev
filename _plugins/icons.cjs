@@ -1,4 +1,5 @@
-const { optimize } = require('svgo')
+const cheerio = require('cheerio');
+const fs = require('node:fs/promises');
 
 /** @param{import('@11ty/eleventy/src/UserConfig.js')} eleventyConfig */
 module.exports = function(eleventyConfig) {
@@ -10,7 +11,11 @@ module.exports = function(eleventyConfig) {
       }
     },
     async getData(inputPath) {
-
+      const content = await fs.readFile(inputPath, 'utf-8');
+      const $ = cheerio.load(content);
+      const title = $('title').text();
+      console.log(inputPath, title);
+      return { title };
     }
   });
   eleventyConfig.addShortcode('icon', function icon(name, kwargs) {
