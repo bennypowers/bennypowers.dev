@@ -18,7 +18,7 @@ main {
 }
 
 #hero {
-  max-height: 200px;
+  image-rendering: pixelated;
 }
 
 #latest {
