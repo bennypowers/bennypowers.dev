@@ -98,7 +98,7 @@ stylesheets:
     {%- set icons = collections.icon | groupby('fileSlug') %}
     <ul id="tools-and-technologies">{% for buzzword in buzzwords %}
       {%- set icon = icons[buzzword.icon or buzzword] | first -%}
-      <li itemprop="knowsAbout" title="{{ buzzword.title or icon.data.title }}">
+      <li itemprop="knowsAbout" title="{{ buzzword.title or icon.data.title or buzzword }}">
         {% icon buzzword.icon or buzzword, 'aria-hidden'='true' %}
       </li>{% endfor %}
     </ul>
