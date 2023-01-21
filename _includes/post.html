@@ -38,6 +38,7 @@ stylesheets:
     <h1>{{ title }}</h1>{% if coverImage %}
     <img id="cover-image"
          alt="{{ coverImageAlt or '' }}"
+         height="400"
          src="{{ coverImage }}">{% endif %}
   </header>
   {{ content | safe }}
