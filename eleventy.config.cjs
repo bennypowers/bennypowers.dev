@@ -35,7 +35,7 @@ module.exports = function(eleventyConfig) {
       .use(attrs, { allowedAttributes: [ 'id', 'slot', 'hidden', 'style',
                                          'reveal', 'current', /^data-.*$/ ] }));
   eleventyConfig.addDataExtension('yaml', x => YAML.parse(x));
-  eleventyConfig.addPassthroughCopy('assets/**/*.{svg,png,jpe?g,webp,webm,js,d.ts,ico,webmanifest,json}');
+  eleventyConfig.addPassthroughCopy('assets/**/*.{svg,png,jpe?g,gif,webp,webm,js,d.ts,ico,webmanifest,json}');
   eleventyConfig.addPlugin(PostsPlugin);
   eleventyConfig.addPlugin(IconsPlugin);
   eleventyConfig.addPlugin(FiltersPlugin);
