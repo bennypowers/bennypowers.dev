@@ -4,15 +4,19 @@ stylesheets:
   - href: /assets/post.css
 ---
 {% if watch or published %}
+{%- set prettyPublished = datePublished | formatDate(month='short', day='numeric', year='numeric') -%}
+{%- set prettyUpdated = page.date | formatDate(month='short', day='numeric', year='numeric') -%}
+{%- set next = collections.posts | getNextCollectionItem -%}
+{%- set previous = collections.posts | getPreviousCollectionItem -%}
 <aside id="side-menu">
   <div>
     <dl id="post-stats">
       <dt>⏲️ Time to read</dt>
       <dd>~ {{ content | timeToRead }}</dd>
       <dt>🌅 Published</dt>
-      <dd><time datetime="{{ datePublished }}">{{ datePublished | formatDate(month='short', day='numeric', year='numeric') }}</time></dd>
+      <dd><time datetime="{{ datePublished }}">{{ prettyPublished }}</time></dd>{% if prettyPublished !== prettyUpdated %}
       <dt>✏️ Last Touched</dt>
-      <dd><time datetime="{{ date }}">{{ page.date | formatDate(month='short', day='numeric', year='numeric') }}</time></dd>
+      <dd><time datetime="{{ page.date }}">{{ prettyUpdated }}</time></dd>{% endif %}
     </dl>{% if audience or tldr %}
     <dl id="post-summaries">{% if audience %}
       <dt>👯 Audience</dt>
@@ -30,6 +34,35 @@ stylesheets:
       <li><a href="{{ ('/tags/' + tag | slug) | url}}">{{ tag }}</a> ({{ related | length }})</li>{% endif %}{% endfor %}
       <li id="all-tags"><a href="{{ '/tags/' | url }}">All Tags</a></li>
     </ul>
+    {% if next %}
+    <h2>Next</h2>
+    <div id="next-post">
+      {% if next.data.coverImage %}
+      <img class="thumbnail" alt="{{ next.data.coverImageAlt or '' }}" src="{{ next.data.coverImage }}">
+      {% endif %}
+      <div>
+        <a href="{{ next.url }}">{{ next.data.title }}</a>
+        <br>
+        <time datetime="{{ next.data.datePublished }}">{{ next.data.datePublished | formatDate(month = 'short', day = 'numeric', year = 'numeric') }}</time>
+      </div>
+    </div>
+    {% endif %}
+    {% if previous %}
+    <h2>Previous</h2>
+    <div id="prev-post">
+      {% if previous.data.coverImage %}
+      <img class="thumbnail"
+           alt="{{ previous.data.coverImageAlt or '' }}"
+           width="192"
+           src="{{ previous.data.coverImage }}">
+      {% endif %}
+      <div>
+        <a href="{{ previous.url }}">{{ previous.data.title }}</a>
+        <br>
+        <time datetime="{{ previous.data.datePublished }}">{{ previous.data.datePublished | formatDate(month = 'short', day = 'numeric', year = 'numeric') }}</time>
+      </div>
+    </div>
+    {% endif %}
   </div>
 </aside>
 

@@ -14,7 +14,6 @@ module.exports = function(eleventyConfig) {
       const content = await fs.readFile(inputPath, 'utf-8');
       const $ = cheerio.load(content);
       const title = $('title').text();
-      console.log(inputPath, title);
       return { title };
     }
   });
