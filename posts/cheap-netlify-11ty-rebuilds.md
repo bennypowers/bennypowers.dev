@@ -22,7 +22,7 @@ minutes per month, and it takes about a minute to build your site, door-to-door.
 That's about 720 minutes a month, or in layman's terms: [$7][pricing] you could 
 be spending on bourbon, or Nintendo games, or, I dunno, rent or something.
 
-Luckily, our Cascadian software overlords in Redmond have deep pockets, so 
+Luckily, our Cascadian software overlords in Redmond have deep pockets, and 
 GitHub actions minutes are basically free. So instead of building our site on 
 netlify's runners, let's build the site on their servers and just ship the 
 `_site` dir to netlify to deploy. How? Easy-peasy:
