@@ -4,6 +4,8 @@ description: Web Components are awesome, but perhaps a little misunderstood. Thi
 published: true
 datePublished: 2019-02-19
 coverImage: https://thepracticaldev.s3.amazonaws.com/i/qgc03cib7p603aph0o76.png
+altUrls:
+  - https://dev.to/bennypowers/lets-build-web-components-part-8-mythbusters-edition-3la
 tags:
   - web components
   - custom elements

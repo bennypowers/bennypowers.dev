@@ -3,6 +3,8 @@ title: 8 Days of Web Components Tips
 published: true
 datePublished: 2021-12-05
 coverImage: https://dev-to-uploads.s3.amazonaws.com/uploads/articles/jbu8sm54svooogakrb4d.jpg
+altUrls:
+  - https://dev.to/bennypowers/8-days-of-web-components-tips-39o5
 tags:
   - web components
   - html

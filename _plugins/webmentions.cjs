@@ -4,22 +4,26 @@ const TOKEN = 'zuu3pr1ps_Gt3fPKSTzWYg';
 
 /** @param {import('@11ty/eleventy/src/UserConfig.js')} eleventyConfig */
 module.exports = function(eleventyConfig, { domain }) {
-  eleventyConfig.addGlobalData('webmentions', async function() {
-    return EleventyFetch(`https://webmention.io/api/mentions.jf2?token=${TOKEN}`, {
+  eleventyConfig.addPairedShortcode('webmentions', async function(content, kwargs) {
+    const { url, type, altUrls = [] } = kwargs;
+
+    const target = new URL(url.replace(/index\.html$/, ''), domain).href;
+    const resourceUrl = new URL('/api/mentions.jf2', 'https://webmention.io')
+          resourceUrl.searchParams.append('token', TOKEN);
+          resourceUrl.searchParams.append('target[]', target);
+    // Hoping one day to slurp up dev.to likes and comments this way, but for now,
+    // adding them returns an empty list
+    // for (const t of altUrls)
+    //       resourceUrl.searchParams.append('target[]', target);
+
+    const mentions = await EleventyFetch(resourceUrl.href, {
       duration: '1h',
       type: 'json',
       verbose: true,
     });
-  });
-
-  eleventyConfig.addPairedShortcode('webmentions', function(content, kwargs) {
-    const { mentions, url, type } = kwargs;
-    const webmentionUrl = url.replace(/index\.html$/, '');
 
     const { likes, reposts, replies } = mentions.children.reduce((acc, mention) => {
-      if (mention['wm-target'] !== `${domain}${webmentionUrl}`) 
-        return acc;
-      else if (mention['wm-property'] === 'like-of')
+      if (mention['wm-property'] === 'like-of')
         acc.likes.push(mention);
       else if (mention['wm-property'] === 'repost-of')
         acc.reposts.push(mention);
@@ -48,19 +52,19 @@ module.exports = function(eleventyConfig, { domain }) {
       case 'reply':
         return !replies.length ? '' : /* html */`
         <section class="webmentions replies">${content}${replies.map(mention => /* html */`
-          <article class="webmention reply">
-            <header>
+          <article class="webmention reply h-entry">
+            <header class="p-author h-card">
               <a class="avatar" target="_blank" rel="noopener" href="${mention.author.url}">
                 <img src="${mention.author.photo}" title="${mention.author.name}">
               </a>
-            <span class="byline">
-              <a target="_blank" rel="noopener" href="${mention.author.url}">
-                <h3>${mention.author.name}</h3>
-              </a>
-              <a target="_blank" rel="noopener" href="${mention.url}">${prettyDate(mention.published ?? mention['wm-received'])}</a>
-            </span>
+              <span class="byline">
+                <a target="_blank" rel="noopener" href="${mention.author.url}">
+                  <h3 class="p-name">${mention.author.name}</h3>
+                </a>
+                <a class="u-in-reply-to" target="_blank" rel="noopener" href="${mention.url}">${prettyDate(mention.published ?? mention['wm-received'])}</a>
+              </span>
             </header>
-            <div class="comment">${mention.content.html}</div>
+            <div class="comment p-name p-content">${mention.content.html}</div>
           </article>`).join('\n')}
         </section>`;
     }

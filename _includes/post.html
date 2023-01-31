@@ -35,10 +35,10 @@ stylesheets:
       <li><a href="{{ ('/tags/' + tag | slug) | url}}">{{ tag }}</a> ({{ related | length }})</li>{% endif %}{% endfor %}
       <li id="all-tags"><a href="{{ '/tags/' | url }}">All Tags</a></li>
     </ul>
-    {% webmentions url = page.url, mentions = webmentions, type = 'like' %}
+    {% webmentions url = page.url, altUrls = altUrls, type = 'like' %}
     <h2>Likes</h2>
     {% endwebmentions %}
-    {% webmentions url = page.url, mentions = webmentions, type = 'repost' %}
+    {% webmentions url = page.url, altUrls = altUrls, type = 'repost' %}
     <h2>Boosts</h2>
     {% endwebmentions %}
     {% if next %}
@@ -84,7 +84,7 @@ stylesheets:
   </header>
   <div class="e-content">{{ content | safe }}</div>
 
-  {% webmentions url = page.url, mentions = webmentions, type = 'reply' %}
+  {% webmentions url = page.url, altUrls = altUrls, type = 'reply' %}
   <h2>Comments</h2>
   {% endwebmentions %}
 </main>
