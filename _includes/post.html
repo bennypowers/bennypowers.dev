@@ -9,6 +9,7 @@ stylesheets:
 {%- set prettyUpdated = page.date | formatDate(month='short', day='numeric', year='numeric') -%}
 {%- set next = collections.posts | getNextCollectionItem -%}
 {%- set previous = collections.posts | getPreviousCollectionItem -%}
+{%- set tableOfContents = content | toc | safe -%}
 <aside id="side-menu">
   <div>
     <dl id="post-stats">
@@ -24,11 +25,11 @@ stylesheets:
       <dd>{{ audience | safe }}</dd>{% endif %}{% if tldr %}
       <dt>🙈 tl;dr:</dt>
       <dd>{{ tldr | safe }}</dd>{% endif %}
-    </dl>{% endif %}
+    </dl>{% endif %}{% if tableOfContents.length %}
     <section class="table-of-contents">
       <h2><a href="#">Contents</a></h2>
-      {{ content | toc | safe }}
-    </section>
+      {{ tableOfContents }}
+    </section>{% endif %}
     <h2>Tags</h2>
     <ul id="tags-list" class="p-category">{% for tag in tags %}{% if tag != 'posts' %}
       {%- set related = collections[tag] -%}
