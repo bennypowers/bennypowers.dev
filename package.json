@@ -46,5 +46,8 @@
     "stylelint-use-nesting": "^4.0.0",
     "svgo": "^3.0.2",
     "yaml": "^2.2.1"
+  },
+  "devDependencies": {
+    "netlify-plugin-cache": "^1.0.3"
   }
 }
