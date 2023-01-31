@@ -1,0 +1,14 @@
+name: Rebuild
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 * * * *'
+
+jobs:
+  rebuild:
+    runs-on: ubuntu-latest
+    name: Rebuild site
+    steps:
+      - name: Ping Netlify Webhook
+        run: curl -X POST -d {} https://api.netlify.com/build_hooks/63d93cb641cd98005b109483
