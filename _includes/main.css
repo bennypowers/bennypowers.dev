@@ -96,6 +96,7 @@ body {
 
 img {
   max-width: 100%;
+  height: auto;
 
   &.thumbnail {
     border-radius: 16px;
