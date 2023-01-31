@@ -29,6 +29,7 @@ netlify's runners, let's build the site on their servers and just ship the
 
 Make `.github/workflows/rebuild.yaml` and plop this jaunty little ditty inside:
 
+{%raw%}
 ```yaml
 name: Rebuild
 
@@ -56,6 +57,7 @@ jobs:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
         run: npx netlify-cli deploy --prod --message "deploy from GitHub Action" --dir=_site
 ```
+{%endraw%}
 
 Let's break this down:
 
