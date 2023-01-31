@@ -89,8 +89,9 @@ How'd we do?
 9s]({{ '/assets/images/netlify-deploy-time-vs-build.png' }})
 
 Not too shabby! With this trick we cut our build time down by about a fifth. If 
-deploys take on average 15 seconds, that gives us a headroom of about 120 build 
-minutes for regular `main` branch deploys and branch deploy previews.
+deploys take on average 15 seconds, and we automatically rebuild on the hour, 
+that gives us a headroom of about 120 build minutes for regular `main` branch 
+deploys and branch deploy previews.
 
 [rknight]: https://rknight.me/adding-webmentions-to-your-site/
 [pricing]: https://www.netlify.com/pricing/
