@@ -1,3 +1,4 @@
+require('dotenv').config();
 const YAML = require('yaml');
 
 const attrs = require('markdown-it-attrs');
@@ -54,7 +55,11 @@ module.exports = function(eleventyConfig) {
   eleventyConfig.addPlugin(EleventyPluginRSS);
   eleventyConfig.addPlugin(EleventyPluginSyntaxhighlight, { init() { require('prismjs/components/index')(['regex']) } });
   eleventyConfig.addPlugin(JamPackPlugin);
-  eleventyConfig.addPlugin(WebmentionsPlugin, { domain: 'https://bennypowers.dev' });
+  eleventyConfig.addPlugin(WebmentionsPlugin, {
+    domain: 'https://bennypowers.dev',
+    webmentionIoToken: process.env.WEBMENTION_IO_TOKEN,
+    devToToken: process.env.DEV_TO_TOKEN,
+  });
   return {
     templateFormats: [ 'md', 'njk', 'html', 'svg', 'css' ],
     markdownTemplateEngine: 'njk',

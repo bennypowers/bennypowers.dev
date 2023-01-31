@@ -70,6 +70,9 @@ stylesheets:
       </div>
     </div>
     {% endif %}
+    {% for service in autoPublish %}
+    <a href="https://brid.gy/publish/{{ service }}"></a>
+    {% endfor %}
   </div>
 
 </aside>

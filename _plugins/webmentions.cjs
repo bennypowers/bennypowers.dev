@@ -1,36 +1,77 @@
 // @ts-check
 const EleventyFetch = require('@11ty/eleventy-fetch');
-const TOKEN = 'zuu3pr1ps_Gt3fPKSTzWYg';
+
+/** @typedef {object} WebMentionAuthor
+ * @property {string} url
+ * @property {string} name
+ * @property {string} photo
+ */
+
+/**
+ * @typedef {object} WebMention
+ * @property {WebMentionAuthor} author
+ * @property {string} published
+ * @property {string} url
+ * @property {{ html: string; text: string; }} content
+ * @property {string} wm-received
+ * @property {'like-of'|'repost-of'|'in-reply-to'} wm-property
+ */
+
+/** @typedef {object} WebMentionResponse
+ * @property {WebMention[]} children
+ */
+
+/** @type {WeakMap<WebMentionResponse, Record<'likes'|'replies'|'reposts', WebMention[]>>} */
+const COLLATED = new WeakMap();
+
+/**
+ * @param {WebMentionResponse} mentions
+ */
+function collateMentions(mentions) {
+  if (!COLLATED.has(mentions)) {
+    COLLATED.set(mentions, mentions.children.reduce((acc, mention) => {
+      switch(mention['wm-property']) {
+        case 'like-of': acc.likes.push(mention); break;
+        case 'repost-of': acc.reposts.push(mention); break;
+        case 'in-reply-to': acc.replies.push(mention); break;
+      }
+      return acc;
+    }, { likes: [], reposts: [], replies: []}));
+  }
+  return COLLATED.get(mentions);
+}
+
+/** @param {string | number | Date} string */
+function prettyDate(string) {
+  return new Date(string).toLocaleString('en-US', {
+    timeStyle: 'short',
+    dateStyle: 'short',
+  });
+}
+
 
 /** @param {import('@11ty/eleventy/src/UserConfig.js')} eleventyConfig */
-module.exports = function(eleventyConfig, { domain }) {
+module.exports = function(eleventyConfig, { domain, webmentionIoToken }) {
   eleventyConfig.addPairedShortcode('webmentions', async function(content, kwargs) {
     const { url, type, altUrls = [] } = kwargs;
 
     const target = new URL(url.replace(/index\.html$/, ''), domain).href;
-    const resourceUrl = new URL('/api/mentions.jf2', 'https://webmention.io')
-          resourceUrl.searchParams.append('token', TOKEN);
-          resourceUrl.searchParams.append('target[]', target);
+    const webmentionIoUrl = new URL('/api/mentions.jf2', 'https://webmention.io')
+          webmentionIoUrl.searchParams.append('token', webmentionIoToken);
+          webmentionIoUrl.searchParams.append('target[]', target);
     // Hoping one day to slurp up dev.to likes and comments this way, but for now,
     // adding them returns an empty list
-    // for (const t of altUrls)
+    // for (const t of altUrls.filter(x => !x.startsWith('https://dev.to')))
     //       resourceUrl.searchParams.append('target[]', target);
 
-    const mentions = await EleventyFetch(resourceUrl.href, {
+    /** @type {WebMentionResponse} */
+    const mentions = await EleventyFetch(webmentionIoUrl.href, {
       duration: '1h',
       type: 'json',
       verbose: true,
     });
 
-    const { likes, reposts, replies } = mentions.children.reduce((acc, mention) => {
-      if (mention['wm-property'] === 'like-of')
-        acc.likes.push(mention);
-      else if (mention['wm-property'] === 'repost-of')
-        acc.reposts.push(mention);
-      else if (mention['wm-property'] === 'in-reply-to')
-        acc.replies.push(mention);
-      return acc;
-    }, { likes: [], reposts: [], replies: []});
+    const { likes, reposts, replies } = collateMentions(mentions);
 
     switch(type) {
       case 'like': return !likes.length ? '' : /* html */`${content}
@@ -68,14 +109,6 @@ module.exports = function(eleventyConfig, { domain }) {
           </article>`).join('\n')}
         </section>`;
     }
-
-    function prettyDate(string) {
-      return new Date(string).toLocaleString('en-US', {
-        timeStyle: 'short',
-        dateStyle: 'short',
-      });
-    }
-
 
     return '';
   });
