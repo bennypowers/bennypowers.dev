@@ -10,5 +10,17 @@ jobs:
     runs-on: ubuntu-latest
     name: Rebuild site
     steps:
-      - name: Ping Netlify Webhook
-        run: curl -X POST -d {} https://api.netlify.com/build_hooks/63d93cb641cd98005b109483
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+          cache: 'npm'
+      - run: npm ci --prefer-offline
+      - run: npm run build
+
+      - name: Publish to Netlify
+        env:
+          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+        run: npx netlify-cli deploy --dir=_site
+
