@@ -15,12 +15,12 @@ tags:
   - performance
 ---
 
-So, you read Robb Knight's lovely article on implementing Webmentions on your 
-11ty site, and you even wrote some code to fetch reactions from brigdy and 
-webmention.io; good for you! Thing is, Netlify provides 300 free build minutes 
-per month, and it takes about a minute to build your site, door-to-door. That's 
-about 720 minutes a month, or in layman's terms: [$7][pricing] you could be 
-spending on bourbon, or Nintendo games, or, I dunno, rent or something.
+So, you read [Robb Knight's lovely article on implementing Webmentions][rknight] 
+on your 11ty site, and you even wrote some code to fetch reactions from brigdy 
+and webmention.io; good for you! Thing is, Netlify provides 300 free build 
+minutes per month, and it takes about a minute to build your site, door-to-door. 
+That's about 720 minutes a month, or in layman's terms: [$7][pricing] you could 
+be spending on bourbon, or Nintendo games, or, I dunno, rent or something.
 
 Luckily, our Cascadian software overlords in Redmond have deep pockets, so 
 GitHub actions minutes are basically free. So instead of building our site on 
@@ -92,5 +92,6 @@ Not too shabby! With this trick we cut our build time down by about a fifth. If
 deploys take on average 15 seconds, that gives us a headroom of about 120 build 
 minutes for regular `main` branch deploys and branch deploy previews.
 
+[rknight]: https://rknight.me/adding-webmentions-to-your-site/
 [pricing]: https://www.netlify.com/pricing/
 [user]: https://app.netlify.com/user/applications
