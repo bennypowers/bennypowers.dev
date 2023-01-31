@@ -137,6 +137,7 @@ main { grid-area: main; }
   --avatar-size: 60px;
   &:is(.likes,.reposts) {
     margin-inline-start: 24px;
+    margin-block-start: 24px;
   }
   &.replies {
     display: flex;
@@ -153,6 +154,7 @@ main { grid-area: main; }
   }
   &:is(.like,.repost) {
     margin-inline-start: -24px;
+    margin-block-start: -24px;
   }
   &.reply {
     display: grid;
