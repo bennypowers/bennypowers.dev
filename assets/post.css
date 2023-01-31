@@ -121,8 +121,71 @@ main { grid-area: main; }
 
   & > * { grid-area: all; }
   & time { font-size: 80%; }
+
   &:is(:hover, :focus-within) {
     & .thumbnail { opacity: 1; }
     & div { background: black; }
   }
+}
+
+.webmentions {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  --avatar-size: 80px;
+  &.replies {
+    display: flex;
+    flex-flow: column;
+  }
+  &.many {
+    --avatar-size: 40px;
+  }
+}
+
+.webmention:is(.like, .repost):not(:first-of-type) {
+  margin-inline-start: -24px;
+}
+
+.webmention{
+  & header {
+    display: contents;
+  }
+  &.reply {
+    display: grid;
+    column-gap: calc(var(--avatar-size) / 4);
+    row-gap: calc(var(--avatar-size) / 8);
+    grid-template-rows: calc(var(--avatar-size) / 2) auto;
+    grid-template-columns: var(--avatar-size) auto;
+    grid-template-areas:
+      'avatar byline'
+      'avatar comment';
+    & .avatar { grid-area: avatar; }
+    & .byline {
+      grid-area: byline;
+      align-self: end;
+      display: flex;
+      justify-content: space-between;
+      align-items: end;
+      & h3 {
+        display: inline;
+      }
+    }
+    & .comment {
+      grid-area: comment;
+      align-self: start;
+      & p:first-child {
+        margin-block-start: 0;
+      }
+    }
+  }
+}
+
+.webmention img {
+  border: 4px solid var(--background-color);
+  background: var(--background-color);
+  border-radius: 100%;
+  overflow: hidden;
+  width: var(--avatar-size);
+  aspect-ratio: 1;
 }

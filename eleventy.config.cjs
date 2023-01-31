@@ -23,6 +23,7 @@ const PostCSSPlugin = require('./_plugins/postcss.cjs');
 const RedHatDeckPlugin = require('./_plugins/redhat-deck.cjs');
 const RHDSPlugin = require('./_plugins/rhds.cjs');
 const JamPackPlugin = require('./_plugins/jampack.cjs');
+const WebmentionsPlugin = require('./_plugins/webmentions.cjs');
 
 /** @param{import('@11ty/eleventy/src/UserConfig.js')} eleventyConfig */
 module.exports = function(eleventyConfig) {
@@ -53,6 +54,7 @@ module.exports = function(eleventyConfig) {
   eleventyConfig.addPlugin(EleventyPluginRSS);
   eleventyConfig.addPlugin(EleventyPluginSyntaxhighlight, { init() { require('prismjs/components/index')(['regex']) } });
   eleventyConfig.addPlugin(JamPackPlugin);
+  eleventyConfig.addPlugin(WebmentionsPlugin, { domain: 'https://bennypowers.dev' });
   return {
     templateFormats: [ 'md', 'njk', 'html', 'svg', 'css' ],
     markdownTemplateEngine: 'njk',

@@ -34,6 +34,12 @@ stylesheets:
       <li><a href="{{ ('/tags/' + tag | slug) | url}}">{{ tag }}</a> ({{ related | length }})</li>{% endif %}{% endfor %}
       <li id="all-tags"><a href="{{ '/tags/' | url }}">All Tags</a></li>
     </ul>
+    {% webmentions url = page.url, mentions = webmentions, type = 'like' %}
+    <h2>Likes</h2>
+    {% endwebmentions %}
+    {% webmentions url = page.url, mentions = webmentions, type = 'repost' %}
+    <h2>Boosts</h2>
+    {% endwebmentions %}
     {% if next %}
     <h2>Next</h2>
     <div id="next-post">
@@ -64,8 +70,7 @@ stylesheets:
     </div>
     {% endif %}
   </div>
-  {%- set webmentionUrl -%}{{ page.url | replace('index.html', '') }}{%- endset -%}
-  {% include 'webmentions.njk' %}
+
 </aside>
 
 <main>
@@ -77,5 +82,9 @@ stylesheets:
          src="{{ coverImage }}">{% endif %}
   </header>
   {{ content | safe }}
+
+  {% webmentions url = page.url, mentions = webmentions, type = 'reply' %}
+  <h2>Comments</h2>
+  {% endwebmentions %}
 </main>
 {% endif %}
