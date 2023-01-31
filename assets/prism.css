@@ -7,30 +7,34 @@
 
 /*****************  + */
 
-pre[class*='language-'] {
+pre[class*="language-"] {
   background: var(--markdown-syntax-background-color, #f6f8fa);
   border-radius: 3px;
   margin-bottom: 16px;
   padding: 16px;
 }
 
-code[class*='language-'],
-pre[class*='language-'] {
+code[class*="language-"],
+pre[class*="language-"] {
   color: var(--markdown-syntax-color, #393a34);
   font-size: 1em;
   font-family: var(--fixed-font);
-	direction: ltr;
-	text-align: left;
+  direction: ltr;
+  text-align: left;
   white-space: pre;
   word-break: normal;
   word-spacing: normal;
-	hyphens: none;
-	line-height: 1.5;
-	tab-size: 2;
+  hyphens: none;
+  line-height: 1.5;
+  tab-size: 2;
 }
 
-.token.atrule {
+.token.atrule:not(.key) {
   color: var(--markdown-syntax-atrule-color, #d73a49);
+}
+
+.token.key {
+  color: var(--markdown-syntax-property-color, var(--blue));
 }
 
 .token.attr-name {
