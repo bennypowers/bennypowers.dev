@@ -4,14 +4,16 @@ inlineCss:
   - index.css
 ---
 
-<main class="home">
+<main class="home h-card">
   <h1>Greetings</h1>
   <img id="hero"
        alt="Ness, from the 90s era SNES classic Earthbound"
        height="320"
        width="300"
        src="{{ '/assets/images/bicycle.gif' | url }}">
-  <p>I'm a web developer from Jerusalem. On weekdays, I make web components and related tools for Red Hat.</p>
+  <p>I'm <span class="p-name">Benny Powers</span>,
+     a web developer from <span class="p-locality">Jerusalem</span>.
+     On weekdays, I make web components and related tools for <span class="p-org">Red Hat</span>.</p>
   <!-- <p><a href="https://github.com/bennypowers">Furiously procrastinate</a></p> -->
   <!-- <p><a href="{{ '/posts' | url }}">Read Something</a></p> -->
   <!-- <p><a href="https://social.bennypowers.dev">Gawk</a></p> -->
