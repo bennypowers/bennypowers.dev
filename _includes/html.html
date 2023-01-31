@@ -108,7 +108,7 @@ inlineCss:
       <script data-goatcounter="https://bp-dev.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
     </head>
     <body class="{{ type }}{% if type == 'post' and not published and watch %} unpublished{% endif %}"{%-
-          if bodyAttributes %} {{ bodyAttributes }}{% endif %}>
+          if bodyAttributes %} {{ bodyAttributes | safe }}{% endif %}>
     {{ content | safe }}
     <footer id="footer" class="screen-only">
       <small id="legal">© {{ (datePublished or page.date) | formatDate(year='numeric') }} Benny Powers.</small>
