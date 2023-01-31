@@ -64,6 +64,8 @@ stylesheets:
     </div>
     {% endif %}
   </div>
+  {%- set webmentionUrl -%}{{ page.url | replace('index.html', '') }}{%- endset -%}
+  {% include 'webmentions.njk' %}
 </aside>
 
 <main>
