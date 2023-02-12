@@ -1,6 +1,9 @@
 [[redirects]]
 from = "/.well-known/host-meta"
 to = "https://social.bennypowers.dev/.well-known/host-meta"
+[[redirects]]
+from = "/stripe-elements/"
+to = "https://stripe-elements.netlify.app"
 
 [[edge_functions]]
 function = "webfinger"
