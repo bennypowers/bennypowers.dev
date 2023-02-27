@@ -1,0 +1,82 @@
+---
+permalink: /aom-hidden-input-repro.html
+---
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>AOM Repro</title>
+  </head>
+  <body>
+    <header>
+      <h1>Shadow Inputs should be allowed to be aria-hidden</h1>
+    </header>
+
+    <main>
+      <p>In this demo, a form-associated custom element provides a range slider.
+        The <abbr title="form-associated custom element">FACE</abbr>' shadow root 
+        contains a private input. The private input is meant to be transparent to
+        assistive technology, since the FACE exposes it's state to
+        <abbr title="assistive technology">AT</abbr> via <code>ElementInternals</code>.</p>
+      <p>We expect AT to report a single interactive control here, but instead find that the 
+        Chrome dev tools accessibility panel lists two nested controls.</p>
+
+      <form>
+        <fieldset>
+          <legend>Using <code>aria-hidden="true"</code></legend>
+          <label>Range <x-range template-type="aria-hidden"></x-range> </label>
+        </fieldset>
+        <fieldset>
+          <legend>Using <code>role="presentation"</code></legend>
+          <label>Range <x-range template-type="presentation"></x-range> </label>
+        </fieldset>
+      </form>
+    </main>
+
+    <template id="aria-hidden">
+      <input type="range" aria-hidden="true" min="0" max="100" step="1">
+    </template>
+
+    <template id="presentation">
+      <input type="range" role="presentation" min="0" max="100" step="1">
+    </template>
+
+    <script>
+      customElements.define('x-range', class extends HTMLElement {
+        static formAssociated = true;
+
+        #internals = this.attachInternals();
+
+        #input;
+
+        constructor() {
+          super();
+          this.#internals.role = 'slider';
+          const type = this.getAttribute('template-type');
+          this.attachShadow({ mode: 'open' })
+            .append(document.getElementById(type)
+              .content.cloneNode(true));
+          this.#input = this.shadowRoot.querySelector('input');
+          this.#input.addEventListener('change', e => this.#onChange(e))
+          if (this.hasAttribute('value')) this.#input.value = this.getAttribute('value');
+          this.#update();
+        }
+
+        #onChange(event) {
+          event.stopPropagation();
+          this.#update()
+        }
+
+        #update(value = this.#input.value) {
+          this.#input.value = value;
+          this.#input.step = this.getAttribute('step') ?? '1'
+          this.#internals.ariaValueMin = this.getAttribute('min') ?? '0';
+          this.#internals.ariaValueMax = this.getAttribute('max') ?? '100';
+          this.#internals.ariaValueNow = this.#input.value;
+        }
+      });
+    </script>
+  </body>
+</html>
+
