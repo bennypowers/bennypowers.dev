@@ -70,13 +70,13 @@ module.exports = function(eleventyConfig) {
       '@patternfly/pfe-core/functions/debounce.js',
       '@patternfly/pfe-core/functions/deprecatedCustomEvent.js',
       '@patternfly/pfe-core/functions/random.js',
-      '@patternfly/pf-icon',
-      '@patternfly/pf-modal',
-      '@patternfly/pf-spinner',
-      '@patternfly/pf-spinner/BaseSpinner.js',
-      '@patternfly/pf-accordion',
-      '@patternfly/pf-tooltip',
-      '@patternfly/pf-tooltip/BaseTooltip.js',
+      '@patternfly/elements/pf-icon/pf-icon.js',
+      '@patternfly/elements/pf-modal/pf-modal.js',
+      '@patternfly/elements/pf-spinner/pf-spinner.js',
+      '@patternfly/elements/pf-spinner/BaseSpinner.js',
+      '@patternfly/elements/pf-accordion/pf-accordion.js',
+      '@patternfly/elements/pf-tooltip/pf-tooltip.js',
+      '@patternfly/elements/pf-tooltip/BaseTooltip.js',
     ];
 
     const LIT_DEPS = [
