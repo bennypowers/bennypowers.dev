@@ -119,6 +119,7 @@ redhat-slide-divider [slot="image"] :is(img, figcaption) {
 
 redhat-slide-divider [slot="image"] img {
   width: 100%;
+  height: auto;
 }
 
 redhat-slide-divider figure[slot="image"] figcaption {

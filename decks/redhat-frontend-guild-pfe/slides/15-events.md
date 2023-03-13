@@ -1,7 +1,7 @@
 ## Document Object Model {slot=heading}
 
 ### Events
-![Node inherits from EventTarget](events.svg)
+![Node inherits from EventTarget](events.png)
 
 - click / tap / scroll / mouseenter / mouseleave
 - keyup / keydown
