@@ -3,6 +3,7 @@ const path = require('node:path');
 const fs = require('node:fs');
 const EleventyNavigationPagination = require("@11ty/eleventy-navigation");
 const EleventySyntaxHighlightPlugin = require("@11ty/eleventy-plugin-syntaxhighlight");
+const { AssetCache } = require("@11ty/eleventy-fetch");
 const { EleventyRenderPlugin } = require('@11ty/eleventy')
 const { copyFile, lstat, mkdir, readdir } = fs.promises;
 
@@ -46,7 +47,12 @@ module.exports = function(eleventyConfig) {
     }
   }
 
+  const importMapCache = new AssetCache('import_map_rhds');
   eleventyConfig.addGlobalData('importMap', async function(configData) {
+    if (importMapCache.isCacheValid('1d')) {
+      return importMapCache.getCachedValue();
+    }
+
     const PFE_DEPS = [
       'tslib',
       '@patternfly/pfe-core',
@@ -107,6 +113,8 @@ module.exports = function(eleventyConfig) {
     const pathPrefix = configData?.pathPrefix ?? process.env.ELEVENTY_PATH_PREFIX ?? '';
     map.imports['@rhds/elements'] = `/${pathPrefix}/assets/@rhds/elements/rhds.min.js`.replaceAll('//', '/');
     map.imports['@rhds/elements/'] = `/${pathPrefix}/assets/@rhds/elements/elements/`.replaceAll('//', '/');
+
+    await importMapCache.save(map, 'json');
 
     console.log('  ...Done!');
     return map;

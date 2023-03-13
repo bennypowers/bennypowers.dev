@@ -50,6 +50,6 @@ overrides:
       csstools/use-nesting: always
   - files:
     - assets/*.css
+    - _plugins/redhat-deck/redhat-theme.css
     rules:
       csstools/use-nesting: ignore
-   

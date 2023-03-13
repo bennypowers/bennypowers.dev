@@ -43,6 +43,7 @@ pre[class^="language-"] {
 :is(h1, h2, h3, h4, h5, h6) {
   font-family: var(--rh-font-family-heading);
   margin-block: var(--rh-space-xl);
+  line-height: 1;
 }
 
 rh-alert :is(h1, h2, h3, h4, h5, h6) {
@@ -68,14 +69,14 @@ ol {
   margin-inline-start: 1em;
 }
 
+ul li {
+  padding-inline-start: 0.5em;
+}
+
 ul li::marker {
   content: "▶";
   color: var(--rh-color-brand-red-on-light);
   font-size: 80%;
-}
-
-ul li {
-  padding-inline-start: 0.5em;
 }
 
 summary::marker {

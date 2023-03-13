@@ -11,6 +11,19 @@ const processor = new Processor([
 ]);
 
 /**
+ * @param {string} input
+ */
+async function postcss(input) {
+  try {
+    const result = await processor.process(input);
+    return result.css;
+  } catch(e) {
+    console.error(e);
+    return input
+  }
+}
+
+/**
  * @param{import('@11ty/eleventy/src/UserConfig.js')} eleventyConfig
  * @param{*} options
  */
@@ -31,13 +44,7 @@ module.exports = function(eleventyConfig, options) {
       }
     }
   });
-  eleventyConfig.addFilter('postcss', async function(input) {
-    try {
-      const result = await processor.process(input);
-      return result.css;
-    } catch(e) {
-      console.error(e);
-      return input
-    }
-  });
+  eleventyConfig.addFilter('postcss', postcss);
 }
+
+module.exports.postcss = postcss;

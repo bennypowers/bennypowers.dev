@@ -1,0 +1,80 @@
+:root {
+  --deck-primary-color: var(--rh-color-accent-brand-on-light);
+}
+
+rh-alert {
+  --rh-font-size-body-text-sm: calc(0.875rem * 3);
+  --rh-font-size-body-text-2xl: calc(0.875rem * 3);
+}
+
+label {
+  font-size: var(--rh-font-size-body-text-2xl);
+}
+
+:not(a, h1, h2, h3, h4, h5, h6) > code:not([class]) {
+  padding: 0.05em 0.1em;
+}
+
+.revealer {
+  position: relative;
+  height: 100%;
+
+  & [reveal] {
+    position: absolute;
+    inset-inline: 0;
+    inset-block-start: 0;
+  }
+
+  & pre {
+    font-size: 80%;
+
+    &[reveal] {
+      inset-block-start: calc(-1 * var(--rh-space-lg));
+    }
+  }
+}
+
+[reveal]:not([current]) {
+  pointer-events: none;
+}
+
+.smaller-syntax pre {
+  font-size: 75%;
+}
+
+[src="coffee-notebook.jpg"] {
+  translate: 40px -50px;
+}
+
+[src="dom.png"] {
+  translate: 90px;
+}
+
+[src="gears.jpg"] {
+  translate: -20px -190px;
+}
+
+[name="events"] img {
+  width: 30%;
+  float: right;
+}
+
+[name="slots"] {
+  & .revealer { text-align: center; }
+  & img { margin-inline: auto; }
+  & pre { margin-block-start: 1em; }
+  & [past] { opacity: 0; }
+}
+
+[name="patternfly-elements"] div[slot="image"] {
+  display: flex;
+  gap: 6rem;
+  scale: 1;
+  align-items: center;
+  background: var(--pf-global--palette--blue-500, #004080);
+  padding: 6rem;
+  color: white;
+  & img {
+    width: 30%;
+  }
+}

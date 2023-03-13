@@ -19,6 +19,7 @@
     var(--rh-space-7xl);
   display: flex;
   flex-direction: column;
+  line-height: 0.5;
 }
 
 #slide-footer {
@@ -38,10 +39,10 @@
   margin-block-start: auto;
   display: grid;
   gap: var(--rh-space-4xl);
-  font-size: var(--rh-font-size-body-text-lg);
-}
+  font-size: calc(var(--rh-font-size-body-text-lg) * 2);
 
-#presenter ::slotted([slot="presenter"]) {
-  display: grid;
-  gap: var(--rh-space-lg);
+  & ::slotted([slot="presenter"]) {
+    display: grid;
+    gap: var(--rh-space-lg);
+  }
 }

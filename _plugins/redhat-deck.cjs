@@ -1,6 +1,7 @@
-const { mkdirSync } = require('node:fs');
 const { readFile, writeFile, mkdir } = require('node:fs/promises');
 const { join, dirname } = require('node:path');
+const { postcss } = require('./postcss.cjs');
+
 const glob = require('node:util').promisify(require('glob'));
 
 const GLOBAL_CSS_PATH = join(
@@ -8,10 +9,10 @@ const GLOBAL_CSS_PATH = join(
   '../../css/global.css'
 );
 
-function cssModularize(contents, filename) {
+async function cssModularize(contents, filename) {
   return `// ${filename}
 const sheet = new CSSStyleSheet();
-await sheet.replace(\`${contents}\`);
+await sheet.replace(\`${await postcss(contents)}\`);
 export default sheet;
 `;
 }
@@ -33,7 +34,7 @@ function writeModules(transform, ext) {
       const OUTFILE = join(OUTDIR, fileName) + '.js';
       const contents = await readFile(join(cwd, fileName), 'utf8');
       await mkdir(dirname(OUTFILE), { recursive: true });
-      await writeFile(OUTFILE, transform(contents, fileName), 'utf8')
+      await writeFile(OUTFILE, await transform(contents, fileName), 'utf8')
     }
   }
 }
@@ -90,6 +91,7 @@ module.exports = function(eleventyConfig, options) {
     '_plugins/redhat-deck/*': 'assets/redhat-deck',
     '_plugins/redhat-deck/elements/*.js': 'assets/redhat-deck/elements'
   });
+  eleventyConfig.addWatchTarget('decks/*/slides/*.md');
   eleventyConfig.addPairedShortcode('quote', quote);
   eleventyConfig.addPairedShortcode('inputType', inputType);
   eleventyConfig.on('eleventy.before', writeEntryPoint);

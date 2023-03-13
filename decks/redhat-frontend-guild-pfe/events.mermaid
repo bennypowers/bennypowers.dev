@@ -1,0 +1,10 @@
+classDiagram
+  direction BT
+  HTMLElement <|-- Element
+  Element <|-- Node
+  Node <|-- EventTarget
+  class EventTarget {
+    addEventListener(type, callback) void
+    removeEventListener(type, callback) void
+    dispatchEvent(event)
+  }
