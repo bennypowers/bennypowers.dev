@@ -6,6 +6,7 @@ description: |
   Tug-of-LED like audio, network, and fancier graphics. Students will learn 
   about functions, arrays, and audio frequency while improving their gameplay.
 datePublished: 2023-03-19
+coverImage: /assets/images/tug1-cover.png
 tags:
   - micro:bit
   - mentoring
