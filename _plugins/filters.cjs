@@ -1,10 +1,14 @@
+const { readFile } = require('node:fs/promises');
+const { join } = require('node:path');
+
 /**
  * @param {string} content
  * @return {string}
  */
 function abbrs(content) {
   let replaced = content;
-  for (const { name, title } of this.ctx.abbrs ?? []) {
+  // console.log(this)
+  for (const { name, title } of this.ctx?.abbrs ?? []) {
     if (name && title)
       replaced = replaced.replaceAll(name, `<abbr title="${title}">${name}</abbr>`)
         // shitty workaround for a shitty problem
@@ -43,4 +47,9 @@ function formatDate(d, opts) {
 module.exports = function(eleventyConfig) {
   eleventyConfig.addFilter('abbrs', abbrs);
   eleventyConfig.addFilter('formatDate', formatDate);
+  eleventyConfig.addFilter('include', async function includeFilter(path) {
+    const resolved = join(__dirname, '..', '_includes', path)
+    const content = await readFile(resolved, 'utf8');
+    return content;
+  });
 };

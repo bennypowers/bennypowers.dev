@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="en" dir="ltr" @type="layout.replace(/\.(html|webc)/, '')">
+  <head>
+    <meta charset="utf-8">
+    <title @text="title || 'Benny Powers, Web Developer'"></title>
+    <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
+    <meta name="generator" content="Eleventy">
+    <meta name="theme-color" content="#464a5b">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="application-name" content="Benny Powers, Web Developer">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Benny Powers, Web Developer">
+    <meta name="msapplication-TileImage" :content="url('/assets/images/manifest/icon-144x144.png')">
+    <meta name="msapplication-TileColor" content="#464a5b">
+    <meta name="msapplication-tap-highlight" content="no">
+    <meta name="author" content="Benny Powers">
+    <meta name="date.created" content="01-2017">
+    <meta name="HandheldFriendly" content="true">
+    <meta name="description" :content="description || 'Benny Powers, Web Developer'">
+
+    <meta property="og:title" :content="title || 'Benny Powers'">
+    <meta property="og:description" :content="description || 'Benny Powers, Web Developer'">
+    <meta property="og:type" :content="type == 'post' ? 'article' : 'website'">
+    <meta property="og:site_name" content="Benny Powers, Web Developer">
+    <meta property="og:locale" content="en_US">
+    <meta property="og:url" :content="`https://bennypowers.dev${page.url || '/'}`">
+    <meta property="og:image" :content="{{ coverImage || '/assets/images/logo/bp-logo-dark@2x.png' }}">
+    <meta property="og:image:width" content="1024">
+    <meta property="og:image:height" content="1024">
+    <meta property="og:image:type" :content="mime(coverImage) ?? 'image/png'">
+
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+
+    <link rel="apple-touch-icon" webc:keep :href="url('/assets/images/manifest/icon-48x48.png')">
+    <link rel="apple-touch-icon" sizes="72x72" webc:keep :href="url('/assets/images/manifest/icon-72x72.png')">
+    <link rel="apple-touch-icon" sizes="96x96" webc:keep :href="url('/assets/images/manifest/icon-96x96.png')">
+    <link rel="apple-touch-icon" sizes="144x144" webc:keep :href="url('/assets/images/manifest/icon-144x144.png')">
+    <link rel="apple-touch-icon" sizes="192x192" webc:keep :href="url('/assets/images/manifest/icon-192x192.png')">
+    <link rel="shortcut icon" webc:keep :href="include('icon.svg').then(x => `data:image/svg+xml,${encodeURIComponent(x)}`)">
+    <link rel="icon" webc:keep :href="url('/assets/images/favicon.ico?v=2')">
+    <link rel="manifest" webc:keep :href="url('/manifest.webmanifest')">
+
+    <link rel="webmention" href="https://webmention.io/bennypowers.dev/webmention">
+    <link rel="pingback" href="https://webmention.io/bennypowers.dev/xmlrpc">
+
+    <noscript><style>:not(:defined) { display: initial; }</style></noscript>
+
+    <link rel="stylesheet"
+          webc:keep
+          href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+
+    <link rel="stylesheet"
+          media="(prefers-color-scheme: light)"
+          webc:keep
+          :href="url('/assets/theme-light.css')">
+
+    <link rel="stylesheet"
+          media="(prefers-color-scheme: dark)"
+          webc:keep
+          :href="url('/assets/theme-dark.css')">
+
+    <link rel="stylesheet"
+          webc:keep
+          :href="url('/assets/prism.css')">
+
+    <link rel="stylesheet"
+          webc:keep
+          :href="googleFonts(fonts)">
+
+    <template webc:nokeep webc:for="sheet of stylesheets ?? []">
+      <script webc:type="js">
+        let attrs = [];
+        if (sheet.media) attrs.push(`media="${sheet.media}"`);
+        if (sheet.async) attrs.push("async");
+
+        `<link rel="stylesheet" webc:keep ${attrs.join(" ")} href="${url(sheet.href)}">`
+      </script>
+    </template>
+
+    <script type="importmap" webc:if="importMap" @raw="JSON.stringify(importMap)"></script>
+    <!-- ES Module Shims: Import maps polyfill for modules browsers without import maps support (all except Chrome 89+) -->
+    <script webc:if="importMap" async src="https://ga.jspm.io/npm:es-module-shims@1.5.1/dist/es-module-shims.js" crossorigin="anonymous" webc:keep></script>
+
+    <script webc:for="script of scripts ?? []"
+           :type="script.type ?? 'javascript'"
+           :src="url(script.src)"
+            webc:keep
+    ></script>
+
+    <script type="module" :src="url('/assets/main.js')" webc:keep></script>
+
+    <style webc:if="watch" data-file="watch.css">
+      html :has(body.unpublished) {
+        border: 4px solid hotpink;
+      }
+      #latest .unpublished {
+        border: 4px solid hotpink;
+      }
+      .list .unpublished div::after,
+      .post.unpublished #side-menu div::before {
+        border: 4px solid hotpink;
+        display: inline-block;
+        padding: .3em .6em;
+        content: ' UNPUBLISHED';
+        font-style: italic;
+        font-size: 200%;
+        font-weight: bolder;
+      }
+    </style>
+    <link rel="stylesheet" webc:keep href="/assets/base.css">
+    <script data-goatcounter="https://bp-dev.goatcounter.com/count" async src="https://gc.zgo.at/count.js" webc:keep></script>
+  </head>
+  <body :class="`${type ?? ''} ${bodyClasses ?? ''} ${type == 'post' && !published && watch ? 'unpublished' : ''}`"
+        :@attributes="bodyAttributes">
+
+    <template webc:nokeep @raw="content"></template>
+
+    <footer id="footer" class="screen-only">
+      <small id="legal">
+        © <template webc:nokeep @text="formatDate(datePublished || page.date, { year: 'numeric' })"></template> Benny Powers.
+      </small>
+    </footer>
+    <svg webc:if="page.icons" id="icon-sprite-sheet">
+      <defs>
+        <g :id="`${icon.fileSlug}-icon`"
+            webc:for="icon of collections.icon ?? []"
+            webc:if="page.icons.has(icon.fileSlug)"
+            @raw="icon.content"></g>
+      </defs>
+    </svg>
+  </body>
+</html>

@@ -1,0 +1,6 @@
+<script webc:setup>
+  this.page.icons ??= new Set();
+  this.page.icons.add(name);
+</script>
+
+<svg @attributes><use :href="`#${name}-icon`"</svg>

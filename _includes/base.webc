@@ -1,0 +1,46 @@
+---
+layout: html.webc
+---
+<header id="main-header" webc:if="!noHeader">
+  <a :href="url('/')">
+    <img alt="bp"
+         width="40"
+         height="40"
+        :src="url('/assets/images/logo/bp-logo-transparent.png')"
+        :srcset="`${url('/assets/images/logo/bp-logo-transparent@2x.png' )} 2x,
+                  ${url('/assets/images/logo/bp-logo-transparent.png')} 1x`"></a>
+
+  <nav title="Site nav">
+    <a :href="url('/posts/')">Posts</a>
+    <a :href="url('/tags/')">Tags</a>
+    <a :href="url('/resume/')">C.V.</a>
+  </nav>
+
+  <ul class="socials">
+    <li webc:for="link of social">
+      <a rel="me noreferrer nofollow" target="_blank" :href="link.href" :title="link.label">
+        <icon :name="link.icon"></icon>
+      </a>
+    </li>
+  </ul>
+
+  <details id="mobile-nav">
+    <summary><icon name="hamburger" title="Menu"></icon></summary>
+
+    <div id="mobile-nav-content">
+      <ul class="socials">
+        <li webc:for="link of social">
+          <a rel="me noreferrer nofollow" target="_blank" :href="link.href">
+            <icon :name="link.icon" :title="link.label"></icon>
+          </a>
+        </li>
+      </ul>
+      <section class="table-of-contents">
+        <h2><a href="#">Contents</a></h2>
+        <template webc:nokeep @raw="toc(content)"></template>
+      </section>
+    </div>
+  </details>
+</header>
+
+<template @raw="content" webc:nokeep></template>

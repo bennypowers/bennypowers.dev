@@ -15,7 +15,7 @@ const processor = new Processor([
  */
 async function postcss(input) {
   try {
-    const result = await processor.process(input);
+    const result = await processor.process(await input);
     return result.css;
   } catch(e) {
     console.error(e);
@@ -39,7 +39,8 @@ module.exports = function(eleventyConfig, options) {
           const result = await processor.process(input, { from, to });
           return result.css;
         } catch(e) {
-          // console.error(e)
+          console.error(e)
+          throw e;
         }
       }
     }
