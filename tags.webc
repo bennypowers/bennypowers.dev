@@ -1,0 +1,15 @@
+<link rel="stylesheet" href="/assets/post.css">
+<paginated-list
+    :@title="title"
+    :@posts="collections[tag]"
+    :@watch="watch">
+  <aside id="side-menu">
+    <h2>All Tags</h2>
+    <ul id="tags-list">
+      <li webc:for="(tag, posts) in collections">
+        <a :href="url(`/tags/${slug(tag)}`)" @text="tag"></a>
+        (<template :@text="posts.length"></template>)
+      </li>
+    </ul>
+  </aside>
+</paginated-list>

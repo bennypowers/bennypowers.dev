@@ -20,13 +20,13 @@ initial investment, adding and using icons should be easy for you and easy on
 your users.
 
 <div id="examples">
-{% icon '11ty' %}
-{% icon 'svg' %}
-{% icon 'a11y' %}
-{% icon 'html5' %}
-{% icon 'javascript' %}
-{% icon 'jerusalem' %}
-{% icon 'ness' %}
+  <icon :name="11ty"></icon>
+  <icon :name="svg"></icon>
+  <icon :name="a11y"></icon>
+  <icon :name="html5"></icon>
+  <icon :name="javascript"></icon>
+  <icon :name="jerusalem"></icon>
+  <icon :name="ness"></icon>
 </div>
 
 ## Step 1: The Collection

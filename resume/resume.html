@@ -1,8 +1,10 @@
 ---
-layout: base.html
+layout: base.webc
 permalink: /resume/index.html
 datePublished: '2016'
-bodyAttributes: itemscope itemtype="https://schema.org/Person"
+bodyAttributes:
+  itemscope: ''
+  itemtype: https://schema.org/Person
 noHeader: true
 fonts:
   - Libre Franklin
@@ -13,6 +15,7 @@ stylesheets:
     media: print
 ---
 
+<template webc:type="11ty" 11ty:type="njk">
 <script type="module" src="{{ '/assets/resume.js' | url }}"></script>
 
 <header id="identity">
@@ -180,4 +183,4 @@ stylesheets:
   </section>
 
 </main>
-
+</template>

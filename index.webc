@@ -1,3 +1,8 @@
+---
+layout: base.webc
+---
+
+<style webc:type="11ty" 11ty:type="css">
 h1 {
   --hue-offset: -120;
 
@@ -92,3 +97,34 @@ main {
 [src="/assets/images/sprite-sheet.png"] {
   image-rendering: optimizespeed;
 }
+</style>
+
+<main class="home h-card">
+  <h1>Greetings</h1>
+  <img id="hero"
+       alt="Ness, from the 90s era SNES classic Earthbound"
+       height="320"
+       width="300"
+      :src="url('/assets/images/bicycle.gif')">
+  <p>I'm <span class="p-name">Benny Powers</span>,
+    a web developer from <span class="p-locality">Jerusalem</span>.
+    On weekdays, I make web components and related tools for <span class="p-org">Red Hat</span>.</p>
+
+  <nav id="latest">
+    <h2>Latest</h2>
+    <ol @posts="[...collections.posts].reverse().filter(x => watch || x.data.published).slice(0, 4)">
+      <li webc:for="post of posts ?? []" :class="watch && !post.data.published ? 'unpublished' : ''">
+        <img class="thumbnail"
+            :alt="post.data.coverImageAlt ?? ''"
+            :src="post.data.coverImage"
+             webc:if="post.data.coverImage">
+        <div>
+          <a :href="post.url" @html="post.data.title"></a>
+          <time :datetime="post.data.datePublished"
+                @text="formatDate(post.data.datePublished, { month: 'short', day: 'numeric', year: 'numeric' })"></time>
+        </div>
+      </li>
+    </ol>
+  </nav>
+</main>
+

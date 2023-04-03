@@ -1,0 +1,24 @@
+<link rel="stylesheet" href="paginated-list.css">
+<main>
+  <h1 @text="h1 ? h1 : title"></h1>
+  <ol>
+    <li webc:for="post of posts"
+        webc:if="post.data.published"
+       :class="(watch && !post.data.published) ? 'unpublished' : ''">
+      <img class="thumbnail"
+           webc:if="showThumbnails && post.data.coverImage"
+           width="192"
+           height="125"
+          :alt="post.data.coverImageAlt ?? ''"
+          :src="post.data.coverImage">
+      <h2><a :href="post.url" @text="post.data.title"></a></h2>
+      <div>
+        <time :datetime="post.data.datePublished"
+              @text="formatDate(post.data.datePublished, { month: 'short', day: 'numeric', year: 'numeric' })"></time>
+        <p @html="post.data.description"></p>
+      </div>
+    </li>
+  </ol>
+</main>
+
+<slot></slot>
