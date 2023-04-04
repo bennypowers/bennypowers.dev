@@ -11,7 +11,7 @@ const processor = new Processor([
 ]);
 
 /**
- * @param {string} input
+ * @param {string|Promise<string>} input
  */
 async function postcss(input) {
   try {
