@@ -20,13 +20,13 @@ initial investment, adding and using icons should be easy for you and easy on
 your users.
 
 <div id="examples">
-  <icon :name="11ty"></icon>
-  <icon :name="svg"></icon>
-  <icon :name="a11y"></icon>
-  <icon :name="html5"></icon>
-  <icon :name="javascript"></icon>
-  <icon :name="jerusalem"></icon>
-  <icon :name="ness"></icon>
+  <sprite-icon name="11ty"></sprite-icon>
+  <sprite-icon name="svg"></sprite-icon>
+  <sprite-icon name="a11y"></sprite-icon>
+  <sprite-icon name="html5"></sprite-icon>
+  <sprite-icon name="javascript"></sprite-icon>
+  <sprite-icon name="jerusalem"></sprite-icon>
+  <sprite-icon name="ness"></sprite-icon>
 </div>
 
 ## Step 1: The Collection

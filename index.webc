@@ -2,102 +2,7 @@
 layout: base.webc
 ---
 
-<style webc:type="11ty" 11ty:type="css">
-h1 {
-  --hue-offset: -120;
-
-  font-size: 1.3em;
-
-  @media (min-width: 500px) {
-    font-size: 2em;
-  }
-}
-
-main {
-  --thumbnail-height: 125px;
-
-  text-align: center;
-  font-size: 180%;
-  max-width: min(800px, calc(100vw - 2 * 1.6em));
-  margin-inline: auto;
-}
-
-#hero {
-  image-rendering: pixelated;
-}
-
-#latest {
-  display: flex;
-  gap: 0.25em;
-  flex-flow: row wrap;
-  justify-content: center;
-  margin-block-end: 1em;
-
-  & h2 {
-    flex: 1 0 100%;
-    font-size: 60%;
-    margin-block-end: 0;
-  }
-
-  & ol {
-    list-style-type: none;
-    display: contents;
-
-    & li {
-      max-width: 150px;
-      display: grid;
-      grid-template-areas: "all";
-      place-items: center;
-      font-size: 50%;
-      border-radius: 16px;
-      overflow: hidden;
-
-      & > * {
-        grid-area: all;
-      }
-
-      & .thumbnail {
-        opacity: 0.5;
-        filter: blur(2px);
-        transition: filter 0.2s ease;
-      }
-
-      & div {
-        z-index: 1;
-        padding-block: 0.6em;
-        transition: background 0.2s ease;
-      }
-
-      & a {
-        font-weight: 800;
-        box-shadow: 0 0 rgba(255 255 255 / 0.5);
-      }
-
-      & time {
-        font-size: 80%;
-      }
-
-      &:is(:hover, :focus-within) {
-        & .thumbnail {
-          filter: blur(0);
-        }
-
-        & div {
-          background: black;
-        }
-      }
-    }
-  }
-}
-
-.table-of-contents {
-  display: none;
-}
-
-[src="/assets/images/sprite-sheet.png"] {
-  image-rendering: optimizespeed;
-}
-</style>
+<style webc:keep @raw="postcss(include('../index.css'))"></style>
 
 <main class="home h-card">
   <h1>Greetings</h1>
@@ -112,16 +17,17 @@ main {
 
   <nav id="latest">
     <h2>Latest</h2>
-    <ol @posts="[...collections.posts].reverse().filter(x => watch || x.data.published).slice(0, 4)">
-      <li webc:for="post of posts ?? []" :class="watch && !post.data.published ? 'unpublished' : ''">
+    <ol>
+      <li webc:for="post of collections.posts.filter(x => watch || x.data.published).slice(-5).reverse() ?? []"
+              :class="watch && !post.data.published ? 'unpublished' : ''">
         <img class="thumbnail"
             :alt="post.data.coverImageAlt ?? ''"
             :src="post.data.coverImage"
              webc:if="post.data.coverImage">
         <div>
-          <a :href="post.url" @html="post.data.title"></a>
+          <a :href="post.url" :@html="post.data.title"></a>
           <time :datetime="post.data.datePublished"
-                @text="formatDate(post.data.datePublished, { month: 'short', day: 'numeric', year: 'numeric' })"></time>
+                :@text="formatDate(post.data.datePublished, { month: 'short', day: 'numeric', year: 'numeric' })"></time>
         </div>
       </li>
     </ol>

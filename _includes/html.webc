@@ -33,9 +33,9 @@
     <link rel="preconnect" href="https://cdnjs.cloudflare.com">
     <link rel="preconnect" href="https://fonts.googleapis.com">
 
-    <link rel="apple-touch-icon" webc:keep :href="url('/assets/images/manifest/icon-48x48.png')">
-    <link rel="apple-touch-icon" sizes="72x72" webc:keep :href="url('/assets/images/manifest/icon-72x72.png')">
-    <link rel="apple-touch-icon" sizes="96x96" webc:keep :href="url('/assets/images/manifest/icon-96x96.png')">
+    <link rel="apple-touch-icon"                 webc:keep :href="url('/assets/images/manifest/icon-48x48.png')">
+    <link rel="apple-touch-icon" sizes="72x72"   webc:keep :href="url('/assets/images/manifest/icon-72x72.png')">
+    <link rel="apple-touch-icon" sizes="96x96"   webc:keep :href="url('/assets/images/manifest/icon-96x96.png')">
     <link rel="apple-touch-icon" sizes="144x144" webc:keep :href="url('/assets/images/manifest/icon-144x144.png')">
     <link rel="apple-touch-icon" sizes="192x192" webc:keep :href="url('/assets/images/manifest/icon-192x192.png')">
     <link rel="shortcut icon" webc:keep :href="include('icon.svg').then(x => `data:image/svg+xml,${encodeURIComponent(x)}`)">
@@ -69,29 +69,30 @@
           webc:keep
           :href="googleFonts(fonts)">
 
-    <template webc:nokeep webc:for="sheet of stylesheets ?? []">
-      <script webc:type="js">
-        let attrs = [];
-        if (sheet.media) attrs.push(`media="${sheet.media}"`);
-        if (sheet.async) attrs.push("async");
+    <link rel="stylesheet"
+     webc:for="sheet of stylesheets ?? []"
+     webc:keep
+         :media="sheet.media ?? false"
+         :async="!!sheet.async"
+         :href="url(sheet.href)">
 
-        `<link rel="stylesheet" webc:keep ${attrs.join(" ")} href="${url(sheet.href)}">`
-      </script>
-    </template>
-
-    <script type="importmap" webc:if="importMap" @raw="JSON.stringify(importMap)"></script>
+    <script type="importmap"
+       webc:if="importMap"
+           @raw="JSON.stringify(importMap)"></script>
     <!-- ES Module Shims: Import maps polyfill for modules browsers without import maps support (all except Chrome 89+) -->
     <script webc:if="importMap" async src="https://ga.jspm.io/npm:es-module-shims@1.5.1/dist/es-module-shims.js" crossorigin="anonymous" webc:keep></script>
 
     <script webc:for="script of scripts ?? []"
-           :type="script.type ?? 'javascript'"
-           :src="url(script.src)"
             webc:keep
+                :type="script.type ?? false"
+                :src="url(script.src)"
     ></script>
 
     <script type="module" :src="url('/assets/main.js')" webc:keep></script>
+    <style @raw="getBundle('css')" webc:keep></style>
+    <script @raw="getBundle('js')" webc:keep></script>
 
-    <style webc:if="watch" data-file="watch.css">
+    <style webc:if="watch" webc:keep data-file="watch.css">
       html :has(body.unpublished) {
         border: 4px solid hotpink;
       }
