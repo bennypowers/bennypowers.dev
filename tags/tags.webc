@@ -1,0 +1,70 @@
+---
+layout: html.webc
+pagination:
+  data: collections
+  size: 1
+  alias: tag
+  filter:
+    - all
+    - icon
+    - slides
+    - posts
+    - resume-open-source
+    - resume-experience
+    - resume-education
+bodyClasses: sidebar
+---
+<link rel="stylesheet" href="../sidebar.css">
+<bp-header></bp-header>
+
+<style>
+main {
+  max-width: 800px;
+  margin-inline: auto;
+}
+
+body.tags {
+  display: grid;
+  gap: 1em 1.6em;
+  grid-template-rows: min-content auto auto min-content;
+  grid-template-columns: minmax(0, auto);
+  grid-template-areas:
+    "head"
+    "main"
+    "menu"
+    "foot";
+}
+
+@media (min-width: 1000px) {
+  body.tags {
+    grid-template-rows: min-content auto min-content;
+    grid-template-columns: minmax(0, 1fr) 300px;
+    grid-template-areas:
+      "head head"
+      "main menu"
+      "foot foot";
+  }
+
+  #side-menu .table-of-contents {
+    display: block;
+  }
+}
+
+</style>
+
+<main>
+  <h1 @html="h1 ? h1 : title"></h1>
+  <paginated-list
+      :@posts="collections[tag]"
+      :@pagination="pagination"
+      :@watch="watch">
+  </paginated-list>
+  <!---
+  <paginator-nav :@pages="collections[tag]"></paginator-nav>
+  --->
+</main>
+
+<aside id="side-menu">
+  <h2>All Tags</h2>
+  <tag-list></tag-list>
+</aside>

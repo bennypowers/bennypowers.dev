@@ -1,0 +1,40 @@
+<style>
+#pages {
+  max-width: 800px;
+  text-align: end;
+  justify-content: end;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+
+  & h2 {
+    flex: 1 0 100%;
+  }
+
+  & ol {
+    display: contents;
+    list-style-type: none;
+    & li {
+      display: inline;
+    }
+  }
+
+  @media (min-width: 800px) & {
+    width: 800px;
+    margin-inline: auto;
+  }
+}
+</style>
+<nav id="pages">
+  <h2>Pages</h2>
+  <a webc:if="pagination.href.previous" :href="pagination.href.previous">Previous</a>
+  <template webc:nokeep webc:else>Previous</template>
+  <ol>
+    <li webc:for="(_, index) of pages">
+      <a :href="pagination.hrefs[index]"
+         :aria-current="page.url === pagination.hrefs[index] && 'page'" @text="index + 1"></a>
+    </li>
+  </ol>
+  <a :href="pagination.href.next" webc:if="pagination.href.next">Next</a>
+  <template           webc:nokeep webc:else>Next</template>
+</nav>

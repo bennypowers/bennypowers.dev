@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" dir="ltr" @type="layout.replace(/\.(html|webc)/, '')">
+<html lang="en" dir="ltr">
   <head>
     <meta charset="utf-8">
     <title @text="title || 'Benny Powers, Web Developer'"></title>
@@ -21,7 +21,7 @@
 
     <meta property="og:title" :content="title || 'Benny Powers'">
     <meta property="og:description" :content="description || 'Benny Powers, Web Developer'">
-    <meta property="og:type" :content="type == 'post' ? 'article' : 'website'">
+    <meta property="og:type" :content="layout.replace(/\.(html|webc)/, '') == 'post' ? 'article' : 'website'">
     <meta property="og:site_name" content="Benny Powers, Web Developer">
     <meta property="og:locale" content="en_US">
     <meta property="og:url" :content="`https://bennypowers.dev${page.url || '/'}`">
@@ -46,6 +46,8 @@
     <link rel="pingback" href="https://webmention.io/bennypowers.dev/xmlrpc">
 
     <noscript><style>:not(:defined) { display: initial; }</style></noscript>
+
+    <link rel="stylesheet" href="base.css">
 
     <link rel="stylesheet"
           webc:keep
@@ -77,6 +79,7 @@
          :href="url(sheet.href)">
 
     <script type="importmap"
+       webc:keep
        webc:if="importMap"
            @raw="JSON.stringify(importMap)"></script>
     <!-- ES Module Shims: Import maps polyfill for modules browsers without import maps support (all except Chrome 89+) -->
@@ -110,26 +113,11 @@
         font-weight: bolder;
       }
     </style>
-    <link rel="stylesheet" webc:keep href="/assets/base.css">
+
     <script data-goatcounter="https://bp-dev.goatcounter.com/count" async src="https://gc.zgo.at/count.js" webc:keep></script>
   </head>
-  <body :class="`${type ?? ''} ${bodyClasses ?? ''} ${type == 'post' && !published && watch ? 'unpublished' : ''}`"
-        :@attributes="bodyAttributes">
-
-    <template webc:nokeep @raw="content"></template>
-
-    <footer id="footer" class="screen-only">
-      <small id="legal">
-        © <template webc:nokeep @text="formatDate(datePublished || page.date, { year: 'numeric' })"></template> Benny Powers.
-      </small>
-    </footer>
-    <svg webc:if="page.icons" id="icon-sprite-sheet">
-      <defs>
-        <g :id="`${icon.fileSlug}-icon`"
-            webc:for="icon of collections.icon ?? []"
-            webc:if="page.icons.has(icon.fileSlug)"
-            @raw="icon.content"></g>
-      </defs>
-    </svg>
+  <body :class="bodyClasses ?? ''">
+    <template @raw="content" webc:nokeep></template>
+    <bp-footer></bp-footer>
   </body>
 </html>

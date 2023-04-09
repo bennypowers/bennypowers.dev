@@ -1,5 +1,5 @@
 ---
-layout: base.webc
+layout: html.webc
 permalink: /resume/index.html
 datePublished: '2016'
 bodyAttributes:
@@ -9,14 +9,16 @@ noHeader: true
 fonts:
   - Libre Franklin
   - Anonymous Pro
-stylesheets:
-  - href: /assets/resume.css
-  - href: /assets/resume-print.css
-    media: print
 ---
 
+<bp-header></bp-header>
+
+<link rel="stylesheet" href="resume.css">
+<!-- <link rel="stylesheet" media="print" href="resume-print.css"> -->
+
+<script type="module" src="resume.js"></script>
+
 <template webc:type="11ty" 11ty:type="njk">
-<script type="module" src="{{ '/assets/resume.js' | url }}"></script>
 
 <header id="identity">
   <h1>

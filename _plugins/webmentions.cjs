@@ -52,8 +52,8 @@ function prettyDate(string) {
 
 /** @param {import('@11ty/eleventy/src/UserConfig.js')} eleventyConfig */
 module.exports = function(eleventyConfig, { domain, webmentionIoToken }) {
-  eleventyConfig.addPairedShortcode('webmentions', async function(content, kwargs) {
-    const { url, type, altUrls = [] } = kwargs;
+  eleventyConfig.addShortcode('webmentions', async function(kwargs) {
+    const { pageUrl: url, type, altUrls = [] } = kwargs;
 
     const target = new URL(url.replace(/index\.html$/, ''), domain).href;
     const webmentionIoUrl = new URL('/api/mentions.jf2', 'https://webmention.io')
@@ -74,7 +74,7 @@ module.exports = function(eleventyConfig, { domain, webmentionIoToken }) {
     const { likes, reposts, replies } = collateMentions(mentions);
 
     switch(type) {
-      case 'like': return !likes.length ? '' : /* html */`${content}
+      case 'like': return !likes.length ? '' : /* html */`
         <ul class="webmentions likes ${likes.length > 12 ? 'many' : ''}">${likes.map(mention => /* html */`
           <li class="webmention like">
             <a target="_blank" rel="noopener" href="${mention.author.url}">
@@ -82,7 +82,7 @@ module.exports = function(eleventyConfig, { domain, webmentionIoToken }) {
             </a>
           </li>`).join('\n')}
         </ul>`;
-      case 'repost': return !reposts.length ? '' : /* html */`${content}
+      case 'repost': return !reposts.length ? '' : /* html */`
         <ul class="webmentions reposts ${reposts.length > 12 ? 'many' : ''}">${reposts.map(mention => /* html */`
           <li class="webmention repost">
             <a target="_blank" rel="noopener" href="${mention.author.url}">
@@ -92,7 +92,7 @@ module.exports = function(eleventyConfig, { domain, webmentionIoToken }) {
         </ul>`;
       case 'reply':
         return !replies.length ? '' : /* html */`
-        <section class="webmentions replies">${content}${replies.map(mention => /* html */`
+        <section class="webmentions replies">${replies.map(mention => /* html */`
           <article class="webmention reply h-entry">
             <header class="p-author h-card">
               <a class="avatar" target="_blank" rel="noopener" href="${mention.author.url}">

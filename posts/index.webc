@@ -1,0 +1,28 @@
+---
+layout: html.webc
+date: Created
+title: Posts
+pagination:
+  data: collections.posts
+  reverse: true
+  size: 5
+---
+<bp-header></bp-header>
+
+<style>
+main {
+  max-width: 800px;
+  margin-inline: auto;
+}
+</style>
+
+<main>
+  <h1 @text="h1 ? h1 : title"></h1>
+  <paginated-list
+      :@posts="pagination.items"
+      :@pagination="pagination"
+      :@watch="watch">
+  </paginated-list>
+  <paginator-nav :@pages="pagination.pages"></paginator-nav>
+</main>
+
