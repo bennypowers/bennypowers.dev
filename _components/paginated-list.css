@@ -1,43 +1,37 @@
-main {
-  max-width: 800px;
-  margin-inline: auto;
+img {
+  max-height: 200px;
+}
 
-  & img {
-    max-height: 200px;
-  }
-
-  & ol {
-    display: flex;
-    flex-flow: column;
-    gap: 1em;
-    list-style-type: none;
-    padding: 0;
-  }
+ol {
+  display: flex;
+  flex-flow: column;
+  gap: 1em;
+  list-style-type: none;
+  padding: 0;
 
   & li {
     display: grid;
     margin: 0;
+    column-gap: 1em;
     grid-template-areas:
       "thumb"
       "title"
       "desc";
-    column-gap: 1em;
+    & h2 { grid-area: title; }
+    & img { grid-area: thumb; }
+    & div { grid-area: desc; }
+
+    & .thumbnail {
+      float: left;
+    }
   }
 }
 
 @media (min-width: 800px) {
-  main li {
+  ol li {
     grid-template-columns: auto 1fr;
     grid-template-areas:
       "thumb title"
       "thumb desc";
   }
-}
-
-li h2 { grid-area: title; }
-li img { grid-area: thumb; }
-li div { grid-area: desc; }
-
-.thumbnail {
-  float: left;
 }

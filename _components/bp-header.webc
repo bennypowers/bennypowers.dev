@@ -1,6 +1,3 @@
----
-layout: html.webc
----
 <header id="main-header" webc:if="!noHeader">
   <a :href="url('/')">
     <img alt="bp"
@@ -42,5 +39,3 @@ layout: html.webc
     </div>
   </details>
 </header>
-
-<template @raw="content" webc:nokeep></template>

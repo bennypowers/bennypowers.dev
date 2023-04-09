@@ -1,0 +1,17 @@
+<style>
+@media (min-width: 1000px) {
+  #tags-list {
+    position: sticky;
+    top: 64px;
+  }
+}
+</style>
+<ul id="tags-list">
+  <li webc:for="tag of Object.keys(collections)
+                        .filter(tag => !tag.match(/^(all$|icon$|posts$|slides$|resume-)/))
+                        .sort((a, b) => collections[b].length - collections[a].length)">
+    <a :href="url(`/tags/${slug(tag)}`)"
+       @text="tag"></a>
+    (<template webc:nokeep @raw="collections[tag].length"></template> posts)
+  </li>
+</ul>

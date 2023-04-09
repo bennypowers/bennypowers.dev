@@ -54,7 +54,19 @@ module.exports = function(eleventyConfig) {
   eleventyConfig.addPlugin(EleventyPluginDirectoryOutput);
   eleventyConfig.addPlugin(EleventyRenderPlugin);
   eleventyConfig.addPlugin(EleventyPluginRSS);
-  eleventyConfig.addPlugin(EleventyPluginWebC);
+  eleventyConfig.addPlugin(EleventyPluginWebC, {
+    bundlePluginOptions: {
+      transforms: [
+        async function(content) {
+          if (this.type === 'css') {
+            return PostCSSPlugin.postcss(content);
+          } else {
+            return content;
+          }
+        }
+      ]
+    }
+  });
   eleventyConfig.addPlugin(EleventyPluginSyntaxhighlight, { init() { require('prismjs/components/index')(['regex']) } });
   eleventyConfig.addPlugin(JamPackPlugin);
   eleventyConfig.addPlugin(WebmentionsPlugin, {

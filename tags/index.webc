@@ -1,0 +1,12 @@
+---
+layout: html.webc
+date: Created
+title: Tags
+---
+
+<bp-header></bp-header>
+
+<main>
+  <h1>All Tags</h1>
+  <tag-list></tag-list>
+</main>

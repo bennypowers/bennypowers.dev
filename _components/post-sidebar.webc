@@ -1,0 +1,86 @@
+<aside id="side-menu">
+
+  <div>
+
+    <dl id="post-stats" webc:if="watch || published">
+      <dt>⏲️ Time to read</dt>
+      <dd>~ <template webc:nokeep @html="timeToRead(content)"></template></dd>
+      <dt>🌅 Published</dt>
+      <dd><time class="dt-published"
+               :datetime="datePublished"
+               @text="prettyPublished"></time></dd>
+      <template webc:nokeep webc:if="prettyPublished !== prettyUpdated">
+        <dt>✏️ Last Touched</dt>
+        <dd>
+          <time class="dt-updated"
+               :datetime="pageDate"
+               @text="prettyUpdated"></time>
+        </dd>
+      </template>
+    </dl>
+    <dl id="post-summaries"
+        class="p-summary"
+        webc:if="(watch || published) && (audience || tldr)">
+      <template webc:nokeep webc:if="audience">
+        <dt>👯 Audience</dt>
+        <dd @html="audience"></dd>
+      </template>
+      <template webc:nokeep webc:if="tldr">
+        <dt>🙈 tl;dr:</dt>
+        <dd @html="tldr"></dd>
+      </template>
+    </dl>
+
+    <section class="table-of-contents" webc:if="tableOfContents.length">
+      <h2><a href="#">Contents</a></h2>
+      <template webc:nokeep :@html="tableOfContents"></template>
+    </section>
+
+    <h2>Tags</h2>
+    <ul id="tags-list" class="p-category">
+      <li webc:if="tag !== 'posts'"
+          webc:for="tag of tags ?? []">
+        <a :href="url(slug(`/tags/${tag}`))" @text="tag"></a>
+        (<template webc:nokeep @text="collections[tag]?.length"></template>)
+      </li>
+      <li id="all-tags">
+        <a :href="url('/tags/')">All Tags</a>
+      </li>
+    </ul>
+
+    <web-mentions :@page-url="log(page).url" :@alt-urls="altUrls" @type="like" @title="Likes"></web-mentions>
+    <web-mentions :@page-url="page.url" :@alt-urls="altUrls" @type="repost" @title="Boosts"></web-mentions>
+
+    <h2 webc:if="next">Next</h2>
+    <div webc:if="next" id="next-post">
+      <img webc:if="next.data.coverImage"
+           class="thumbnail"
+          :alt="next.data.coverImageAlt ?? ''"
+          :src="next.data.coverImage">
+      <div>
+        <a :href="next.url" @html="next.data.title"></a>
+        <br>
+        <time :datetime="next.data.datePublished"
+              @html="formatDate(next.data.datePublished, { month: 'short', day: 'numeric', year: 'numeric' })"></time>
+      </div>
+    </div>
+
+    <h2 webc:if="previous">Previous</h2>
+    <div id="prev-post" webc:if="previous">
+      <img class="thumbnail"
+           width="192"
+          :alt="previous.data.coverImageAlt ?? ''"
+          :src="previous.data.coverImage"
+           webc:if="previous.data.coverImage">
+      <div>
+        <a :href="previous.url" @html="previous.data.title"></a>
+        <br>
+        <time :datetime="previous.data.datePublished"
+              @html="formatDate(previous.data.datePublished, { month: 'short', day: 'numeric', year: 'numeric' })"></time>
+      </div>
+    </div>
+
+    <a webc:for="service of autoPublish ?? []" :href="`https://brid.gy/publish/${service}`"></a>
+  </div>
+
+</aside>
