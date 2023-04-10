@@ -48,7 +48,7 @@
       </li>
     </ul>
 
-    <web-mentions :@page-url="log(page).url" :@alt-urls="altUrls" @type="like" @title="Likes"></web-mentions>
+    <web-mentions :@page-url="page.url" :@alt-urls="altUrls" @type="like" @title="Likes"></web-mentions>
     <web-mentions :@page-url="page.url" :@alt-urls="altUrls" @type="repost" @title="Boosts"></web-mentions>
 
     <h2 webc:if="next">Next</h2>
