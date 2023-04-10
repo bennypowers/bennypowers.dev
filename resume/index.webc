@@ -18,7 +18,7 @@ const getResumeData = tag =>
     ...this.omit(x.data, ['tags', 'template', ...Object.keys(this)]),
     templateContent: x.templateContent,
   }))
-  .sort((a, b) => (a.startDate ?? 0) - (b.startDate ?? 0));
+  .sort((a, b) => new Date(b.startDate).getTime() - new Date(a.startDate).getTime());
 </script>
 
 <bp-header></bp-header>
@@ -26,7 +26,7 @@ const getResumeData = tag =>
 <link rel="stylesheet" href="resume.css">
 <link rel="stylesheet" media="print" webc:keep href="resume-print.css">
 
-<script type="module" src="resume.js"></script>
+<script type="module" webc:keep src="resume.js"></script>
 
 <header id="identity">
   <h1>
@@ -96,12 +96,12 @@ const getResumeData = tag =>
 
     <h2>Highlights</h2>
     <ul>
-      <li>Mobile Web Specialist</li>
-      <li>Standards and a11y</li>
-      <li>Functional Programming</li>
       <li>Web Components</li>
       <li>Contributor to Open Source</li>
+      <li>Standards and Accessibility</li>
       <li>Tenacious autodidact</li>
+      <li>Mobile Web Specialist</li>
+      <li>Functional Programming</li>
       <li>Bilingual (English and Hebrew)</li>
       <li>Multifaceted</li>
     </ul>
