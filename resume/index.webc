@@ -1,6 +1,5 @@
 ---
 layout: html.webc
-permalink: /resume/index.html
 datePublished: '2016'
 bodyAttributes:
   itemscope: ''
@@ -11,14 +10,23 @@ fonts:
   - Anonymous Pro
 ---
 
+<script webc:setup>
+const icons = Object.fromEntries(this.collections.icon.map(({ fileSlug, data }) =>
+  [fileSlug, data.title]));
+const getResumeData = tag =>
+  Array.from(this.collections[`resume-${tag}`], x => ({
+    ...this.omit(x.data, ['tags', 'template', ...Object.keys(this)]),
+    templateContent: x.templateContent,
+  }))
+  .sort((a, b) => (a.startDate ?? 0) - (b.startDate ?? 0));
+</script>
+
 <bp-header></bp-header>
 
 <link rel="stylesheet" href="resume.css">
-<!-- <link rel="stylesheet" media="print" href="resume-print.css"> -->
+<link rel="stylesheet" media="print" webc:keep href="resume-print.css">
 
 <script type="module" src="resume.js"></script>
-
-<template webc:type="11ty" 11ty:type="njk">
 
 <header id="identity">
   <h1>
@@ -28,15 +36,16 @@ fonts:
   </h1>
 
   <section id="social">
-    <h2 class="invisible">Social Profiles</h2>{% for link in social %}
-    <a href="{{ link.href }}"
-       title="{{ link.label }}"
-       target="_blank"
-       rel="me noreferrer nofollow">
-      {% icon link.icon %}
-    </a>{% endfor %}
+    <h2 class="invisible">Social Profiles</h2>
+    <a webc:for="link of social"
+        :href="link.href"
+        :title="link.label"
+        target="_blank"
+        rel="me noreferrer nofollow">
+      <sprite-icon :name="link.icon"></sprite-icon>
+    </a>
     <button id="print-button" class="screen-only" aria-label="print this page" title="Print this page">
-      {% icon 'print', 'aria-hidden'='true' %}
+      <sprite-icon name="print" aria-hidden="true"></sprite-icon>
     </button>
   </section>
 
@@ -47,6 +56,7 @@ fonts:
     <span itemprop="nationality" role="img" aria-label="Canadian">🇨🇦</span>
     <details id="contact-disclosure">
       <summary class="screen-only">Contact</summary>
+
       <a itemprop="email" href="mailto:web@bennypowers.com">web@bennypowers.com</a>
       <a itemprop="telephone" href="tel:+972544825726">054-482-5726</a>
       <p class="screen-only">To book a live mentoring session, find me on codementor.io. For all other enquiries, please email me.</p>
@@ -100,89 +110,103 @@ fonts:
 
   <section id="tools">
     <h2>Relevant Buzzwords</h2>
-    {%- set icons = collections.icon | groupby('fileSlug') %}
-    <ul id="tools-and-technologies">{% for buzzword in buzzwords %}
-      {%- set icon = icons[buzzword.icon or buzzword] | first -%}
-      <li itemprop="knowsAbout" title="{{ buzzword.title or icon.data.title or buzzword }}">
-        {% icon buzzword.icon or buzzword, 'aria-hidden'='true' %}
-      </li>{% endfor %}
+    <ul id="tools-and-technologies">
+      <li webc:for="buzzword of buzzwords"
+          itemprop="knowsAbout"
+          :title="buzzword.title || icons[buzzword.icon || buzzword]?.title || buzzword">
+        <sprite-icon :name="buzzword.icon || buzzword" aria-hidden="true"></sprite-icon>
+      </li>
     </ul>
   </section>
 
   <section id="experience">
-    <h2>Experience</h2>{% for file in collections['resume-experience'] | sort(true, false, 'data.startDate') %}{% set position = file.data %}
-    <!-- {{ position.organization.name }} -->
-    <article class="experience" itemscope itemtype="https://schema.org/OrganizationRole">
+    <h2>Experience</h2>
+    <article class="experience"
+             webc:for="role of getResumeData('experience')"
+             itemscope
+             itemtype="https://schema.org/OrganizationRole">
       <header>
-        <h3 itemprop="roleName">{{ position.role }}</h3>
+        <h3 itemprop="roleName" @text="role.role"></h3>
         <span>
           <time itemprop="startDate"
-                datetime="{{ position.startDate }}">{{ position.startDate | formatDate(month = 'long', year = 'numeric') }}</time> -
+               :datetime="role.startDate"
+               @text="formatDate(role.startDate, { month: 'long', year: 'numeric' })"></time> -
           <time itemprop="endDate"
-                datetime="{{ position.endDate }}">{{ position.endDate | formatDate(month = 'long', year = 'numeric') }}</time>
+               :datetime="role.endDate"
+               @text="formatDate(role.endDate, { month: 'long', year: 'numeric' })"></time>
         </span>
         <span itemscope
               itemtype="https://schema.org/Organization">
           <a itemprop="name url"
-             href="{{ position.organization.href }}">{{ position.organization.name }}</a>
-          <address itemprop="address">{{ position.organization.address }}</address>
+             :href="role.organization.href" @text="role.organization.name"></a>
+          <address itemprop="address" @text="role.organization.address"></address>
         </span>
       </header>
       <div>
-        <section itemprop="description">{{ file.templateContent | safe }}</section>
+        <section itemprop="description" @html="role.templateContent"></section>
         <section itemscope
-                itemtype="https://schema.org/ItemList"
-                class="technologies">
+                 itemtype="https://schema.org/ItemList"
+                 class="technologies">
           <h3 itemprop="name">Technologies</h3>
-            <ul>{% for technology in position.technologies %}{%- set icon = ((icons[technology] or []) | first) or [] | first -%}
-            <li itemprop="itemListElement" title="{{ icon.data.title }}">
-              {% icon technology, 'aria-hidden'=true %}
-            </li>{% endfor %}
+          <ul>
+            <li webc:for="technology of role.technologies"
+                itemprop="itemListElement"
+                :title="icons[technology].title">
+              <sprite-icon :name="technology" aria-hidden="true"></sprite-icon>
+            </li>
           </ul>
         </section>
       </div>
-    </article>{% endfor %}
+    </article>
   </section>
 
   <section id="qualifications">
-    <h2>Qualifications & Education</h2>{% for file in collections['resume-education'] %}
-    <!-- {{ file.data.shortDescription }} -->
-    <article class="credential" itemscope itemtype="http://schema.org/educationalCredentialAwarded">
-      <h3 itemscope itemtype="https://schema.org/Course">{{ file.data.title }}</h3>
-      {{ file.templateContent | safe }}
-      <ul>{% for credential in file.data.credentials %}
-        <li>
+    <h2>Qualifications & Education</h2>
+    <article webc:for="item of getResumeData('education')"
+             class="credential"
+             itemscope
+             itemtype="http://schema.org/educationalCredentialAwarded">
+      <!-- <template webc:nokeep @text="item.shortDescription"></template> -->
+      <h3 itemscope itemtype="https://schema.org/Course" @text="item.title"></h3>
+      <template webc:nokeep @html="item.templateContent"></template>
+      <ul>
+        <li webc:for="credential of item.credentials">
           <span itemscope
                 itemprop="educationalCredentialAwarded">
             <a itemprop="issuedBy"
-               itemtype="https://schema.org/{{ credential.institutionType or 'CollegeOrUniversity' }}"
-               href="{{ file.data.href }}"
+               :itemtype="`https://schema.org/${credential.institutionType ?? 'CollegeOrUniversity'}`"
+               :href="credential.href"
                rel="noreferrer"
                target="_blank">
-              <span itemprop="name">{{ credential.institution }}</span>
+              <span itemprop="name" @text="credential.institution"></span>
             </a>&nbsp;
-            <time datetime="{{ file.data.date }}">{{ credential.date }}</time>
+            <time :datetime="credential.date" @text="credential.date"></time>
           </span>
-        </li>{% endfor %}
+        </li>
       </ul>
-    </article>{% endfor %}
+    </article>
   </section>
 
   <section id="open-source">
-    <h2>Open Source</h2>{% for file in collections['resume-open-source'] %}
-    <article class="open-source" itemscope itemtype="https://schema.org/CreativeWork">
+    <h2>Open Source</h2>
+    <article webc:for="contribution of getResumeData('open-source')"
+             class="open-source"
+             itemscope
+             itemtype="https://schema.org/CreativeWork">
       <header>
         <h3 itemprop="name">
-          <a href="{{ file.data.href }}" target="_blank" rel="nofollow noreferrer noopener">{{ file.data.title }}</a>
+          <a :href="contribution.href"
+              target="_blank"
+              rel="nofollow noreferrer noopener"
+              @text="contribution.title"></a>
         </h3>
         <span>
-          <time datetime="{{ file.data.date }}">{{ file.data.date }}</time>
+          <time :datetime="contribution.date" @text="contribution.date"></time>
         </span>
       </header>
-     <section itemprop="description">{{ file.templateContent | safe }}</section>
-    </article>{% endfor %}
+     <section itemprop="description" @html="contribution.templateContent"></section>
+    </article>
     <a href="https://github.com/bennypowers" target="_blank" rel="nofollow noreferrer noopener">And more</a>
   </section>
 
 </main>
-</template>
