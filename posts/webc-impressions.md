@@ -124,7 +124,7 @@ bikeshedding, and I could understand an argument like "but if it's *not*
 javascript, don't use JS syntax".
 
 Using async data (i.e. promises) in templates can be awkward. If you pass a 
-promise in as a prop, you'll have to pass it through async functions in each 
+promise in as a "prop", you'll have to pass it through async functions in each 
 interpolation, and won't be able to rely on subsidiary properties like the 
 `length` of a `Promise<Array>`. Need to toggle a class on an element if it's 
 Promise-wrapped data meets a certain predicate? You can use a render template, 
