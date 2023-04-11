@@ -1,7 +1,7 @@
 <link rel="stylesheet" href="paginated-list.css">
 
 <ol>
-  <li webc:for="post of [...posts].reverse()"
+  <li webc:for="post of [...posts]"
       webc:if="watch || post.data.published"
      :class="(watch && !post.data.published) ? 'unpublished' : ''">
     <img class="thumbnail"
