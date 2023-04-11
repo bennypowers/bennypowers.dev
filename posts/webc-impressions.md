@@ -12,30 +12,22 @@ tags:
   - web components
 ---
 
-{#
-    **HEY YOU**, yeah you! Reading this on my unpublished github branch? that's 
-    cute? Please understand that this file represents *very rough notes*. Both 
-    in substance and in tone, it will need significant work before it even 
-    resembles my actual opinion on webc, so don't go quoting me based on a 
-    draft. Even after publishing, this post will remain a "first impressions" 
-    kind of view of things.
-#}
+[`WebC`][webc] is the new-hotness component framework from [all-american web 
+developer Zach Leatherman][zachleat]. It's described as a standards-based web 
+component framework for <abbr title="static site generators">SSGs</abbr> like 
+Zach's own [eleventy][11ty]. I've been casually following WebC news since it's 
+announcement in 2022, and a [recent blog post by Bryce Wray conviced me][bryce] 
+to try migrating my personal site from nunjucks templates. This post collects 
+some of my initial impressions from that process.
 
-`WebC` is the new-hotness component framework from [all-american web developer 
-Zach Leatherman][zachleat]. It's described as a standards-based web component 
-framework for <abbr title="static site generators">SSGs</abbr> like Zach's own 
-[eleventy][11ty]. I've been casually following WebC news since it's announcement 
-in 2022, and a [recent blog post by Bryce Wray conviced me][bryce] to try 
-migrating my personal site from nunjucks templates. This post collects some of 
-my initial impressions from that process.
+My goal with this post is to proffer a hearty [<em 
+lang="yiddish">firgun</em>][firgun] to Zach and the WebC contributors, and to 
+draw attention to some of the less-stellar experiences I had, for the purposes 
+of improving WebC for everyone. If the post comes off as dismissive or 
+overly-negative, please attribute that to the my own lack of insight, rather 
+than to the WebC authors' engineering.
 
-My goal with this post is to proffer a hearty <em lang="yiddish">firgun</em> to 
-Zach and the WebC contributors, and to highlight some of the less-stellar 
-experiences I had. If the post comes off as dismissive or overly-negative, 
-please attribute that to the my own lack of skill, rather than to the WebC 
-authors' engineering.
-
-**<abbr title="too long; didn't read">tl;dr</abbr>:** WebC is an exciting 
+👉 **<abbr title="too long; didn't read">tl;dr</abbr>:** WebC is an exciting 
 technology that comes with shiny tools, but should be adopted by web component 
 developers with caveats.
 
@@ -83,11 +75,11 @@ This strikes me as a bug or oversight which I imagine the maintainers will be
 eager to fix.
 
 ### Component Data
-A common pattern in nunjucks templates uses the [`{%raw%}{% set %}{%endraw%}`] 
+A common pattern in nunjucks templates uses the [`{%raw%}{% set %}{%endraw%}` 
 tag][set-tag] to compute some local data in scope, that can later be accessed 
-whenever. WebC has a concept of [setup scripts][setup-scripts] that let you 
-compute some component-local data, but those scripts can't access the data 
-cascade or the components "props".
+elsewhere in the template. WebC has a concept of [setup scripts][setup-scripts] 
+that let you compute some component-local data, but those scripts can't access 
+the data cascade or the components "props".
 
 This severely limits setup scripts usefulness compared to `set`. [hopefully the 
 maintainers will take an interest in covering this case][data-issue].
@@ -123,10 +115,13 @@ And now, the things I'm eager to be proven wrong about:
 ### Templating
 WebC innovates a novel interpolation syntax, which is fine. To my taste, I found 
 the syntax serviceable but slightly awkward. I would have prefered js template 
-literal interpolation syntax like `src="${someVarInScope}` over 
+literal interpolation syntax like `src="${someVarInScope}"` over 
 `:src="someVarInScope"`. Some editors like my preferred NeoVim can use 
 treesitter to switch to ECMAScript grammar inside the interpolation sections of 
-HTML attributes when `${}` is present.
+HTML attributes when `${}` is present. Using established syntax would have 
+reduced cognitive and tooling load. This is, admittedly, a minor point of 
+bikeshedding, and I could understand an argument like "but if it's *not* 
+javascript, don't use JS syntax".
 
 Using async data (i.e. promises) in templates can be awkward. If you pass a 
 promise in as a prop, you'll have to pass it through async functions in each 
@@ -275,12 +270,14 @@ me wrong about my gripes, please don't hesitate to reach out on
 [mastodon][mastodon]. I'd really like to be corrected on any misconceptions here 
 in this post and will add an "errata" section for any I come across.
 
+[webc]: https://www.11ty.dev/docs/languages/webc/
 [zachleat]: https://www.zachleat.com
 [11ty]: https://11ty.dev
 [bryce]: https://www.brycewray.com/posts/2023/03/time-move-on-nunjucks/
+[firgun]: https://www.wikiwand.com/en/Firgun
 [attr-issue]: https://github.com/11ty/webc/issues/163
 [data-issue]: https://github.com/11ty/webc/issues/164
-[njk-set]: https://mozilla.github.io/nunjucks/templating.html#set
+[set-tag]: https://mozilla.github.io/nunjucks/templating.html#set
 [svg-icon]: ../11ty-svg-sprites/
 [attributes]: https://www.11ty.dev/docs/languages/webc/#@attributes
 [setup-scripts]: https://www.11ty.dev/docs/languages/webc/#using-javascript-to-setup-your-component
