@@ -2,6 +2,7 @@
 layout: html.webc
 date: Created
 title: Posts
+bodyClasses: sidebar
 pagination:
   data: collections.posts
   reverse: true
@@ -9,12 +10,8 @@ pagination:
 ---
 <bp-header></bp-header>
 
-<style>
-main {
-  max-width: 800px;
-  margin-inline: auto;
-}
-</style>
+<link rel="stylesheet" href="../sidebar.css">
+<link rel="stylesheet" href="index.css">
 
 <main>
   <h1 @text="h1 ? h1 : title"></h1>
@@ -26,3 +23,7 @@ main {
   <paginator-nav :@pages="pagination.pages"></paginator-nav>
 </main>
 
+<aside id="side-menu">
+  <h2>All Tags</h2>
+  <tag-list></tag-list>
+</aside>
