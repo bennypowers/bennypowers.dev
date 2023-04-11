@@ -32,7 +32,7 @@
   <ol>
     <li webc:for="(_, index) of pages">
       <a :href="pagination.hrefs[index]"
-         :aria-current="page.url === pagination.hrefs[index] && 'page'" @text="index + 1"></a>
+         :aria-current="page?.url === pagination.hrefs[index] && 'page'" @text="index + 1"></a>
     </li>
   </ol>
   <a :href="pagination.href.next" webc:if="pagination.href.next">Next</a>

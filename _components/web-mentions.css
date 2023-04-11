@@ -1,0 +1,25 @@
+web-mentions {
+  display: contents;
+
+  & ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    margin-inline-start: 24px;
+    margin-block-start: 24px;
+
+    & li {
+      margin-inline-start: -24px;
+      margin-block-start: -24px;
+
+      & a { outline: none; }
+
+      &:is(:hover, :focus, :focus-within) img {
+        z-index: 2;
+        border-color: var(--text-color);
+      }
+    }
+  }
+}

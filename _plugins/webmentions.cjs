@@ -27,7 +27,7 @@ const COLLATED = new WeakMap();
 /**
  * @param {WebMentionResponse} mentions
  */
-function collateMentions(mentions) {
+function collateWebmentions(mentions) {
   if (!COLLATED.has(mentions)) {
     COLLATED.set(mentions, mentions.children.reduce((acc, mention) => {
       switch(mention['wm-property']) {
@@ -52,10 +52,13 @@ function prettyDate(string) {
 
 /** @param {import('@11ty/eleventy/src/UserConfig.js')} eleventyConfig */
 module.exports = function(eleventyConfig, { domain, webmentionIoToken }) {
-  eleventyConfig.addShortcode('webmentions', async function(kwargs) {
-    const { pageUrl: url, type, altUrls = [] } = kwargs;
-
-    const target = new URL(url.replace(/index\.html$/, ''), domain).href;
+  eleventyConfig.addFilter('prettyDate', prettyDate);
+  eleventyConfig.addFilter('collateWebmentions', collateWebmentions);
+  eleventyConfig.addFilter('isWebmentionLike', mention => mention?.['wm-property'] === 'like-of');
+  eleventyConfig.addFilter('isWebmentionRepost', mention => mention?.['wm-property'] === 'repost-of');
+  eleventyConfig.addFilter('isWebmentionReply', mention => mention?.['wm-property'] === 'in-reply-to');
+  eleventyConfig.addFilter('getWebmentions', async function(pageUrl, altUrls) {
+    const target = new URL(pageUrl.replace(/index\.html$/, ''), domain).href;
     const webmentionIoUrl = new URL('/api/mentions.jf2', 'https://webmention.io')
           webmentionIoUrl.searchParams.append('token', webmentionIoToken);
           webmentionIoUrl.searchParams.append('target[]', target);
@@ -71,45 +74,6 @@ module.exports = function(eleventyConfig, { domain, webmentionIoToken }) {
       verbose: true,
     });
 
-    const { likes, reposts, replies } = collateMentions(mentions);
-
-    switch(type) {
-      case 'like': return !likes.length ? '' : /* html */`
-        <ul class="webmentions likes ${likes.length > 12 ? 'many' : ''}">${likes.map(mention => /* html */`
-          <li class="webmention like">
-            <a target="_blank" rel="noopener" href="${mention.author.url}">
-              <img src="${mention.author.photo}" title="${mention.author.name}">
-            </a>
-          </li>`).join('\n')}
-        </ul>`;
-      case 'repost': return !reposts.length ? '' : /* html */`
-        <ul class="webmentions reposts ${reposts.length > 12 ? 'many' : ''}">${reposts.map(mention => /* html */`
-          <li class="webmention repost">
-            <a target="_blank" rel="noopener" href="${mention.author.url}">
-              <img src="${mention.author.photo}" title="${mention.author.name}">
-            </a>
-          </li>`).join('\n')}
-        </ul>`;
-      case 'reply':
-        return !replies.length ? '' : /* html */`
-        <section class="webmentions replies">${replies.map(mention => /* html */`
-          <article class="webmention reply h-entry">
-            <header class="p-author h-card">
-              <a class="avatar" target="_blank" rel="noopener" href="${mention.author.url}">
-                <img src="${mention.author.photo}" title="${mention.author.name}">
-              </a>
-              <span class="byline">
-                <a target="_blank" rel="noopener" href="${mention.author.url}">
-                  <h3 class="p-name">${mention.author.name}</h3>
-                </a>
-                <a class="u-in-reply-to" target="_blank" rel="noopener" href="${mention.url}">${prettyDate(mention.published ?? mention['wm-received'])}</a>
-              </span>
-            </header>
-            <div class="comment p-name p-content">${mention.content.html}</div>
-          </article>`).join('\n')}
-        </section>`;
-    }
-
-    return '';
+    return mentions;
   });
 }

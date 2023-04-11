@@ -40,20 +40,22 @@ module.exports = function(eleventyConfig) {
   eleventyConfig.addDataExtension('yaml', x => YAML.parse(x));
   eleventyConfig.addPassthroughCopy('assets/**/*.{svg,png,jpeg,jpg,gif,webp,webm,js,d.ts,ico,webmanifest,json}');
   eleventyConfig.addPlugin(PostsPlugin);
+  eleventyConfig.addPlugin(PostCSSPlugin);
   eleventyConfig.addPlugin(IconsPlugin);
   eleventyConfig.addPlugin(FiltersPlugin);
   eleventyConfig.addPlugin(FontsPlugin);
   eleventyConfig.addPlugin(DecksPlugin, { assetsExtensions: ['jpg', 'png', 'webp', 'svg', 'js']});
+  eleventyConfig.addPlugin(JamPackPlugin);
   eleventyConfig.addPlugin(RedHatDeckPlugin);
   eleventyConfig.addPlugin(RHDSPlugin);
   eleventyConfig.addPlugin(GlitchPlugin);
-  eleventyConfig.addPlugin(PostCSSPlugin, { exclude: /_plugins/ });
   eleventyConfig.addPlugin(EmbedPlugin, { lite: true });
   eleventyConfig.addPlugin(TableOfContentsPlugin);
   eleventyConfig.addPlugin(TimeToReadPlugin);
   eleventyConfig.addPlugin(EleventyPluginDirectoryOutput);
   eleventyConfig.addPlugin(EleventyRenderPlugin);
   eleventyConfig.addPlugin(EleventyPluginRSS);
+  eleventyConfig.addPlugin(EleventyPluginSyntaxhighlight, { init() { require('prismjs/components/index')(['regex']) } });
   eleventyConfig.addPlugin(EleventyPluginWebC, {
     bundlePluginOptions: {
       transforms: [
@@ -67,13 +69,12 @@ module.exports = function(eleventyConfig) {
       ]
     }
   });
-  eleventyConfig.addPlugin(EleventyPluginSyntaxhighlight, { init() { require('prismjs/components/index')(['regex']) } });
-  eleventyConfig.addPlugin(JamPackPlugin);
   eleventyConfig.addPlugin(WebmentionsPlugin, {
     domain: 'https://bennypowers.dev',
     webmentionIoToken: process.env.WEBMENTION_IO_TOKEN,
     devToToken: process.env.DEV_TO_TOKEN,
   });
+
   return {
     templateFormats: [ 'md', 'njk', 'html', 'svg', 'css' ],
     markdownTemplateEngine: 'njk',

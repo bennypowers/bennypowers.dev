@@ -40,7 +40,7 @@
     <ul id="tags-list" class="p-category">
       <li webc:if="tag !== 'posts'"
           webc:for="tag of tags ?? []">
-        <a :href="url(slug(`/tags/${tag}`))" @text="tag"></a>
+        <a :href="url(`/tags/${slug(tag)}`)" @text="tag"></a>
         (<template webc:nokeep @text="collections[tag]?.length"></template>)
       </li>
       <li id="all-tags">
@@ -48,8 +48,7 @@
       </li>
     </ul>
 
-    <web-mentions :@page-url="page.url" :@alt-urls="altUrls" @type="like" @title="Likes"></web-mentions>
-    <web-mentions :@page-url="page.url" :@alt-urls="altUrls" @type="repost" @title="Boosts"></web-mentions>
+    <web-mentions :@webmentions="webmentions"></web-mentions>
 
     <h2 webc:if="next">Next</h2>
     <div webc:if="next" id="next-post">

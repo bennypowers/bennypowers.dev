@@ -27,7 +27,7 @@ layout: html.webc
             :src="post.data.coverImage"
              webc:if="post.data.coverImage">
         <div>
-          <a :href="post.url" @text="post.data.title"></a>
+          <a :href="post?.url" @text="post.data.title"></a>
           <time :datetime="post.data.datePublished"
                 :@text="formatDate(post.data.datePublished, { month: 'short', day: 'numeric', year: 'numeric' })"></time>
         </div>
