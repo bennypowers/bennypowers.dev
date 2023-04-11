@@ -1,6 +1,6 @@
 ---
 title: WebC First Impressions
-published: false
+published: true
 description: Thoughts from my first attempt at understanding the new WebC framework from 11ty
 datePublished: 2023-04-11
 coverImage: /assets/images/webc-impressions.png
@@ -34,6 +34,10 @@ Zach and the WebC contributors, and to highlight some of the less-stellar
 experiences I had. If the post comes off as dismissive or overly-negative, 
 please attribute that to the my own lack of skill, rather than to the WebC 
 authors' engineering.
+
+**<abbr title="too long; didn't read">tl;dr</abbr>:** WebC is an exciting 
+technology that comes with shiny tools, but should be adopted by web component 
+developers with caveats.
 
 ## Advantages
 WebC's main advantages in my mind are it's mostly-`html`-ish syntax, and 
@@ -175,6 +179,7 @@ As mentioned above, one of WebC's major selling points are the bundling
 features. But as of this writing, those features only work for global CSS and 
 scripts, but not for Shadow DOM and modules.
 
+If you try this render template:
 ```html
 <script type="module" webc:type="js">
 const likes = await getWebmentionLikes(mentions);
@@ -183,10 +188,11 @@ const reposts = await getWebmentionReposts(mentions);
 </script>
 ```
 
-```
-Check the webc:type="js" element in ./_includes/post.webc.
-Original error message: await is only valid in async functions and the top level bodies of modules (via Error)
-```
+You'll get this error:
+
+> Check the webc:type="js" element in ./_includes/post.webc.
+> Original error message: await is only valid in async functions and the top 
+> level bodies of modules (via Error)
 
 It's hard for me to understand the thought process behind picking 
 CommonJS/script parsing for a contemporary green-field web-and-JS-based 
