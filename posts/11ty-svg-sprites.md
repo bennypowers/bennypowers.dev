@@ -10,9 +10,26 @@ tags:
   - html
   - svg
   - performance
-inlineCss:
-  - 11ty-svg-sprites.css
 ---
+{% css %}
+#examples {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1em;
+  align-items: center;
+  justify-content: center;
+
+  & svg {
+    fill: currentcolor;
+    height: 40px;
+    aspect-ratio: 1;
+  }
+}
+
+#cover-image {
+  image-rendering: optimizespeed;
+}
+{% endcss %}
 
 So you want to put some SVG icons on your [11ty](https://11ty.dev) site, hey? 
 This technique lets you include icons in your posts easily. With a little 
