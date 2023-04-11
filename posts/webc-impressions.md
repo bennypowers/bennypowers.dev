@@ -24,12 +24,16 @@ My goal with this post is to proffer a hearty [<em
 lang="yiddish">firgun</em>][firgun] to Zach and the WebC contributors, and to 
 draw attention to some of the less-stellar experiences I had, for the purposes 
 of improving WebC for everyone. If the post comes off as dismissive or 
-overly-negative, please attribute that to the my own lack of insight, rather 
-than to the WebC authors' engineering.
+overly-negative, please attribute that to my own lack of insight and tact, 
+rather than to the WebC authors' engineering.
+
+-----
 
 👉 **<abbr title="too long; didn't read">tl;dr</abbr>:** WebC is an exciting 
 technology that comes with shiny tools, but should be adopted by web component 
-developers with caveats.
+developers with caveats. 👈
+
+-----
 
 ## Advantages
 WebC's main advantages in my mind are it's mostly-`html`-ish syntax, and 
