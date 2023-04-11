@@ -30,8 +30,5 @@ bodyClasses: h-entry post sidebar
     <template webc:nokeep @raw="content"></template>
   </div>
 
-  <web-mentions @title="Comments"
-      @type="reply"
-      :@alt-urls="altUrls"
-      :@page-url="page.url"></web-mentions>
+  <web-mention-replies :@webmentions="webmentions"></web-mentions>
 </main>

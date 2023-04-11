@@ -24,7 +24,7 @@
     <meta property="og:type" :content="layout.replace(/\.(html|webc)/, '') == 'post' ? 'article' : 'website'">
     <meta property="og:site_name" content="Benny Powers, Web Developer">
     <meta property="og:locale" content="en_US">
-    <meta property="og:url" :content="`https://bennypowers.dev${page.url || '/'}`">
+    <meta property="og:url" :content="`https://bennypowers.dev${page?.url || '/'}`">
     <meta property="og:image" :content="{{ coverImage || '/assets/images/logo/bp-logo-dark@2x.png' }}">
     <meta property="og:image:width" content="1024">
     <meta property="og:image:height" content="1024">

@@ -8,5 +8,5 @@
   {%- endif -%}
 </template>
 
-<svg @attributes><use :href="`#${name}-icon`"></svg>
+<svg :aria-hidden="ariaHidden ?? false" @attributes><use :href="`#${name}-icon`"></svg>
 

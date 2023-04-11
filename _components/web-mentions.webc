@@ -1,92 +1,16 @@
-<style>
-.webmentions {
-  list-style-type: none;
-  margin: 0;
-  padding: 0;
-  display: flex;
-  flex-wrap: wrap;
+<link rel="stylesheet" href="web-mentions.css">
 
-  --avatar-size: 60px;
-
-  &:is(.likes,.reposts) {
-    margin-inline-start: 24px;
-    margin-block-start: 24px;
-  }
-
-  &.replies {
-    display: flex;
-    flex-flow: column;
-  }
-
-  &.many {
-    --avatar-size: 40px;
-  }
-}
-
-.webmention {
-  & header {
-    display: contents;
-  }
-
-  &:is(.like,.repost) {
-    margin-inline-start: -24px;
-    margin-block-start: -24px;
-  }
-
-  &.reply {
-    display: grid;
-    column-gap: calc(var(--avatar-size) / 4);
-    row-gap: calc(var(--avatar-size) / 8);
-    grid-template-rows: calc(var(--avatar-size) / 2) auto;
-    grid-template-columns: var(--avatar-size) auto;
-    grid-template-areas:
-      "avatar byline"
-      "avatar comment";
-    & .avatar { grid-area: avatar; }
-
-    & .byline {
-      grid-area: byline;
-      align-self: end;
-      display: flex;
-      justify-content: space-between;
-      align-items: end;
-
-      & h3 {
-        display: inline;
-      }
-    }
-
-    & .comment {
-      grid-area: comment;
-      align-self: start;
-
-      & p:first-child {
-        margin-block-start: 0;
-      }
-    }
-  }
-
-  & img {
-    border: 4px solid var(--background-color);
-    background: var(--background-color);
-    border-radius: 100%;
-    overflow: hidden;
-    width: var(--avatar-size);
-    aspect-ratio: 1;
-    position: relative;
-  }
-
-  & a {
-    outline: none;
-  }
-
-  &:is(:hover, :focus, :focus-within):not(.reply) img {
-    z-index: 2;
-    border-color: var(--text-color);
-  }
-}
-</style>
-<h2 @html="title"></h2>
-<template webc:type="11ty" 11ty:type="njk,md">
-{% webmentions pageUrl=pageUrl, altUrls=altUrls, type=type %}
+<template webc:nokeep webc:if="webmentions?.likes?.length">
+  <h2>Likes</h2>
+  <ul :class="webmentions?.likes.length > 12 ? 'many' : ''">
+    <web-mention webc:for="mention of webmentions?.likes" :@mention="mention"></web-mention>
+  </ul>
 </template>
+
+<template webc:nokeep webc:if="webmentions?.reposts?.length">
+  <h2>Boosts</h2>
+  <ul :class="webmentions?.reposts.length > 12 ? 'many' : ''">
+    <web-mention webc:for="mention of webmentions?.reposts" :@mention="mention"></web-mention>
+  </ul>
+</template>
+

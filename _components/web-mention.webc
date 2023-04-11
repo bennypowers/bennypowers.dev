@@ -1,0 +1,30 @@
+<link rel="stylesheet" href="web-mention.css">
+
+
+<section webc:if="isWebmentionReply(mention)" webc:root="override">
+  <article class="h-entry">
+    <header class="p-author h-card">
+      <a class="avatar" target="_blank" rel="noopener" :href="mention.author.url">
+        <img :src="mention.author.photo" :title="mention.author.name">
+      </a>
+      <span class="byline">
+        <a target="_blank" rel="noopener" :href="mention.author.url">
+          <h3 class="p-name" @html="mention.author.name"></h3>
+        </a>
+        <a class="u-in-reply-to"
+            target="_blank"
+            rel="noopener"
+            :href="mention.url"
+            @html="prettyDate(mention.published ?? mention['wm-received'])"></a>
+      </span>
+    </header>
+    <div class="comment p-name p-content" @html="mention.content.html"></div>
+  </article>
+</section>
+
+<li webc:else webc:root="override">
+  <a class="avatar" target="_blank" rel="noopener" :href="mention.author.url">
+    <img :src="mention.author.photo" :title="mention.author.name">
+  </a>
+</li>
+

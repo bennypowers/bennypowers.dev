@@ -1,0 +1,5 @@
+<link rel="stylesheet" href="web-mention-replies.css">
+
+<h2 webc:if="webmentions?.replies?.length">Comments</h2>
+
+<web-mention webc:for="mention of webmentions?.replies ?? []"></web-mention>
