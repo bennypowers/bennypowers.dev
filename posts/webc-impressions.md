@@ -285,4 +285,4 @@ in this post and will add an "errata" section for any I come across.
 [11ty-esm]: https://github.com/11ty/eleventy/pull/2575
 [dsd]: https://webkit.org/blog/13851/declarative-shadow-dom/
 [dsd-example]: https://github.com/11ty/demo-webc-shadow-dom/blob/01a5d8c7db6df2874e28f4e050294c8607e139ba/_components/sample-component-dsd.webc
-[mastodon]: https://social.bennypowers.dev/tags/11ty/
+[mastodon]: https://social.bennypowers.dev/@bp/110180477123622364
