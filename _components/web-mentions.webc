@@ -3,14 +3,18 @@
 <template webc:nokeep webc:if="webmentions?.likes?.length">
   <h2>Likes</h2>
   <ul :class="webmentions?.likes.length > 12 ? 'many' : ''">
-    <web-mention webc:for="mention of webmentions?.likes" :@mention="mention"></web-mention>
+    <li webc:for="mention of webmentions?.likes">
+      <web-mention :@mention="mention"></web-mention>
+    </li>
   </ul>
 </template>
 
 <template webc:nokeep webc:if="webmentions?.reposts?.length">
   <h2>Boosts</h2>
   <ul :class="webmentions?.reposts.length > 12 ? 'many' : ''">
-    <web-mention webc:for="mention of webmentions?.reposts" :@mention="mention"></web-mention>
+    <li webc:for="mention of webmentions?.reposts">
+      <web-mention :@mention="mention"></web-mention>
+    </li>
   </ul>
 </template>
 

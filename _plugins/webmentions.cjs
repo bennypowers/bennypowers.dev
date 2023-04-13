@@ -41,18 +41,8 @@ function collateWebmentions(mentions) {
   return COLLATED.get(mentions);
 }
 
-/** @param {string | number | Date} string */
-function prettyDate(string) {
-  return new Date(string).toLocaleString('en-US', {
-    timeStyle: 'short',
-    dateStyle: 'short',
-  });
-}
-
-
 /** @param {import('@11ty/eleventy/src/UserConfig.js')} eleventyConfig */
 module.exports = function(eleventyConfig, { domain, webmentionIoToken }) {
-  eleventyConfig.addFilter('prettyDate', prettyDate);
   eleventyConfig.addFilter('collateWebmentions', collateWebmentions);
   eleventyConfig.addFilter('isWebmentionLike', mention => mention?.['wm-property'] === 'like-of');
   eleventyConfig.addFilter('isWebmentionRepost', mention => mention?.['wm-property'] === 'repost-of');

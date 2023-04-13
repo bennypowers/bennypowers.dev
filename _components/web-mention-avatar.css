@@ -1,0 +1,12 @@
+web-mention-avatar {
+  display: contents;
+  & img {
+    border: 4px solid var(--background-color);
+    background: var(--background-color);
+    border-radius: 100%;
+    overflow: hidden;
+    width: var(--avatar-size, 60px);
+    aspect-ratio: 1;
+    position: relative;
+  }
+}

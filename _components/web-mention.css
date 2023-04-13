@@ -1,40 +1,34 @@
-:is(web-mention-replies, web-mentions) :is(section, ul) {
-  --avatar-size: 60px;
+web-mention {
+  display: flex;
+  flex-flow: column;
+
   &.many { --avatar-size: 40px; }
 
-  & .avatar img {
-    border: 4px solid var(--background-color);
-    background: var(--background-color);
-    border-radius: 100%;
-    overflow: hidden;
-    width: var(--avatar-size);
-    aspect-ratio: 1;
-    position: relative;
-  }
-
-  & article {
+  & .h-entry {
     display: grid;
-    column-gap: calc(var(--avatar-size) / 4);
-    row-gap: calc(var(--avatar-size) / 8);
-    grid-template-rows: calc(var(--avatar-size) / 2) auto;
-    grid-template-columns: var(--avatar-size) auto;
+    column-gap: calc(var(--avatar-size, 60px) / 4);
+    row-gap: calc(var(--avatar-size, 60px) / 8);
+    grid-template-rows: calc(var(--avatar-size, 60px) / 2) auto;
+    grid-template-columns: var(--avatar-size, 60px) auto;
     grid-template-areas:
       "avatar byline"
       "avatar comment";
 
     & header { display: contents; }
-    & .avatar { grid-area: avatar; }
+
+    & web-mention-avatar { grid-area: avatar; }
 
     & .byline {
       grid-area: byline;
+      font-style: italic;
       align-self: end;
       display: flex;
-      justify-content: space-between;
       align-items: end;
       & h3 { display: inline; }
     }
 
     & .comment {
+      margin: 0;
       grid-area: comment;
       align-self: start;
       & p:first-child { margin-block-start: 0; }

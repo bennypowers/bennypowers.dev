@@ -78,7 +78,10 @@ post-thumbnail {
 <template webc:if="expanded" webc:nokeep>
   <h2><a :href="post.url" @text="post.data.title"></a></h2>
   <div>
-    <date-time :datetime="post.data.datePublished"></date-time>
+    <date-time :datetime="post.data.datePublished"
+                month="short"
+                day="numeric"
+                year="numeric"></date-time>
     <p @html="post.data.description"></p>
   </div>
 </template>
@@ -86,6 +89,9 @@ post-thumbnail {
   <div>
     <a :href="post.url" @text="post.data.title"></a>
     <br>
-    <date-time :datetime="post.data.datePublished"></date-time>
+    <date-time :datetime="post.data.datePublished"
+                month="short"
+                day="numeric"
+                year="numeric"></date-time>
   </div>
 </template>

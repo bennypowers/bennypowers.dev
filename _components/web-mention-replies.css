@@ -1,8 +1,5 @@
 web-mention-replies {
   display: contents;
 
-  & section {
-    display: flex;
-    flex-flow: column;
-  }
+  & web-mention-avatar { grid-area: avatar; }
 }

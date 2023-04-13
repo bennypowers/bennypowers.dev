@@ -1,0 +1,7 @@
+<link rel="stylesheet" href="web-mention-avatar.css">
+
+<a target="_blank"
+    rel="noopener"
+    :href="author.url">
+  <img :src="author.photo" :title="author.name">
+</a>

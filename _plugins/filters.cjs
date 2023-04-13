@@ -25,24 +25,6 @@ function abbrs(content) {
   return replaced;
 }
 
-/**
- * @param {string|Date} d
- * @param {Intl.DateTimeFormatOptions} opts
- * @return { string }
- */
-function formatDate(d, opts) {
-  if (d instanceof Date) {
-    return new Intl.DateTimeFormat('en-US', opts).format(d);
-  } else {
-    try {
-      const date = new Date(d);
-      return new Intl.DateTimeFormat('en-US', opts).format(date);
-    } catch (e) {
-      return d
-    }
-  }
-}
-
 /** @see https://mozilla.github.io/nunjucks/templating.html#groupby */
 function groupby(array, prop) {
   const obj = {}
@@ -68,15 +50,34 @@ function isSameDay(a, b) {
   );
 }
 
-const omit = (obj, props) => Object.fromEntries(Object.entries(obj).filter(([x]) => !props.includes(x)))
+const omit = (obj, props) =>
+  Object.fromEntries(Object.entries(obj).filter(([x]) =>
+    !props.includes(x)))
 
+/**
+ * @param {string|Date} d
+ * @param {Intl.DateTimeFormatOptions} opts
+ * @return { string }
+ */
+function formatDate(d, opts) {
+  if (d instanceof Date) {
+    return new Intl.DateTimeFormat('en-US', opts).format(d);
+  } else {
+    try {
+      const date = new Date(d);
+      return new Intl.DateTimeFormat('en-US', opts).format(date);
+    } catch (e) {
+      return d
+    }
+  }
+}
 
 /** @param{import('@11ty/eleventy/src/UserConfig.js')} eleventyConfig */
 module.exports = function(eleventyConfig) {
   eleventyConfig.addFilter('abbrs', abbrs);
-  eleventyConfig.addFilter('formatDate', formatDate);
   eleventyConfig.addFilter('omit', omit);
   eleventyConfig.addFilter('isSameDay', isSameDay);
+  eleventyConfig.addFilter('formatDate', formatDate);
   eleventyConfig.addJavaScriptFunction('groupby', groupby);
   eleventyConfig.addFilter('include', async function includeFilter(path) {
     const resolved = join(__dirname, '..', '_includes', path)
