@@ -1,6 +1,10 @@
 <link rel="stylesheet" href="web-mention-replies.css">
 
-<h2 webc:if="webmentions?.replies?.length">Comments</h2>
+<script webc:setup>
+  const byPublishedDate = (a, b) => new Date(a.published) - new Date(b.published);
+</script>
 
-<web-mention webc:for="mention of (webmentions?.replies ?? [])
-  .sort((a, b) => new Date(a.published) - new Date(b.published))"></web-mention>
+<template webc:nokeep webc:if="webmentions?.replies?.length">
+  <h2>Comments</h2>
+  <web-mention webc:for="mention of webmentions.replies.sort(byPublishedDate)"></web-mention>
+</template>
