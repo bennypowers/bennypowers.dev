@@ -3,7 +3,7 @@ name: Rebuild
 on:
   workflow_dispatch:
   schedule:
-    - cron: '0 * * * *'
+    - cron: '0 0 * * 0' # 12:00 AM, only on Sunday
 
 jobs:
   rebuild:

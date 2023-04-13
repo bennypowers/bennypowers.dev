@@ -1,15 +1,20 @@
 [[redirects]]
-from = "/.well-known/host-meta"
-to = "https://social.bennypowers.dev/.well-known/host-meta"
+  from = "/.well-known/host-meta"
+  to = "https://social.bennypowers.dev/.well-known/host-meta"
 [[redirects]]
-from = "/stripe-elements/"
-to = "https://stripe-elements.netlify.app"
+  from = "/stripe-elements/"
+  to = "https://stripe-elements.netlify.app"
 
 [[edge_functions]]
-function = "webfinger"
-path = "/.well-known/webfinger"
+  function = "webfinger"
+  path = "/.well-known/webfinger"
 
 [[plugins]]
-package = "netlify-plugin-cache"
-  [plugins.inputs]
-  paths = [ ".cache" ]
+  package = "netlify-plugin-cache"
+    [plugins.inputs]
+    paths = [ ".cache" ]
+[[plugins]]
+  package = "netlify-plugin-webmentions"
+    [plugins.inputs]
+    # Maximum number of feed entries to check for mentions (optional, default: 1)
+    limit = 1
