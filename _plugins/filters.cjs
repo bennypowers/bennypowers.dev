@@ -53,12 +53,30 @@ function groupby(array, prop) {
   return obj;
 }
 
+/**
+ * @param {string | number | Date} a
+ * @param {string | number | Date} b
+ * @return {boolean}
+ */
+function isSameDay(a, b) {
+  const A = new Date(a);
+  const B = new Date(b);
+  return (
+    A.getFullYear() === B.getFullYear() &&
+    A.getMonth() === B.getMonth() &&
+    A.getDay() === B.getDay()
+  );
+}
+
 const omit = (obj, props) => Object.fromEntries(Object.entries(obj).filter(([x]) => !props.includes(x)))
+
+
 /** @param{import('@11ty/eleventy/src/UserConfig.js')} eleventyConfig */
 module.exports = function(eleventyConfig) {
   eleventyConfig.addFilter('abbrs', abbrs);
   eleventyConfig.addFilter('formatDate', formatDate);
   eleventyConfig.addFilter('omit', omit);
+  eleventyConfig.addFilter('isSameDay', isSameDay);
   eleventyConfig.addJavaScriptFunction('groupby', groupby);
   eleventyConfig.addFilter('include', async function includeFilter(path) {
     const resolved = join(__dirname, '..', '_includes', path)

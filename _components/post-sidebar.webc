@@ -2,19 +2,28 @@
 
   <div>
 
+    <!---
+
+    :@pretty-published="formatDate(datePublished, { month: 'short', day: 'numeric', year: 'numeric' })"
+    :@pretty-updated="formatDate(page.date, { month: 'short', day: 'numeric', year: 'numeric' })"
+--->
+
     <dl id="post-stats" webc:if="watch || published">
       <dt>⏲️ Time to read</dt>
       <dd>~ <template webc:nokeep @html="timeToRead(content)"></template></dd>
       <dt>🌅 Published</dt>
-      <dd><time class="dt-published"
-               :datetime="datePublished"
-               @text="prettyPublished"></time></dd>
-      <template webc:nokeep webc:if="prettyPublished !== prettyUpdated">
+      <dd><date-time class="dt-published"
+                     month="short"
+                     day="numeric"
+                     year="numeric"
+                     :datetime="datePublished"></date-time></dd>
+      <template webc:nokeep webc:if="!isSameDay(datePublished, page.date)">
         <dt>✏️ Last Touched</dt>
-        <dd>
-          <time class="dt-updated"
-               :datetime="pageDate"
-               @text="prettyUpdated"></time>
+        <dd><date-time class="dt-updated"
+                     month="short"
+                     day="numeric"
+                     year="numeric"
+                     :datetime="page.date"></date-time>
         </dd>
       </template>
     </dl>

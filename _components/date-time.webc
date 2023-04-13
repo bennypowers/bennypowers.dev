@@ -1,0 +1,5 @@
+<time :datetime="datetime" @text="formatDate(datetime, {
+  month: month ?? 'short',
+  day: day ?? 'numeric',
+  year: year ?? 'numeric',
+})"></time>
