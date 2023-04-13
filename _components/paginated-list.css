@@ -8,30 +8,4 @@ ol {
   gap: 1em;
   list-style-type: none;
   padding: 0;
-
-  & li {
-    display: grid;
-    margin: 0;
-    column-gap: 1em;
-    grid-template-areas:
-      "thumb"
-      "title"
-      "desc";
-    & h2 { grid-area: title; }
-    & img { grid-area: thumb; }
-    & div { grid-area: desc; }
-
-    & .thumbnail {
-      float: left;
-    }
-  }
-}
-
-@media (min-width: 800px) {
-  ol li {
-    grid-template-columns: auto 1fr;
-    grid-template-areas:
-      "thumb title"
-      "thumb desc";
-  }
 }

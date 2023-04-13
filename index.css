@@ -8,8 +8,6 @@ h1 {
   }
 }
 
-.thumbnail { background: limegreen; }
-
 main {
   --thumbnail-height: 125px;
 
@@ -41,48 +39,8 @@ main {
     display: contents;
 
     & li {
-      max-width: 150px;
-      display: grid;
-      grid-template-areas: "all";
-      place-items: center;
+      display: contents;
       font-size: 50%;
-      border-radius: 16px;
-      overflow: hidden;
-
-      & > * {
-        grid-area: all;
-      }
-
-      & .thumbnail {
-        opacity: 0.5;
-        filter: blur(2px);
-        transition: filter 0.2s ease;
-      }
-
-      & div {
-        z-index: 1;
-        padding-block: 0.6em;
-        transition: background 0.2s ease;
-      }
-
-      & a {
-        font-weight: 800;
-        box-shadow: 0 0 rgba(255 255 255 / 0.5);
-      }
-
-      & time {
-        font-size: 80%;
-      }
-
-      &:is(:hover, :focus-within) {
-        & .thumbnail {
-          filter: blur(0);
-        }
-
-        & div {
-          background: black;
-        }
-      }
     }
   }
 }

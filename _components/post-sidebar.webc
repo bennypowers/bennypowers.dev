@@ -48,33 +48,10 @@
     <web-mentions :@webmentions="webmentions"></web-mentions>
 
     <h2 webc:if="next">Next</h2>
-    <div webc:if="next" id="next-post">
-      <img webc:if="next.data.coverImage"
-           class="thumbnail"
-          :alt="next.data.coverImageAlt ?? ''"
-          :src="next.data.coverImage">
-      <div>
-        <a :href="next.url" @html="next.data.title"></a>
-        <br>
-        <time :datetime="next.data.datePublished"
-              @html="formatDate(next.data.datePublished, { month: 'short', day: 'numeric', year: 'numeric' })"></time>
-      </div>
-    </div>
+    <post-thumbnail id="next-post" :@post="next" webc:if="next"></post-thumbnail>
 
     <h2 webc:if="previous">Previous</h2>
-    <div id="prev-post" webc:if="previous">
-      <img class="thumbnail"
-           width="192"
-          :alt="previous.data.coverImageAlt ?? ''"
-          :src="previous.data.coverImage"
-           webc:if="previous.data.coverImage">
-      <div>
-        <a :href="previous.url" @html="previous.data.title"></a>
-        <br>
-        <time :datetime="previous.data.datePublished"
-              @html="formatDate(previous.data.datePublished, { month: 'short', day: 'numeric', year: 'numeric' })"></time>
-      </div>
-    </div>
+    <post-thumbnail id="prev-post" webc:if="previous" :@post="previous"></post-thumbnail>
 
     <a webc:for="service of autoPublish ?? []" :href="`https://brid.gy/publish/${service}`"></a>
   </div>

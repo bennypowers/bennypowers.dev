@@ -1,0 +1,93 @@
+<style>
+post-thumbnail {
+  display: grid;
+
+  & img {
+    border-radius: 16px;
+    height: var(--thumbnail-height, 125px);
+    aspect-ratio: 1.61/1;
+    object-fit: cover;
+    object-position: center;
+  }
+
+  & a {
+    font-weight: 800;
+    box-shadow: 0 0 rgba(255 255 255 / 0.5);
+  }
+
+  & time {
+    font-size: 80%;
+  }
+
+  &:not([expanded]) {
+    grid-template-areas: "all";
+    border-radius: 16px;
+    overflow: hidden;
+    max-width: 192px;
+    text-align: center;
+    place-items: center;
+    & > * { grid-area: all; }
+    & div {
+      z-index: 1;
+      padding-block: 0.6em;
+      transition: background 0.2s ease;
+      background: rgba(0 0 0 / .5);
+      width: 100%;
+    }
+
+    & img {
+      opacity: 0.5;
+      filter: blur(2px);
+      transition: filter 0.2s ease;
+    }
+
+    &:is(:hover, :focus-within) {
+      & img { filter: blur(0); }
+      & div { background: black; }
+    }
+  }
+
+  &[expanded] {
+    margin: 0;
+    column-gap: 1em;
+    grid-template-areas:
+      "thumb"
+      "title"
+      "desc";
+    & img { float: left; filter: none; opacity: 1; }
+    & div { background: none; }
+    & h2 { grid-area: title; margin-block-start: 0; }
+    & img { grid-area: thumb; }
+    & div { grid-area: desc; }
+
+    @media (min-width: 800px) {
+      grid-template-columns: auto 1fr;
+      grid-template-areas:
+        "thumb title"
+        "thumb desc";
+    }
+  }
+}
+</style>
+<img width="192"
+     height="125"
+    :alt="post.data.coverImageAlt ?? ''"
+    :src="post.data.coverImage"
+     webc:if="post.data.coverImage">
+
+<template webc:if="expanded" webc:nokeep>
+  <h2><a :href="post.url" @text="post.data.title"></a></h2>
+  <div>
+    <time :datetime="post.data.datePublished"
+          @text="formatDate(post.data.datePublished, { month: 'short', day: 'numeric', year: 'numeric' })"></time>
+    <p @html="post.data.description"></p>
+  </div>
+</template>
+<template webc:if="!expanded" webc:nokeep>
+  <div>
+    <a :href="post.url" @text="post.data.title"></a>
+    <br>
+    <time :datetime="post.data.datePublished"
+          @html="formatDate(post.data.datePublished, { month: 'short', day: 'numeric', year: 'numeric' })"></time>
+  </div>
+</template>
