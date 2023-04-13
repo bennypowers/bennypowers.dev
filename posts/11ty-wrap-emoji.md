@@ -2,6 +2,11 @@
 title: Wrapping Emoji in your 11ty build
 published: true
 description: Wrap emoji with accessible and semantic HTML, without breaking your pages
+tldr: >
+  Wrapping emoji in element with #aria-label is an #accessibility practice 
+  recommended by experts like Leonie Watson. This post builds on work by Kitty 
+  Giraudel and others in automatically wrapping emoji in your #11ty/#eleventy 
+  pages.
 coverImage: /assets/images/emoji-sticker.png
 coverImageAlt: dozens of emoji stickers piled one on top of the other
 datePublished: 2023-04-13

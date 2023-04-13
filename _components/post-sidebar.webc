@@ -2,12 +2,6 @@
 
   <div>
 
-    <!---
-
-    :@pretty-published="formatDate(datePublished, { month: 'short', day: 'numeric', year: 'numeric' })"
-    :@pretty-updated="formatDate(page.date, { month: 'short', day: 'numeric', year: 'numeric' })"
---->
-
     <dl id="post-stats" webc:if="watch || published">
       <dt>⏲️ Time to read</dt>
       <dd>~ <template webc:nokeep @html="timeToRead(content)"></template></dd>
@@ -36,7 +30,7 @@
       </template>
       <template webc:nokeep webc:if="tldr">
         <dt>🙈 tl;dr:</dt>
-        <dd @html="tldr"></dd>
+        <dd @html="tldr" class="p-bridgy-mastodon-content"></dd>
       </template>
     </dl>
 
