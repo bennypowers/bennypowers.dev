@@ -35,12 +35,6 @@ body.sidebar {
 
 main { grid-area: main; }
 
-#main-header {
-  grid-area: head;
-
-  & .socials {
-    place-self: end;
-  }
-}
+#main-header { grid-area: head; }
 
 #main-footer { grid-area: foot; }
