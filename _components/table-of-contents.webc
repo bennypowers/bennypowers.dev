@@ -1,5 +1,7 @@
 <link rel="stylesheet" href="table-of-contents.css">
 <template webc:nokeep webc:if="toc(content).trim().length">
-  <h2><a href="#">Contents</a></h2>
-  <template webc:nokeep @html="toc(content)"></template>
+  <details open>
+    <summary class="magic-color">Contents</summary>
+    <template webc:nokeep @html="toc(content)"></template>
+  </details>
 </template>

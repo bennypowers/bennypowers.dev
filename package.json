@@ -35,6 +35,8 @@
     "eleventy-plugin-slide-decks": "^0.1.1",
     "eleventy-plugin-time-to-read": "^1.3.0",
     "eleventy-plugin-youtube-embed": "^1.8.1",
+    "emoji-regex": "^10.2.1",
+    "emoji-short-name": "^2.0.0",
     "github-repository": "^0.4.0",
     "markdown-it-anchor": "^8.6.7",
     "markdown-it-attrs": "^4.1.6",

@@ -16,6 +16,7 @@ const EleventyPluginSyntaxhighlight = require('@11ty/eleventy-plugin-syntaxhighl
 const EleventyPluginRSS = require('@11ty/eleventy-plugin-rss');
 const EleventyPluginWebC = require('@11ty/eleventy-plugin-webc');
 
+const EmojiWrapPlugin = require('./_plugins/emoji-wrap.cjs');
 const GlitchPlugin = require('./_plugins/glitch.cjs');
 const IconsPlugin = require('./_plugins/icons.cjs');
 const FiltersPlugin = require('./_plugins/filters.cjs');
@@ -42,6 +43,7 @@ module.exports = function(eleventyConfig) {
   eleventyConfig.addPlugin(PostsPlugin);
   eleventyConfig.addPlugin(PostCSSPlugin);
   eleventyConfig.addPlugin(IconsPlugin);
+  eleventyConfig.addPlugin(EmojiWrapPlugin, { exclude: /^_site\/.*-repro\.html$/ });
   eleventyConfig.addPlugin(FiltersPlugin);
   eleventyConfig.addPlugin(FontsPlugin);
   eleventyConfig.addPlugin(DecksPlugin, { assetsExtensions: ['jpg', 'png', 'webp', 'svg', 'js']});
