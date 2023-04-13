@@ -7,6 +7,7 @@ coverImage: /assets/images/webc-impressions.jpg
 coverImageAlt: a wizard conjures web components using his staff
 tags:
   - eleventy
+  - webc
   - html
   - opinion
   - web components
