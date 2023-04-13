@@ -178,7 +178,8 @@ As mentioned above, one of WebC's major selling points are the bundling
 features. But as of this writing, those features only work for global CSS and 
 scripts, but not for Shadow DOM and modules.
 
-If you try this render template:
+If you try to use `type="module"` and features like <abbr title="top-level 
+await">TLA</abbr> in this render template, you'll get an error:
 ```html
 <script type="module" webc:type="js">
 const likes = await getWebmentionLikes(mentions);
@@ -186,8 +187,6 @@ const reposts = await getWebmentionReposts(mentions);
 '';
 </script>
 ```
-
-You'll get this error:
 
 > Check the webc:type="js" element in ./_includes/post.webc.
 > Original error message: await is only valid in async functions and the top 
