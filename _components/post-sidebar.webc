@@ -31,10 +31,7 @@
       </template>
     </dl>
 
-    <section class="table-of-contents" webc:if="tableOfContents.length">
-      <h2><a href="#">Contents</a></h2>
-      <template webc:nokeep :@html="tableOfContents"></template>
-    </section>
+    <table-of-contents :@content="content"></table-of-contents>
 
     <h2>Tags</h2>
     <ul id="tags-list" class="p-category">

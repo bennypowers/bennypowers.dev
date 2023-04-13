@@ -42,12 +42,6 @@ body.tags {
       "foot foot";
   }
 }
-
-@media (min-width: 1000px) {
-  #side-menu .table-of-contents {
-    display: block;
-  }
-}
 </style>
 
 <bp-header></bp-header>

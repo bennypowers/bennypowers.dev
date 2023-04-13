@@ -13,7 +13,7 @@ bodyClasses: h-entry post sidebar
     :@pretty-updated="formatDate(page.date, { month: 'short', day: 'numeric', year: 'numeric' })"
     :@next="getNextCollectionItem.call(this, collections.posts)"
     :@previous="getPreviousCollectionItem.call(this, collections.posts)"
-    :@table-of-contents="toc(content) ?? ''">
+    :@content="content">
 </post-sidebar>
 
 <main>

@@ -1,0 +1,7 @@
+<ul class="socials">
+  <li webc:for="link of social">
+    <a rel="me noreferrer nofollow" target="_blank" :href="link.href" :title="link.label">
+      <sprite-icon :name="link.icon"></sprite-icon>
+    </a>
+  </li>
+</ul>

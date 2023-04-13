@@ -13,29 +13,14 @@
     <a :href="url('/resume/')">C.V.</a>
   </nav>
 
-  <ul class="socials">
-    <li webc:for="link of social">
-      <a rel="me noreferrer nofollow" target="_blank" :href="link.href" :title="link.label">
-        <sprite-icon :name="link.icon"></sprite-icon>
-      </a>
-    </li>
-  </ul>
+  <social-links></social-links>
 
   <details id="mobile-nav">
     <summary><sprite-icon name="hamburger" title="Menu"></sprite-icon></summary>
 
     <div id="mobile-nav-content">
-      <ul class="socials">
-        <li webc:for="link of social">
-          <a rel="me noreferrer nofollow" target="_blank" :href="link.href">
-            <sprite-icon :name="link.icon" :title="link.label"></sprite-icon>
-          </a>
-        </li>
-      </ul>
-      <section class="table-of-contents">
-        <h2><a href="#">Contents</a></h2>
-        <template webc:nokeep @raw="toc(content)"></template>
-      </section>
+      <social-links></social-links>
+      <table-of-contents :@content="content"></table-of-contents>
     </div>
   </details>
 </header>

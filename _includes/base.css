@@ -190,14 +190,6 @@ a {
   }
 }
 
-#mobile-nav-content {
-  position: fixed;
-  inset: 40px 0 auto 0;
-  background: var(--background-color);
-  padding: 40px;
-  border: 1px solid currentcolor;
-}
-
 #tags-list {
   list-style-type: none;
   margin: 0;

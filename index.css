@@ -87,10 +87,6 @@ main {
   }
 }
 
-.table-of-contents {
-  display: none;
-}
-
 [src="/assets/images/sprite-sheet.png"] {
   image-rendering: optimizespeed;
 }
