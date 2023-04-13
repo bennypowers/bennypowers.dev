@@ -91,3 +91,4 @@ the chance we'll breaking the page in unexpected ways.
 [kitty]: https://kittygiraudel.com/2021/01/02/accessible-emojis-with-11ty/
 [csstricks]: https://css-tricks.com/excluding-emojis-from-transparent-text-clipping/
 [wmio]: https://webmention.io/
+[linkedom]: https://github.com/WebReflection/linkedom
