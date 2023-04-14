@@ -14,7 +14,7 @@ web-mention {
       "avatar byline"
       "avatar comment";
 
-    & header { display: contents; }
+    & .h-card { display: contents; }
 
     & web-mention-avatar { grid-area: avatar; display: block; }
 

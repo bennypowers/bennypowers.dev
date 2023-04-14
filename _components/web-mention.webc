@@ -6,9 +6,9 @@
     <span class="byline">
       <a target="_blank" rel="noopener" :href="mention.author.url">
         <h3 class="p-name" @html="mention.author.name"></h3>
-      </a>&nbsp;wrote on&nbsp;<date-time :datetime="mention['wm-received']"
+      </a> wrote on <date-time :datetime="mention['wm-received']"
                                           time-zone="UTC"
-                                          date-style="long"></date-time>&nbsp;
+                                          date-style="long"></date-time>
       <a class="u-in-reply-to"
           target="_blank"
           rel="noopener"
@@ -22,7 +22,7 @@
   </header>
   <blockquote :cite="mention.url"
                class="comment p-name p-content"
-              @html="mention.content.html"></blockquote>
+              @html="appendOpenGraphCard(mention.content.html)"></blockquote>
 </article>
 
 <web-mention-avatar webc:else :@author="mention.author"></web-mention-avatar>

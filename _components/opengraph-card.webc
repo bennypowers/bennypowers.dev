@@ -1,0 +1,51 @@
+<style>
+opengraph-card {
+  & article {
+    display: grid;
+    overflow: hidden;
+    border: var(--opengraph-card-border-width, 1px) solid var(--opengraph-card-border-color, transparent);
+    border-radius: var(--opengraph-card-border-radius, 8px);
+    max-width: var(--opengraph-card-width, 300px);
+    font-size: 80%;
+    & a { display: contents; }
+    &.article {
+      grid-template-columns: minmax(min-content, var(--opengraph-square-image-size, 110px)) auto;
+      max-width: var(--opengraph-card-article-width, 544px);
+    }
+    & header {
+      padding: .68em 1em ;
+      background: var(--opengraph-card-header-background, hsla(0 100% var(--opengraph-card-bg-lightness, 0%) / .1));
+      color: var(--opengraph-card-header-color, inherit);
+      & h2, & p, & a {
+        color: inherit !important;
+        background: none !important;
+        background-clip: initial !important;
+        -webkit-text-fill-color: initial !important;
+        font-size: var(--opengraph-card-font-color, inherit);
+        margin: 0;
+      }
+    }
+  }
+  @media (prefers-color-scheme: dark) {
+    --opengraph-card-bg-lightness: 100%;
+  }
+}
+</style>
+<script webc:type="js">
+  getOpenGraphCardData(webc.attributes.href)
+    .then(card => console.log(card) ?? card)
+    .then(card => /*html*/`
+    <article class="${card.ogType}">${!card.ogImage ? '' : `
+      <a href="${card.ogUrl}" target="_blank" rel="nofollow noreferrer">
+        <img alt="${card.ogImage.alt ?? ''}" src="${card.ogImage.secureUrl ?? card.ogImage.url}">`}
+      </a>
+      <header>${!card.ogTitle?'': `
+        <h2>
+          <a href="${card.ogUrl}" target="_blank" rel="nofollow noreferrer">${card.ogTitle}</a>
+        </h2>`}${!card.ogDescription ? '' : `
+        <p>
+          <a href="${card.ogUrl}" target="_blank" rel="nofollow noreferrer">${card.ogDescription}</a>
+        </p>`}
+      </header>
+    </article>`);
+</script>
