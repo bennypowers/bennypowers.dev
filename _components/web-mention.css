@@ -8,7 +8,7 @@ web-mention {
     display: grid;
     column-gap: calc(var(--avatar-size, 60px) / 4);
     row-gap: calc(var(--avatar-size, 60px) / 8);
-    grid-template-rows: calc(var(--avatar-size, 60px) / 2) auto;
+    grid-template-rows: minmax(calc(var(--avatar-size, 60px) / 2), min-content) auto;
     grid-template-columns: var(--avatar-size, 60px) auto;
     grid-template-areas:
       "avatar byline"
@@ -16,21 +16,20 @@ web-mention {
 
     & header { display: contents; }
 
-    & web-mention-avatar { grid-area: avatar; }
+    & web-mention-avatar { grid-area: avatar; display: block; }
 
     & .byline {
       grid-area: byline;
       font-style: italic;
       align-self: end;
-      display: flex;
-      align-items: end;
       & h3 { display: inline; }
     }
 
     & .comment {
-      margin: 0;
       grid-area: comment;
-      align-self: start;
+      margin: 0;
+
+      /* align-self: start; */
       & p:first-child { margin-block-start: 0; }
     }
   }

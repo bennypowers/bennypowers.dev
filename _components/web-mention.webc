@@ -1,6 +1,6 @@
 <link rel="stylesheet" href="web-mention.css">
 
-<article class="h-entry" webc:if="isWebmentionReply(log(mention))">
+<article class="h-entry" webc:if="isWebmentionReply(mention)">
   <header class="p-author h-card">
     <web-mention-avatar :@author="mention.author"></web-mention-avatar>
     <span class="byline">
