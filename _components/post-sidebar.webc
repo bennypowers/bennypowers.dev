@@ -35,10 +35,7 @@
         <dd @html="audience"></dd>
       </template>
       <template webc:nokeep webc:if="tldr">
-        <dt>
-          <a id="tldr" webc:if="watch || isProductionBuild" href="https://brid.gy/publish/mastodon"></a>
-          🙈 tl;dr:
-        </dt>
+        <dt>🙈 tl;dr:</dt>
         <dd>
           <template webc:nokeep @raw="linkifyHashtags(tldr)"></template>
           <span @html="tldr" class="p-bridgy-mastodon-content" style="display:none;"></span>
