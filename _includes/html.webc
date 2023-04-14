@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" dir="ltr">
+<html :lang="lang ?? 'en'" :dir="dir ?? lang === 'he' ? 'rtl' : 'ltr'">
   <head>
     <meta charset="utf-8">
     <title @text="title || 'Benny Powers, Web Developer'"></title>
