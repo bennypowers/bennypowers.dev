@@ -19,20 +19,6 @@ body.sidebar {
   }
 }
 
-#side-menu {
-  grid-area: menu;
-  position: relative;
-
-  & > div {
-    position: sticky;
-    top: 50px;
-  }
-
-  & h2 {
-    font-size: 100%;
-  }
-}
-
 main { grid-area: main; }
 
 #main-header { grid-area: head; }

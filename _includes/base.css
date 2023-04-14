@@ -124,6 +124,20 @@ img {
   -webkit-text-fill-color: transparent;
   background-clip: text;
 
+  &:is(a) {
+    --magic-hue: var(--hue-start);
+    --magic: linear-gradient(72deg, var(--magic-start), var(--magic-start));
+    &:is(:hover, :focus, :focus-within, :active) {
+      --magic-hue: calc(var(--primary-hue) + var(--hue-offset));
+      --magic: linear-gradient(72deg, var(--magic-start), var(--magic-end));
+    }
+  }
+
+  & a {
+    --magic-hue: calc(var(--primary-hue) + var(--hue-offset));
+    --magic: linear-gradient(72deg, var(--magic-start), var(--magic-end));
+  }
+
   & .emoji {
     background: initial;
     background-clip: initial;

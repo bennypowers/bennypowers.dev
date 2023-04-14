@@ -1,12 +1,7 @@
-<style>
-.p-summary dd {
-  margin-inline-start: 1em;
-}
-</style>
+<link rel="stylesheet" href="post-sidebar.css">
+
 <aside id="side-menu" webc:root="override">
-
   <div>
-
     <dl id="post-stats" webc:if="watch || published">
       <dt>⏲️ Time to read</dt>
       <dd>~ <template webc:nokeep @html="timeToRead(content)"></template></dd>
@@ -57,5 +52,4 @@
 
     <a webc:for="service of autoPublish ?? []" :href="`https://brid.gy/publish/${service}`"></a>
   </div>
-
 </aside>
