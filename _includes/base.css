@@ -96,7 +96,10 @@ body {
 
 img {
   max-width: 100%;
-  height: auto;
+
+  &:not([height]) {
+    height: auto;
+  }
 }
 
 #main-header {

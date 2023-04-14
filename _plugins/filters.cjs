@@ -72,12 +72,19 @@ function formatDate(d, opts) {
   }
 }
 
+function linkifyHashtags(content) {
+  return content.replace(/(\s*)#(\w+)(\s*)/g, function(_,pre, tag,post) {
+    return /*html*/`${pre}<a href="https://social.bennypowers.dev/tags/${tag.toLowerCase()}">#${tag}</a>${post}`;
+  })
+}
+
 /** @param{import('@11ty/eleventy/src/UserConfig.js')} eleventyConfig */
 module.exports = function(eleventyConfig) {
   eleventyConfig.addFilter('abbrs', abbrs);
   eleventyConfig.addFilter('omit', omit);
   eleventyConfig.addFilter('isSameDay', isSameDay);
   eleventyConfig.addFilter('formatDate', formatDate);
+  eleventyConfig.addFilter('linkifyHashtags', linkifyHashtags);
   eleventyConfig.addJavaScriptFunction('groupby', groupby);
   eleventyConfig.addFilter('include', async function includeFilter(path) {
     const resolved = join(__dirname, '..', '_includes', path)

@@ -1,4 +1,9 @@
-<aside id="side-menu">
+<style>
+.p-summary dd {
+  margin-inline-start: 1em;
+}
+</style>
+<aside id="side-menu" webc:root="override">
 
   <div>
 
@@ -21,6 +26,7 @@
         </dd>
       </template>
     </dl>
+
     <dl id="post-summaries"
         class="p-summary"
         webc:if="(watch || published) && (audience || tldr)">
@@ -29,24 +35,20 @@
         <dd @html="audience"></dd>
       </template>
       <template webc:nokeep webc:if="tldr">
-        <dt>🙈 tl;dr:</dt>
-        <dd @html="tldr" class="p-bridgy-mastodon-content"></dd>
+        <dt>
+          <a id="tldr" webc:if="watch || isProductionBuild" href="https://brid.gy/publish/mastodon"></a>
+          🙈 tl;dr:
+        </dt>
+        <dd>
+          <template webc:nokeep @raw="linkifyHashtags(tldr)"></template>
+          <span @html="tldr" class="p-bridgy-mastodon-content" style="display:none;"></span>
+        </dd>
       </template>
     </dl>
 
     <table-of-contents :@content="content"></table-of-contents>
 
-    <h2>Tags</h2>
-    <ul id="tags-list" class="p-category">
-      <li webc:if="tag !== 'posts'"
-          webc:for="tag of tags ?? []">
-        <a :href="url(`/tags/${slug(tag)}`)" @text="tag"></a>
-        (<template webc:nokeep @text="collections[tag]?.length"></template>)
-      </li>
-      <li id="all-tags">
-        <a :href="url('/tags/')">All Tags</a>
-      </li>
-    </ul>
+    <tag-cloud :@tags="tags"></tag-cloud>
 
     <web-mentions :@webmentions="webmentions"></web-mentions>
 

@@ -40,6 +40,7 @@ module.exports = function(eleventyConfig) {
                                          'reveal', 'current', /^data-.*$/ ] }));
   eleventyConfig.addDataExtension('yaml', x => YAML.parse(x));
   eleventyConfig.addPassthroughCopy('assets/**/*.{svg,png,jpeg,jpg,gif,webp,webm,js,d.ts,ico,webmanifest,json}');
+  eleventyConfig.addGlobalData('isProductionBuild', process.env.NETLIFY && process.env.CONTEXT === 'production');
   eleventyConfig.addPlugin(PostsPlugin);
   eleventyConfig.addPlugin(PostCSSPlugin);
   eleventyConfig.addPlugin(IconsPlugin);
