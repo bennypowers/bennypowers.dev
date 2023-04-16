@@ -14,7 +14,7 @@ tag-cloud {
     <li webc:if="tag !== 'posts'"
         webc:for="tag of tags ?? []">
       <a :href="url(`/tags/${slug(tag)}`)" @text="tag"></a>
-      (<template webc:nokeep @text="collections[tag]?.length"></template>)
+      (<template webc:nokeep @text="$data.collections[tag]?.length"></template>)
     </li>
     <li id="all-tags">
       <a :href="url('/tags/')">All Tags</a>

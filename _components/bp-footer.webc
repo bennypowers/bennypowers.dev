@@ -1,6 +1,6 @@
 <footer id="footer" class="screen-only">
   <small id="legal">
-    © <template webc:nokeep @text="formatDate(datePublished || page.date, { year: 'numeric' })"></template> Benny Powers.
+    © <template webc:nokeep @text="formatDate(datePublished || $data.page.date, { year: 'numeric' })"></template> Benny Powers.
   </small>
 </footer>
 

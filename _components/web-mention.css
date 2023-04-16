@@ -1,36 +1,44 @@
 web-mention {
   display: flex;
   flex-flow: column;
+  position: relative;
 
   &.many { --avatar-size: 40px; }
 
   & .h-entry {
-    display: grid;
     column-gap: calc(var(--avatar-size, 60px) / 4);
     row-gap: calc(var(--avatar-size, 60px) / 8);
-    grid-template-rows: minmax(calc(var(--avatar-size, 60px) / 2), min-content) auto;
-    grid-template-columns: var(--avatar-size, 60px) auto;
-    grid-template-areas:
-      "avatar byline"
-      "avatar comment";
+    margin-block-end: 1em;
+    margin-inline-start: var(--avatar-size, 60px);
+    border-radius: 16px;
+    background: hsl(0deg 100% var(--webmention-reply-lightness, 0%) / 0.1);
 
-    & .h-card { display: contents; }
+    @media (prefers-color-scheme: dark) { --webmention-reply-lightness: 100%; }
 
-    & web-mention-avatar { grid-area: avatar; display: block; }
+    & .h-card {
+      display: contents;
+    }
+
+    & web-mention-avatar {
+      display: block;
+      position: absolute;
+      inset-inline-start: -14px;
+    }
 
     & .byline {
-      grid-area: byline;
       font-style: italic;
-      align-self: end;
+      padding-block-start: .16em;
+      display: block;
       & h3 { display: inline; }
     }
 
     & .comment {
-      grid-area: comment;
       margin: 0;
-
-      /* align-self: start; */
       & p:first-child { margin-block-start: 0; }
+    }
+
+    & .byline, & .comment {
+      padding-inline: .6em;
     }
   }
 }

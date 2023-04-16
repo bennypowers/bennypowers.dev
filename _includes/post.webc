@@ -9,8 +9,14 @@ bodyClasses: h-entry post sidebar
 
 <post-sidebar
     :@page="page"
-    :@next="getNextCollectionItem.call(this, collections.posts)"
-    :@previous="getPreviousCollectionItem.call(this, collections.posts)"
+    :@next="getNextCollectionItem.call(this, $data.collections.posts)"
+    :@previous="getPreviousCollectionItem.call(this, $data.collections.posts)"
+    :@date-published="datePublished"
+    :@watch="watch"
+    :@audience="audience"
+    :@tags="tags"
+    :@tldr="tldr"
+    :@published="published"
     :@content="content">
 </post-sidebar>
 

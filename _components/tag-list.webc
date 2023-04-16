@@ -7,11 +7,11 @@
 }
 </style>
 <ul id="tags-list">
-  <li webc:for="tag of Object.keys(collections)
+  <li webc:for="tag of Object.keys($data.collections)
                         .filter(tag => !tag.match(/^(all$|icon$|posts$|slides$|resume-)/))
-                        .sort((a, b) => collections[b].length - collections[a].length)">
+                        .sort((a, b) => $data.collections[b].length - $data.collections[a].length)">
     <a :href="url(`/tags/${slug(tag)}`)"
        @text="tag"></a>
-    (<template webc:nokeep @raw="collections[tag].length"></template> posts)
+    (<template webc:nokeep @raw="$data.collections[tag].length"></template> posts)
   </li>
 </ul>

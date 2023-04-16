@@ -54,7 +54,7 @@ body.tags {
       :@watch="watch">
   </paginated-list>
   <!---
-  <paginator-nav :@pages="collections[tag]"></paginator-nav>
+  <paginator-nav :@pages="collections[tag]" :@pagination="pagination"></paginator-nav>
   --->
 </main>
 

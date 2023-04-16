@@ -20,7 +20,7 @@ pagination:
       :@pagination="pagination"
       :@watch="watch">
   </paginated-list>
-  <paginator-nav :@pages="pagination.pages"></paginator-nav>
+  <paginator-nav :@pages="pagination.pages" :@pagination="pagination"></paginator-nav>
 </main>
 
 <aside id="side-menu">
