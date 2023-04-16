@@ -9,7 +9,7 @@ tag-cloud {
 }
 </style>
 <details open>
-  <summary class="magic-color">Tags</summary>
+  <summary class="magic-color"><i18n-text>Tags</i18n-text></summary>
   <ul id="tags-list" class="p-category">
     <li webc:if="tag !== 'posts'"
         webc:for="tag of tags ?? []">
@@ -17,7 +17,7 @@ tag-cloud {
       (<template webc:nokeep @text="$data.collections[tag]?.length"></template>)
     </li>
     <li id="all-tags">
-      <a :href="url('/tags/')">All Tags</a>
+      <a :href="url('/tags/')"><i18n-text>All Tags</i18n-text></a>
     </li>
   </ul>
 </details>

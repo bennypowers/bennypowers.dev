@@ -1,0 +1,3 @@
+<script webc:type="js">
+this.translate(this.slots?.text?.default, lang)
+</script>

@@ -13,6 +13,8 @@ bodyClasses: h-entry post sidebar
     :@previous="getPreviousCollectionItem.call(this, $data.collections.posts)"
     :@date-published="datePublished"
     :@watch="watch"
+    :@date="page.date"
+    :@lang="lang ?? 'en'"
     :@audience="audience"
     :@tags="tags"
     :@tldr="tldr"

@@ -7,7 +7,6 @@ const { join } = require('node:path');
  */
 function abbrs(content) {
   let replaced = content;
-  // console.log(this)
   for (const { name, title } of this.ctx?.abbrs ?? []) {
     if (name && title)
       replaced = replaced.replaceAll(name, `<abbr title="${title}">${name}</abbr>`)
@@ -56,16 +55,17 @@ const omit = (obj, props) =>
 
 /**
  * @param {string|Date} d
- * @param {Intl.DateTimeFormatOptions} opts
+ * @param {Intl.DateTimeFormatOptions & { lang: string }} opts
  * @return { string }
  */
 function formatDate(d, opts) {
+  const { lang = 'en-US', ...init } = opts;
   if (d instanceof Date) {
-    return new Intl.DateTimeFormat('en-US', opts).format(d);
+    return new Intl.DateTimeFormat(lang, init).format(d);
   } else {
     try {
       const date = new Date(d);
-      return new Intl.DateTimeFormat('en-US', opts).format(date);
+      return new Intl.DateTimeFormat(lang, init).format(date);
     } catch (e) {
       return d
     }
@@ -78,10 +78,16 @@ function linkifyHashtags(content) {
   })
 }
 
+function translate(str, lang = this?.lang ?? this.$data?.lang ?? 'en') {
+  const i18n = this.i18n ?? this.$data?.i18n;
+  return i18n?.[lang]?.[str] ?? str;
+}
+
 /** @param{import('@11ty/eleventy/src/UserConfig.js')} eleventyConfig */
 module.exports = function(eleventyConfig) {
   eleventyConfig.addFilter('abbrs', abbrs);
   eleventyConfig.addFilter('omit', omit);
+  eleventyConfig.addFilter('translate', translate);
   eleventyConfig.addFilter('isSameDay', isSameDay);
   eleventyConfig.addFilter('formatDate', formatDate);
   eleventyConfig.addFilter('linkifyHashtags', linkifyHashtags);

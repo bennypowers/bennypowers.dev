@@ -1,5 +1,5 @@
 <time :datetime="datetime"
-      @text="formatDate(datetime, { dateStyle, dayPeriod,
+      @text="formatDate(datetime, { lang, dateStyle, dayPeriod,
                                     hour, hourCycle,
                                     timeStyle, timeZoneName,
                                     day, month, year })"></time>

@@ -12,16 +12,16 @@
         :srcset="`${url('/assets/images/logo/bp-logo-transparent@2x.png' )} 2x,
                   ${url('/assets/images/logo/bp-logo-transparent.png')} 1x`"></a>
 
-  <nav title="Site nav">
-    <a :href="url('/posts/')">Posts</a>
-    <a :href="url('/tags/')">Tags</a>
-    <a :href="url('/resume/')">C.V.</a>
+  <nav aria-label="translate('main site nav', $data.lang)">
+    <a :href="url('/posts/')"><i18n-text>Posts</i18n-text></a>
+    <a :href="url('/tags/')"><i18n-text>Tags</i18n-text></a>
+    <a :href="url('/resume/')"><i18n-text>C.V.</i18n-text></a>
   </nav>
 
   <social-links></social-links>
 
   <details id="mobile-nav">
-    <summary><sprite-icon name="hamburger" title="Menu"></sprite-icon></summary>
+    <summary><sprite-icon name="hamburger" :title="translate('Menu', $data.lang)"></sprite-icon></summary>
 
     <div id="mobile-nav-content">
       <social-links></social-links>

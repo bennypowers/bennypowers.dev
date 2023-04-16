@@ -3,21 +3,23 @@
 <aside id="side-menu" webc:root="override">
   <div>
     <dl id="post-stats" webc:if="watch || published">
-      <dt>⏲️ Time to read</dt>
-      <dd>~ <template webc:nokeep @html="timeToRead(content)"></template></dd>
-      <dt>🌅 Published</dt>
+      <dt>⏲️ <i18n-text>Time to read</i18n-text>:</dt>
+      <dd>~ <template webc:nokeep @html="timeToRead(content, lang)"></template></dd>
+      <dt>🌅 <i18n-text>Published</i18n-text>:</dt>
       <dd><date-time class="dt-published"
                      month="short"
                      day="numeric"
                      year="numeric"
+                     :lang="lang"
                      :datetime="datePublished"></date-time></dd>
-      <template webc:nokeep webc:if="!isSameDay(datePublished, $data.page.date)">
-        <dt>✏️ Last Touched</dt>
+      <template webc:nokeep webc:if="!isSameDay(datePublished, date)">
+        <dt>✏️ <i18n-text>Last Touched</i18n-text>:</dt>
         <dd><date-time class="dt-updated"
                      month="short"
                      day="numeric"
                      year="numeric"
-                     :datetime="$data.page.date"></date-time>
+                     :lang="lang"
+                     :datetime="date"></date-time>
         </dd>
       </template>
     </dl>
@@ -26,11 +28,11 @@
         class="p-summary"
         webc:if="(watch || published) && (audience || tldr)">
       <template webc:nokeep webc:if="audience">
-        <dt>👯 Audience</dt>
+        <dt>👯 <i18n-text>Audience</i18n-text>:</dt>
         <dd @html="audience"></dd>
       </template>
       <template webc:nokeep webc:if="tldr">
-        <dt>🙈 tl;dr:</dt>
+        <dt>🙈 <abbr :title="translate(`Too long; didn't read`, lang)"><i18n-text>tl;dr</i18n-text></abbr>:</dt>
         <dd>
           <template webc:nokeep @raw="linkifyHashtags(tldr)"></template>
           <span @html="tldr" class="p-bridgy-mastodon-content" style="display:none;"></span>
@@ -44,12 +46,13 @@
 
     <web-mentions :@webmentions="$data.webmentions"></web-mentions>
 
-    <h2 webc:if="next">Next</h2>
+    <h2 webc:if="next"><i18n-text>Next</i18n-text></h2>
     <post-thumbnail id="next-post" :@post="next" webc:if="next"></post-thumbnail>
 
-    <h2 webc:if="previous">Previous</h2>
+    <h2 webc:if="previous"><i18n-text>Previous</i18n-text></h2>
     <post-thumbnail id="prev-post" webc:if="previous" :@post="previous"></post-thumbnail>
 
-    <a webc:for="service of $data.autoPublish ?? []" :href="`https://brid.gy/publish/${service}`"></a>
+    <a webc:for="service of $data.autoPublish ?? []"
+       :href="`https://brid.gy/publish/${service}`"></a>
   </div>
 </aside>
