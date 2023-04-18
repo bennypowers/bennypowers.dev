@@ -31,7 +31,8 @@ post-thumbnail {
       z-index: 1;
       padding-block: 0.6em;
       transition: background 0.2s ease;
-      background: rgba(0 0 0 / .5);
+      background: hsla(0 100% 100% / .5);
+      @media (prefers-color-scheme: dark) { background: hsla(0 100% 0% / .5); }
       width: 100%;
     }
 
@@ -43,7 +44,10 @@ post-thumbnail {
 
     &:is(:hover, :focus-within) {
       & img { filter: blur(0); }
-      & div { background: black; }
+      & div {
+        background: white;
+        @media (prefers-color-scheme: dark) { background: black; };
+      }
     }
   }
 
