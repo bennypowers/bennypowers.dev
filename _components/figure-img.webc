@@ -6,7 +6,10 @@ figure.figure-img {
 }
 </style>
 <figure class="figure-img" webc:root="override">
-  <img :src="src" :alt="alt ?? ''" :width="width ?? false" height="height ?? false">
+  <img :src="src"
+       :alt="alt ?? ''"
+       :width="width ?? false"
+       :height="height ?? false">
   <figcaption :style="width ? `max-width: ${width}px;` : false">
     <slot></slot>
   </figcaption>
