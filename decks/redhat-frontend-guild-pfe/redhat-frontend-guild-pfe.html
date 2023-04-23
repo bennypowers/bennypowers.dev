@@ -19,10 +19,10 @@ preconnect:
   - https://static.redhat.com
 ---
 
+<script webc:keep type="module" src="{{ '/assets/redhat-deck/redhat-theme.js' | url }}"></script>
 <template webc:type="11ty" 11ty:type="njk">
 <script type="importmap">{{ importMap | dump | safe }}</script>
 
-<script type="module" src="{{ '/assets/redhat-deck/redhat-theme.js' | url }}"></script>
 <script type="module">import '@rhds/elements';</script>
 <script>
     function supportsDeclarativeShadowDOM() {
