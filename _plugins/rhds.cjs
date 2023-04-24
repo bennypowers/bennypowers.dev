@@ -132,7 +132,7 @@ module.exports = function(eleventyConfig) {
     state = 'info',
     title = 'Note:',
   } = {}) {
-    return `
+    return /*html*/`
 
 <rh-alert state="${state}">
   <h3 slot="header">${title}</h3>
@@ -155,7 +155,7 @@ ${content}
       globalLinks = [],
       globalLinksSecondary = []
     } = this.ctx.footer;
-    return `
+    return /*html*/`
 <rh-footer>
   <a slot="logo" href="/en">
     <img src="${eleventyConfig.javascriptFunctions.url(LOGO_URL)}" alt="Red Hat Israel logo" loading="lazy">
