@@ -18,7 +18,8 @@ Large Organizations and small Projects
 - SAP
 - Reddit
 - Salesforce
-- SpaceX Dragon Capsule
+- Scania
+- Went to space on the SpaceX Dragon Capsule
 - Wordle
 {.logo-grid}
 
