@@ -24,6 +24,8 @@ tags:
 "hebrew dvorak keyboard layout" או משהו כזה, וווו-הופ! יצא תוצאה למקלדת שעיצב 
 אהרון שלמה עדעלמן.
 
+![adelman layout][layout]
+
 המקלדת מבוססת על דבוראק, כך שהאותיות הכי נפוצות נמצאות בשורת הבית. וגם הניקוד קל 
 לגשת עליו כי הם פשות בשכבת ה-shift. הולך להקליד תיקון קוראים שלם? יש לך בשכבת 
 ה-alt. 
@@ -97,3 +99,4 @@ for these.
 תהנו ועצמאות שמח
 
 [github]: https://github.com/bennypowers/adelman-keyboard
+[layout]: /assets/images/adelman-layout.png
