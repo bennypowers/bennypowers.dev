@@ -10,7 +10,7 @@ figure.figure-img {
        :alt="alt ?? ''"
        :width="width ?? false"
        :height="height ?? false">
-  <figcaption :style="width ? `max-width: ${width}px;` : false">
+  <figcaption :style="!!width && `max-width: ${width}px;`">
     <slot></slot>
   </figcaption>
 </figure>
