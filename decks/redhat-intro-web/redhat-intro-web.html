@@ -25,7 +25,6 @@ preconnect:
   - https://upload.wikimedia.org
 ---
 
-<template webc:type="11ty" 11ty:type="njk">
 <script type="importmap">{{ importMap | dump | safe }}</script>
 
 <script type="module" src="{{ '/assets/redhat-deck/redhat-theme.js' | url }}"></script>
@@ -56,4 +55,3 @@ preconnect:
     <g id="{{ icon.fileSlug }}-icon">{{ icon.content | safe }}</g>{% endif %}{% endfor %}
   </defs>
 </svg>
-</template>
