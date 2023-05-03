@@ -6,4 +6,3 @@ is: redhat-slide-title
 A Performant Design System {.subheading}
 
 <span>Benny Powers</span> <span>Principal UX Engineer</span> {slot=presenter}
-
