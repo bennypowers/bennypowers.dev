@@ -2,6 +2,7 @@
 layout: deck.html
 deck: redhat-intro-web
 title: Introduction to Web Technologies
+templateEngineOverride: webc
 date: 2022-12-11
 description: >-
   A comprehensive introduction to the technologies which power the web: HTML, 
@@ -10,12 +11,10 @@ icons:
   - rel: shortcut icon
     href: redhat.svg
 scripts:
-  - src: https://ga.jspm.io/npm:es-module-shims@1.6.2/dist/es-module-shims.js
+  - src: https://ga.jspm.io/npm:es-module-shims@1.7.1/dist/es-module-shims.js
     async: true
 stylesheets:
-  - href: https://static.redhat.com/libs/redhat/redhat-font/2/webfonts/red-hat-font.css
   - href: /assets/redhat-deck/redhat-theme.css
-  - href: redhat-intro-web.css
   - href: /assets/@rhds/global.css
 preconnect:
   - https://redhat.com
@@ -25,33 +24,11 @@ preconnect:
   - https://upload.wikimedia.org
 ---
 
-<script type="importmap">{{ importMap | dump | safe }}</script>
 
-<script type="module" src="{{ '/assets/redhat-deck/redhat-theme.js' | url }}"></script>
-<script type="module">import '@rhds/elements';</script>
-<script>
-    function supportsDeclarativeShadowDOM() {
-        return HTMLTemplateElement.prototype.hasOwnProperty("shadowRoot");
-    }
-
-    function polyfillDeclarativeShadowDom(docOrShadowRoot) {
-        docOrShadowRoot.querySelectorAll('template[shadowroot]').forEach((template) => {
-            const mode = template.getAttribute('shadowroot');
-            const shadowRoot = template.parentNode.attachShadow({ mode });
-            shadowRoot.appendChild(template.content);
-            template.remove();
-
-            polyfillDeclarativeShadowDom(shadowRoot);
-        });
-    }
-
-    if (!supportsDeclarativeShadowDOM()) {
-        polyfillDeclarativeShadowDom(document);
-    }
-</script>
-
-<svg id="icon-sprite-sheet">
-  <defs>{% for icon in collections.icon %}{% if page.icons and page.icons.has(icon.fileSlug) %}
-    <g id="{{ icon.fileSlug }}-icon">{{ icon.content | safe }}</g>{% endif %}{% endfor %}
-  </defs>
-</svg>
+<script webc:keep type="module" :src="url('/assets/redhat-deck/redhat-theme.js')"></script>
+<script webc:keep type="module">import '@rhds/elements';</script>
+<link rel="stylesheet" href="redhat-intro-web.css">
+<link webc:keep rel="stylesheet" href="https://static.redhat.com/libs/redhat/redhat-font/2/webfonts/red-hat-font.css">
+<script src="../../scripts/polyfill-dsd.js"></script>
+<style webc:keep @text="getBundle('css')"></style>
+<script webc:keep @text="getBundle('js')"></script>

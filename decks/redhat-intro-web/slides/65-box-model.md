@@ -5,10 +5,10 @@ reveal: img
 
 ### Box Model
 
-CSS' box model defines elements' dimensions and positions. Each elements is 
-surrounded by a box. Boxes have a **margin** separating it from other boxes, a 
-**border** surrounding itself, **padding** separating content from the border, and the 
-**content** itself.
+CSS' box model defines elements' dimensions and positions in terms of 
+surrounding boxes. Boxes' dimensions are composed of **margin** separating it 
+from other boxes, a **border** surrounding itself, **padding** separating 
+content from the border, and the **content** itself.
 
 Boxes can have one of two "outer display types", which determine how the browser 
 lays them out on the page. **Block** elements break onto a new line and have 
