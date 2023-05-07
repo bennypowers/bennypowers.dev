@@ -15,10 +15,14 @@ label {
   padding: 0.05em 0.1em;
 }
 
-[name^="www-"] img {
-  float: right;
-  height: 260px;
-  margin-inline: var(--rh-space-md);
+img {
+  width: auto;
+
+  @nest [name^="www-"] & {
+    float: right;
+    height: 260px;
+    margin-inline: var(--rh-space-md);
+  }
 }
 
 .revealer {
@@ -33,12 +37,12 @@ label {
   inset-block-start: 0;
 }
 
-.revealer pre[reveal] {
-  inset-block-start: calc(-1 * var(--rh-space-lg));
-}
-
 .revealer pre {
   font-size: 80%;
+
+  &[reveal] {
+    inset-block-start: calc(-1 * var(--rh-space-lg));
+  }
 }
 
 [reveal]:not([current]) {
@@ -185,22 +189,22 @@ label {
   }
 }
 
-[src="coffee-notebook.jpg"] {
+[src^="coffee-notebook"] {
   translate: 40px -50px;
 }
 
-[src="var-venn.svg"] {
+[src^="var-venn"] {
   position: relative;
   z-index: 2;
   float: right;
   width: 580px;
 }
 
-[src="dom.png"] {
+[src^="dom"] {
   translate: 90px;
 }
 
-[src="gears.jpg"] {
+[src^="gears"] {
   translate: -20px -190px;
 }
 

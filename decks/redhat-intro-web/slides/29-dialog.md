@@ -11,7 +11,8 @@ reveal: pre
 The `<dialog>` element is a web-native way to  present information to the user 
 in a popup window or modal dialog.
 
-<button id="showModal" onclick="dialog.showModal()">Show Modal</button>
+<rh-button size="large" id="showModal" onclick="dialog.showModal()">Show 
+Modal</rh-button>
 
 <dialog id="dialog" onclose="output.value=`${dialog.returnValue} selected`;">
   <form method="dialog">

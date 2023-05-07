@@ -22,7 +22,7 @@ they send their contents.
       onsubmit="return !!deck.forward();">
   <label>Username <input name="username" type="text"></label>
   <label>Password <input name="password" type="password"></label>
-  <button>Register</button>
+  <rh-button>Register</rh-button>
 </form>
 
 ```http
