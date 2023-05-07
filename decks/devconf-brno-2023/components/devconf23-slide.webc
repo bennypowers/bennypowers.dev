@@ -1,0 +1,56 @@
+<script type="module">
+  import { Base } from '/decks/devconf-brno-2023/slides.js';
+  class Devconf23Slide extends Base {
+    static is = 'devconf23-slide';
+    static template = document.createElement('template');
+    static {
+      this.template.innerHTML = `
+        <style>
+          #wrapper {
+            height: 100vh;
+            display: grid;
+            grid-template-rows: min-content auto min-content;
+          }
+          footer {
+            display: flex;
+            align-items: center;
+            justify-content: end;
+            background: var(--deck-primary-color);
+            width: 100vw;
+            bottom: 0;
+            position: sticky;
+          }
+          img {
+            height: 100px;
+            margin: 40px 100px;
+            display: block;
+          }
+          #contents {
+            display: grid;
+            gap: 1em;
+            grid-template-columns: repeat(var(--columns, 1), 1fr);
+          }
+          #title, #footer {
+            grid-column: 1/-1;
+          }
+          #title {
+            padding-top: 20px;
+            display: block;
+          }
+          #title, #contents {
+            padding-inline: 20px;
+          }
+        </style>
+
+        <div id="wrapper">
+          <slot id="title" name="title"></slot>
+          <slot id="contents"></slot>
+          <footer id="footer">
+            <img alt="devconf.cz" src="/decks/devconf-brno-2023/devconf-logo.png">
+          </footer>
+        </div>
+      `;
+    }
+  }
+  customElements.define(Devconf23Slide.is, Devconf23Slide);
+</script>

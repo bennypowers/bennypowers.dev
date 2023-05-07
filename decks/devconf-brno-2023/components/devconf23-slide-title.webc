@@ -1,0 +1,65 @@
+<script type="module">
+  class Devconf23SlideTitle extends Devconf23Slide {
+    static is = 'devconf23-slide-title';
+    static template = document.createElement('template');
+    static {
+      this.template.innerHTML = `
+        <style>
+          :host {
+            --background: url("/decks/devconf-brno-2023/title.png");
+            color: white !important;
+            display: grid !important;
+            max-width: 100vw;
+            max-height: 100vh;
+            padding-block: 10vh;
+            padding-inline: 5vw;
+            grid-template-rows: 1fr 1fr ;
+            grid-template-columns: repeat(6, 1fr);
+            grid-template-areas:
+              'L L L b c d'
+              'e f T T T T';
+          }
+
+          #logo {
+            grid-area: L;
+            width: 100%;
+          }
+
+          #titles {
+            text-align: right;
+            grid-area: T;
+          }
+
+          ::slotted(:is(p, h1, h2, h3, h4, h5)) {
+            margin: 0 !important;
+          }
+
+          #subheading {
+            font-family: "Montserrat", sans-serif;
+            font-size: calc(17.2pt * var(--font-scale));
+          }
+
+          #presenter {
+            display: grid;
+            font-size: calc(12pt * var(--font-scale)) !important;
+            margin-block-start: 1em;
+          }
+        </style>
+
+        <img id="logo" alt="DEVCONF 2023" src="/decks/devconf-brno-2023/devconf-textmark.png">
+
+        <section id="titles">
+          <slot id="title" name="title"></slot>
+          <slot id="subheading" name="subheading"></slot>
+          <div id="presenter">
+            <slot name="speaker-name"></slot>
+            <slot name="speaker-title"></slot>
+          </div>
+        </section>
+
+      `;
+    }
+  }
+
+  customElements.define(Devconf23SlideTitle.is, Devconf23SlideTitle);
+</script>

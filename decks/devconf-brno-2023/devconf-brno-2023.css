@@ -1,3 +1,73 @@
-redhat-slide {
-  color: hotpink;
+:root {
+  --deck-primary-background: white;
+  --deck-secondary-background: var(--rh-color-surface--light);
+  --deck-primary-color: #8e83e4;
+  --deck-secondary-color: #00addc;
+  --deck-tertiary-color: #ff0099;
+  --fixed-font: var(--rh-font-family-code);
+  --markdown-syntax-color: var(--rh-color-text-primary-on-light);
+  --markdown-syntax-comment-color: var(--surface2);
+  --markdown-code-background-color: var(--base);
+  --markdown-syntax-keyword-color: var(--mauve);
+  --markdown-syntax-background-color: var(--base);
+  --markdown-syntax-function-color: var(--blue);
+  --markdown-syntax-regex-color: var(--peach);
+  --markdown-syntax-punctuation-color: var(--subtext1);
+  --markdown-syntax-operator-color: var(--sky);
+  --markdown-syntax-class-name-color: var(--maroon);
+  --markdown-syntax-number-color: var(--yellow);
+  --font-scale: 1.5;
+
+  font-family: Montserrat, sans-serif;
+}
+
+:not(:defined) { display: none !important; }
+
+slidem-deck {
+  line-height: inherit;
+}
+
+#slides-progress {
+  --indicator-color: var(--deck-secondary-color);
+}
+
+:is(h1, h2, h3, h4, h5, h6) {
+  font-family: "Montserrat SemiBold", sans-serif;
+  line-height: 1;
+  margin: 0;
+}
+
+h1 {
+  font-size: calc(38pt * var(--font-scale));
+}
+
+h2 {
+  font-family: "Montserrat Medium", sans-serif;
+  font-size: calc(27pt * var(--font-scale));
+  color: var(--deck-primary-color);
+}
+
+h3 {
+  font-size: calc(12pt * var(--font-scale));
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+
+  &[href^="#"] {
+    pointer-events: none;
+  }
+}
+
+ol {
+  margin-inline-start: 1em;
+}
+
+summary::marker {
+  color: var(--rh-color-brand-red-on-light);
+}
+
+figure blockquote + figcaption {
+  text-align: end;
 }

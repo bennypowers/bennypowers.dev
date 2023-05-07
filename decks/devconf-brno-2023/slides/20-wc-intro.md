@@ -1,3 +1,6 @@
+---
+is: devconf23-slide
+---
 ## What are Web Components
 (large scale - compare to native ui frameworks) {slot=notes}
 

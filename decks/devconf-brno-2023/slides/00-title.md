@@ -1,8 +1,11 @@
 ---
-is: redhat-slide-title
+is: devconf23-slide-title
 ---
 
-# PatternFly Elements
-A Performant Design System {.subheading}
+# PatternFly Elements {slot=title}
 
-<span>Benny Powers</span> <span>Principal UX Engineer</span> {slot=presenter}
+A Performant Design System {slot=subheading}
+
+Benny Powers {slot=speaker-name}
+
+Principal UX Engineer {slot=speaker-title}
