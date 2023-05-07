@@ -20,9 +20,9 @@ layout: html.webc
   <nav id="latest">
     <h2>Latest</h2>
     <ol>
-      <li webc:for="post of collections.posts.filter(x => watch || x.data.published).slice(-5).reverse() ?? []"
-              :class="watch && !post.data.published ? 'unpublished' : ''">
-        <post-thumbnail :@post="post"></post-thumbnail>
+      <li webc:for="post of collections.posts.filter(x => watch || x.data.published).slice(-6).reverse() ?? []">
+        <post-thumbnail :@post="post"
+                        :class="watch && !post.data.published ? 'unpublished' : ''"></post-thumbnail>
       </li>
     </ol>
   </nav>
