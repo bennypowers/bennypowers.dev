@@ -3,7 +3,6 @@ const path = require('node:path');
 const fs = require('node:fs');
 const EleventyNavigationPagination = require("@11ty/eleventy-navigation");
 const EleventySyntaxHighlightPlugin = require("@11ty/eleventy-plugin-syntaxhighlight");
-const { AssetCache } = require("@11ty/eleventy-fetch");
 const { EleventyRenderPlugin } = require('@11ty/eleventy')
 const { copyFile, lstat, mkdir, readdir } = fs.promises;
 
@@ -46,79 +45,6 @@ module.exports = function(eleventyConfig) {
       eleventyConfig.addPlugin(upstreamPlugin);
     }
   }
-
-  const importMapCache = new AssetCache('import_map_rhds');
-  eleventyConfig.addGlobalData('importMap', async function(configData) {
-    if (importMapCache.isCacheValid('1d')) {
-      return importMapCache.getCachedValue();
-    }
-
-    const PFE_DEPS = [
-      'tslib',
-      '@patternfly/pfe-core',
-      '@patternfly/pfe-core/decorators.js',
-      '@patternfly/pfe-core/controllers/cascade-controller.js',
-      '@patternfly/pfe-core/controllers/css-variable-controller.js',
-      '@patternfly/pfe-core/controllers/light-dom-controller.js',
-      '@patternfly/pfe-core/controllers/logger.js',
-      '@patternfly/pfe-core/controllers/perf-controller.js',
-      '@patternfly/pfe-core/controllers/property-observer-controller.js',
-      '@patternfly/pfe-core/controllers/slot-controller.js',
-      '@patternfly/pfe-core/controllers/style-controller.js',
-      '@patternfly/pfe-core/decorators/bound.js',
-      '@patternfly/pfe-core/decorators/cascades.js',
-      '@patternfly/pfe-core/decorators/deprecation.js',
-      '@patternfly/pfe-core/decorators/initializer.js',
-      '@patternfly/pfe-core/decorators/observed.js',
-      '@patternfly/pfe-core/decorators/time.js',
-      '@patternfly/pfe-core/decorators/trace.js',
-      '@patternfly/elements/pf-icon/pf-icon.js',
-      '@patternfly/elements/pf-modal/pf-modal.js',
-      '@patternfly/elements/pf-spinner/pf-spinner.js',
-      '@patternfly/elements/pf-spinner/BaseSpinner.js',
-      '@patternfly/elements/pf-accordion/pf-accordion.js',
-      '@patternfly/elements/pf-tooltip/pf-tooltip.js',
-      '@patternfly/elements/pf-tooltip/BaseTooltip.js',
-    ];
-
-    const LIT_DEPS = [
-      'lit',
-      'lit/async-directive.js',
-      'lit/decorators.js',
-      'lit/directive-helpers.js',
-      'lit/directive.js',
-      'lit/directives/class-map.js',
-      'lit/directives/if-defined.js',
-      'lit/experimental-hydrate-support.js',
-      'lit/experimental-hydrate.js',
-      'lit/static-html.js',
-    ];
-
-    const CDN_DEPS = [
-      ...LIT_DEPS,
-      ...PFE_DEPS,
-    ];
-
-    console.log('Generating import map...');
-    const { Generator } = await import('@jspm/generator');
-
-    const generator = new Generator({ env: ['production', 'browser', 'module'] });
-
-    await generator.install([
-      ...CDN_DEPS,
-    ]);
-
-    const map = generator.getMap();
-
-    const pathPrefix = configData?.pathPrefix ?? process.env.ELEVENTY_PATH_PREFIX ?? '';
-    map.imports['@rhds/elements'] = `/${pathPrefix}/assets/@rhds/elements/rhds.min.js`.replaceAll('//', '/');
-    map.imports['@rhds/elements/'] = `/${pathPrefix}/assets/@rhds/elements/elements/`.replaceAll('//', '/');
-
-    await importMapCache.save(map, 'json');
-
-    console.log('  ...Done!');
-    return map;
-  });
 
   eleventyConfig.addFilter('hasUrl', function(children, url) {
     function isActive(entry) {

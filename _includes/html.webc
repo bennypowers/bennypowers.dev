@@ -80,8 +80,7 @@
 
     <script type="importmap"
        webc:keep
-       webc:if="importMap"
-           @raw="JSON.stringify(importMap)"></script>
+       webc:if="importMap" @raw="JSON.stringify(importMap, null, 2)"></script>
     <!-- ES Module Shims: Import maps polyfill for modules browsers without import maps support (all except Chrome 89+) -->
     <script webc:if="importMap" async src="https://ga.jspm.io/npm:es-module-shims@1.5.1/dist/es-module-shims.js" crossorigin="anonymous" webc:keep></script>
 

@@ -29,6 +29,7 @@ const RedHatDeckPlugin = require('./_plugins/redhat-deck.cjs');
 const RHDSPlugin = require('./_plugins/rhds.cjs');
 const JamPackPlugin = require('./_plugins/jampack.cjs');
 const WebmentionsPlugin = require('./_plugins/webmentions.cjs');
+const ImportMapPlugin = require('./_plugins/importMap.cjs');
 
 /** @param{import('@11ty/eleventy/src/UserConfig.js')} eleventyConfig */
 module.exports = function(eleventyConfig) {
@@ -64,6 +65,10 @@ module.exports = function(eleventyConfig) {
   eleventyConfig.addPlugin(EleventyPluginRSS);
   eleventyConfig.addPlugin(EleventyPluginSyntaxhighlight, { init() { require('prismjs/components/index')(['regex']) } });
   eleventyConfig.addPlugin(EleventyPluginWebC, {
+    components: [
+      '_components/**/*.webc',
+      'decks/**/components/**/*.webc',
+    ],
     bundlePluginOptions: {
       transforms: [
         async function(content) {
@@ -80,6 +85,55 @@ module.exports = function(eleventyConfig) {
     domain: 'https://bennypowers.dev',
     webmentionIoToken: process.env.WEBMENTION_IO_TOKEN,
     devToToken: process.env.DEV_TO_TOKEN,
+  });
+  eleventyConfig.addPlugin(ImportMapPlugin, {
+    specs: [
+      'tslib',
+      '@patternfly/pfe-core',
+      '@patternfly/pfe-core/decorators.js',
+      '@patternfly/pfe-core/controllers/cascade-controller.js',
+      '@patternfly/pfe-core/controllers/css-variable-controller.js',
+      '@patternfly/pfe-core/controllers/light-dom-controller.js',
+      '@patternfly/pfe-core/controllers/logger.js',
+      '@patternfly/pfe-core/controllers/perf-controller.js',
+      '@patternfly/pfe-core/controllers/property-observer-controller.js',
+      '@patternfly/pfe-core/controllers/slot-controller.js',
+      '@patternfly/pfe-core/controllers/style-controller.js',
+      '@patternfly/pfe-core/decorators/bound.js',
+      '@patternfly/pfe-core/decorators/cascades.js',
+      '@patternfly/pfe-core/decorators/deprecation.js',
+      '@patternfly/pfe-core/decorators/initializer.js',
+      '@patternfly/pfe-core/decorators/observed.js',
+      '@patternfly/pfe-core/decorators/time.js',
+      '@patternfly/pfe-core/decorators/trace.js',
+      '@patternfly/elements/pf-icon/pf-icon.js',
+      '@patternfly/elements/pf-modal/pf-modal.js',
+      '@patternfly/elements/pf-spinner/pf-spinner.js',
+      '@patternfly/elements/pf-spinner/BaseSpinner.js',
+      '@patternfly/elements/pf-accordion/pf-accordion.js',
+      '@patternfly/elements/pf-tooltip/pf-tooltip.js',
+      '@patternfly/elements/pf-tooltip/BaseTooltip.js',
+      'lit',
+      'lit/async-directive.js',
+      'lit/decorators.js',
+      'lit/directive-helpers.js',
+      'lit/directive.js',
+      'lit/directives/class-map.js',
+      'lit/directives/if-defined.js',
+      'lit/experimental-hydrate-support.js',
+      'lit/experimental-hydrate.js',
+      'lit/static-html.js',
+    ],
+    additionalImports(configData) {
+      const pathPrefix = configData?.pathPrefix ?? process.env.ELEVENTY_PATH_PREFIX ?? '';
+      const rhdsPrefix = `/${pathPrefix}/assets/@rhds/elements`.replaceAll('//', '/');
+      return {
+        slidem: `/assets/decks.min.js`,
+        'slidem/slidem-slide.js': `/assets/decks.min.js`,
+        ['@rhds/elements']: `${rhdsPrefix}/rhds.min.js`,
+        ['@rhds/elements/']: `/${rhdsPrefix}/elements/`,
+      };
+    }
   });
 
   return {
