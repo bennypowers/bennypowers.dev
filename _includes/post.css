@@ -1,4 +1,4 @@
-@media (max-width: 999px) {
+@media (width <= 999px) {
   :not(:is(pre, th)) :is(code, output) {
     word-break: break-all;
   }
@@ -16,6 +16,28 @@
     height: 100px;
     max-width: 2em;
     translate: 0 20px;
+  }
+}
+
+main {
+  & table {
+    @media (width >=1000px) {
+      width: 100%;
+
+      & td {
+        padding: .6em 1em;
+      }
+
+      & th {
+        text-align: start;
+      }
+
+      & tbody {
+        & tr:nth-child(odd) {
+          background: #222222;
+        }
+      }
+    }
   }
 }
 

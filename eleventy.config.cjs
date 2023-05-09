@@ -4,6 +4,7 @@ const YAML = require('yaml');
 const attrs = require('markdown-it-attrs');
 const anchor = require('markdown-it-anchor');
 const deflist = require('markdown-it-deflist');
+const footnote = require('markdown-it-footnote');
 
 const { EleventyRenderPlugin } = require('@11ty/eleventy');
 
@@ -37,6 +38,7 @@ module.exports = function(eleventyConfig) {
     md.set({ breaks: false })
       .use(anchor, { permalink: anchor.permalink.headerLink(), })
       .use(deflist)
+      .use(footnote)
       .use(attrs, { allowedAttributes: [ 'id', 'slot', 'hidden', 'style',
                                          'reveal', 'current', /^data-.*$/ ] }));
   eleventyConfig.addDataExtension('yaml', x => YAML.parse(x));

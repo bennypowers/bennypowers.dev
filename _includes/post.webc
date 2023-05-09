@@ -29,6 +29,7 @@ bodyClasses: h-entry post sidebar
          height="400"
         :alt="coverImageAlt ?? ''"
         :src="coverImage"
+        :title="coverImageAlt ?? false"
          webc:if="coverImage">
   </header>
 

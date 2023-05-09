@@ -43,6 +43,7 @@
     "markdown-it-anchor": "^8.6.7",
     "markdown-it-attrs": "^4.1.6",
     "markdown-it-deflist": "^2.1.0",
+    "markdown-it-footnote": "^3.0.3",
     "netlify-plugin-cache": "^1.0.3",
     "patch-package": "^6.5.1",
     "postcss-html": "^1.5.0",
