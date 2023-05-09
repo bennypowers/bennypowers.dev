@@ -284,7 +284,7 @@ The workflow for creating a build of the CDN looks like this:
 3. For each package version from step 2:
     1. Install the package using `pnpm` (i.e. link it from the global store)
     2. Convert it's entrypoints map to a list of filepaths on disk
-    3p. Use `esbuild` to bundle up that list of entrypoints
+    3. Use `esbuild` to bundle up that list of entrypoints
         - Making sure to mark all the requested package names as `external`, so 
           that we don't end up bundling files from sibling CDN packages
 
