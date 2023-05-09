@@ -118,9 +118,9 @@ works for them.
 
 Entrypoints and transitive dependencies
 : No one cares about `tslib` 🎻. CDN users wouldn't need to extend `LitElement` 
-(at least, not from our files). We wanted to provide a limited set of 
-entrypoints per package, and hide the implementation details in a "vendor 
-bundle" or similar solution.
+(at least, not from our files). We wanted to provide a limited set of entry 
+points per package, and hide the implementation details in a "vendor bundle" or 
+similar solution.
 
 <abbr title="ecmascript modules">esm</abbr>-first
 : The advantages to javascript modules are many: they are automatically 
@@ -227,7 +227,7 @@ dx
 </figure>
 
 ### Package Entry Points
-A package's [entry points][entrypoints] don't have to line up with the files on 
+A package's [entry points][exports] don't have to line up with the files on 
 disk. This might pose problems for our static CDN, since it's all based on 
 directory structure. For example, our package `@rhds/elements` has an exports 
 block that looks like this:
