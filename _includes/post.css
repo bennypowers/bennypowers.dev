@@ -19,23 +19,23 @@
   }
 }
 
-@media (width >=1000px) {
-  main {
-    & table {
-      width: 100%;
+main {
+  & table {
+    width: 100%;
 
-      & td {
+    & td {
+      @media (width >= 1000px) {
         padding: .6em 1em;
       }
+    }
 
-      & th {
-        text-align: start;
-      }
+    & th {
+      text-align: start;
+    }
 
-      & tbody {
-        & tr:nth-child(odd) {
-          background: var(--zebra-row-bg, #EEEEEE);
-        }
+    & tbody {
+      & tr:nth-child(odd) {
+        background: var(--zebra-row-bg, #EEEEEE);
       }
     }
   }
@@ -43,7 +43,7 @@
 
 @media (prefers-color-scheme: dark) {
   table { --zebra-row-bg: #222222; }
-};
+}
 
 #post-stats {
   display: grid;
