@@ -20,6 +20,11 @@
 }
 
 main {
+  & pre {
+    max-width: 100%;
+    overflow-x: scroll;
+  }
+
   & table {
     width: 100%;
 
