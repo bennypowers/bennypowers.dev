@@ -388,6 +388,9 @@ available.
 
 ## Thanks
 
+We're looking to roll this work out to pages on redhat.com and various other 
+apps and services soon.
+
 **Michael Potter**, for doing most of the work. **Ivana Rodriguez** for her 
 interest and feedback. **Zack Hawkins**, for his careful review and pointed 
 constructive critique. **Kyle Buchanan** for his support, brainstorming, and 
