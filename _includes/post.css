@@ -19,9 +19,9 @@
   }
 }
 
-main {
-  & table {
-    @media (width >=1000px) {
+@media (width >=1000px) {
+  main {
+    & table {
       width: 100%;
 
       & td {
@@ -34,12 +34,16 @@ main {
 
       & tbody {
         & tr:nth-child(odd) {
-          background: #222222;
+          background: var(--zebra-row-bg, #EEEEEE);
         }
       }
     }
   }
 }
+
+@media (prefers-color-scheme: dark) {
+  table { --zebra-row-bg: #222222; }
+};
 
 #post-stats {
   display: grid;
