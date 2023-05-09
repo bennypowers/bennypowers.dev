@@ -396,6 +396,9 @@ interest and feedback. **Zack Hawkins**, for his careful review and pointed
 constructive critique. **Kyle Buchanan** for his support, brainstorming, and 
 interest, and **Rob Chappell** for the initiative and managerial support.
 
+Thanks also to **Steven Spriggs** and **Nikki Massaro Kauffman** for 
+proofreading this post.
+
 [^1]: at least as far as [package entry points][exports] are concerned.
 [^2]: UNPKG does not support package entry points (aka export maps) as of this 
 writing
