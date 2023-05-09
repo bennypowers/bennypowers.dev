@@ -290,7 +290,7 @@ The workflow for creating a build of the CDN looks like this:
 
 That last point about external packages is important, by marking sibling 
 packages as `external`, we ensure that if `@rhds/elements` depends on modules
-from `@patternfly/elements`, that that file won't get bundled into the dependent 
+from `@patternfly/elements`, then that file won't get bundled into the dependent 
 package. In the case of custom-element definitions, that could lead to 
 double-registration errors, so it's not just a performance issue.
 
