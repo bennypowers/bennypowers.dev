@@ -419,3 +419,4 @@ https://github.com/WICG/webcomponents/blob/gh-pages/proposals/Scoped-Custom-Elem
 [pnpm]: https://pnpm.io/
 [pure]: https://tylerayoung.com/2022/03/16/write-more-pure-functions/
 [manual-chunks]: https://github.com/evanw/esbuild/issues/207
+[semver]: https://semver.org/
