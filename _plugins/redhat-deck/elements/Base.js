@@ -43,14 +43,10 @@ export class Base extends /** @type{typeof import('slidem/slidem-slide.js').Slid
     }
   }
 
-  constructor() {
-    super();
+  connectedCallback() {
+    super.connectedCallback();
     this.#class.gatherTemplates();
     this.#stampTemplates();
-  }
-
-  async connectedCallback() {
-    await super.connectedCallback?.();
     const allSlides = Array.from(this.parentElement.querySelectorAll('[name]'))
       .filter(x => x.parentElement === this.parentElement);
     this.slideNumber = (allSlides.indexOf(this) + 1);
