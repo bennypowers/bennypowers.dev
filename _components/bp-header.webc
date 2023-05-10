@@ -12,7 +12,7 @@
         :srcset="`${url('/assets/images/logo/bp-logo-transparent@2x.png' )} 2x,
                   ${url('/assets/images/logo/bp-logo-transparent.png')} 1x`"></a>
 
-  <nav aria-label="translate('main site nav', $data.lang)">
+  <nav :aria-label="translate('main site nav', $data.lang)">
     <a :href="url('/posts/')"><i18n-text>Posts</i18n-text></a>
     <a :href="url('/tags/')"><i18n-text>Tags</i18n-text></a>
     <a :href="url('/resume/')"><i18n-text>C.V.</i18n-text></a>
@@ -25,7 +25,7 @@
 
     <div id="mobile-nav-content">
       <social-links></social-links>
-      <table-of-contents :@content="content"></table-of-contents>
+      <table-of-contents :@content="$data.content"></table-of-contents>
     </div>
   </details>
 </header>

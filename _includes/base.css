@@ -127,6 +127,7 @@ img {
   &:is(a) {
     --magic-hue: var(--hue-start);
     --magic: linear-gradient(72deg, var(--magic-start), var(--magic-start));
+
     &:is(:hover, :focus, :focus-within, :active) {
       --magic-hue: calc(var(--primary-hue) + var(--hue-offset));
       --magic: linear-gradient(72deg, var(--magic-start), var(--magic-end));
@@ -174,7 +175,7 @@ a {
   margin: 0;
   padding: 0;
 
-  @nest #mobile-nav & {
+  #mobile-nav & {
     display: flex;
   }
 
@@ -190,7 +191,7 @@ a {
   }
 }
 
-#mobile-nav summary {
+#mobile-nav > summary {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -250,7 +251,7 @@ code-tabs:focus-within {
   --code-tabs-selected-highlight-color: var(--primary-color) !important;
 }
 
-@media (min-width: 1000px) {
+@media (width >= 1000px) {
   .socials {
     display: flex;
   }
