@@ -1,8 +1,5 @@
----
-is: devconf23-slide
----
 ## PatternFly Elements
-![PatternFly Elements](pfe.svg)
+![PatternFly Elements](pfe-logo-old-white.svg)
 A Performant Design System {.subheading}
 
 ## PatternFly Design, but Web Components

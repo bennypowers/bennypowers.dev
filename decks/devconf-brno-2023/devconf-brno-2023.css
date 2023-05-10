@@ -16,39 +16,45 @@
   --markdown-syntax-operator-color: var(--sky);
   --markdown-syntax-class-name-color: var(--maroon);
   --markdown-syntax-number-color: var(--yellow);
-  --font-scale: 1.5;
+  --spacer-inline: 4em;
+  --spacer-block: 2em;
 
   font-family: Montserrat, sans-serif;
 }
 
 :not(:defined) { display: none !important; }
 
-slidem-deck {
-  line-height: inherit;
-}
-
 #slides-progress {
   --indicator-color: var(--deck-secondary-color);
 }
 
-:is(h1, h2, h3, h4, h5, h6) {
+slidem-deck {
+  line-height: inherit;
+  color: #595959;
+  font-family: "Montserrat Light", sans-serif;
+  font-size: 175%;
+}
+
+h1, h2, h3, h4, h5, h6 {
   font-family: "Montserrat SemiBold", sans-serif;
   line-height: 1;
   margin: 0;
 }
 
 h1 {
-  font-size: calc(38pt * var(--font-scale));
+  font-size: 5em;
+  margin-block-start: 0;
+  margin-block-end: .35em;
 }
 
 h2 {
   font-family: "Montserrat Medium", sans-serif;
-  font-size: calc(27pt * var(--font-scale));
+  font-size: 3em;
   color: var(--deck-primary-color);
 }
 
 h3 {
-  font-size: calc(12pt * var(--font-scale));
+  margin-block-end: var(--spacer-block);
 }
 
 a {
@@ -58,16 +64,4 @@ a {
   &[href^="#"] {
     pointer-events: none;
   }
-}
-
-ol {
-  margin-inline-start: 1em;
-}
-
-summary::marker {
-  color: var(--rh-color-brand-red-on-light);
-}
-
-figure blockquote + figcaption {
-  text-align: end;
 }

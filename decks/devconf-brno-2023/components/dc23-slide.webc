@@ -1,0 +1,68 @@
+<template id="dc23-slide" webc:keep>
+  <style webc:keep>
+    :host {
+      font-size: 1.5em;
+    }
+
+    #wrapper {
+      height: 100vh;
+      display: grid;
+      grid-template-rows: min-content auto 5.25em;
+    }
+
+    footer {
+      display: flex;
+      align-items: center;
+      justify-content: end;
+      background: var(--deck-primary-color);
+      padding-block: 1em;
+    }
+
+    img {
+      height: 100%;
+      display: block;
+    }
+
+    #contents {
+      display: grid;
+      gap: 1em;
+      grid-template-columns: repeat(var(--columns, 1), 1fr);
+      font-size: 1.2em;
+    }
+
+    #title, #footer {
+      grid-column: 1/-1;
+    }
+
+    #title, #contents, #footer {
+      padding-inline: var(--spacer-inline);
+    }
+
+    #title {
+      padding-block: var(--spacer-block);
+      display: block;
+    }
+  </style>
+
+  <div id="wrapper">
+    <slot id="title" name="title" webc:keep></slot>
+    <slot id="contents" part="body" webc:keep></slot>
+    <footer id="footer">
+      <img alt="devconf.cz" :src="url('/decks/devconf-brno-2023/devconf-logo.png')">
+    </footer>
+  </div>
+</template>
+
+<script type="module">
+  import { SlidemSlide } from 'slidem/slidem-slide.js';
+  class Dc23Slide extends SlidemSlide {
+    static is = 'dc23-slide';
+    static template = document.getElementById('dc23-slide');
+    connectedCallback() {
+      super.connectedCallback();
+      this.shadowRoot.innerHTML = '';
+      this.shadowRoot.append(this.constructor.template.content.cloneNode(true));
+    }
+  }
+  customElements.define(Dc23Slide.is, Dc23Slide);
+</script>

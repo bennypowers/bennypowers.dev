@@ -1,0 +1,61 @@
+<template id="dc23-slide-title" webc:keep>
+  <style webc:keep>
+    :host {
+      background-image: url("/decks/devconf-brno-2023/title.png") !important;
+      background-size: cover !important;
+      color: white !important;
+      display: grid !important;
+      max-width: 100vw;
+      max-height: 100vh;
+      padding-block: 10vh;
+      padding-inline: 5vw;
+      grid-template-rows: 1fr 1fr ;
+      grid-template-columns: repeat(6, 1fr);
+    }
+
+    #logo {
+      grid-column: 1/4;
+      width: 100%;
+    }
+
+    #titles {
+      text-align: right;
+      align-self: start;
+      grid-column: 2/7;
+    }
+
+    ::slotted(p) {
+      margin: 0 !important;
+    }
+
+    #subheading {
+      font-family: "Montserrat", sans-serif;
+      font-size: 2em;
+    }
+
+    #presenter {
+      display: grid;
+      font-size: 1.5em !important;
+      margin-block-start: 4.3em;
+    }
+  </style>
+
+  <img id="logo" alt="DEVCONF 2023" :src="url('/decks/devconf-brno-2023/devconf-textmark.png')">
+
+  <section id="titles">
+    <slot id="title" name="title" webc:keep></slot>
+    <slot id="subheading" name="subheading" webc:keep></slot>
+    <div id="presenter">
+      <slot name="name" webc:keep></slot>
+      <slot name="title" webc:keep></slot>
+    </div>
+  </section>
+</template>
+
+<script type="module">
+  class Dc23SlideTitle extends Dc23Slide {
+    static is = 'dc23-slide-title';
+    static template = document.getElementById('dc23-slide-title');
+  }
+  customElements.define(Dc23SlideTitle.is, Dc23SlideTitle);
+</script>

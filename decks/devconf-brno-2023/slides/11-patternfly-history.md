@@ -1,5 +1,4 @@
 ---
-is: devconf23-slide
 style:
   --columns: 3
 ---

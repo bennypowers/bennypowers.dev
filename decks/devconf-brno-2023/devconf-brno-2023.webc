@@ -3,21 +3,15 @@ layout: deck.html
 deck: devconf-brno-2023
 title: "PatternFly Elements: a Performant Design System"
 date: 2023-06-18
+slideTemplateEngineOverride: webc,md
 ---
 <link rel="stylesheet" href="devconf-brno-2023.css">
 <link rel="preconnect" href="https://redhat.com">
 <link rel="preconnect" href="https://static.redhat.com">
-
-<script src="../../_plugins/dsd/dsd.js"></script>
-
+<script webc:bucket="after" src="../../_plugins/dsd/dsd.js"></script>
 <script @raw="getBundle('js')" webc:keep type="module"></script>
 <style @raw="getBundle('css')" webc:keep></style>
+<script @raw="getBundle('js', 'after')" webc:keep></script>
 
-<script webc:keep type="module">
-  import '@rhds/elements';
-</script>
-
-<template webc:keep>
-<devconf23-slide></devconf23-slide>
-<devconf23-slide-title></devconf23-slide-title>
-</template>
+<dc23-slide hidden></dc23-slide>
+<dc23-slide-title hidden></dc23-slide-title>
