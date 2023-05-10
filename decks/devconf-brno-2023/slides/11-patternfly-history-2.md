@@ -1,4 +1,5 @@
 ---
+class: sidebar
 style:
   --columns: 3
 ---
@@ -11,13 +12,13 @@ style:
 
 </div> <div>
 
-  ### 2020: PatternFly Elements v1
+  ### 2020: PatternFly Elements
   Cross-platform interoperable web components.
   Parallel, effort, with divergent goals and UI needs
 
 </div> <div>
 
-  ### 2022: PatternFly Elements v2
+  ### 2022: PFE v2
 
 </div>
 

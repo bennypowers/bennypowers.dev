@@ -1,17 +1,118 @@
 ---
-layout: deck.html
-deck: devconf-brno-2023
 title: "PatternFly Elements: a Performant Design System"
 date: 2023-06-18
-slideTemplateEngineOverride: webc,md
+eleventyImport:
+  collections:
+    - devconf23
 ---
-<link rel="stylesheet" href="devconf-brno-2023.css">
-<link rel="preconnect" href="https://redhat.com">
-<link rel="preconnect" href="https://static.redhat.com">
-<script webc:bucket="after" src="../../_plugins/dsd/dsd.js"></script>
-<script @raw="getBundle('js')" webc:keep type="module"></script>
-<style @raw="getBundle('css')" webc:keep></style>
-<script @raw="getBundle('js', 'after')" webc:keep></script>
+<!doctype html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title :text="title"></title>
+    <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1,user-scalable=yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="application-name" :content="title">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" :content="title">
+    <meta name="author" :content="author" webc:if="author">
+    <meta name="date.created" :content="date" webc:if="date">
+    <meta name="HandheldFriendly" content="true">
+    <meta name="description" :content="description.trim()" webc:if="description">
+    <meta property="og:description" :content="description.trim()" webc:if="description">
+    <meta property="og:title" :content="title">
+    <meta property="og:site_name" :content="title">
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="en-US">
+    <meta property="og:url" :content="`${origin}${ $data.page.url || '/'}`">
+    <meta property="og:image" :content="coverImage" webc:if="coverImage">
+    <meta property="og:image:type" :content="mime(coverImage)" webc:if="coverImage">
+    <!-- TODO: calculate cover image dimensions -->
+    <meta property="og:image:width" content="1024" webc:if="coverImage">
+    <meta property="og:image:height" content="1024" webc:if="coverImage">
 
-<dc23-slide hidden></dc23-slide>
-<dc23-slide-title hidden></dc23-slide-title>
+    <link webc:for="link of preconnect ?? []" rel="preconnect" :href="link">
+    <link webc:for="icon of icons ?? []" :rel="icon.rel" :sizes="icon.sizes ?? false" :href="url(icon.href)">
+    <link rel="manifest" :href="url(manifest || '/manifest.webmanifest')">
+
+    <noscript><style>:not(:defined) { display: initial; }</style></noscript>
+
+    <link webc:for="sheet of stylesheets ?? []" rel="stylesheet"
+          :media="sheet.media ?? false"
+          :async="sheet.async ?? false"
+          :href="url(sheet.href)">
+
+    <script type="importmap" webc:keep webc:if="importMap" @raw="JSON.stringify(importMap)"></script>
+    <script async src="https://ga.jspm.io/npm:es-module-shims@1.7.2/dist/es-module-shims.js" webc:if="polyfills.esmoduleShims" webc:keep></script>
+
+    <script webc:for="script of scripts ?? []"
+            :type="script.type || false"
+            :src="url(script.src)"></script>
+
+    <script type="module" src="https://unpkg.com/construct-style-sheets-polyfill" webc:if="polyfills.constructibleStyleSheets" webc:keep></script>
+    <script type="module" src="https://unpkg.com/@webcomponents/webcomponentsjs@%5E2/" webc:if="polyfills.webcomponents" webc:keep></script>
+
+    <script type="module">
+      import '/assets/decks.min.js';
+    </script>
+
+    <style>
+      body {
+        height: 100vh;
+        max-height: 100vh;
+        overflow: hidden;
+        max-width: 100vw;
+        padding: 0;
+      }
+
+      main { position: relative; }
+
+      main,
+      slidem-deck { height: 100%; }
+
+      #footer {
+        position: fixed;
+        font-size: 80%;
+        inset-block-end: 1em;
+        inset-inline-end: 1em;
+        z-index: 2;
+      }
+
+      #slides-progress {
+        --sl-border-radius-pill: 0;
+        --indicator-color: var(--deck-primary-color);
+        --height: 100%;
+        width: 100%;
+      }
+
+      slidem-deck::part(progress) {
+        width: 100%;
+        height: 5px;
+        top: 0;
+      }
+    </style>
+
+    <style @raw="getBundle('css')" webc:keep></style>
+    <script @raw="getBundle('js')" webc:keep type="module"></script>
+    <script @raw="getBundle('js', 'after')" webc:keep></script>
+
+    <link rel="stylesheet" href="devconf-brno-2023.css">
+    <link rel="preconnect" href="https://redhat.com">
+    <link rel="preconnect" href="https://static.redhat.com">
+    <script webc:bucket="after" src="../../_plugins/dsd/dsd.js"></script>
+
+  </head>
+  <body class="deck">
+    <main>
+      <slidem-deck id="deck">
+        <sl-progress-bar slot="progress" id="slides-progress" indeterminate></sl-progress-bar>
+        <slide webc:for="slide of collections.devconf23.sort(byInputPath)" :@slide="slide"></slide>
+      </slidem-deck>
+    </main>
+    <footer id="footer" class="screen-only">
+      <small id="legal" @text="copyright"></small>
+    </footer>
+  </body>
+</html>
+

@@ -1,0 +1,42 @@
+<template shadowrootmode="open">
+  <link rel="stylesheet" :href="url('/decks/devconf-brno-2023/shared.css')"/>
+
+  <style>
+    :host {
+      font-size: 1.5em;
+      color: white !important;
+      background-color: var(--bg, var(--deck-primary-color)) !important;
+      display: block;
+      padding: var(--spacer-block) var(--spacer-inline);
+    }
+
+    :host(.secondary) { --bg: var(--deck-secondary-color); }
+    :host(.tertiary) { --bg: var(--deck-tertiary-color); }
+
+    img {
+      display: block;
+      width: 4em;
+      position: absolute;
+      inset-block-end: 2em;
+      inset-inline-end: 2em;
+    }
+
+    #title,
+    #title *,
+    ::slotted(*) {
+      color: inherit !important;
+      font-size: 1.75em;
+    }
+
+  </style>
+
+  <div id="title"><slot></slot></div>
+  <img alt="devconf.cz" :src="url('/decks/devconf-brno-2023/devconf-logo.png')">
+</template>
+
+<script type="module">
+  class Dc23SlideBold extends SlidemSlide {
+    static is = 'dc23-slide-bold';
+  }
+  customElements.define(Dc23SlideBold.is, Dc23SlideBold);
+</script>

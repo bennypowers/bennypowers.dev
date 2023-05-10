@@ -1,11 +1,13 @@
 ---
-is: dc23-slide-title
+is: dc23-slide-divider
+class: title
 ---
 
-# PatternFly Elements {slot=title}
+# PatternFly Elements {slot=heading}
 
 A Performant Design System {slot=subheading}
 
-Benny Powers {slot=name}
-
-Principal UX Engineer {slot=title}
+<div slot="speaker">
+  <p>Benny Powers</p>
+  <p>Principal UX Engineer</p>
+</div>

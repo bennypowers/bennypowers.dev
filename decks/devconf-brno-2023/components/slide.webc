@@ -1,0 +1,8 @@
+<script webc:type="js" webc:root="override">
+  const tag = slide.data.is || 'slidem-slide';
+  const slideAttributes = Object.entries(slide.data)
+    .filter(([x]) => x === 'name' || x==='class' || x ==='style')
+    .map(([x, y]) => `${x}="${x !== 'style' ? y : stringifyCSSStyle(y ?? {})}"`)
+    .join(' ');
+`<${tag} ${slideAttributes}>${reveal(slide.templateContent, slide.data.reveal)}</${tag}>`
+</script>

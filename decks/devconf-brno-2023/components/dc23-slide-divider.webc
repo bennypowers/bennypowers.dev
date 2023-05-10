@@ -1,4 +1,5 @@
-<template id="dc23-slide-title" webc:keep>
+<template shadowrootmode="open">
+  <link rel="stylesheet" :href="url('/decks/devconf-brno-2023/shared.css')"/>
   <style webc:keep>
     :host {
       background-image: url("/decks/devconf-brno-2023/title.png") !important;
@@ -13,6 +14,14 @@
       grid-template-columns: repeat(6, 1fr);
     }
 
+    #logo, #subheading, #presenter {
+      display: none;
+    }
+
+    :host(.title) #logo, #subheading, #presenter {
+      display: block;
+    }
+
     #logo {
       grid-column: 1/4;
       width: 100%;
@@ -24,38 +33,41 @@
       grid-column: 2/7;
     }
 
-    ::slotted(p) {
-      margin: 0 !important;
-    }
-
     #subheading {
       font-family: "Montserrat", sans-serif;
       font-size: 2em;
     }
 
-    #presenter {
+    #speaker {
       display: grid;
       font-size: 1.5em !important;
       margin-block-start: 4.3em;
     }
+
+    h1 {
+      font-size: 5em;
+      margin-block-start: 0;
+      margin-block-end: .35em;
+    }
+
+    p {
+      margin: 0;
+    }
+
   </style>
 
   <img id="logo" alt="DEVCONF 2023" :src="url('/decks/devconf-brno-2023/devconf-textmark.png')">
 
   <section id="titles">
-    <slot id="title" name="title" webc:keep></slot>
+    <slot id="heading" name="heading" webc:keep></slot>
     <slot id="subheading" name="subheading" webc:keep></slot>
-    <div id="presenter">
-      <slot name="name" webc:keep></slot>
-      <slot name="title" webc:keep></slot>
-    </div>
+    <slot id="speaker" name="speaker" webc:keep></slot>
   </section>
 </template>
 
 <script type="module">
-  class Dc23SlideTitle extends Dc23Slide {
-    static is = 'dc23-slide-title';
-    static template = document.getElementById('dc23-slide-title');
+  class Dc23SlideDivider extends SlidemSlide {
+    static is = 'dc23-slide-divider';
   }
-  customElements.define(Dc23SlideTitle.is, Dc23SlideTitle);
+  customElements.define(Dc23SlideDivider.is, Dc23SlideDivider);
 </script>
