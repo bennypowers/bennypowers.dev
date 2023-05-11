@@ -1,5 +1,4 @@
 ---
 is: dc23-slide-divider
 ---
-
-# Design Systems at Red Hat {slot=heading}
+<h2 slot="heading">Design Systems at Red Hat</h2>

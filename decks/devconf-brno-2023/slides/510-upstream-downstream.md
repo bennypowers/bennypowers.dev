@@ -6,12 +6,12 @@ class: comparison footer
 
 <div>
 
-### PatternFly Elements
-Upstream, unbranded, multipurpose
+  ### PatternFly Elements
+  Upstream, unbranded, multipurpose
 
 </div> <div>
 
-### Red Hat Design System
-Downstream, branded, primarily for web pages (but works for apps as well)
+  ### Red Hat Design System
+  Downstream, branded, primarily for web pages (but works for apps as well)
 
 </div>

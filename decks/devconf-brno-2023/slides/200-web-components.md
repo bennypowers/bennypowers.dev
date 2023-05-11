@@ -1,4 +1,4 @@
 ---
 is: dc23-slide-divider
 ---
-## Web Components {slot=header}
+## Web Components {slot=heading}

@@ -3,7 +3,7 @@
     slide.class?.match(/\bfooter\b|\bsidebar\b/);
 </script>
 <template shadowrootmode="open">
-  <link rel="stylesheet" :href="url('/decks/devconf-brno-2023/shared.css')">
+  <link rel="stylesheet" :href="url('/decks/devconf-brno-2023/shared.css')"/>
   <style webc:keep>
     #brno-container {
       display: grid;
@@ -29,7 +29,7 @@
       grid-template-columns: repeat(var(--columns, 1), 1fr);
     }
 
-    figure {
+    figure:not(.figure-img) {
       margin: 0;
       width: 100%;
       grid-column: 1/-1;
@@ -54,7 +54,7 @@
       display: inline-block;
     }
 
-    figcaption {
+    figure:not(.figure-img) figcaption {
       display: flex;
       flex-direction: column;
       padding-block: .5em;
@@ -63,7 +63,7 @@
       text-align: right;
     }
 
-    figcaption::before {
+    figure:not(.figure-img) figcaption::before {
       content: '';
       display: block;
       height: 2px;
@@ -148,6 +148,10 @@
       display: flex;
       flex-direction: column;
       gap: 1em;
+    }
+
+    .grid-2x2 #contents {
+      grid-template: 1fr 1fr / 1fr 1fr;
     }
   </style>
 

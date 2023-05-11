@@ -131,6 +131,7 @@
             webc:if="this.class === 'title'"></slot>
     </section>
   </div>
+  <slot></slot>
 </template>
 
 <script type="module">

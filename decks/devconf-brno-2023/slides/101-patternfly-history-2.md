@@ -2,7 +2,7 @@
 style:
   --columns: 3
 ---
-## Design Systems at Red Hat {slot=title}
+## A Brief History {slot=title}
 
 <div>
 
@@ -12,12 +12,15 @@ style:
 </div> <div>
 
   ### 2020: PatternFly Elements
-  Cross-platform interoperable web components.
-  Parallel, effort, with divergent goals and UI needs
+  - Cross-platform interoperable web components.
+  - Parallel effort, with divergent goals and UI needs
 
 </div> <div>
 
   ### 2022: PF/E v2
+  - 1:1 design alignment with PFv4
+  - Built for web apps
+  - Interoperable core and tools
 
 </div>
 

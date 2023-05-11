@@ -12,12 +12,6 @@ Until 2015, when a group of browser and web developers at Google produced the
 first iteration of **Polymer**: an initial concept for what would eventually 
 become the Web Components standards.
 
-## Web Component Core Technologies
-<figure-img src="ce.svg">Custom Elements</figure-img>
-<figure-img src="sd.svg">Shadow DOM</figure-img>
-<figure-img src="te.svg">Template Element</figure-img>
-<figure-img src="esm.svg">JavaScript Modules</figure-img>
-
 ## Who is Using Web Components?
 Large Organizations and small Projects
 - YouTube
