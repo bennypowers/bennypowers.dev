@@ -1,0 +1,184 @@
+<script webc:setup>
+  const hasStripe = slide =>
+    slide.class?.match(/\bfooter\b|\bsidebar\b/);
+</script>
+<template shadowrootmode="open">
+  <link rel="stylesheet" :href="url('/decks/devconf-brno-2023/shared.css')">
+  <style webc:keep>
+    #brno-container {
+      display: grid;
+      align-items: initial;
+      grid-template-rows: min-content auto;
+      grid-template-columns: 1fr;
+      overflow: hidden;
+      padding-block: var(--spacer-block);
+      padding-inline: var(--spacer-inline);
+      font-size: 1.2em;
+    }
+
+    #title {
+      display: block;
+      grid-column: 1/-1;
+      margin-block-end: var(--spacer-block);
+    }
+
+    #contents {
+      display: grid;
+      column-gap: 1em;
+      grid-auto-rows: min-content;
+      grid-template-columns: repeat(var(--columns, 1), 1fr);
+    }
+
+    figure {
+      margin: 0;
+      width: 100%;
+      grid-column: 1/-1;
+      grid-row: 1/-1;
+      width: 80vw;
+      align-self: center;
+      font-size: 2em;
+    }
+
+    blockquote {
+      margin: 0;
+      font-family: "Montserrat", sans-serif;
+    }
+
+    blockquote::before {
+      content: '“';
+      display: inline-block;
+    }
+
+    blockquote::after {
+      content: '”';
+      display: inline-block;
+    }
+
+    figcaption {
+      display: flex;
+      flex-direction: column;
+      padding-block: .5em;
+      font-family: "Montserrat", sans-serif;
+      font-size: 0.75em;
+      text-align: right;
+    }
+
+    figcaption::before {
+      content: '';
+      display: block;
+      height: 2px;
+      width: 4em;
+      align-self: end;
+      background: var(--deck-primary-color);
+      border-radius: 1px;
+    }
+
+    #stripe {
+      align-items: center;
+      background: var(--deck-primary-color);
+    }
+
+    #stripe img {
+      display: block;
+      width: 4em;
+    }
+
+    .footer {
+      grid-template-rows: min-content auto 6em;
+    }
+
+    .footer #stripe {
+      display: flex;
+      padding-block: 1em;
+      grid-column: 1/-1;
+      padding-inline: var(--spacer-inline);
+      justify-content: end;
+      position: fixed;
+      inset-inline: 0 0;
+      inset-block: auto 0;
+    }
+
+    .feature #contents {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .feature [slot="feature"] {
+      background-color: #b2b2b255;
+      border-radius: .5em;
+      overflow: hidden;
+    }
+
+    .sidebar {
+      grid-template-columns: auto 8.25em;
+    }
+
+    .sidebar #title { grid-column: 1/2; }
+    .sidebar #contents { grid-column: 1/2; }
+
+    .sidebar #stripe {
+      display: flex;
+      flex-flow: column;
+      padding-inline: 1em;
+      grid-column: 2/3;
+      grid-row: 1/-1;
+      padding-block: var(--spacer-block);
+      position: fixed;
+      inset-inline: auto 0;
+      inset-block: 0 0;
+    }
+
+    .comparison #title {
+      text-align: center;
+    }
+
+    .comparison #contents {
+      --columns: 2;
+      text-align: center;
+    }
+
+    svg#divider {
+      position: absolute;
+      width: 0.2em;
+      inset-inline-start: calc(50% - 0.1em);
+      inset-block-start: 25%;
+    }
+
+    ul {
+      list-style-type: square;
+      display: flex;
+      flex-direction: column;
+      gap: 1em;
+    }
+  </style>
+
+  <div id="brno-container" :class="this.class ?? 'plain'">
+    <slot id="title" name="title" webc:keep></slot>
+    <div id="contents">
+      <slot></slot>
+      <slot name="feature" webc:if="this.class?.includes('feature')"></slot>
+      <svg id="divider"
+           webc:if="this.class?.includes('comparison')"
+           version="1.1"
+           xmlns="http://www.w3.org/2000/svg"
+           viewBox="0 0 2 150">
+        <line
+          x1="1"
+          x2="1"
+          y1="1"
+          y2="150"
+          stroke="#b2b2b2"
+          stroke-dasharray="8, 4, 2, 4"
+          stroke-linecap="round"
+          stroke-width="2"/>
+      </svg>
+    </div>
+    <footer id="stripe" webc:if="hasStripe(this)">
+      <img alt="devconf.cz" :src="url('/decks/devconf-brno-2023/devconf-logo.png')">
+    </footer>
+  </div>
+</template>
+
+<script type="module">
+  import { SlidemSlide } from 'slidem/slidem-slide.js';
+  customElements.define('dc23-slide', class Dc23Slide extends SlidemSlide { });
+</script>

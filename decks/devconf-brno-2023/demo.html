@@ -1,0 +1,63 @@
+---
+permalink: false
+---
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>PatternFly Element</title>
+    <link rel="icon" href="https://patternflyelements.org/images/favicon.ico"/>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Red Hat Text&display=swap"/>
+
+    <style>
+      body {
+        display: grid;
+        font-family: 'Red Hat Text', sans-serif;
+        place-content: center;
+        height: 100vh;
+        background-color:rebeccapurple;
+      }
+      pf-card {
+        width: 70vw;
+      }
+    </style>
+
+    <script type="importmap">
+    {
+      "imports": {
+        "@patternfly/elements/": "https://redhatstatic.com/@patternfly/elements@2.1.0/"
+      }
+    }
+    </script>
+
+    <script type="module">
+      import '@patternfly/elements/pf-card/pf-card.js';
+      import '@patternfly/elements/pf-switch/pf-switch.js';
+      import '@patternfly/elements/pf-label/pf-label.js';
+      import '@patternfly/elements/pf-tooltip/pf-tooltip.js';
+    </script>
+
+  </head>
+  <body>
+
+    <pf-card size="large">
+      <h1 slot="header">PatternFly Elements</h1>
+      <p>
+        A performant design system, made with
+        <pf-label color="blue">☕</pf-label> and
+        <pf-tooltip content="Performant, progressively-enhanced experiences">
+          <pf-label color="orange">Web Components</pf-label>
+        </pf-tooltip>
+      </p>
+      <label slot="footer">Rounded?
+        <pf-switch onchange="this.closest('pf-card').rounded = this.checked"></pf-switch>
+      </label>
+      <label slot="footer">Compact?
+        <pf-switch onchange="this.closest('pf-card').size = this.checked ? 'compact' : 'large'"></pf-switch>
+      </label>
+    </pf-card>
+
+
+  </body>
+</html>

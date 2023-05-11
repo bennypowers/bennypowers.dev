@@ -1,0 +1,39 @@
+:root {
+  --deck-primary-background: white;
+  --deck-secondary-background: var(--rh-color-surface--light);
+  --deck-primary-color: #8e83e4;
+  --deck-secondary-color: #00addc;
+  --deck-tertiary-color: #ff0099;
+  --deck-aspect: 287/161;
+  --fixed-font: var(--rh-font-family-code);
+  --markdown-syntax-color: var(--rh-color-text-primary-on-light);
+  --markdown-syntax-comment-color: var(--surface2);
+  --markdown-code-background-color: var(--base);
+  --markdown-syntax-keyword-color: var(--mauve);
+  --markdown-syntax-background-color: var(--base);
+  --markdown-syntax-function-color: var(--blue);
+  --markdown-syntax-regex-color: var(--peach);
+  --markdown-syntax-punctuation-color: var(--subtext1);
+  --markdown-syntax-operator-color: var(--sky);
+  --markdown-syntax-class-name-color: var(--maroon);
+  --markdown-syntax-number-color: var(--yellow);
+  --spacer-block: 4.8vw;
+  --spacer-inline: calc(var(--spacer-block) * var(--deck-aspect));
+
+  font-family: Montserrat, sans-serif;
+  line-height: 1.5;
+}
+
+:not(:defined),[hidden] { display: none !important; }
+
+#slides-progress {
+  --indicator-color: var(--deck-secondary-color);
+}
+
+slidem-deck {
+  line-height: inherit;
+  color: #595959;
+  font-family: "Montserrat Light", sans-serif;
+  font-size: 1.4vw;
+}
+

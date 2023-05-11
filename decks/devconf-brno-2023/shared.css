@@ -1,0 +1,31 @@
+:host {
+  height: 100vh;
+  width: 100vw;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: "Montserrat SemiBold", sans-serif;
+  line-height: 1;
+  margin: 0;
+}
+
+h2 {
+  font-family: "Montserrat Medium", sans-serif;
+  font-size: 3em;
+  color: var(--deck-primary-color);
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+:is(h1, h2, h3, h4, h5, h6) a[href^="#"] {
+  pointer-events: none;
+}
+
+#brno-container {
+  aspect-ratio: var(--deck-aspect);
+  position: relative;
+  width: 100%;
+}

@@ -1,0 +1,14 @@
+---
+eleventyImport:
+  collections:
+    - devconf23
+---
+<slide-deck webc:nokeep
+            webc:import="npm:eleventy-plugin-slide-decks"
+            @title="PatternFly Elements: a Performant Design System"
+            @date="2023-06-18"
+            @tag="devconf23"></slide-deck>
+<script src="../../_plugins/dsd/dsd.js"
+        webc:bucket="after"></script>
+<link rel="stylesheet" href="devconf-brno-2023.css">
+<link rel="shortcut icon" href="/decks/devconf-brno-2023/devconf-logo.png" webc:keep>
