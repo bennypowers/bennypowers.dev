@@ -4,13 +4,15 @@
 }
 
 h1, h2, h3, h4, h5, h6 {
-  font-family: "Montserrat SemiBold", sans-serif;
+  font-family: Montserrat, sans-serif;
+  font-weight: 600;
   line-height: 1;
   margin: 0;
 }
 
 h2 {
-  font-family: "Montserrat Medium", sans-serif;
+  font-family: Montserrat, sans-serif;
+  font-weight: 500;
   font-size: 3em;
   color: var(--deck-primary-color);
 }

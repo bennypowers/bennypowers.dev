@@ -30,7 +30,7 @@
     }
 
     #subheading {
-      font-family: "Montserrat", sans-serif;
+      font-family: Montserrat, sans-serif;
       font-size: 2em;
     }
 
@@ -82,7 +82,8 @@
 
     blockquote {
       margin: 0;
-      font-family: "Montserrat SemiBold", sans-serif;
+      font-family: Montserrat, sans-serif;
+      font-weight: 600;
       text-align: right;
       border-inline-end: 2px solid white;
       padding-inline-end: 2em;
@@ -99,7 +100,7 @@
     }
 
     figcaption {
-      font-family: "Montserrat", sans-serif;
+      font-family: Montserrat, sans-serif;
       font-size: 0.75em;
     }
   </style>

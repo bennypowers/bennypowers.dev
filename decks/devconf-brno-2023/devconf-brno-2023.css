@@ -33,7 +33,8 @@
 slidem-deck {
   line-height: inherit;
   color: #595959;
-  font-family: "Montserrat Light", sans-serif;
+  font-family: Montserrat, sans-serif;
+  font-weight: 300;
   font-size: 1.4vw;
 }
 
