@@ -1,6 +1,7 @@
 ---
 title: SVG Icon Sprites in Eleventy
 published: true
+templateEngineOverride: webc,md
 description: Use SVG icons in Eleventy and only ship the code you need.
 datePublished: 2023-01-15
 coverImage: /assets/images/sprite-sheet.png
@@ -10,8 +11,11 @@ tags:
   - html
   - svg
   - performance
+eleventyImport:
+  collections:
+    - icon
 ---
-{% css %}
+<style>
 #examples {
   display: flex;
   flex-wrap: wrap;
@@ -29,7 +33,7 @@ tags:
 #cover-image {
   image-rendering: optimizespeed;
 }
-{% endcss %}
+</style>
 
 So you want to put some SVG icons on your [11ty](https://11ty.dev) site, hey? 
 This technique lets you include icons in your posts easily. With a little 
@@ -43,6 +47,7 @@ your users.
   <sprite-icon name="html5"></sprite-icon>
   <sprite-icon name="javascript"></sprite-icon>
   <sprite-icon name="jerusalem"></sprite-icon>
+  <sprite-icon name="redhat"></sprite-icon>
   <sprite-icon name="ness"></sprite-icon>
 </div>
 
@@ -72,11 +77,11 @@ That having been accomplished, let's define the [shortcode][shortcodes] that
 we'll use to display icons on our pages. The shortcode will take a name and an 
 optional map of HTML attributes, and works like this:
 
-```njk {%raw%}
+```njk
 {% icon 'html5' %}
 {% icon 'svg', 'aria-labelledby'='svg-w3c' %}
 {% icon '11ty', title='eleventy' %}
-``` {%endraw%}
+```
 
 By storing a set of icons requested on each `page` object, our sprite sheet will 
 only render those icons as actually are needed, saving your readers' data. 
@@ -107,7 +112,7 @@ our pages, so let's add our sprite sheet to our base HTML. Put the following
 [nunjucks][njk] snippet just before the `</body>` tag of your most basic page 
 template: 
 
-```njk {%raw%}
+```njk
 {% if page.icons %}
 <svg id="icon-sprite-sheet">
   <defs>
@@ -119,7 +124,7 @@ template:
   </defs>
 </svg>
 {% endif %}
-```{%endraw%}
+```
 
 The `if` nunjucks tag ensures that only icons that had been requested on _this_ 
 page via shortcode actually get printed to the final HTML.

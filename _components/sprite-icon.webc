@@ -1,16 +1,6 @@
 <script webc:setup>
 const getIconTemplate = name => $data.collections.icon.find(x => x.fileSlug === name);
 </script>
-
-<!--- https://github.com/11ty/webc/issues/36 --->
-<!---
-<template webc:nokeep
-     webc:bucket="svg"
-     webc:if="getIconTemplate(name)">
-  <g :id="`${name}-icon`" :@html="getIconTemplate(name)?.inputContent"></g>
-</template>
---->
-
 <template webc:type="11ty"
           11ty:type="njk"
           :@page="$data.page"
@@ -21,6 +11,6 @@ const getIconTemplate = name => $data.collections.icon.find(x => x.fileSlug === 
     {%- endhtml -%}
   {%- endif -%}
 </template>
-
-<svg :aria-hidden="ariaHidden ?? false" @attributes><use :href="`#${name}-icon`"></svg>
-
+<svg webc:root="override"
+    :aria-hidden="ariaHidden ?? false"
+    @attributes><use :href="`#${name}-icon`"></svg>

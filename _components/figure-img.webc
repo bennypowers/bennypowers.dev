@@ -1,8 +1,7 @@
+<template shadowrootmode="open">
 <style>
-figure.figure-img {
-  & figcaption {
-    font-size: 80%;
-  }
+figure.figure-img figcaption {
+  font-size: 80%;
 }
 </style>
 <figure class="figure-img" webc:root="override">
@@ -14,3 +13,4 @@ figure.figure-img {
     <slot></slot>
   </figcaption>
 </figure>
+</template>
