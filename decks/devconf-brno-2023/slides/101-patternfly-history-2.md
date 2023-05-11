@@ -17,7 +17,7 @@ style:
 
 </div> <div>
 
-  ### 2022: PFE v2
+  ### 2022: PF/E v2
 
 </div>
 

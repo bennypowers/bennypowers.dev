@@ -9,7 +9,7 @@ style:
 - How have our customers benefitted?
 {slot=notes}
 
-## Design Systems at Red Hat {slot=title}
+## A Brief History {slot=title}
 
 <div>
 
@@ -21,8 +21,8 @@ style:
 </div> <div>
 
   ### 2014: PatternFly 1
-  Bootstrap Proof of Concept
-  Beginnins of aligning on design language
+  - Proof of concept using Bootstrap
+  - First steps to align **design language**
 
 </div> <div>
 
