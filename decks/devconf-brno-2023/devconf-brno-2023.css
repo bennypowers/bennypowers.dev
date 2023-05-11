@@ -4,6 +4,7 @@
   --deck-primary-color: #8e83e4;
   --deck-secondary-color: #00addc;
   --deck-tertiary-color: #ff0099;
+  --deck-aspect: 287/161;
   --fixed-font: var(--rh-font-family-code);
   --markdown-syntax-color: var(--rh-color-text-primary-on-light);
   --markdown-syntax-comment-color: var(--surface2);
@@ -32,6 +33,6 @@ slidem-deck {
   line-height: inherit;
   color: #595959;
   font-family: "Montserrat Light", sans-serif;
-  font-size: 175%;
+  font-size: 1.4vw;
 }
 

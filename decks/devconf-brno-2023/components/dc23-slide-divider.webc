@@ -4,22 +4,17 @@
     :host {
       background-image: url("/decks/devconf-brno-2023/title.png") !important;
       background-size: cover !important;
-      color: white !important;
-      display: grid !important;
-      max-width: 100vw;
-      max-height: 100vh;
+      background-color: var(--deck-primary-color) !important;
+    }
+
+    #brno-container {
+      color: white;
+      display: grid;
       padding-block: 10vh;
       padding-inline: 5vw;
       grid-template-rows: 1fr 1fr ;
       grid-template-columns: repeat(6, 1fr);
-    }
-
-    #logo, #subheading, #presenter {
-      display: none;
-    }
-
-    :host(.title) #logo, #subheading, #presenter {
-      display: block;
+      aspect-ratio: var(--deck-aspect);
     }
 
     #logo {
@@ -29,8 +24,9 @@
 
     #titles {
       text-align: right;
-      align-self: start;
-      grid-column: 2/7;
+      align-self: center;
+      grid-row: 1/-1;
+      grid-column: 1/-1;
     }
 
     #subheading {
@@ -44,6 +40,10 @@
       margin-block-start: 4.3em;
     }
 
+    h1, h2, h3, h4, h5, h6 {
+      color: inherit;
+    }
+
     h1 {
       font-size: 5em;
       margin-block-start: 0;
@@ -54,15 +54,34 @@
       margin: 0;
     }
 
+    #titles.title {
+      grid-row: initial;
+      grid-column: 2/7;
+      align-self: start;
+    }
+
   </style>
 
-  <img id="logo" alt="DEVCONF 2023" :src="url('/decks/devconf-brno-2023/devconf-textmark.png')">
+  <div id="brno-container">
+    <img id="logo"
+         alt="DEVCONF 2023"
+        :src="url('/decks/devconf-brno-2023/devconf-textmark.png')"
+         webc:if="this.class === 'title'">
 
-  <section id="titles">
-    <slot id="heading" name="heading" webc:keep></slot>
-    <slot id="subheading" name="subheading" webc:keep></slot>
-    <slot id="speaker" name="speaker" webc:keep></slot>
-  </section>
+    <section id="titles" :class="this.class ?? 'plain'">
+      <slot id="heading"
+            name="heading"
+            webc:keep></slot>
+      <slot id="subheading"
+            name="subheading"
+            webc:keep
+            webc:if="this.class === 'title'"></slot>
+      <slot id="speaker"
+            name="speaker"
+            webc:keep
+            webc:if="this.class === 'title'"></slot>
+    </section>
+  </div>
 </template>
 
 <script type="module">

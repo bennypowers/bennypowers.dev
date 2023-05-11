@@ -7,6 +7,10 @@
       color: white !important;
       background-color: var(--bg, var(--deck-primary-color)) !important;
       display: block;
+    }
+
+    #brno-container {
+      display: flex;
       padding: var(--spacer-block) var(--spacer-inline);
     }
 
@@ -16,27 +20,28 @@
     img {
       display: block;
       width: 4em;
-      position: absolute;
+      position: fixed;
       inset-block-end: 2em;
       inset-inline-end: 2em;
     }
 
-    #title,
-    #title *,
-    ::slotted(*) {
+    #title {
+      align-self: center;
+    }
+
+    #title * {
       color: inherit !important;
       font-size: 1.75em;
     }
 
   </style>
 
-  <div id="title"><slot></slot></div>
-  <img alt="devconf.cz" :src="url('/decks/devconf-brno-2023/devconf-logo.png')">
+  <div id="brno-container">
+    <div id="title"><slot></slot></div>
+    <img alt="devconf.cz" :src="url('/decks/devconf-brno-2023/devconf-logo.png')">
+  </div>
 </template>
 
 <script type="module">
-  class Dc23SlideBold extends SlidemSlide {
-    static is = 'dc23-slide-bold';
-  }
-  customElements.define(Dc23SlideBold.is, Dc23SlideBold);
+  customElements.define('dc23-slide-bold', class Dc23SlideBold extends SlidemSlide { });
 </script>

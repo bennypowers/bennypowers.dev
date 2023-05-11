@@ -1,5 +1,4 @@
 ---
-class: sidebar
 style:
   --columns: 3
 ---

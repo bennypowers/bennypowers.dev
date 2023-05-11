@@ -11,3 +11,4 @@ eleventyImport:
 <script src="../../_plugins/dsd/dsd.js"
         webc:bucket="after"></script>
 <link rel="stylesheet" href="devconf-brno-2023.css">
+<link rel="shortcut icon" href="/decks/devconf-brno-2023/devconf-logo.png" webc:keep>
