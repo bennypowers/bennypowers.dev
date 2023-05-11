@@ -1,17 +1,17 @@
-(function() {
-  /** @param{Document|ShadowRoot} x */
-  function polyfill(x) {
-    /** @type {NodeListOf<HTMLTemplateElement>}*/
-    const ts = x.querySelectorAll('template[shadowrootmode],template[shadowroot]');
-    for (const t of ts) {
-      const mode = /** @type {ShadowRootMode} */(t.getAttribute('shadowrootmode') ?? t.getAttribute('shadowroot'));
-      const shadowRoot = t.parentElement.attachShadow({ mode });
-      shadowRoot.appendChild(t.content);
-      t.remove();
-      polyfill(shadowRoot);
-    }
+/** @param{Document|ShadowRoot} x */
+function polyfillDeclarativeShadowDOM(x) {
+  /** @type {NodeListOf<HTMLTemplateElement>}*/
+  const ts = x.querySelectorAll('template[shadowrootmode],template[shadowroot]');
+  for (const t of ts) {
+    const mode = /** @type {ShadowRootMode} */(t.getAttribute('shadowrootmode') ?? t.getAttribute('shadowroot'));
+    const parent = t.parentElement;
+    const shadowRoot = parent.shadowRoot ?? parent.attachShadow({ mode });
+    for (const node of shadowRoot.children) node.remove();
+    shadowRoot.appendChild(t.content);
+    t.remove();
+    polyfillDeclarativeShadowDOM(shadowRoot);
   }
+}
 
-  if (!HTMLTemplateElement.prototype.hasOwnProperty('shadowRoot'))
-    polyfill(document);
-}());
+if (!HTMLTemplateElement.prototype.hasOwnProperty('shadowRoot') || !HTMLTemplateElement.prototype.hasOwnProperty('shadowRootMode'))
+  polyfillDeclarativeShadowDOM(document);
