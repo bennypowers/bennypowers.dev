@@ -1,8 +1,6 @@
 <script webc:setup>
   const hasStripe = slide =>
     slide.class?.match(/\bfooter\b|\bsidebar\b/);
-  const hasFeature = slide =>
-    slide.content?.includes('slot="feature"') ? 'feature' : false;
 </script>
 <template shadowrootmode="open">
   <link rel="stylesheet" :href="url('/decks/devconf-brno-2023/shared.css')">
@@ -31,6 +29,50 @@
       grid-template-columns: repeat(var(--columns, 1), 1fr);
     }
 
+    figure {
+      margin: 0;
+      width: 100%;
+      grid-column: 1/-1;
+      grid-row: 1/-1;
+      width: 80vw;
+      align-self: center;
+      font-size: 2em;
+    }
+
+    blockquote {
+      margin: 0;
+      font-family: "Montserrat", sans-serif;
+    }
+
+    blockquote::before {
+      content: '“';
+      display: inline-block;
+    }
+
+    blockquote::after {
+      content: '”';
+      display: inline-block;
+    }
+
+    figcaption {
+      display: flex;
+      flex-direction: column;
+      padding-block: .5em;
+      font-family: "Montserrat", sans-serif;
+      font-size: 0.75em;
+      text-align: right;
+    }
+
+    figcaption::before {
+      content: '';
+      display: block;
+      height: 2px;
+      width: 4em;
+      align-self: end;
+      background: var(--deck-primary-color);
+      border-radius: 1px;
+    }
+
     #stripe {
       align-items: center;
       background: var(--deck-primary-color);
@@ -54,6 +96,16 @@
       position: fixed;
       inset-inline: 0 0;
       inset-block: auto 0;
+    }
+
+    .feature #contents {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .feature [slot="feature"] {
+      background-color: #b2b2b255;
+      border-radius: .5em;
+      overflow: hidden;
     }
 
     .sidebar {
@@ -91,12 +143,19 @@
       inset-block-start: 25%;
     }
 
+    ul {
+      list-style-type: square;
+      display: flex;
+      flex-direction: column;
+      gap: 1em;
+    }
   </style>
 
   <div id="brno-container" :class="this.class ?? 'plain'">
     <slot id="title" name="title" webc:keep></slot>
-    <div id="contents" :class="hasFeature(this)">
+    <div id="contents">
       <slot></slot>
+      <slot name="feature" webc:if="this.class?.includes('feature')"></slot>
       <svg id="divider"
            webc:if="this.class?.includes('comparison')"
            version="1.1"
@@ -112,7 +171,6 @@
           stroke-linecap="round"
           stroke-width="2"/>
       </svg>
-      <slot name="feature"></slot>
     </div>
     <footer id="stripe" webc:if="hasStripe(this)">
       <img alt="devconf.cz" :src="url('/decks/devconf-brno-2023/devconf-logo.png')">

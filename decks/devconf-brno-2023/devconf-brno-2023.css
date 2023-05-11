@@ -21,6 +21,7 @@
   --spacer-inline: calc(var(--spacer-block) * var(--deck-aspect));
 
   font-family: Montserrat, sans-serif;
+  line-height: 1.5;
 }
 
 :not(:defined),[hidden] { display: none !important; }

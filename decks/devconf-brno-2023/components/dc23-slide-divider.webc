@@ -66,6 +66,42 @@
       grid-column: 2/7;
       align-self: start;
     }
+
+    figure {
+      margin: 0;
+      width: 100%;
+      grid-column: 1/-1;
+      grid-row: 1/-1;
+      align-self: center;
+      display: grid;
+      grid-template-columns: 5fr 1fr;
+      column-gap: 1em;
+      font-size: 2em;
+      align-items: center;
+    }
+
+    blockquote {
+      margin: 0;
+      font-family: "Montserrat SemiBold", sans-serif;
+      text-align: right;
+      border-inline-end: 2px solid white;
+      padding-inline-end: 2em;
+    }
+
+    blockquote :first-child::before {
+      content: '“';
+      display: inline-block;
+    }
+
+    blockquote :first-child::after {
+      content: '”';
+      display: inline-block;
+    }
+
+    figcaption {
+      font-family: "Montserrat", sans-serif;
+      font-size: 0.75em;
+    }
   </style>
 
   <div id="brno-container">
@@ -74,7 +110,13 @@
         :src="url('/decks/devconf-brno-2023/devconf-textmark.png')"
          webc:if="this.class === 'title'">
 
-    <section id="titles" :class="this.class ?? 'plain'">
+    <figure webc:if="this.class === 'quote'">
+      <blockquote><slot></slot></blockquote>
+      <figcaption><slot name="author"></slot></figcaption>
+    </figure>
+    <section id="titles"
+            :class="this.class ?? 'plain'"
+             webc:if="this.class !== 'quote'">
       <slot id="heading"
             name="heading"
             webc:keep></slot>

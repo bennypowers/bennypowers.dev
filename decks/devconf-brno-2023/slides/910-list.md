@@ -1,6 +1,6 @@
 ## List Slide {slot=title}
 
-Subtitle {slot=subtitle}
+This list slide has a subtitle
 
 - item 1
 - item 2
