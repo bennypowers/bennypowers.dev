@@ -17,8 +17,8 @@
   --markdown-syntax-operator-color: var(--sky);
   --markdown-syntax-class-name-color: var(--maroon);
   --markdown-syntax-number-color: var(--yellow);
-  --spacer-inline: 4em;
-  --spacer-block: 2em;
+  --spacer-block: 4.8vw;
+  --spacer-inline: calc(var(--spacer-block) * var(--deck-aspect));
 
   font-family: Montserrat, sans-serif;
 }

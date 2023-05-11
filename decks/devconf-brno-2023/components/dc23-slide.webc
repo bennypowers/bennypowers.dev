@@ -13,35 +13,32 @@
       grid-template-rows: min-content auto;
       grid-template-columns: 1fr;
       overflow: hidden;
-    }
-
-    #stripe {
-      display: none;
-      align-items: center;
-      background: var(--deck-primary-color);
-    }
-
-    img {
-      display: block;
-      width: 4em;
-    }
-
-    #contents {
-      display: grid;
-      gap: 1em;
-      grid-template-columns: repeat(var(--columns, 1), 1fr);
+      padding-block: var(--spacer-block);
+      padding-inline: var(--spacer-inline);
       font-size: 1.2em;
     }
 
     #title {
       display: block;
       grid-column: 1/-1;
-      padding-block: var(--spacer-block);
+      margin-block-end: var(--spacer-block);
     }
 
-    #title,
     #contents {
-      padding-inline: var(--spacer-inline);
+      display: grid;
+      column-gap: 1em;
+      grid-auto-rows: min-content;
+      grid-template-columns: repeat(var(--columns, 1), 1fr);
+    }
+
+    #stripe {
+      align-items: center;
+      background: var(--deck-primary-color);
+    }
+
+    #stripe img {
+      display: block;
+      width: 4em;
     }
 
     .footer {
