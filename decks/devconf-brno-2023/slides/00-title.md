@@ -7,7 +7,6 @@ class: title
 
 A Performant Design System {slot=subheading}
 
-<div slot="speaker">
-  <p>Benny Powers</p>
-  <p>Principal UX Engineer</p>
-</div>
+Benny Powers
+: Principal UX Engineer
+{slot=speaker}
