@@ -102,8 +102,5 @@
 
 <script type="module">
   import { SlidemSlide } from 'slidem/slidem-slide.js';
-  class Dc23Slide extends SlidemSlide {
-    static is = 'dc23-slide';
-  }
-  customElements.define(Dc23Slide.is, Dc23Slide);
+  customElements.define( 'dc23-slide', class Dc23Slide extends SlidemSlide { });
 </script>

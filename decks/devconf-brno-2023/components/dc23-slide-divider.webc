@@ -66,8 +66,5 @@
 </template>
 
 <script type="module">
-  class Dc23SlideDivider extends SlidemSlide {
-    static is = 'dc23-slide-divider';
-  }
-  customElements.define(Dc23SlideDivider.is, Dc23SlideDivider);
+  customElements.define('dc23-slide-divider', class Dc23SlideDivider extends SlidemSlide { });
 </script>
