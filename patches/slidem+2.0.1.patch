@@ -264,7 +264,7 @@ index 39c60ee..0000000
 -  "names": ["sheet", "slidem_deck_default", "slidem_deck_default"]
 -}
 diff --git a/node_modules/slidem/slidem-slide-base.js b/node_modules/slidem/slidem-slide-base.js
-index b53b012..4601c3f 100644
+index b53b012..2a44ef2 100644
 --- a/node_modules/slidem/slidem-slide-base.js
 +++ b/node_modules/slidem/slidem-slide-base.js
 @@ -52,9 +52,11 @@ var __privateMethod = (obj, member, method) => {
@@ -320,7 +320,49 @@ index b53b012..4601c3f 100644
    }
    set step(step) {
      this.setAttribute("step", step);
-@@ -213,7 +217,7 @@ _steps = new WeakMap();
+@@ -186,12 +190,7 @@ var _SlidemSlideBase = class extends HTMLElement {
+   }
+   connectedCallback() {
+     __privateGet(_SlidemSlideBase, _instances).add(this);
+-    __privateSet(this, _steps, Array.from(this.querySelectorAll("[reveal]")));
+-    this.steps = __privateGet(this, _steps).length;
+-    __privateMethod(this, _resizeContent, resizeContent_fn).call(this);
+-    __privateGet(this, _steps).forEach((step, i) => step.setAttribute("step", i + 2));
+-    if (__privateGet(this, _steps).length)
+-      __privateGet(this, _steps)[0].previousElementSibling?.setAttribute("step", 1);
++    this.defineSteps(this.querySelector("[reveal]"));
+   }
+   disconnectedCallback() {
+     __privateGet(_SlidemSlideBase, _instances).delete(this);
+@@ -206,6 +205,27 @@ var _SlidemSlideBase = class extends HTMLElement {
+       __privateMethod(this, _setStep, setStep_fn).call(this, step);
+     }
+   }
++  /**
++   * Imperatively set the list of steps for this slide
++   * @example when the steps are located in the shadow root
++   *          ```javascript
++   *          class DeclarativeShadowSlide extends SlidemSlideBase {
++   *            async connectedCallback() {
++   *              super.connectedCallback();
++   *              await polyfillDeclarativeShadowDOM(this);
++   *              this.defineSteps(this.shadowRoot.querySelectorAll('[reveal]'));
++   *            }
++   *          }
++   *          ```
++   */
++  defineSteps(nodelist) {
++    __privateSet(this, _steps, Array.from(nodelist ?? []));
++    this.steps = __privateGet(this, _steps).length;
++    __privateMethod(this, _resizeContent, resizeContent_fn).call(this);
++    __privateGet(this, _steps).forEach((step, i) => step.setAttribute("step", i + 2));
++    if (__privateGet(this, _steps).length)
++      __privateGet(this, _steps)[0].previousElementSibling?.setAttribute("step", 1);
++  }
+ };
+ var SlidemSlideBase = _SlidemSlideBase;
+ _instances = new WeakMap();
+@@ -213,7 +233,7 @@ _steps = new WeakMap();
  _setStep = new WeakSet();
  setStep_fn = function(step) {
    this.querySelector('[step="1"]')?.toggleAttribute?.("past", step > 1);
@@ -343,7 +385,7 @@ index 80ea65e..0000000
 -  "names": ["slidem_slide_base_default", "slidem_slide_base_default"]
 -}
 diff --git a/node_modules/slidem/slidem-slide.js b/node_modules/slidem/slidem-slide.js
-index b947ae0..043aaa2 100644
+index b947ae0..f21ffe0 100644
 --- a/node_modules/slidem/slidem-slide.js
 +++ b/node_modules/slidem/slidem-slide.js
 @@ -52,9 +52,11 @@ var __privateMethod = (obj, member, method) => {
@@ -399,7 +441,49 @@ index b947ae0..043aaa2 100644
    }
    set step(step) {
      this.setAttribute("step", step);
-@@ -213,7 +217,7 @@ _steps = new WeakMap();
+@@ -186,12 +190,7 @@ var _SlidemSlideBase = class extends HTMLElement {
+   }
+   connectedCallback() {
+     __privateGet(_SlidemSlideBase, _instances).add(this);
+-    __privateSet(this, _steps, Array.from(this.querySelectorAll("[reveal]")));
+-    this.steps = __privateGet(this, _steps).length;
+-    __privateMethod(this, _resizeContent, resizeContent_fn).call(this);
+-    __privateGet(this, _steps).forEach((step, i) => step.setAttribute("step", i + 2));
+-    if (__privateGet(this, _steps).length)
+-      __privateGet(this, _steps)[0].previousElementSibling?.setAttribute("step", 1);
++    this.defineSteps(this.querySelector("[reveal]"));
+   }
+   disconnectedCallback() {
+     __privateGet(_SlidemSlideBase, _instances).delete(this);
+@@ -206,6 +205,27 @@ var _SlidemSlideBase = class extends HTMLElement {
+       __privateMethod(this, _setStep, setStep_fn).call(this, step);
+     }
+   }
++  /**
++   * Imperatively set the list of steps for this slide
++   * @example when the steps are located in the shadow root
++   *          ```javascript
++   *          class DeclarativeShadowSlide extends SlidemSlideBase {
++   *            async connectedCallback() {
++   *              super.connectedCallback();
++   *              await polyfillDeclarativeShadowDOM(this);
++   *              this.defineSteps(this.shadowRoot.querySelectorAll('[reveal]'));
++   *            }
++   *          }
++   *          ```
++   */
++  defineSteps(nodelist) {
++    __privateSet(this, _steps, Array.from(nodelist ?? []));
++    this.steps = __privateGet(this, _steps).length;
++    __privateMethod(this, _resizeContent, resizeContent_fn).call(this);
++    __privateGet(this, _steps).forEach((step, i) => step.setAttribute("step", i + 2));
++    if (__privateGet(this, _steps).length)
++      __privateGet(this, _steps)[0].previousElementSibling?.setAttribute("step", 1);
++  }
+ };
+ var SlidemSlideBase = _SlidemSlideBase;
+ _instances = new WeakMap();
+@@ -213,7 +233,7 @@ _steps = new WeakMap();
  _setStep = new WeakSet();
  setStep_fn = function(step) {
    this.querySelector('[step="1"]')?.toggleAttribute?.("past", step > 1);
@@ -408,7 +492,7 @@ index b947ae0..043aaa2 100644
      const elStep = i + 2;
      const past = elStep < step;
      const current = elStep === step;
-@@ -253,7 +257,7 @@ var SlidemSlide = class extends SlidemSlideBase {
+@@ -253,7 +273,7 @@ var SlidemSlide = class extends SlidemSlideBase {
      __privateAdd(this, _styleLayoutNode);
      __privateAdd(this, _rescale);
    }
@@ -431,7 +515,7 @@ index 6fe7f53..0000000
 -  "names": ["slidem_slide_base_default", "slidem_slide_base_default"]
 -}
 diff --git a/node_modules/slidem/slidem-video-slide.js b/node_modules/slidem/slidem-video-slide.js
-index 0bc194a..94c2182 100644
+index 0bc194a..3ac84e6 100644
 --- a/node_modules/slidem/slidem-video-slide.js
 +++ b/node_modules/slidem/slidem-video-slide.js
 @@ -52,9 +52,11 @@ var __privateMethod = (obj, member, method) => {
@@ -487,7 +571,49 @@ index 0bc194a..94c2182 100644
    }
    set step(step) {
      this.setAttribute("step", step);
-@@ -213,7 +217,7 @@ _steps = new WeakMap();
+@@ -186,12 +190,7 @@ var _SlidemSlideBase = class extends HTMLElement {
+   }
+   connectedCallback() {
+     __privateGet(_SlidemSlideBase, _instances).add(this);
+-    __privateSet(this, _steps, Array.from(this.querySelectorAll("[reveal]")));
+-    this.steps = __privateGet(this, _steps).length;
+-    __privateMethod(this, _resizeContent, resizeContent_fn).call(this);
+-    __privateGet(this, _steps).forEach((step, i) => step.setAttribute("step", i + 2));
+-    if (__privateGet(this, _steps).length)
+-      __privateGet(this, _steps)[0].previousElementSibling?.setAttribute("step", 1);
++    this.defineSteps(this.querySelector("[reveal]"));
+   }
+   disconnectedCallback() {
+     __privateGet(_SlidemSlideBase, _instances).delete(this);
+@@ -206,6 +205,27 @@ var _SlidemSlideBase = class extends HTMLElement {
+       __privateMethod(this, _setStep, setStep_fn).call(this, step);
+     }
+   }
++  /**
++   * Imperatively set the list of steps for this slide
++   * @example when the steps are located in the shadow root
++   *          ```javascript
++   *          class DeclarativeShadowSlide extends SlidemSlideBase {
++   *            async connectedCallback() {
++   *              super.connectedCallback();
++   *              await polyfillDeclarativeShadowDOM(this);
++   *              this.defineSteps(this.shadowRoot.querySelectorAll('[reveal]'));
++   *            }
++   *          }
++   *          ```
++   */
++  defineSteps(nodelist) {
++    __privateSet(this, _steps, Array.from(nodelist ?? []));
++    this.steps = __privateGet(this, _steps).length;
++    __privateMethod(this, _resizeContent, resizeContent_fn).call(this);
++    __privateGet(this, _steps).forEach((step, i) => step.setAttribute("step", i + 2));
++    if (__privateGet(this, _steps).length)
++      __privateGet(this, _steps)[0].previousElementSibling?.setAttribute("step", 1);
++  }
+ };
+ var SlidemSlideBase = _SlidemSlideBase;
+ _instances = new WeakMap();
+@@ -213,7 +233,7 @@ _steps = new WeakMap();
  _setStep = new WeakSet();
  setStep_fn = function(step) {
    this.querySelector('[step="1"]')?.toggleAttribute?.("past", step > 1);
@@ -496,7 +622,7 @@ index 0bc194a..94c2182 100644
      const elStep = i + 2;
      const past = elStep < step;
      const current = elStep === step;
-@@ -241,9 +245,11 @@ __publicField(SlidemSlideBase, "observedAttributes", [
+@@ -241,9 +261,11 @@ __publicField(SlidemSlideBase, "observedAttributes", [
  ]);
  __privateAdd(SlidemSlideBase, _instances, /* @__PURE__ */ new Set());
  
@@ -510,7 +636,7 @@ index 0bc194a..94c2182 100644
    background: black;
    color: white;
  }
-@@ -253,10 +259,11 @@ video {
+@@ -253,10 +275,11 @@ video {
    max-height: 100%;
    max-width: 100%;
  }
