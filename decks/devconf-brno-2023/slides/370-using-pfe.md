@@ -1,3 +1,6 @@
+---
+class: sidebar
+---
 ## Using PFE
 ### Developer Experience
 HTML-First: Remember writing HTML?
