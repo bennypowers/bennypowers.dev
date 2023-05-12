@@ -1,5 +1,13 @@
+<template webc:type="11ty" 11ty:type="njk,md">
+
+  {% feature %}
+  {{ content }}
+  {% endfeature %}
+
+</template>
 <slot></slot>
 
+<!---
 ```html
   <script webc:type="render"
           webc:is="template"
@@ -8,3 +16,4 @@
     function() { return this.log(this).slots.default }
   </script>
 ```
+--->

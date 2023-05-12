@@ -199,11 +199,9 @@
       const deck = this.closest('slidem-deck');
       const allSlides = Array.from(deck.querySelectorAll('*')).filter(x => x instanceof SlidemSlide);
       const notes = this.shadowRoot.querySelectorAll('[slot=notes]');
-      console.log({deck, allSlides})
       for (const note of notes) {
         note.setAttribute('slide', allSlides.indexOf(this) + 1);
         deck.append(note);
-        console.log({ note })
       }
     }
   }

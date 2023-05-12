@@ -90,6 +90,7 @@ module.exports = function(eleventyConfig) {
     specs: [
       'tslib',
       '@patternfly/elements/pf-icon/pf-icon.js',
+      '@patternfly/elements/pf-card/pf-card.js',
       '@patternfly/elements/pf-modal/pf-modal.js',
       '@patternfly/elements/pf-spinner/pf-spinner.js',
       '@patternfly/elements/pf-spinner/BaseSpinner.js',
@@ -118,6 +119,19 @@ module.exports = function(eleventyConfig) {
       };
     }
   });
+
+  eleventyConfig.addPairedShortcode('dc23Feature', function(content, lang="html") {
+    return `<div slot="feature">
+
+\`\`\`${lang}
+${content}
+\`\`\`
+
+</div>
+${content}
+
+`;
+  })
 
   return {
     templateFormats: [ 'md', 'njk', 'html', 'svg', 'css' ],
