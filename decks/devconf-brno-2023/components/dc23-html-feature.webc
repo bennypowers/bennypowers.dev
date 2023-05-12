@@ -1,0 +1,10 @@
+<slot></slot>
+
+```html
+  <script webc:type="render"
+          webc:is="template"
+          webc:raw
+          webc:nokeep>
+    function() { return this.log(this).slots.default }
+  </script>
+```
