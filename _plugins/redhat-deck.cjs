@@ -25,17 +25,15 @@ export default template;
 `;
 }
 
-function writeModules(transform, ext) {
-  return async function() {
-    const cwd = join(__dirname, 'redhat-deck', 'elements')
-    const OUTDIR = join(process.cwd(), '_site', 'assets', 'redhat-deck', 'elements');
-    const FILES = await glob(`*.${ext}`, { cwd });
-    for (const fileName of FILES) {
-      const OUTFILE = join(OUTDIR, fileName) + '.js';
-      const contents = await readFile(join(cwd, fileName), 'utf8');
-      await mkdir(dirname(OUTFILE), { recursive: true });
-      await writeFile(OUTFILE, await transform(contents, fileName), 'utf8')
-    }
+async function writeModules(transform, ext) {
+  const cwd = join(__dirname, 'redhat-deck', 'elements')
+  const OUTDIR = join(process.cwd(), '_site', 'assets', 'redhat-deck', 'elements');
+  const FILES = await glob(`*.${ext}`, { cwd });
+  for (const fileName of FILES) {
+    const OUTFILE = join(OUTDIR, fileName) + '.js';
+    const contents = await readFile(join(cwd, fileName), 'utf8');
+    await mkdir(dirname(OUTFILE), { recursive: true });
+    await writeFile(OUTFILE, await transform(contents, fileName), 'utf8')
   }
 }
 
@@ -94,7 +92,15 @@ module.exports = function(eleventyConfig, options) {
   eleventyConfig.addWatchTarget('decks/*/slides/*.md');
   eleventyConfig.addPairedShortcode('quote', quote);
   eleventyConfig.addPairedShortcode('inputType', inputType);
-  eleventyConfig.on('eleventy.before', writeEntryPoint);
-  eleventyConfig.on('eleventy.before', writeModules(cssModularize, 'css'))
-  eleventyConfig.on('eleventy.before', writeModules(htmlModularize, 'html'))
+  let watchRanOnce = false;
+
+  eleventyConfig.on('eleventy.before', async function({ runMode }) {
+    if ((runMode === 'serve' || runMode === 'watch') && watchRanOnce) return;
+    await Promise.all([
+      writeEntryPoint(),
+      writeModules(cssModularize, 'css'), 
+      writeModules(htmlModularize, 'html'), 
+    ])
+      watchRanOnce = true;
+    });
 }

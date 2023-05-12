@@ -21,18 +21,15 @@ async function copyRecursive(from, to) {
 }
 
 module.exports = function(eleventyConfig) {
-  eleventyConfig.on('eleventy.before', async (e) => {
-    // console.log('Copying base RHDS styles...');
-    // const globalStylesIn = path.join(require.resolve('@rhds/tokens'), '..', '..', 'css', 'global.css');
-    // const globalStylesOut = path.join(process.cwd(), 'assets', 'css', 'rhds.css');
-    // if (!fs.existsSync(globalStylesOut)) {
-    //   await copyFile( globalStylesIn, globalStylesOut);
-    // }
+  let watchRanOnce = false
+  eleventyConfig.on('eleventy.before', async ({ runMode }) => {
+    if ((runMode === 'serve' || runMode === 'watch') && watchRanOnce) return;
     console.log('Copying RHDS elements assets...');
     const from = path.join(require.resolve('@rhds/elements'), '..');
     const to = path.join(process.cwd(), '_site', 'assets', '@rhds', 'elements');
     await copyRecursive(from, to);
     console.log('  ...done');
+    watchRanOnce = true;
   });
 
   /** Load upstream plugins only if they aren't already loaded */
