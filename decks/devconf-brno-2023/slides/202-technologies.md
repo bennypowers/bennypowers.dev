@@ -1,5 +1,5 @@
 ---
-class: grid-2x2
+class: footer grid-2x2
 ---
 <h2 slot="title">Web Component Core Technologies</h2>
 <figure-img src="ce.svg">Custom Elements</figure-img>

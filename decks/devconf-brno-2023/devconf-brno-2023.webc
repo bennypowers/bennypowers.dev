@@ -2,6 +2,7 @@
 eleventyImport:
   collections:
     - devconf23
+    - icon
 ---
 <slide-deck webc:nokeep
             webc:import="npm:eleventy-plugin-slide-decks"

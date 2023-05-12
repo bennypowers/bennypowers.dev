@@ -29,7 +29,7 @@
       grid-template-columns: repeat(var(--columns, 1), 1fr);
     }
 
-    figure:not(.figure-img) {
+    figure {
       margin: 0;
       width: 100%;
       grid-column: 1/-1;
@@ -54,7 +54,7 @@
       display: inline-block;
     }
 
-    figure:not(.figure-img) figcaption {
+    figure figcaption {
       display: flex;
       flex-direction: column;
       padding-block: .5em;
@@ -63,7 +63,7 @@
       text-align: right;
     }
 
-    figure:not(.figure-img) figcaption::before {
+    figure figcaption::before {
       content: '';
       display: block;
       height: 2px;
