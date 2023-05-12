@@ -180,9 +180,32 @@
       <img alt="devconf.cz" :src="url('/decks/devconf-brno-2023/devconf-logo.png')">
     </footer>
   </div>
+  <slot hidden name="notes" webc:keep></slot>
 </template>
 
 <script type="module">
   import { SlidemSlide } from 'slidem/slidem-slide.js';
-  customElements.define('dc23-slide', class Dc23Slide extends SlidemSlide { });
+  class Dc23Slide extends SlidemSlide {
+    connectedCallback() {
+      super.connectedCallback();
+      if (!HTMLTemplateElement.prototype.hasOwnProperty('shadowRoot') || !HTMLTemplateElement.prototype.hasOwnProperty('shadowRootMode'))
+        this.addEventListener('declarative-shadow-dom-stamped', this.afterStamp, { once: true });
+      else
+        this.afterStamp();
+    }
+
+    afterStamp() {
+      this.defineSteps(this.shadowRoot.querySelectorAll('[reveal]') ?? [])
+      const deck = this.closest('slidem-deck');
+      const allSlides = Array.from(deck.querySelectorAll('*')).filter(x => x instanceof SlidemSlide);
+      const notes = this.shadowRoot.querySelectorAll('[slot=notes]');
+      console.log({deck, allSlides})
+      for (const note of notes) {
+        note.setAttribute('slide', allSlides.indexOf(this) + 1);
+        deck.append(note);
+        console.log({ note })
+      }
+    }
+  }
+  customElements.define('dc23-slide', Dc23Slide);
 </script>

@@ -35,3 +35,14 @@ a {
   position: relative;
   width: 100%;
 }
+
+[reveal] {
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+[current],
+[past] {
+  opacity: 1;
+}
+

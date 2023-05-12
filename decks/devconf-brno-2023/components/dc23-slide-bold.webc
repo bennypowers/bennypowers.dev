@@ -1,3 +1,5 @@
+<dc23-slide webc:nokeep></dc23-slide>
+
 <template shadowrootmode="open">
   <link rel="stylesheet" :href="url('/decks/devconf-brno-2023/shared.css')"/>
 
@@ -40,8 +42,9 @@
     <div id="title"><slot></slot></div>
     <img alt="devconf.cz" :src="url('/decks/devconf-brno-2023/devconf-logo.png')">
   </div>
+  <slot hidden name="notes" webc:keep></slot>
 </template>
 
 <script type="module">
-  customElements.define('dc23-slide-bold', class Dc23SlideBold extends SlidemSlide { });
+  customElements.define('dc23-slide-bold', class Dc23SlideBold extends Dc23Slide { });
 </script>

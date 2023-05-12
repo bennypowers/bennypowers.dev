@@ -1,3 +1,5 @@
+<dc23-slide webc:nokeep></dc23-slide>
+
 <template shadowrootmode="open">
   <link rel="stylesheet" :href="url('/decks/devconf-brno-2023/shared.css')"/>
   <style webc:keep>
@@ -5,6 +7,7 @@
       background-image: url("/decks/devconf-brno-2023/title.png") !important;
       background-size: cover !important;
       background-color: var(--deck-primary-color) !important;
+      font-size: .8em;
     }
 
     #brno-container {
@@ -132,8 +135,9 @@
     </section>
   </div>
   <slot></slot>
+  <slot hidden name="notes" webc:keep></slot>
 </template>
 
 <script type="module">
-  customElements.define('dc23-slide-divider', class Dc23SlideDivider extends SlidemSlide { });
+  customElements.define('dc23-slide-divider', class Dc23SlideDivider extends Dc23Slide { });
 </script>
