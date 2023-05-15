@@ -27,6 +27,7 @@ const PostsPlugin = require('./_plugins/posts.cjs');
 const PostCSSPlugin = require('./_plugins/postcss.cjs');
 const RedHatDeckPlugin = require('./_plugins/redhat-deck.cjs');
 const RHDSPlugin = require('./_plugins/rhds.cjs');
+const DC23Plugin = require('./_plugins/devconf-brno-2023.cjs');
 const JamPackPlugin = require('./_plugins/jampack.cjs');
 const WebmentionsPlugin = require('./_plugins/webmentions.cjs');
 const ImportMapPlugin = require('./_plugins/importMap.cjs');
@@ -57,6 +58,7 @@ module.exports = function(eleventyConfig) {
   eleventyConfig.addPlugin(PostCSSPlugin);
   eleventyConfig.addPlugin(PostsPlugin);
   eleventyConfig.addPlugin(RHDSPlugin);
+  eleventyConfig.addPlugin(DC23Plugin);
   eleventyConfig.addPlugin(RedHatDeckPlugin);
   eleventyConfig.addPlugin(TableOfContentsPlugin);
   eleventyConfig.addPlugin(TimeToReadPlugin);
@@ -119,19 +121,6 @@ module.exports = function(eleventyConfig) {
       };
     }
   });
-
-  eleventyConfig.addPairedShortcode('dc23Feature', function(content, lang="html") {
-    return `<div slot="feature">
-
-\`\`\`${lang}
-${content}
-\`\`\`
-
-</div>
-${content}
-
-`;
-  })
 
   return {
     templateFormats: [ 'md', 'njk', 'html', 'svg', 'css' ],
