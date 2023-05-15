@@ -55,7 +55,7 @@ module.exports = function(eleventyConfig) {
   eleventyConfig.addPlugin(IconsPlugin);
   eleventyConfig.addPlugin(JamPackPlugin);
   eleventyConfig.addPlugin(OpenGraphCardPlugin);
-  eleventyConfig.addPlugin(PostCSSPlugin);
+  eleventyConfig.addPlugin(PostCSSPlugin, { include: /devconf-brno-2023\/components\/.*\.css/ });
   eleventyConfig.addPlugin(PostsPlugin);
   eleventyConfig.addPlugin(RHDSPlugin);
   eleventyConfig.addPlugin(DC23Plugin);
