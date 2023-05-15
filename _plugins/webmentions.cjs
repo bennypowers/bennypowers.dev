@@ -21,15 +21,16 @@ const EleventyFetch = require('@11ty/eleventy-fetch');
  * @property {WebMention[]} children
  */
 
-/** @type {WeakMap<WebMentionResponse, Record<'likes'|'replies'|'reposts', WebMention[]>>} */
-const COLLATED = new WeakMap();
+/** @type {Map<string, Record<'likes'|'replies'|'reposts', WebMention[]>>} */
+const COLLATED = new Map();
 
 /**
- * @param {WebMentionResponse} mentions
+ * @param {string} pageUrl
+ * @param {WebMention[]} mentions
  */
-function collateWebmentions(mentions) {
-  if (!COLLATED.has(mentions)) {
-    COLLATED.set(mentions, mentions.children.reduce((acc, mention) => {
+function collateWebmentions(pageUrl, mentions) {
+  if (!COLLATED.has(pageUrl)) {
+    COLLATED.set(pageUrl, mentions.reduce((acc, mention) => {
       switch(mention['wm-property']) {
         case 'like-of': acc.likes.push(mention); break;
         case 'repost-of': acc.reposts.push(mention); break;
@@ -38,32 +39,45 @@ function collateWebmentions(mentions) {
       return acc;
     }, { likes: [], reposts: [], replies: []}));
   }
-  return COLLATED.get(mentions);
+  return COLLATED.get(pageUrl);
+}
+
+/**
+ * @param {import('@11ty/eleventy/src/UserConfig.js')} eleventyConfig
+ * @param {string} domain
+ */
+function getWebmentions(eleventyConfig, domain) {
+  /**
+   * @param {string}   pageUrl
+   * @param {string[]} altUrls
+   */
+  return async function getWebmentions(pageUrl, altUrls) {
+    /** @type {WebMentionResponse} */
+    const allWMs = eleventyConfig.globalData.allWebmentions;
+    const pageUrlRE = new RegExp(`^https?:\/\/${domain}${pageUrl}?`);
+    const pageMentions = allWMs.children.filter(wm => {
+      const target = wm['wm-target'];
+      return pageUrlRE.test(target) || altUrls?.includes(target);
+    });
+    return collateWebmentions(pageUrl, pageMentions);
+  }
 }
 
 /** @param {import('@11ty/eleventy/src/UserConfig.js')} eleventyConfig */
 module.exports = function(eleventyConfig, { domain, webmentionIoToken }) {
-  eleventyConfig.addFilter('collateWebmentions', collateWebmentions);
-  eleventyConfig.addFilter('isWebmentionLike', mention => mention?.['wm-property'] === 'like-of');
-  eleventyConfig.addFilter('isWebmentionRepost', mention => mention?.['wm-property'] === 'repost-of');
-  eleventyConfig.addFilter('isWebmentionReply', mention => mention?.['wm-property'] === 'in-reply-to');
-  eleventyConfig.addFilter('getWebmentions', async function(pageUrl, altUrls) {
-    const target = new URL(pageUrl.replace(/index\.html$/, ''), domain).href;
+  eleventyConfig.on('eleventy.before', async function() {
     const webmentionIoUrl = new URL('/api/mentions.jf2', 'https://webmention.io')
           webmentionIoUrl.searchParams.append('token', webmentionIoToken);
-          webmentionIoUrl.searchParams.append('target[]', target);
-    // Hoping one day to slurp up dev.to likes and comments this way, but for now,
-    // adding them returns an empty list
-    // for (const t of altUrls.filter(x => !x.startsWith('https://dev.to')))
-    //       resourceUrl.searchParams.append('target[]', target);
-
-    /** @type {WebMentionResponse} */
+          webmentionIoUrl.searchParams.append('domain', domain);
     const mentions = await EleventyFetch(webmentionIoUrl.href, {
       duration: '1h',
       type: 'json',
       verbose: true,
     });
-
-    return mentions;
+    eleventyConfig.addGlobalData('allWebmentions', mentions);
   });
+  eleventyConfig.addFilter('isWebmentionLike', mention => mention?.['wm-property'] === 'like-of');
+  eleventyConfig.addFilter('isWebmentionRepost', mention => mention?.['wm-property'] === 'repost-of');
+  eleventyConfig.addFilter('isWebmentionReply', mention => mention?.['wm-property'] === 'in-reply-to');
+  eleventyConfig.addFilter('getWebmentions', getWebmentions(eleventyConfig, domain));
 }

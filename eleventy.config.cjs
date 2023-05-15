@@ -82,30 +82,13 @@ module.exports = function(eleventyConfig) {
     }
   });
   eleventyConfig.addPlugin(WebmentionsPlugin, {
-    domain: 'https://bennypowers.dev',
+    domain: 'bennypowers.dev',
     webmentionIoToken: process.env.WEBMENTION_IO_TOKEN,
     devToToken: process.env.DEV_TO_TOKEN,
   });
   eleventyConfig.addPlugin(ImportMapPlugin, {
     specs: [
       'tslib',
-      '@patternfly/pfe-core',
-      '@patternfly/pfe-core/decorators.js',
-      '@patternfly/pfe-core/controllers/cascade-controller.js',
-      '@patternfly/pfe-core/controllers/css-variable-controller.js',
-      '@patternfly/pfe-core/controllers/light-dom-controller.js',
-      '@patternfly/pfe-core/controllers/logger.js',
-      '@patternfly/pfe-core/controllers/perf-controller.js',
-      '@patternfly/pfe-core/controllers/property-observer-controller.js',
-      '@patternfly/pfe-core/controllers/slot-controller.js',
-      '@patternfly/pfe-core/controllers/style-controller.js',
-      '@patternfly/pfe-core/decorators/bound.js',
-      '@patternfly/pfe-core/decorators/cascades.js',
-      '@patternfly/pfe-core/decorators/deprecation.js',
-      '@patternfly/pfe-core/decorators/initializer.js',
-      '@patternfly/pfe-core/decorators/observed.js',
-      '@patternfly/pfe-core/decorators/time.js',
-      '@patternfly/pfe-core/decorators/trace.js',
       '@patternfly/elements/pf-icon/pf-icon.js',
       '@patternfly/elements/pf-modal/pf-modal.js',
       '@patternfly/elements/pf-spinner/pf-spinner.js',
