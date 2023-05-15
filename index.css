@@ -3,7 +3,7 @@ h1 {
 
   font-size: 1.3em;
 
-  @media (min-width: 500px) {
+  @media (width >= 500px) {
     font-size: 2em;
   }
 }
@@ -19,6 +19,7 @@ main {
 
 #hero {
   image-rendering: pixelated;
+  width: 50%;
 }
 
 #latest {
