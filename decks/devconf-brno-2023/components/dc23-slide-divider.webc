@@ -1,8 +1,8 @@
 <dc23-slide webc:nokeep></dc23-slide>
 
 <template shadowrootmode="open">
-  <link rel="stylesheet" :href="url('/decks/devconf-brno-2023/shared.css')"/>
-  <link rel="stylesheet" :href="url('/decks/devconf-brno-2023/components/dc23-slide-divider.css')"/>
+  <link rel="stylesheet" :href="url('components/shared.css')"/>
+  <link rel="stylesheet" :href="url('components/dc23-slide-divider.css')"/>
 
   <div id="brno-container">
     <img id="logo"

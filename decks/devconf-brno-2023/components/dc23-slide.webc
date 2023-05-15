@@ -2,9 +2,11 @@
   const hasStripe = slide =>
     slide.class?.match(/\bfooter\b|\bsidebar\b/);
 </script>
+
 <template shadowrootmode="open">
-  <link rel="stylesheet" :href="url('/decks/devconf-brno-2023/shared.css')"/>
-  <link rel="stylesheet" :href="url('/decks/devconf-brno-2023/components/dc23-slide.css')")"
+  <link rel="stylesheet" :href="url('components/shared.css')"/>
+  <link rel="stylesheet" :href="url('components/dc23-slide.css')"/>
+
   <div id="brno-container" :class="this.class ?? 'plain'">
     <slot id="title" name="title" webc:keep></slot>
     <div id="contents">
@@ -27,7 +29,7 @@
       </svg>
     </div>
     <footer id="stripe" webc:if="hasStripe(this)">
-      <img alt="devconf.cz" :src="url('/decks/devconf-brno-2023/devconf-logo.png')">
+      <img alt="devconf.cz" :src="url('devconf-logo.png')">
     </footer>
   </div>
   <slot hidden name="notes" webc:keep></slot>

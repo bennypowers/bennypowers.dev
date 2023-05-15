@@ -1,16 +1,4 @@
-const postcss = require('./postcss.cjs');
+/** @param {import('@11ty/eleventy/src/UserConfig')} eleventyConfig */
 module.exports = function(eleventyConfig) {
-  eleventyConfig.addPairedShortcode('dc23Feature', function(content, lang="html") {
-    return `<div slot="feature">
-
-\`\`\`${lang}
-${content}
-\`\`\`
-
-</div>
-${content}
-
-`;
-  })
-
+  eleventyConfig.addPassthroughCopy('./decks/devconf-brno-2023/components/*.css');
 }

@@ -1,12 +1,12 @@
 <dc23-slide webc:nokeep></dc23-slide>
 
 <template shadowrootmode="open">
-  <link rel="stylesheet" :href="url('/decks/devconf-brno-2023/shared.css')"/>
-  <link rel="stylesheet" :href="url('/decks/devconf-brno-2023/components/dc23-slide-bold.css')"/>
+  <link rel="stylesheet" :href="url('components/shared.css')"/>
+  <link rel="stylesheet" :href="url('components/dc23-slide-bold.css')"/>
 
   <div id="brno-container">
     <div id="title"><slot></slot></div>
-    <img alt="devconf.cz" :src="url('/decks/devconf-brno-2023/devconf-logo.png')">
+    <img alt="devconf.cz" :src="url('devconf-logo.png')">
   </div>
   <slot hidden name="notes" webc:keep></slot>
 </template>

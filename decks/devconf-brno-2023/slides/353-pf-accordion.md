@@ -15,7 +15,8 @@ hide more detailed information as needed.
     <h3>Freedom 0: To Run</h3>
   </pf-accordion-header>
   <pf-accordion-panel>
-    <p>The freedom to run the program as you wish, for any purpose.</p>
+    <p>The freedom to run the program
+       as you wish, for any purpose.</p>
   </pf-accordion-panel>
 
   ...

@@ -2,8 +2,13 @@
 class: sidebar
 ---
 ## Using PFE
+
+Good-old HTML!
+
 ### Developer Experience
-HTML-First: Remember writing HTML?
 Ease up on that webpack config for a minute
-Try a CDN first, maybe write an event listener
+
+Try a CDN first
+
+Maybe write an event listener
 
