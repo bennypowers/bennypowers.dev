@@ -36,5 +36,10 @@ slidem-deck {
   font-family: Montserrat, sans-serif;
   font-weight: 300;
   font-size: 1.4vw;
+
+  /* adjustments for demo components, because of root font-size changes */
+  --pf-global--FontSize--sm: 1em;
+  --pf-global--FontSize--md: 1.2em;
+  --pf-global--FontSize--lg: 1.5em;
 }
 
