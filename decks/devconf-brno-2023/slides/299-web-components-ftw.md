@@ -1,5 +1,5 @@
 ---
 is: dc23-slide-bold
-class: secondary
+class: tertiary
 ---
 ## Web Components are Here to Stay

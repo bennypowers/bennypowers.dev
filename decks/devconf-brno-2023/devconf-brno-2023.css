@@ -1,22 +1,17 @@
 :root {
+  --dc23-lilac: #8e83e4;
+  --dc23-magenta: #ff0099;
+  --dc23-cyan: #00addc;
+  --dc23-orange: #dc2f00;
+  --dc23-green: #00ff66;
+  --dc23-grey: #595959;
   --deck-primary-background: white;
-  --deck-secondary-background: var(--rh-color-surface--light);
-  --deck-primary-color: #8e83e4;
-  --deck-secondary-color: #00addc;
-  --deck-tertiary-color: #ff0099;
+  --deck-primary-color: var(--dc23-lilac);
+  --deck-secondary-color: var(--dc23-cyan);
+  --deck-tertiary-color: var(--dc23-magenta);
+  --deck-primary-text: var(--dc23-grey);
   --deck-aspect: 287/161;
   --fixed-font: var(--rh-font-family-code);
-  --markdown-syntax-color: var(--rh-color-text-primary-on-light);
-  --markdown-syntax-comment-color: var(--surface2);
-  --markdown-code-background-color: var(--base);
-  --markdown-syntax-keyword-color: var(--mauve);
-  --markdown-syntax-background-color: var(--base);
-  --markdown-syntax-function-color: var(--blue);
-  --markdown-syntax-regex-color: var(--peach);
-  --markdown-syntax-punctuation-color: var(--subtext1);
-  --markdown-syntax-operator-color: var(--sky);
-  --markdown-syntax-class-name-color: var(--maroon);
-  --markdown-syntax-number-color: var(--yellow);
   --spacer-block: 4.8vw;
   --spacer-inline: calc(var(--spacer-block) * var(--deck-aspect));
 
@@ -27,12 +22,12 @@
 :not(:defined),[hidden] { display: none !important; }
 
 #slides-progress {
-  --indicator-color: var(--deck-secondary-color);
+  --indicator-color: var(--dc23-cyan);
 }
 
 slidem-deck {
   line-height: inherit;
-  color: #595959;
+  color: var(--deck-primary-text);
   font-family: Montserrat, sans-serif;
   font-weight: 300;
   font-size: 1.4vw;

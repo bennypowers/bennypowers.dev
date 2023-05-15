@@ -9,6 +9,19 @@ reduce page scrolling, by allowing users to choose whether they want to show or
 hide more detailed information as needed.
 {slot=notes}
 
+```html
+<pf-accordion>
+  <pf-accordion-header>
+    <h3>Freedom 0: To Run</h3>
+  </pf-accordion-header>
+  <pf-accordion-panel>
+    <p>The freedom to run the program as you wish, for any purpose.</p>
+  </pf-accordion-panel>
+
+  ...
+</pf-accordion>
+```
+
 <pf-accordion slot="feature" reveal>
   <pf-accordion-header>
     <h3>Freedom 0: To Run</h3>
@@ -38,19 +51,6 @@ hide more detailed information as needed.
     <p>The freedom to distribute copies of your modified versions to others. By doing this you can give the whole community a chance to benefit from your changes. Access to the source code is a precondition for this. </p>
   </pf-accordion-panel>
 </pf-accordion>
-
-```html
-<pf-accordion>
-  <pf-accordion-header>
-    <h3>Freedom 0: To Run</h3>
-  </pf-accordion-header>
-  <pf-accordion-panel>
-    <p>The freedom to run the program as you wish, for any purpose.</p>
-  </pf-accordion-panel>
-
-  ...
-</pf-accordion>
-```
 
 <script type="module">
 import '@patternfly/elements/pf-accordion/pf-accordion.js';

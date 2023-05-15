@@ -46,3 +46,31 @@ a {
   opacity: 1;
 }
 
+/*********************************************************
+ * Prism
+ */
+pre[class*="language-"] {
+  color: var(--deck-primary-text);
+  font-size: 13px;
+  text-shadow: none;
+  font-family: Consolas, Monaco, "Andale Mono", "Ubuntu Mono", monospace;
+  direction: ltr;
+  text-align: left;
+  white-space: pre;
+  word-spacing: normal;
+  word-break: normal;
+  line-height: 1.5;
+  tab-size: 4;
+  hyphens: none;
+}
+
+pre[class*="language-"]::selection,
+code::selection {
+  text-shadow: none;
+  background: var(--dc23-cyan);
+}
+
+pre .token.punctuation { color: var(--dc23-lilac); opacity: 0.7; }
+pre .token.attr-name { color: var(--dc23-orange); }
+pre .token.attr-value { color: var(--dc23-magenta); }
+pre .token.tag { color: var(--dc23-lilac); }
