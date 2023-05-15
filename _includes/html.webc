@@ -30,7 +30,6 @@
     <meta property="og:image:height" content="1024">
     <meta property="og:image:type" :content="mime(coverImage) ?? 'image/png'">
 
-    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
     <link rel="preconnect" href="https://fonts.googleapis.com">
 
     <link rel="apple-touch-icon"                 webc:keep :href="url('/assets/images/manifest/icon-48x48.png')">
@@ -48,10 +47,6 @@
     <noscript><style>:not(:defined) { display: initial; }</style></noscript>
 
     <link rel="stylesheet" href="base.css">
-
-    <link rel="stylesheet"
-          webc:keep
-          href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
 
     <link rel="stylesheet"
           media="(prefers-color-scheme: light)"
