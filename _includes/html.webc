@@ -47,6 +47,7 @@
     <noscript><style>:not(:defined) { display: initial; }</style></noscript>
 
     <link rel="stylesheet" href="base.css">
+    <link rel="stylesheet" href="desktop.css" webc:bucket="desktop">
 
     <link rel="stylesheet"
           media="(prefers-color-scheme: light)"
@@ -75,7 +76,7 @@
 
     <script type="importmap"
        webc:keep
-       webc:if="importMap" @raw="JSON.stringify(importMap, null, 2)"></script>
+       webc:if="importMap" @raw="JSON.stringify(importMap, null, watch ? 2 : 0)"></script>
     <!-- ES Module Shims: Import maps polyfill for modules browsers without import maps support (all except Chrome 89+) -->
     <script webc:if="importMap" async src="https://ga.jspm.io/npm:es-module-shims@1.5.1/dist/es-module-shims.js" crossorigin="anonymous" webc:keep></script>
 
@@ -87,9 +88,15 @@
 
     <script type="module" :src="url('/assets/main.js')" webc:keep></script>
     <style @raw="getBundle('css')" webc:keep></style>
+    <style @raw="getBundle('css', 'desktop')"
+           media="(min-width: 1000px)"
+           data-bundle="desktop"
+           webc:keep></style>
     <script @raw="getBundle('js')" webc:keep></script>
 
-    <style webc:if="watch" webc:keep data-file="watch.css">
+    <style data-bundle="watch"
+           webc:if="watch"
+           webc:keep>
       html :has(body.unpublished) {
         border: 4px solid hotpink;
       }

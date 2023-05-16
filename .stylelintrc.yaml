@@ -2,47 +2,6 @@ extends: stylelint-config-standard
 ignoreFiles:
   - node_modules/**/*
 
-rules:
-  alpha-value-notation: number # TODO: fix for `percentage` in tokens
-  color-hex-length: long
-  color-function-notation: legacy # TODO: fix for `modern` in tokens
-  custom-property-pattern: _?[a-z]+[a-z0-9-]*
-  declaration-block-no-redundant-longhand-properties:
-    - true
-    - ignoreShorthands:
-        - /grid/
-  indentation: 2
-  number-max-precision: 6
-  no-descending-specificity:
-    - true
-    - ignore:
-      - selectors-within-list
-  selector-class-pattern: null
-  selector-combinator-space-after: always
-  selector-combinator-space-before: always
-  selector-pseudo-element-colon-notation: single
-  shorthand-property-no-redundant-values: true
-  string-quotes: double
-  csstools/use-nesting: always
-  max-line-length:
-    - 100
-    - ignorePattern: /--rh-font-family-/
-  selector-type-no-unknown:
-    - true
-    - ignore:
-        - custom-elements
-      ignoreTypes:
-        - heading
-        - actions
-
-  selector-pseudo-element-no-unknown:
-    - true
-    - ignorePseudoElements:
-      - /part(.*)/
-
-plugins:
-  - stylelint-use-nesting
-
 overrides:
   - files:
     - decks/nvim-regexplainer/*.css
@@ -53,3 +12,45 @@ overrides:
     - _plugins/redhat-deck/redhat-theme.css
     rules:
       csstools/use-nesting: ignore
+
+plugins:
+  - stylelint-use-nesting
+
+rules:
+  alpha-value-notation: number # TODO: fix for `percentage` in tokens
+  color-function-notation: legacy # TODO: fix for `modern` in tokens
+  color-hex-length: long
+  csstools/use-nesting: always
+  custom-property-pattern: _?[a-z]+[a-z0-9-]*
+  declaration-block-no-redundant-longhand-properties:
+    - true
+    - ignoreShorthands:
+        - /grid/
+  indentation: 2
+  max-line-length:
+    - 100
+    - ignorePattern: /--rh-font-family-/
+  media-feature-range-notation: never # TODO: https://github.com/divriots/jampack/issues/69
+  no-descending-specificity:
+    - true
+    - ignore:
+      - selectors-within-list
+  number-max-precision: 6
+  selector-class-pattern: null
+  selector-combinator-space-after: always
+  selector-combinator-space-before: always
+  selector-pseudo-element-colon-notation: single
+  selector-pseudo-element-no-unknown:
+    - true
+    - ignorePseudoElements:
+      - /part(.*)/
+  selector-type-no-unknown:
+    - true
+    - ignore:
+        - custom-elements
+      ignoreTypes:
+        - heading
+        - actions
+  shorthand-property-no-redundant-values: true
+  string-quotes: double
+

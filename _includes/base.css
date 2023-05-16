@@ -251,36 +251,6 @@ code-tabs:focus-within {
   --code-tabs-selected-highlight-color: var(--primary-color) !important;
 }
 
-@media (width >= 1000px) {
-  .socials {
-    display: flex;
-  }
-
-  #main-header {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    justify-items: center;
-    font-size: 150%;
-
-    & nav {
-      display: flex;
-      gap: 0.5em;
-    }
-
-    & :first-child { justify-self: start; }
-    & :last-child { justify-self: end; }
-  }
-
-  #mobile-nav {
-    display: none;
-  }
-
-  main.home {
-    text-align: center;
-    font-size: 220%;
-  }
-}
-
 #icon-sprite-sheet {
   clip: rect(0 0 0 0);
   clip-path: inset(50%);

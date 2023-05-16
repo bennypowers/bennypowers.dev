@@ -18,7 +18,7 @@ label {
 img {
   width: auto;
 
-  @nest [name^="www-"] & {
+  [name^="www-"] & {
     float: right;
     height: 260px;
     margin-inline: var(--rh-space-md);

@@ -8,13 +8,7 @@ table-of-contents {
     margin-block: 0.83em;
   }
 
-  @nest #mobile-nav-content & { display: block; }
-
-  @media (min-width: 1000px) {
-    display: block;
-
-    @nest #mobile-nav-content & { display: none; }
-  }
+  #mobile-nav-content & { display: block; }
 
   & ol {
     list-style-type: none;
@@ -24,7 +18,7 @@ table-of-contents {
 
 #mobile-nav-content {
   position: fixed;
-  inset: 40px 0 auto 0;
+  inset: 40px 0 auto;
   background: var(--background-color);
   padding: 40px;
   border: 1px solid currentcolor;

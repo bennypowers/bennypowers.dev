@@ -16,23 +16,24 @@ eleventyImport:
     - icon
 ---
 <style>
-#examples {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 1em;
-  align-items: center;
-  justify-content: center;
+  #examples {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1em;
+    align-items: center;
+    justify-content: center;
 
-  & svg {
-    fill: currentcolor;
-    height: 40px;
-    aspect-ratio: 1;
+    & svg {
+      fill: currentcolor;
+      height: 40px;
+      aspect-ratio: 1;
+    }
   }
-}
 
-#cover-image {
-  image-rendering: optimizespeed;
-}
+  #cover-image,
+  [src="/assets/images/sprite-sheet.png"] {
+    image-rendering: optimizespeed;
+  }
 </style>
 
 So you want to put some SVG icons on your [11ty](https://11ty.dev) site, hey? 
