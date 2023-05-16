@@ -34,7 +34,6 @@ rules:
   max-line-length:
     - 100
     - ignorePattern: /--rh-font-family-/
-  media-feature-range-notation: never # TODO: https://github.com/divriots/jampack/issues/69
   no-descending-specificity:
     - true
     - ignore:

@@ -30,7 +30,7 @@ main {
     translate: -40% 10px;
 
     &:first-of-type {
-      translate: 0 10px;
+      @media (width < 1000px) { translate: 0 10px; }
     }
   }
 }
