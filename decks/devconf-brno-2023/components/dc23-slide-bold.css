@@ -16,6 +16,7 @@
 img {
   display: block;
   width: 4em;
+  height: auto;
   position: fixed;
   inset-block-end: 2em;
   inset-inline-end: 2em;
