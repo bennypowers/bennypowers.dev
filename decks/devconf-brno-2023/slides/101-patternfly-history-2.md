@@ -5,7 +5,7 @@ class: history
 
 *2018:* PatternFly React
 : - Elaborated on the Bootstrap MVP
-  - A comprehensive design system
+  - An application design system
   - But only for React applications
 
 *2020:* PatternFly Elements
@@ -17,3 +17,9 @@ class: history
   - Built for web apps
   - Interoperable core and tools
 
+
+<div slot="notes">
+
+PF 1 targetted app developers **only**
+
+</div>
