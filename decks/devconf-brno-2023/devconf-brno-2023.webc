@@ -18,3 +18,20 @@ eleventyImport:
       webc:keep>
 <script src="../../_plugins/dsd/dsd.js" webc:bucket="after"></script>
 <link rel="stylesheet" href="devconf-brno-2023.css">
+
+<style>
+slidem-deck:after {
+  background: #f008;
+  border-radius: .2em;
+  color: white;
+  content: 'draft';
+  display: block;
+  font-size: 2em;
+  font-weight: 900;
+  inset: .5em .5em auto auto;
+  padding: .1em 1em;
+  position: fixed;
+  text-transform: uppercase;
+  z-index: 100000;
+}
+</style>
