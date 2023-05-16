@@ -21,8 +21,6 @@ scripts:
     type: module
   - src: /assets/x-checkbox.js
     type: module
-stylesheets:
-  - href: /assets/form-associated-custom-elements.css
 abbrs:
   - name: FACE
     title: form-associated custom element
@@ -35,6 +33,34 @@ tags:
   - javascript
   - lit
 ---
+
+<style>
+  .settings {
+    display: grid;
+    grid-template-columns: max-content auto;
+    gap: 0.2em 1em;
+  }
+
+  #set {
+    display: grid;
+    grid-template-columns: max-content min-content;
+    align-items: center;
+    justify-items: start;
+    column-gap: 1em;
+  }
+
+  fieldset[form="form"] label {
+    display: block;
+  }
+
+  output {
+    font-family: var(--fixed-font);
+  }
+
+  table tbody td:not(:first-of-type) {
+    text-align: center;
+  }
+</style>
 
 Form-Associated Custom Elements are a new web standard by which to build custom 
 interactive form controls like buttons, inputs, checkboxes, etc. They present a 
