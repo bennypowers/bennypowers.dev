@@ -103,6 +103,7 @@ figure figcaption:before {
 #stripe img {
   display: block;
   width: 4em;
+  height: auto;
 }
 
 .footer {
