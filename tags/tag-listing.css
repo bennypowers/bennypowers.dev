@@ -1,4 +1,9 @@
-body.sidebar {
+main {
+  max-width: 800px;
+  margin-inline: auto;
+}
+
+body.tags {
   display: grid;
   gap: 1em 1.6em;
   grid-template-rows: min-content auto auto min-content;
@@ -10,8 +15,3 @@ body.sidebar {
     "foot";
 }
 
-main { grid-area: main; }
-
-#main-header { grid-area: head; }
-
-#main-footer { grid-area: foot; }

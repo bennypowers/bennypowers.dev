@@ -48,4 +48,7 @@
   --markdown-table-background-color: var(--grey-900);
   --markdown-table-border-color: var(--markdown-table-background-color);
   --markdown-table-row-odd-background-color: var(--blue-grey-900);
+
+  /* table */
+  --zebra-row-bg: #222222;
 }

@@ -1,22 +1,9 @@
-@media (width <= 999px) {
-  :not(:is(pre, th)) :is(code, output) {
-    word-break: break-all;
-  }
+:not(:is(pre, th)) :is(code, output) {
+  word-break: break-all;
+}
 
-  th code {
-    word-break: initial;
-  }
-
-  main table {
-    max-width: 100%;
-  }
-
-  main thead th:not(:empty) {
-    rotate: -45deg;
-    height: 100px;
-    max-width: 2em;
-    translate: 0 20px;
-  }
+th code {
+  word-break: initial;
 }
 
 main {
@@ -27,16 +14,7 @@ main {
 
   & table {
     width: 100%;
-
-    & td {
-      @media (width >= 1000px) {
-        padding: .6em 1em;
-      }
-    }
-
-    & th {
-      text-align: start;
-    }
+    max-width: 100%;
 
     & tbody {
       & tr:nth-child(odd) {
@@ -44,10 +22,13 @@ main {
       }
     }
   }
-}
 
-@media (prefers-color-scheme: dark) {
-  table { --zebra-row-bg: #222222; }
+  & thead th:not(:empty) {
+    rotate: -45deg;
+    height: 100px;
+    max-width: 2em;
+    translate: -30px 10px;
+  }
 }
 
 #post-stats {

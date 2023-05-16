@@ -1,4 +1,10 @@
 <link rel="stylesheet" href="table-of-contents.css">
+<style webc:bucket="desktop">
+  table-of-contents {
+    display: block;
+    #mobile-nav-content & { display: none; }
+  }
+</style>
 <template webc:nokeep webc:if="toc(content).trim().length">
   <details open>
     <summary class="magic-color">Contents</summary>

@@ -3,7 +3,7 @@ h1 {
 
   font-size: 1.3em;
 
-  @media (width >= 500px) {
+  @media (min-width: 500px) {
     font-size: 2em;
   }
 }
@@ -19,7 +19,6 @@ main {
 
 #hero {
   image-rendering: pixelated;
-  width: 50%;
 }
 
 #latest {
@@ -44,8 +43,4 @@ main {
       font-size: 50%;
     }
   }
-}
-
-[src="/assets/images/sprite-sheet.png"] {
-  image-rendering: optimizespeed;
 }

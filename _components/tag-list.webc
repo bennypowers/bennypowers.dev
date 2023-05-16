@@ -1,10 +1,8 @@
-<style>
-@media (min-width: 1000px) {
+<style webc:bucket="desktop">
   #tags-list {
     position: sticky;
     top: 64px;
   }
-}
 </style>
 <ul id="tags-list">
   <li webc:for="tag of Object.keys($data.collections)

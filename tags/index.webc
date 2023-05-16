@@ -4,6 +4,26 @@ date: Created
 title: Tags
 ---
 
+<style webc:bucket="desktop">
+  body.sidebar {
+    grid-template-rows: min-content auto min-content;
+    grid-template-columns: minmax(0, 1fr) 300px;
+    grid-template-areas:
+      "head head"
+      "main menu"
+      "foot foot";
+  }
+
+  body.tags {
+    grid-template-rows: min-content auto min-content;
+    grid-template-columns: minmax(0, 1fr) 300px;
+    grid-template-areas:
+      "head head"
+      "main menu"
+      "foot foot";
+  }
+</style>
+
 <bp-header></bp-header>
 
 <main>

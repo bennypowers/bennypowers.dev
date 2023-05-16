@@ -14,8 +14,9 @@ const processor = new Processor([
  * @param {string|Promise<string>} input
  */
 async function postcss(input) {
+  const from = this.page?.inputPath;
   try {
-    const result = await processor.process(await input);
+    const result = await processor.process(await input, { from });
     return result.css;
   } catch(e) {
     console.error(e);
