@@ -1,0 +1,106 @@
+:host {
+  background-image: url("/decks/devconf-brno-2023/title.png") !important;
+  background-size: cover !important;
+  background-color: var(--deck-primary-color) !important;
+  font-size: .8em;
+}
+
+#brno-container {
+  color: white;
+  display: grid;
+  padding-block: 10vh;
+  padding-inline: 5vw;
+  grid-template-rows: 1fr 1fr ;
+  grid-template-columns: repeat(6, 1fr);
+  aspect-ratio: var(--deck-aspect);
+}
+
+#logo {
+  grid-column: 1/4;
+  width: 100%;
+  height: auto;
+}
+
+#titles {
+  text-align: right;
+  align-self: center;
+  grid-row: 1/-1;
+  grid-column: 1/-1;
+}
+
+#subheading {
+  font-family: Montserrat, sans-serif;
+  font-size: 2em;
+}
+
+#speaker {
+  display: grid;
+  font-size: 1.5em !important;
+  margin-block-start: 4.3em;
+  grid-auto-columns: 1fr;
+  grid-template: 1fr 1fr / repeat(auto-fit, minmax(150px, 1fr));
+  grid-auto-flow: column;
+
+}
+
+#speaker dl,
+#speaker ::slotted(dl) {
+  display: contents;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  color: inherit;
+}
+
+h1 {
+  font-size: 5em;
+  margin-block-start: 0;
+  margin-block-end: .35em;
+}
+
+p {
+  margin: 0;
+}
+
+#titles.title {
+  grid-row: initial;
+  grid-column: 2/7;
+  align-self: start;
+}
+
+figure {
+  margin: 0;
+  width: 100%;
+  grid-column: 1/-1;
+  grid-row: 1/-1;
+  align-self: center;
+  display: grid;
+  grid-template-columns: 5fr 1fr;
+  column-gap: 1em;
+  font-size: 2em;
+  align-items: center;
+}
+
+blockquote {
+  margin: 0;
+  font-family: Montserrat, sans-serif;
+  font-weight: 600;
+  text-align: right;
+  border-inline-end: 2px solid white;
+  padding-inline-end: 2em;
+}
+
+blockquote :first-child:before {
+  content: "“";
+  display: inline-block;
+}
+
+blockquote :first-child:after {
+  content: "”";
+  display: inline-block;
+}
+
+figcaption {
+  font-family: Montserrat, sans-serif;
+  font-size: 0.75em;
+}

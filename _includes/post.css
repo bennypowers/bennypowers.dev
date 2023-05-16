@@ -1,9 +1,11 @@
-:not(:is(pre, th)) :is(code, output) {
-  word-break: break-all;
-}
-
 th code {
   word-break: initial;
+}
+
+:not(:is(pre, th)) :is(code, output) {
+  @media (width < 1000px) {
+    word-break: break-all;
+  }
 }
 
 main {
@@ -14,23 +16,26 @@ main {
 
   & table {
     width: 100%;
-    max-width: 100%;
 
-    & tbody {
-      & tr:nth-child(odd) {
-        background: var(--zebra-row-bg, #EEEEEE);
+    @media (width < 1000px) {
+      max-width: 100%;
+
+      & tbody {
+        & tr:nth-child(odd) {
+          background: var(--zebra-row-bg, #EEEEEE);
+        }
       }
-    }
-  }
 
-  & thead th:not(:empty) {
-    rotate: -45deg;
-    height: 100px;
-    max-width: 2em;
-    translate: -40% 10px;
+      & thead th:not(:empty) {
+        rotate: -45deg;
+        height: 100px;
+        max-width: 2em;
+        translate: -40% 10px;
 
-    &:first-of-type {
-      translate: 0 10px;
+        &:first-of-type {
+          translate: 0 10px;
+        }
+      }
     }
   }
 }

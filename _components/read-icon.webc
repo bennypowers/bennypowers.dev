@@ -1,0 +1,3 @@
+<script webc:type="js" @attributes>
+  $data.collections.icon.find(x => x.fileSlug === name)?.content ?? ''
+</script>

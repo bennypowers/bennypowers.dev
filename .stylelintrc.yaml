@@ -8,6 +8,10 @@ overrides:
     rules:
       csstools/use-nesting: always
   - files:
+    - decks/devconf-brno-2023/components/*.css
+    rules:
+      csstools/use-nesting: never
+  - files:
     - assets/*.css
     - _plugins/redhat-deck/redhat-theme.css
     rules:
@@ -30,7 +34,6 @@ rules:
   max-line-length:
     - 100
     - ignorePattern: /--rh-font-family-/
-  media-feature-range-notation: never # TODO: https://github.com/divriots/jampack/issues/69
   no-descending-specificity:
     - true
     - ignore:

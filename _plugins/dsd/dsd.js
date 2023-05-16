@@ -10,6 +10,7 @@ function polyfillDeclarativeShadowDOM(x) {
     shadowRoot.appendChild(t.content);
     t.remove();
     polyfillDeclarativeShadowDOM(shadowRoot);
+    parent.dispatchEvent(new Event('declarative-shadow-dom-stamped'));
   }
 }
 

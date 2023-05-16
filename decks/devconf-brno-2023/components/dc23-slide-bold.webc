@@ -1,47 +1,16 @@
+<dc23-slide webc:nokeep></dc23-slide>
+
 <template shadowrootmode="open">
-  <link rel="stylesheet" :href="url('/decks/devconf-brno-2023/shared.css')"/>
-
-  <style>
-    :host {
-      font-size: 1.5em;
-      color: white !important;
-      background-color: var(--bg, var(--deck-primary-color)) !important;
-      display: block;
-    }
-
-    #brno-container {
-      display: flex;
-      padding: var(--spacer-block) var(--spacer-inline);
-    }
-
-    :host(.secondary) { --bg: var(--deck-secondary-color); }
-    :host(.tertiary) { --bg: var(--deck-tertiary-color); }
-
-    img {
-      display: block;
-      width: 4em;
-      position: fixed;
-      inset-block-end: 2em;
-      inset-inline-end: 2em;
-    }
-
-    #title {
-      align-self: center;
-    }
-
-    #title * {
-      color: inherit !important;
-      font-size: 1.75em;
-    }
-
-  </style>
+  <link rel="stylesheet" :href="url('components/shared.css')"/>
+  <link rel="stylesheet" :href="url('components/dc23-slide-bold.css')"/>
 
   <div id="brno-container">
     <div id="title"><slot></slot></div>
-    <img alt="devconf.cz" :src="url('/decks/devconf-brno-2023/devconf-logo.png')">
+    <img alt="devconf.cz" :src="url('devconf-logo.png')">
   </div>
+  <slot hidden name="notes" webc:keep></slot>
 </template>
 
 <script type="module">
-  customElements.define('dc23-slide-bold', class Dc23SlideBold extends SlidemSlide { });
+  customElements.define('dc23-slide-bold', class Dc23SlideBold extends Dc23Slide { });
 </script>

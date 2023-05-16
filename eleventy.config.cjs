@@ -27,6 +27,7 @@ const PostsPlugin = require('./_plugins/posts.cjs');
 const PostCSSPlugin = require('./_plugins/postcss.cjs');
 const RedHatDeckPlugin = require('./_plugins/redhat-deck.cjs');
 const RHDSPlugin = require('./_plugins/rhds.cjs');
+const DC23Plugin = require('./_plugins/devconf-brno-2023.cjs');
 const JamPackPlugin = require('./_plugins/jampack.cjs');
 const WebmentionsPlugin = require('./_plugins/webmentions.cjs');
 const ImportMapPlugin = require('./_plugins/importMap.cjs');
@@ -54,9 +55,10 @@ module.exports = function(eleventyConfig) {
   eleventyConfig.addPlugin(IconsPlugin);
   eleventyConfig.addPlugin(JamPackPlugin);
   eleventyConfig.addPlugin(OpenGraphCardPlugin);
-  eleventyConfig.addPlugin(PostCSSPlugin);
+  eleventyConfig.addPlugin(PostCSSPlugin, { include: /devconf-brno-2023\/components\/.*\.css/ });
   eleventyConfig.addPlugin(PostsPlugin);
   eleventyConfig.addPlugin(RHDSPlugin);
+  eleventyConfig.addPlugin(DC23Plugin);
   eleventyConfig.addPlugin(RedHatDeckPlugin);
   eleventyConfig.addPlugin(TableOfContentsPlugin);
   eleventyConfig.addPlugin(TimeToReadPlugin);
@@ -89,6 +91,8 @@ module.exports = function(eleventyConfig) {
   eleventyConfig.addPlugin(ImportMapPlugin, {
     specs: [
       'tslib',
+      '@patternfly/elements/pf-button/pf-button.js',
+      '@patternfly/elements/pf-card/pf-card.js',
       '@patternfly/elements/pf-icon/pf-icon.js',
       '@patternfly/elements/pf-modal/pf-modal.js',
       '@patternfly/elements/pf-spinner/pf-spinner.js',

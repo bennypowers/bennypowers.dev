@@ -1,0 +1,34 @@
+:host {
+  font-size: 1.5em;
+  color: white !important;
+  background-color: var(--bg, var(--deck-primary-color)) !important;
+  display: block;
+}
+
+#brno-container {
+  display: flex;
+  padding: var(--spacer-block) var(--spacer-inline);
+}
+
+:host(.secondary) { --bg: var(--deck-secondary-color); }
+:host(.tertiary) { --bg: var(--deck-tertiary-color); }
+
+img {
+  display: block;
+  width: 4em;
+  height: auto;
+  position: fixed;
+  inset-block-end: 2em;
+  inset-inline-end: 2em;
+}
+
+#title {
+  align-self: center;
+
+}
+
+#title * {
+  color: inherit !important;
+  font-size: 1.75em;
+}
+  

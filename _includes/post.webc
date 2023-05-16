@@ -5,25 +5,6 @@ bodyClasses: h-entry post sidebar
 <link rel="stylesheet" href="post.css">
 <link rel="stylesheet" href="../sidebar.css">
 
-<style webc:bucket="desktop">
-  main table {
-    max-width: initial;
-    & td { padding: .6em 1em; }
-    & th code { word-break: initial; }
-    & thead th:not(:empty) {
-      rotate: 0deg;
-      height: initial;
-      max-width: initial;
-      translate: 0;
-      text-align: start;
-    }
-  }
-
-  :not(:is(pre, th)) :is(code, output) {
-    word-break: initial;
-  }
-</style>
-
 <bp-header></bp-header>
 
 <post-sidebar

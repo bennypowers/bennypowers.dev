@@ -2,16 +2,36 @@
 eleventyImport:
   collections:
     - devconf23
+    - icon
 ---
 <slide-deck webc:nokeep
             webc:import="npm:eleventy-plugin-slide-decks"
             @title="PatternFly Elements: a Performant Design System"
             @date="2023-06-18"
-            @tag="devconf23"></slide-deck>
-<script src="../../_plugins/dsd/dsd.js"
-        webc:bucket="after"></script>
+            @tag="devconf23">
+  <link rel="shortcut icon" href="/decks/devconf-brno-2023/devconf-logo.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+</slide-deck>
+<link rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+      webc:keep>
+<script src="../../_plugins/dsd/dsd.js" webc:bucket="after"></script>
 <link rel="stylesheet" href="devconf-brno-2023.css">
-<link rel="shortcut icon" href="/decks/devconf-brno-2023/devconf-logo.png" webc:keep>
-<link rel="preconnect" href="https://fonts.googleapis.com" webc:keep>
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin webc:keep>
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet" webc:keep>
+
+<style>
+slidem-deck:after {
+  background: #f008;
+  border-radius: .2em;
+  color: white;
+  content: 'draft';
+  display: block;
+  font-size: 2em;
+  font-weight: 900;
+  inset: .5em .5em auto auto;
+  padding: .1em 1em;
+  position: fixed;
+  text-transform: uppercase;
+  z-index: 100000;
+}
+</style>

@@ -27,7 +27,7 @@ index 7d4ba67..0000000
 -SOFTWARE.
 diff --git a/node_modules/slidem/build.js b/node_modules/slidem/build.js
 new file mode 100644
-index 0000000..7527604
+index 0000000..23f7dea
 --- /dev/null
 +++ b/node_modules/slidem/build.js
 @@ -0,0 +1,72 @@
@@ -43,8 +43,8 @@ index 0000000..7527604
 +  const LICENSE = await readFile(r('./LICENSE'), 'utf8')
 +  await build({
 +    entryPoints: files
-+      .filter(x => x.endsWith('.js'))
-+      .map(x => r(`./src/${x}`)),
++      .filter(file => file.endsWith('.js'))
++      .map(file => r(`./src/${file}`)),
 +    outdir: '.',
 +    banner: { js: `/**\n * @license\n${LICENSE}\n*/`, },
 +    format: 'esm',
@@ -104,41 +104,12 @@ index 0000000..7527604
 +  }
 +}
 diff --git a/node_modules/slidem/slidem-deck.js b/node_modules/slidem/slidem-deck.js
-index fb0f471..8993b73 100644
+index fb0f471..87ddede 100644
 --- a/node_modules/slidem/slidem-deck.js
 +++ b/node_modules/slidem/slidem-deck.js
-@@ -23,38 +23,12 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
- SOFTWARE.
- 
- */
--var __defProp = Object.defineProperty;
--var __defNormalProp = (obj, key, value) => key in obj ? __defProp(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
--var __publicField = (obj, key, value) => {
--  __defNormalProp(obj, typeof key !== "symbol" ? key + "" : key, value);
--  return value;
--};
--var __accessCheck = (obj, member, msg) => {
--  if (!member.has(obj))
--    throw TypeError("Cannot " + msg);
--};
--var __privateGet = (obj, member, getter) => {
--  __accessCheck(obj, member, "read from private field");
--  return getter ? getter.call(obj) : member.get(obj);
--};
--var __privateAdd = (obj, member, value) => {
--  if (member.has(obj))
--    throw TypeError("Cannot add the same private member more than once");
--  member instanceof WeakSet ? member.add(obj) : member.set(obj, value);
--};
--var __privateSet = (obj, member, value, setter) => {
--  __accessCheck(obj, member, "write to private field");
--  setter ? setter.call(obj, value) : member.set(obj, value);
--  return value;
--};
--var __privateMethod = (obj, member, method) => {
--  __accessCheck(obj, member, "access private method");
--  return method;
--};
+@@ -52,9 +52,11 @@ var __privateMethod = (obj, member, method) => {
+   return method;
+ };
  
 -// assert-css:/home/ruphin/dev/slidem/src/slidem-deck-global.css
 +// css-constructible:/home/bennyp/Developer/slidem/src/slidem-deck-global.css
@@ -150,7 +121,7 @@ index fb0f471..8993b73 100644
  body {
    margin: 0;
  }
-@@ -123,12 +97,15 @@ slidem-slide a {
+@@ -123,12 +125,15 @@ slidem-slide a {
    to { translate: 0 0; }
  }
  
@@ -169,7 +140,7 @@ index fb0f471..8993b73 100644
    /* inset for active slide */
    --active-inset-block-start: calc(25% - 20px);
    --active-inset-block-end: calc(25% - 20px);
-@@ -357,10 +334,11 @@ sheet2.replace(`:host {
+@@ -357,10 +362,11 @@ sheet2.replace(`:host {
    to { translate: 0 0; }
  }
  
@@ -183,420 +154,102 @@ index fb0f471..8993b73 100644
  var template = document.createElement("template");
  template.innerHTML = `<div id="slides" part="slides">
    <slot></slot>
-@@ -389,32 +367,30 @@ var slidem_deck_default2 = template;
+@@ -388,19 +394,37 @@ var slidem_deck_default2 = template;
+ 
  // src/slidem-deck.js
  document.adoptedStyleSheets = [...document.adoptedStyleSheets, slidem_deck_global_default];
- var STATE_RE = /^#(?:slide-(?<slide>\d+))?(?:\/step-(?<step>\d+|Infinity))?/;
+-var STATE_RE = /^#(?:slide-(?<slide>\d+))?(?:\/step-(?<step>\d+|Infinity))?/;
 -var _instances, _timer, _changeLocation, changeLocation_fn, _timerInterval, _originalTitle, _$$, $$_fn, _init, init_fn, _untilDefined, untilDefined_fn, _onKeyup, onKeyup_fn, _updateTitle, updateTitle_fn, _onRouteChange, onRouteChange_fn, _updateNotes, updateNotes_fn;
--var _SlidemDeck = class extends HTMLElement {
--  constructor() {
--    super();
--    __privateAdd(this, _$$);
--    __privateAdd(this, _init);
--    __privateAdd(this, _untilDefined);
++var STATE_RE = /^#(?:slide-(?<slide>\d+))?(?:\/step-(?<step>\d+))?/;
++function isInInputLike(event) {
++  return event.composedPath().some((node) => node instanceof HTMLInputElement || node.hasAttribute?.("contenteditable"));
++}
++var _instances, _timer, _changeLocation, changeLocation_fn, _timerInterval, _originalTitle, _$$, $$_fn, _init, init_fn, _untilDefined, untilDefined_fn, _onKeydown, onKeydown_fn, _updateTitle, updateTitle_fn, _onRouteChange, onRouteChange_fn, _updateNotes, updateNotes_fn;
+ var _SlidemDeck = class extends HTMLElement {
+   constructor() {
+     super();
+     __privateAdd(this, _$$);
++    /**
++     * Font loading subsystem.
++     *
++     * It checks the 'font' attribute defined on slidem-deck, and the 'fonts' properties on
++     * all children that are custom elements (which could be custom slide elements).
++     *
++     * It calls the 'init' function once all fonts are loaded, or after a 2 second timeout.
++     */
+     __privateAdd(this, _init);
+     __privateAdd(this, _untilDefined);
 -    __privateAdd(this, _onKeyup);
--    __privateAdd(this, _updateTitle);
--    __privateAdd(this, _onRouteChange);
--    __privateAdd(this, _updateNotes);
--    __privateAdd(this, _timerInterval, void 0);
--    __privateAdd(this, _originalTitle, document.title);
--    __publicField(this, "previousSlideIndex");
--    __publicField(this, "nextSlide");
--    __publicField(this, "slides");
--    this.attachShadow({ mode: "open" }).append(slidem_deck_default2.content.cloneNode(true));
--    this.shadowRoot.adoptedStyleSheets = [...this.shadowRoot.adoptedStyleSheets, slidem_deck_default];
--    this.presenter = new URLSearchParams(location.search).has("presenter");
-+var SlidemDeck = (() => class SlidemDeck2 extends HTMLElement {
-+  static is = "slidem-deck";
-+  static #instances = /* @__PURE__ */ new Set();
-+  // Returns a string representing elapsed time since 'begin'
-+  static #timer = (begin) => {
-+    const time = new Date(/* @__PURE__ */ new Date() - begin);
-+    const pad = (t) => t < 10 && "0" + t || t;
-+    const hours = pad(time.getUTCHours());
-+    const minutes = pad(time.getUTCMinutes());
-+    const seconds = pad(time.getUTCSeconds());
-+    return `${time.getUTCHours() && hours + ":" || ""}${minutes}:${seconds}`;
-+  };
-+  static #changeLocation({ search = location.search, hash = location.hash } = {}) {
-+    const url = new URL(location.href);
-+    url.search = new URLSearchParams(search).toString();
-+    url.hash = hash;
-+    history.pushState({}, "", url.toString());
-+    dispatchEvent(new Event("location-changed"));
-+    localStorage.setItem("location", location.hash);
-+    SlidemDeck2.#instances.forEach((i) => i.#updateTitle());
-   }
-   static initListeners() {
-     function notify(e) {
--      __privateGet(_SlidemDeck, _instances).forEach((i) => {
--        var _a;
--        return __privateMethod(_a = i, _onRouteChange, onRouteChange_fn).call(_a, e);
--      });
-+      SlidemDeck2.#instances.forEach((i) => i.#onRouteChange(e));
-     }
-     window.addEventListener("hashchange", notify);
-     window.addEventListener("location-changed", notify);
-@@ -422,14 +398,11 @@ var _SlidemDeck = class extends HTMLElement {
-     window.addEventListener("storage", ({ key, newValue }) => {
-       if (key === "location") {
-         if (location.hash !== newValue) {
--          __privateMethod(this, _changeLocation, changeLocation_fn).call(this, { hash: `${newValue}` });
-+          this.#changeLocation({ hash: `${newValue}` });
-         }
-       }
++    __privateAdd(this, _onKeydown);
+     __privateAdd(this, _updateTitle);
++    /**
++     * Routing system
++     *
++     * Handles route changes and displays / animates the slides by changing classes and attributes
++     */
+     __privateAdd(this, _onRouteChange);
++    /** set the `active` attr on any notes for this slide */
+     __privateAdd(this, _updateNotes);
+     __privateAdd(this, _timerInterval, void 0);
++    // cache the document title
+     __privateAdd(this, _originalTitle, document.title);
+     __publicField(this, "previousSlideIndex");
+     __publicField(this, "nextSlide");
+@@ -428,7 +452,7 @@ var _SlidemDeck = class extends HTMLElement {
      });
--    window.addEventListener("keyup", (e) => __privateGet(_SlidemDeck, _instances).forEach((i) => {
--      var _a;
+     window.addEventListener("keyup", (e) => __privateGet(_SlidemDeck, _instances).forEach((i) => {
+       var _a;
 -      return __privateMethod(_a = i, _onKeyup, onKeyup_fn).call(_a, e);
--    }));
-+    window.addEventListener("keyup", (e) => SlidemDeck2.#instances.forEach((i) => i.#onKeyup(e)));
++      return __privateMethod(_a = i, _onKeydown, onKeydown_fn).call(_a, e);
+     }));
      let touchX;
      let touchY;
-     document.addEventListener("touchstart", ({ touches: [{ clientX, clientY }] }) => {
-@@ -440,21 +413,23 @@ var _SlidemDeck = class extends HTMLElement {
-       const xMove = e.changedTouches[0].clientX - touchX;
-       const yMove = e.changedTouches[0].clientY - touchY;
-       if (Math.abs(xMove) > 60 && Math.abs(xMove) > Math.abs(yMove))
--        __privateGet(this, _instances).forEach((i) => xMove < 0 ? i.forward() : i.back());
-+        this.#instances.forEach((i) => xMove < 0 ? i.forward() : i.back());
-     }, false);
-   }
-+  #timerInterval;
-+  // cache the document title
-+  #originalTitle = document.title;
-   get state() {
-     return location.hash.match(STATE_RE)?.groups ?? { slide: 1, step: 1 };
-   }
+@@ -449,7 +473,7 @@ var _SlidemDeck = class extends HTMLElement {
    set state(state) {
--    var _a;
+     var _a;
      const { state: old } = this;
-     if (state.slide === old.slide && state.step === old.step)
+-    if (state.slide === old.slide && state.step === old.step)
++    if (state.slide === old.slide && state.step === old.step || state.step === Infinity || state.slide === Infinity || Number.isNaN(state.step) || Number.isNaN(state.slide))
        return;
      state.step ??= old.step;
      state.slide ??= old.slide;
-     const hash = `#slide-${state.slide}/step-${state.step}`;
--    __privateMethod(_a = _SlidemDeck, _changeLocation, changeLocation_fn).call(_a, { hash });
-+    SlidemDeck2.#changeLocation({ hash });
-   }
-   get currentStepIndex() {
-     return this.state.step - 1;
-@@ -462,6 +437,7 @@ var _SlidemDeck = class extends HTMLElement {
-   get currentSlideIndex() {
-     return this.state.slide - 1;
-   }
-+  previousSlideIndex;
-   get presenter() {
-     return this.hasAttribute("presenter");
-   }
-@@ -474,11 +450,22 @@ var _SlidemDeck = class extends HTMLElement {
-   get currentSlide() {
-     return this.slides?.[this.currentSlideIndex] ?? null;
-   }
-+  nextSlide;
-+  #$$(selector) {
-+    return this.shadowRoot.querySelectorAll(selector);
-+  }
-   get $() {
--    return Object.fromEntries(Array.from(__privateMethod(this, _$$, $$_fn).call(this, "[id]"), (el) => [el.id, el]));
-+    return Object.fromEntries(Array.from(this.#$$("[id]"), (el) => [el.id, el]));
-+  }
-+  slides;
-+  constructor() {
-+    super();
-+    this.attachShadow({ mode: "open" }).append(slidem_deck_default2.content.cloneNode(true));
-+    this.shadowRoot.adoptedStyleSheets = [...this.shadowRoot.adoptedStyleSheets, slidem_deck_default];
-+    this.presenter = new URLSearchParams(location.search).has("presenter");
-   }
-   connectedCallback() {
--    __privateGet(_SlidemDeck, _instances).add(this);
-+    SlidemDeck2.#instances.add(this);
-     this.slides = Array.from(this.children).filter((item) => !item.hasAttribute("slot"));
-     this.slides.forEach((slide, i) => {
-       this.$.progressSlot.appendChild(document.createElement("div"));
-@@ -489,10 +476,116 @@ var _SlidemDeck = class extends HTMLElement {
-     });
-     this.$.forward.addEventListener("click", () => this.forward());
-     this.$.backward.addEventListener("click", () => this.back());
--    __privateMethod(this, _init, init_fn).call(this);
-+    this.#init();
-   }
-   disconnectedCallback() {
--    __privateGet(_SlidemDeck, _instances).delete(this);
-+    SlidemDeck2.#instances.delete(this);
-+  }
-+  /**
-+   * Font loading subsystem.
-+   *
-+   * It checks the 'font' attribute defined on slidem-deck, and the 'fonts' properties on
-+   * all children that are custom elements (which could be custom slide elements).
-+   *
-+   * It calls the 'init' function once all fonts are loaded, or after a 2 second timeout.
-+   */
-+  async #init() {
-+    if (this.getAttribute("font"))
-+      this.style.fontFamily = this.getAttribute("font");
-+    await Promise.race([
-+      this.#untilDefined(),
-+      document.fonts.ready,
-+      new Promise((r) => void setTimeout(r, 2e3))
-+    ]);
-+    await document.fonts.ready;
-+    await new Promise(requestAnimationFrame);
-+    this.removeAttribute("loading");
-+    this.#onRouteChange();
-+  }
-+  async #untilDefined() {
-+    await Promise.all(this.slides.filter((slide) => slide.localName.includes("-")).map((slide) => customElements.whenDefined(slide.localName)));
-+  }
-+  #onKeyup({ key }) {
-+    switch (key) {
-+      case "PageDown":
-+      case "ArrowRight":
-+      case "j":
-+      case "l":
-+        return this.forward();
-+      case "PageUp":
-+      case "ArrowLeft":
-+      case "h":
-+      case "k":
-+        return this.back();
-+      case "t":
-+        return this.presenter && this.toggleTimer();
-+      case "p":
-+        return this.togglePresenter();
-+    }
-+  }
-+  #updateTitle() {
-+    if (this.currentSlide.hasAttribute("name"))
-+      document.title = this.currentSlide.getAttribute("name") + " | " + this.#originalTitle;
-+    else
-+      document.title = this.#originalTitle;
-+  }
-+  /**
-+   * Routing system
-+   *
-+   * Handles route changes and displays / animates the slides by changing classes and attributes
-+   */
-+  #onRouteChange() {
-+    this.currentSlide.step = this.currentStepIndex + 1;
-+    this.currentSlide.setAttribute("active", "");
-+    if (this.presenter)
-+      this.#updateNotes();
-+    if (this.previousSlideIndex !== this.currentSlideIndex) {
-+      if (this.autoTimer)
-+        clearInterval(this.autoTimer);
-+      if (this.currentSlide.auto) {
-+        this.autoTimer = setInterval(() => {
-+          const { steps, step } = this.currentSlide;
-+          this.currentSlide.step = step === steps + 1 ? 1 : step + 1;
-+        }, this.currentSlide.auto);
-+      }
-+      if (this.previousSlideIndex !== void 0) {
-+        if (this.previousSlideIndex < this.currentSlideIndex) {
-+          this.slides[this.previousSlideIndex].classList.add("animate-forward");
-+          this.currentSlide.classList.add("animate-forward");
-+          this.slides[this.previousSlideIndex].classList.remove("animate-backward");
-+          this.currentSlide.classList.remove("animate-backward");
-+        } else {
-+          this.slides[this.previousSlideIndex].classList.add("animate-backward");
-+          this.currentSlide.classList.add("animate-backward");
-+          this.slides[this.previousSlideIndex].classList.remove("animate-forward");
-+          this.currentSlide.classList.remove("animate-forward");
-+        }
-+      }
-+      if (this.oldNextSlide !== void 0)
-+        this.slides[this.oldNextSlide].removeAttribute("next");
-+      const nextIndex = this.currentSlideIndex + 1;
-+      this.nextSlide = this.slides[nextIndex] ? nextIndex : void 0;
-+      if (this.nextSlide !== void 0) {
-+        this.slides[this.nextSlide].setAttribute("next", "");
-+        this.oldNextSlide = this.nextSlide;
-+      }
-+      if (this.oldPreviousSlide !== void 0)
-+        this.slides[this.oldPreviousSlide].removeAttribute("previous");
-+      if (this.previousSlideIndex !== void 0) {
-+        this.slides[this.previousSlideIndex].removeAttribute("active");
-+        this.slides[this.previousSlideIndex].setAttribute("previous", "");
-+        this.$.progressSlot.children[this.previousSlideIndex].classList.remove("active");
-+        this.oldPreviousSlide = this.previousSlideIndex;
-+      }
-+      this.$.progressSlot.children[this.currentSlideIndex].classList.add("active");
-+      this.previousSlideIndex = this.currentSlideIndex;
-+    }
-+    this.dispatchEvent(new Event("change"));
-+  }
-+  /** set the `active` attr on any notes for this slide */
-+  #updateNotes() {
-+    for (const note of this.$.notes.querySelector("slot").assignedElements())
-+      note.toggleAttribute("active", note.getAttribute("slide") == this.currentSlideIndex + 1);
-   }
-   forward() {
-     if (this.currentSlide.steps && this.currentSlide.step <= this.currentSlide.steps) {
-@@ -509,156 +602,21 @@ var _SlidemDeck = class extends HTMLElement {
-     }
-   }
-   togglePresenter() {
--    var _a;
-     this.presenter = !this.presenter;
--    __privateMethod(_a = _SlidemDeck, _changeLocation, changeLocation_fn).call(_a, { search: this.presenter ? "?presenter" : "" });
-+    SlidemDeck2.#changeLocation({ search: this.presenter ? "?presenter" : "" });
-   }
-   toggleTimer() {
--    if (__privateGet(this, _timerInterval)) {
--      clearInterval(__privateGet(this, _timerInterval));
--      __privateSet(this, _timerInterval, void 0);
-+    if (this.#timerInterval) {
-+      clearInterval(this.#timerInterval);
-+      this.#timerInterval = void 0;
+@@ -520,7 +544,7 @@ var _SlidemDeck = class extends HTMLElement {
        this.$.timer.innerText = "";
      } else {
        this.$.timer.innerText = "00:00";
 -      let begin = new Date();
--      __privateSet(this, _timerInterval, setInterval(() => {
--        var _a;
--        return this.$.timer.innerText = __privateGet(_a = _SlidemDeck, _timer).call(_a, begin);
--      }, 1e3));
--    }
--  }
--};
--var SlidemDeck = _SlidemDeck;
--_instances = new WeakMap();
--_timer = new WeakMap();
--_changeLocation = new WeakSet();
--changeLocation_fn = function({ search = location.search, hash = location.hash } = {}) {
--  const url = new URL(location.href);
--  url.search = new URLSearchParams(search).toString();
--  url.hash = hash;
--  history.pushState({}, "", url.toString());
--  dispatchEvent(new Event("location-changed"));
--  localStorage.setItem("location", location.hash);
--  __privateGet(_SlidemDeck, _instances).forEach((i) => {
--    var _a;
--    return __privateMethod(_a = i, _updateTitle, updateTitle_fn).call(_a);
--  });
--};
--_timerInterval = new WeakMap();
--_originalTitle = new WeakMap();
--_$$ = new WeakSet();
--$$_fn = function(selector) {
--  return this.shadowRoot.querySelectorAll(selector);
--};
--_init = new WeakSet();
--init_fn = async function() {
--  if (this.getAttribute("font"))
--    this.style.fontFamily = this.getAttribute("font");
--  await Promise.race([
--    __privateMethod(this, _untilDefined, untilDefined_fn).call(this),
--    document.fonts.ready,
--    new Promise((r) => void setTimeout(r, 2e3))
--  ]);
--  await document.fonts.ready;
--  await new Promise(requestAnimationFrame);
--  this.removeAttribute("loading");
--  __privateMethod(this, _onRouteChange, onRouteChange_fn).call(this);
--};
--_untilDefined = new WeakSet();
--untilDefined_fn = async function() {
--  await Promise.all(this.slides.filter((slide) => slide.localName.includes("-")).map((slide) => customElements.whenDefined(slide.localName)));
--};
++      let begin = /* @__PURE__ */ new Date();
+       __privateSet(this, _timerInterval, setInterval(() => {
+         var _a;
+         return this.$.timer.innerText = __privateGet(_a = _SlidemDeck, _timer).call(_a, begin);
+@@ -568,9 +592,11 @@ _untilDefined = new WeakSet();
+ untilDefined_fn = async function() {
+   await Promise.all(this.slides.filter((slide) => slide.localName.includes("-")).map((slide) => customElements.whenDefined(slide.localName)));
+ };
 -_onKeyup = new WeakSet();
 -onKeyup_fn = function({ key }) {
 -  switch (key) {
--    case "PageDown":
--    case "ArrowRight":
--    case "j":
--    case "l":
--      return this.forward();
--    case "PageUp":
--    case "ArrowLeft":
--    case "h":
--    case "k":
--      return this.back();
--    case "t":
--      return this.presenter && this.toggleTimer();
--    case "p":
--      return this.togglePresenter();
--  }
--};
--_updateTitle = new WeakSet();
--updateTitle_fn = function() {
--  if (this.currentSlide.hasAttribute("name"))
--    document.title = this.currentSlide.getAttribute("name") + " | " + __privateGet(this, _originalTitle);
--  else
--    document.title = __privateGet(this, _originalTitle);
--};
--_onRouteChange = new WeakSet();
--onRouteChange_fn = function() {
--  this.currentSlide.step = this.currentStepIndex + 1;
--  this.currentSlide.setAttribute("active", "");
--  if (this.presenter)
--    __privateMethod(this, _updateNotes, updateNotes_fn).call(this);
--  if (this.previousSlideIndex !== this.currentSlideIndex) {
--    if (this.autoTimer)
--      clearInterval(this.autoTimer);
--    if (this.currentSlide.auto) {
--      this.autoTimer = setInterval(() => {
--        const { steps, step } = this.currentSlide;
--        this.currentSlide.step = step === steps + 1 ? 1 : step + 1;
--      }, this.currentSlide.auto);
-+      let begin = /* @__PURE__ */ new Date();
-+      this.#timerInterval = setInterval(() => this.$.timer.innerText = SlidemDeck2.#timer(begin), 1e3);
-     }
--    if (this.previousSlideIndex !== void 0) {
--      if (this.previousSlideIndex < this.currentSlideIndex) {
--        this.slides[this.previousSlideIndex].classList.add("animate-forward");
--        this.currentSlide.classList.add("animate-forward");
--        this.slides[this.previousSlideIndex].classList.remove("animate-backward");
--        this.currentSlide.classList.remove("animate-backward");
--      } else {
--        this.slides[this.previousSlideIndex].classList.add("animate-backward");
--        this.currentSlide.classList.add("animate-backward");
--        this.slides[this.previousSlideIndex].classList.remove("animate-forward");
--        this.currentSlide.classList.remove("animate-forward");
--      }
--    }
--    if (this.oldNextSlide !== void 0)
--      this.slides[this.oldNextSlide].removeAttribute("next");
--    const nextIndex = this.currentSlideIndex + 1;
--    this.nextSlide = this.slides[nextIndex] ? nextIndex : void 0;
--    if (this.nextSlide !== void 0) {
--      this.slides[this.nextSlide].setAttribute("next", "");
--      this.oldNextSlide = this.nextSlide;
--    }
--    if (this.oldPreviousSlide !== void 0)
--      this.slides[this.oldPreviousSlide].removeAttribute("previous");
--    if (this.previousSlideIndex !== void 0) {
--      this.slides[this.previousSlideIndex].removeAttribute("active");
--      this.slides[this.previousSlideIndex].setAttribute("previous", "");
--      this.$.progressSlot.children[this.previousSlideIndex].classList.remove("active");
--      this.oldPreviousSlide = this.previousSlideIndex;
--    }
--    this.$.progressSlot.children[this.currentSlideIndex].classList.add("active");
--    this.previousSlideIndex = this.currentSlideIndex;
-   }
--  this.dispatchEvent(new Event("change"));
--};
--_updateNotes = new WeakSet();
--updateNotes_fn = function() {
--  for (const note of this.$.notes.querySelector("slot").assignedElements())
--    note.toggleAttribute("active", note.getAttribute("slide") == this.currentSlideIndex + 1);
--};
--__privateAdd(SlidemDeck, _changeLocation);
--__publicField(SlidemDeck, "is", "slidem-deck");
--__privateAdd(SlidemDeck, _instances, /* @__PURE__ */ new Set());
--__privateAdd(SlidemDeck, _timer, (begin) => {
++_onKeydown = new WeakSet();
++onKeydown_fn = function(event) {
++  if (isInInputLike(event))
++    return;
++  switch (event.key) {
+     case "PageDown":
+     case "ArrowRight":
+     case "j":
+@@ -650,9 +676,11 @@ updateNotes_fn = function() {
+ };
+ __privateAdd(SlidemDeck, _changeLocation);
+ __publicField(SlidemDeck, "is", "slidem-deck");
++/** @type {Set<SlidemDeck>} */
+ __privateAdd(SlidemDeck, _instances, /* @__PURE__ */ new Set());
++// Returns a string representing elapsed time since 'begin'
+ __privateAdd(SlidemDeck, _timer, (begin) => {
 -  const time = new Date(new Date() - begin);
--  const pad = (t) => t < 10 && "0" + t || t;
--  const hours = pad(time.getUTCHours());
--  const minutes = pad(time.getUTCMinutes());
--  const seconds = pad(time.getUTCSeconds());
--  return `${time.getUTCHours() && hours + ":" || ""}${minutes}:${seconds}`;
--});
-+})();
- SlidemDeck.initListeners();
- customElements.define(SlidemDeck.is, SlidemDeck);
- export {
++  const time = new Date(/* @__PURE__ */ new Date() - begin);
+   const pad = (t) => t < 10 && "0" + t || t;
+   const hours = pad(time.getUTCHours());
+   const minutes = pad(time.getUTCMinutes());
 diff --git a/node_modules/slidem/slidem-deck.js.map b/node_modules/slidem/slidem-deck.js.map
 deleted file mode 100644
 index 39c60ee..0000000
@@ -611,41 +264,12 @@ index 39c60ee..0000000
 -  "names": ["sheet", "slidem_deck_default", "slidem_deck_default"]
 -}
 diff --git a/node_modules/slidem/slidem-slide-base.js b/node_modules/slidem/slidem-slide-base.js
-index b53b012..bf55eb6 100644
+index b53b012..2a44ef2 100644
 --- a/node_modules/slidem/slidem-slide-base.js
 +++ b/node_modules/slidem/slidem-slide-base.js
-@@ -23,38 +23,12 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
- SOFTWARE.
- 
- */
--var __defProp = Object.defineProperty;
--var __defNormalProp = (obj, key, value) => key in obj ? __defProp(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
--var __publicField = (obj, key, value) => {
--  __defNormalProp(obj, typeof key !== "symbol" ? key + "" : key, value);
--  return value;
--};
--var __accessCheck = (obj, member, msg) => {
--  if (!member.has(obj))
--    throw TypeError("Cannot " + msg);
--};
--var __privateGet = (obj, member, getter) => {
--  __accessCheck(obj, member, "read from private field");
--  return getter ? getter.call(obj) : member.get(obj);
--};
--var __privateAdd = (obj, member, value) => {
--  if (member.has(obj))
--    throw TypeError("Cannot add the same private member more than once");
--  member instanceof WeakSet ? member.add(obj) : member.set(obj, value);
--};
--var __privateSet = (obj, member, value, setter) => {
--  __accessCheck(obj, member, "write to private field");
--  setter ? setter.call(obj, value) : member.set(obj, value);
--  return value;
--};
--var __privateMethod = (obj, member, method) => {
--  __accessCheck(obj, member, "access private method");
--  return method;
--};
+@@ -52,9 +52,11 @@ var __privateMethod = (obj, member, method) => {
+   return method;
+ };
  
 -// assert-css:/home/ruphin/dev/slidem/src/slidem-slide-base.css
 +// css-constructible:/home/bennyp/Developer/slidem/src/slidem-slide-base.css
@@ -657,7 +281,7 @@ index b53b012..bf55eb6 100644
    display: flex;
    flex-direction: row;
    overflow: hidden;
-@@ -126,10 +100,11 @@ sheet.replace(`:host {
+@@ -126,10 +128,11 @@ sheet.replace(`:host {
    }
  }
  
@@ -671,145 +295,82 @@ index b53b012..bf55eb6 100644
  var template = document.createElement("template");
  template.innerHTML = `<div id="container">
    <div id="content" part="content">
-@@ -140,29 +115,23 @@ template.innerHTML = `<div id="container">
- var slidem_slide_base_default2 = template;
- 
- // src/slidem-slide-base.js
--var _instances, _steps, _setStep, setStep_fn, _resizeContent, resizeContent_fn;
--var _SlidemSlideBase = class extends HTMLElement {
--  constructor() {
--    super();
--    __privateAdd(this, _setStep);
--    __privateAdd(this, _resizeContent);
--    __privateAdd(this, _steps, void 0);
--    __publicField(this, "steps");
+@@ -148,7 +151,8 @@ var _SlidemSlideBase = class extends HTMLElement {
+     __privateAdd(this, _resizeContent);
+     __privateAdd(this, _steps, void 0);
+     __publicField(this, "steps");
 -    this.attachShadow({ mode: "open" }).append(slidem_slide_base_default2.content.cloneNode(true));
--    this.shadowRoot.adoptedStyleSheets = [...this.shadowRoot.adoptedStyleSheets, slidem_slide_base_default];
--  }
-+var SlidemSlideBase = (() => class SlidemSlideBase2 extends HTMLElement {
-+  static observedAttributes = [
-+    "auto",
-+    "step"
-+  ];
-+  static #instances = /* @__PURE__ */ new Set();
-   static {
-     let resizeTimeout;
-     window.addEventListener("resize", () => {
-       window.clearTimeout(resizeTimeout);
-       resizeTimeout = window.setTimeout(() => {
--        __privateGet(_SlidemSlideBase, _instances).forEach((i) => {
--          var _a;
--          return __privateMethod(_a = i, _resizeContent, resizeContent_fn).call(_a);
--        });
-+        this.#instances.forEach((i) => i.#resizeContent());
-       }, 200);
-     });
-   }
-+  #steps = [];
-+  steps;
-   get auto() {
-     if (!this.hasAttribute("auto"))
-       return false;
-@@ -184,17 +153,23 @@ var _SlidemSlideBase = class extends HTMLElement {
-   get $() {
-     return Object.fromEntries(Array.from(this.shadowRoot.querySelectorAll("[id]"), (el) => [el.id, el]));
-   }
-+  constructor() {
-+    super();
 +    if (!this.shadowRoot)
 +      this.attachShadow({ mode: "open" }).append(slidem_slide_base_default2.content.cloneNode(true));
-+    this.shadowRoot.adoptedStyleSheets = [...this.shadowRoot.adoptedStyleSheets, slidem_slide_base_default];
-+  }
+     this.shadowRoot.adoptedStyleSheets = [...this.shadowRoot.adoptedStyleSheets, slidem_slide_base_default];
+   }
+   static {
+@@ -169,11 +173,11 @@ var _SlidemSlideBase = class extends HTMLElement {
+     else
+       return parseInt(this.getAttribute("auto")) || 5e3;
+   }
+-  set auto(v) {
+-    if (!(typeof v === "number") || Number.isNaN(v))
++  set auto(timer) {
++    if (!(typeof timer === "number") || Number.isNaN(timer))
+       this.removeAttribute("auto");
+     else
+-      this.setAttribute("auto", v.toString());
++      this.setAttribute("auto", timer);
+   }
+   set step(step) {
+     this.setAttribute("step", step);
+@@ -186,12 +190,7 @@ var _SlidemSlideBase = class extends HTMLElement {
+   }
    connectedCallback() {
--    __privateGet(_SlidemSlideBase, _instances).add(this);
+     __privateGet(_SlidemSlideBase, _instances).add(this);
 -    __privateSet(this, _steps, Array.from(this.querySelectorAll("[reveal]")));
 -    this.steps = __privateGet(this, _steps).length;
 -    __privateMethod(this, _resizeContent, resizeContent_fn).call(this);
 -    __privateGet(this, _steps).forEach((step, i) => step.setAttribute("step", i + 2));
 -    if (__privateGet(this, _steps).length)
 -      __privateGet(this, _steps)[0].previousElementSibling?.setAttribute("step", 1);
-+    SlidemSlideBase2.#instances.add(this);
-+    this.#steps = Array.from(this.querySelectorAll("[reveal]"));
-+    this.steps = this.#steps.length;
-+    this.#resizeContent();
-+    this.#steps.forEach((step, i) => step.setAttribute("step", i + 2));
-+    if (this.#steps.length)
-+      this.#steps[0].previousElementSibling?.setAttribute("step", 1);
++    this.defineSteps(this.querySelector("[reveal]"));
    }
    disconnectedCallback() {
--    __privateGet(_SlidemSlideBase, _instances).delete(this);
-+    SlidemSlideBase2.#instances.delete(this);
-   }
-   attributeChangedCallback(attr, _, newVal) {
-     if (attr === "step") {
-@@ -203,43 +178,33 @@ var _SlidemSlideBase = class extends HTMLElement {
-         this.setAttribute("step", this.steps + 1);
-         return;
-       }
--      __privateMethod(this, _setStep, setStep_fn).call(this, step);
-+      this.#setStep(step);
+     __privateGet(_SlidemSlideBase, _instances).delete(this);
+@@ -206,6 +205,27 @@ var _SlidemSlideBase = class extends HTMLElement {
+       __privateMethod(this, _setStep, setStep_fn).call(this, step);
      }
    }
--};
--var SlidemSlideBase = _SlidemSlideBase;
--_instances = new WeakMap();
--_steps = new WeakMap();
--_setStep = new WeakSet();
--setStep_fn = function(step) {
--  this.querySelector('[step="1"]')?.toggleAttribute?.("past", step > 1);
--  __privateGet(this, _steps).forEach((el, i) => {
--    const elStep = i + 2;
--    const past = elStep < step;
--    const current = elStep === step;
--    el.toggleAttribute("past", past);
--    el.toggleAttribute("current", current);
--  });
--};
--_resizeContent = new WeakSet();
--resizeContent_fn = function() {
--  const documentStyle = window.getComputedStyle(document.documentElement);
--  const width = Number((documentStyle.getPropertyValue("--slidem-content-width") || "1760px").slice(0, -2));
--  const height = Number((documentStyle.getPropertyValue("--slidem-content-height") || "990px").slice(0, -2));
--  const scale = Math.min(window.innerHeight / 1.09 / height, window.innerWidth / 1.09 / width);
--  if (scale < 1) {
--    document.documentElement.style.setProperty("--slidem-content-scale", scale);
--    this.$.content?.style?.setProperty("scale", scale);
--  } else {
--    document.documentElement.style.setProperty("--slidem-content-scale", 1);
--    this.$.content?.style?.setProperty("scale", 1);
-+  #setStep(step) {
-+    this.querySelector('[step="1"]')?.toggleAttribute?.("past", step > 1);
-+    this.#steps.forEach((el, i) => {
-+      const elStep = i + 2;
-+      const past = elStep < step;
-+      const current = elStep === step;
-+      el.toggleAttribute("past", past);
-+      el.toggleAttribute("current", current);
-+    });
-   }
--};
--__publicField(SlidemSlideBase, "observedAttributes", [
--  "auto",
--  "step"
--]);
--__privateAdd(SlidemSlideBase, _instances, /* @__PURE__ */ new Set());
-+  #resizeContent() {
-+    const documentStyle = window.getComputedStyle(document.documentElement);
-+    const width = Number((documentStyle.getPropertyValue("--slidem-content-width") || "1760px").slice(0, -2));
-+    const height = Number((documentStyle.getPropertyValue("--slidem-content-height") || "990px").slice(0, -2));
-+    const scale = Math.min(window.innerHeight / 1.09 / height, window.innerWidth / 1.09 / width);
-+    if (scale < 1) {
-+      document.documentElement.style.setProperty("--slidem-content-scale", scale);
-+      this.$.content?.style?.setProperty("scale", scale);
-+    } else {
-+      document.documentElement.style.setProperty("--slidem-content-scale", 1);
-+      this.$.content?.style?.setProperty("scale", 1);
-+    }
++  /**
++   * Imperatively set the list of steps for this slide
++   * @example when the steps are located in the shadow root
++   *          ```javascript
++   *          class DeclarativeShadowSlide extends SlidemSlideBase {
++   *            async connectedCallback() {
++   *              super.connectedCallback();
++   *              await polyfillDeclarativeShadowDOM(this);
++   *              this.defineSteps(this.shadowRoot.querySelectorAll('[reveal]'));
++   *            }
++   *          }
++   *          ```
++   */
++  defineSteps(nodelist) {
++    __privateSet(this, _steps, Array.from(nodelist ?? []));
++    this.steps = __privateGet(this, _steps).length;
++    __privateMethod(this, _resizeContent, resizeContent_fn).call(this);
++    __privateGet(this, _steps).forEach((step, i) => step.setAttribute("step", i + 2));
++    if (__privateGet(this, _steps).length)
++      __privateGet(this, _steps)[0].previousElementSibling?.setAttribute("step", 1);
 +  }
-+})();
- export {
-   SlidemSlideBase
  };
+ var SlidemSlideBase = _SlidemSlideBase;
+ _instances = new WeakMap();
+@@ -213,7 +233,7 @@ _steps = new WeakMap();
+ _setStep = new WeakSet();
+ setStep_fn = function(step) {
+   this.querySelector('[step="1"]')?.toggleAttribute?.("past", step > 1);
+-  __privateGet(this, _steps).forEach((el, i) => {
++  __privateGet(this, _steps)?.forEach((el, i) => {
+     const elStep = i + 2;
+     const past = elStep < step;
+     const current = elStep === step;
 diff --git a/node_modules/slidem/slidem-slide-base.js.map b/node_modules/slidem/slidem-slide-base.js.map
 deleted file mode 100644
 index 80ea65e..0000000
@@ -824,41 +385,12 @@ index 80ea65e..0000000
 -  "names": ["slidem_slide_base_default", "slidem_slide_base_default"]
 -}
 diff --git a/node_modules/slidem/slidem-slide.js b/node_modules/slidem/slidem-slide.js
-index b947ae0..3a09cc0 100644
+index b947ae0..f21ffe0 100644
 --- a/node_modules/slidem/slidem-slide.js
 +++ b/node_modules/slidem/slidem-slide.js
-@@ -23,38 +23,12 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
- SOFTWARE.
- 
- */
--var __defProp = Object.defineProperty;
--var __defNormalProp = (obj, key, value) => key in obj ? __defProp(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
--var __publicField = (obj, key, value) => {
--  __defNormalProp(obj, typeof key !== "symbol" ? key + "" : key, value);
--  return value;
--};
--var __accessCheck = (obj, member, msg) => {
--  if (!member.has(obj))
--    throw TypeError("Cannot " + msg);
--};
--var __privateGet = (obj, member, getter) => {
--  __accessCheck(obj, member, "read from private field");
--  return getter ? getter.call(obj) : member.get(obj);
--};
--var __privateAdd = (obj, member, value) => {
--  if (member.has(obj))
--    throw TypeError("Cannot add the same private member more than once");
--  member instanceof WeakSet ? member.add(obj) : member.set(obj, value);
--};
--var __privateSet = (obj, member, value, setter) => {
--  __accessCheck(obj, member, "write to private field");
--  setter ? setter.call(obj, value) : member.set(obj, value);
--  return value;
--};
--var __privateMethod = (obj, member, method) => {
--  __accessCheck(obj, member, "access private method");
--  return method;
--};
+@@ -52,9 +52,11 @@ var __privateMethod = (obj, member, method) => {
+   return method;
+ };
  
 -// assert-css:/home/ruphin/dev/slidem/src/slidem-slide-base.css
 +// css-constructible:/home/bennyp/Developer/slidem/src/slidem-slide-base.css
@@ -870,7 +402,7 @@ index b947ae0..3a09cc0 100644
    display: flex;
    flex-direction: row;
    overflow: hidden;
-@@ -126,10 +100,11 @@ sheet.replace(`:host {
+@@ -126,10 +128,11 @@ sheet.replace(`:host {
    }
  }
  
@@ -884,329 +416,91 @@ index b947ae0..3a09cc0 100644
  var template = document.createElement("template");
  template.innerHTML = `<div id="container">
    <div id="content" part="content">
-@@ -140,29 +115,23 @@ template.innerHTML = `<div id="container">
- var slidem_slide_base_default2 = template;
- 
- // src/slidem-slide-base.js
--var _instances, _steps, _setStep, setStep_fn, _resizeContent, resizeContent_fn;
--var _SlidemSlideBase = class extends HTMLElement {
--  constructor() {
--    super();
--    __privateAdd(this, _setStep);
--    __privateAdd(this, _resizeContent);
--    __privateAdd(this, _steps, void 0);
--    __publicField(this, "steps");
+@@ -148,7 +151,8 @@ var _SlidemSlideBase = class extends HTMLElement {
+     __privateAdd(this, _resizeContent);
+     __privateAdd(this, _steps, void 0);
+     __publicField(this, "steps");
 -    this.attachShadow({ mode: "open" }).append(slidem_slide_base_default2.content.cloneNode(true));
--    this.shadowRoot.adoptedStyleSheets = [...this.shadowRoot.adoptedStyleSheets, slidem_slide_base_default];
--  }
-+var SlidemSlideBase = (() => class SlidemSlideBase2 extends HTMLElement {
-+  static observedAttributes = [
-+    "auto",
-+    "step"
-+  ];
-+  static #instances = /* @__PURE__ */ new Set();
-   static {
-     let resizeTimeout;
-     window.addEventListener("resize", () => {
-       window.clearTimeout(resizeTimeout);
-       resizeTimeout = window.setTimeout(() => {
--        __privateGet(_SlidemSlideBase, _instances).forEach((i) => {
--          var _a;
--          return __privateMethod(_a = i, _resizeContent, resizeContent_fn).call(_a);
--        });
-+        this.#instances.forEach((i) => i.#resizeContent());
-       }, 200);
-     });
-   }
-+  #steps = [];
-+  steps;
-   get auto() {
-     if (!this.hasAttribute("auto"))
-       return false;
-@@ -184,17 +153,23 @@ var _SlidemSlideBase = class extends HTMLElement {
-   get $() {
-     return Object.fromEntries(Array.from(this.shadowRoot.querySelectorAll("[id]"), (el) => [el.id, el]));
-   }
-+  constructor() {
-+    super();
 +    if (!this.shadowRoot)
 +      this.attachShadow({ mode: "open" }).append(slidem_slide_base_default2.content.cloneNode(true));
-+    this.shadowRoot.adoptedStyleSheets = [...this.shadowRoot.adoptedStyleSheets, slidem_slide_base_default];
-+  }
+     this.shadowRoot.adoptedStyleSheets = [...this.shadowRoot.adoptedStyleSheets, slidem_slide_base_default];
+   }
+   static {
+@@ -169,11 +173,11 @@ var _SlidemSlideBase = class extends HTMLElement {
+     else
+       return parseInt(this.getAttribute("auto")) || 5e3;
+   }
+-  set auto(v) {
+-    if (!(typeof v === "number") || Number.isNaN(v))
++  set auto(timer) {
++    if (!(typeof timer === "number") || Number.isNaN(timer))
+       this.removeAttribute("auto");
+     else
+-      this.setAttribute("auto", v.toString());
++      this.setAttribute("auto", timer);
+   }
+   set step(step) {
+     this.setAttribute("step", step);
+@@ -186,12 +190,7 @@ var _SlidemSlideBase = class extends HTMLElement {
+   }
    connectedCallback() {
--    __privateGet(_SlidemSlideBase, _instances).add(this);
+     __privateGet(_SlidemSlideBase, _instances).add(this);
 -    __privateSet(this, _steps, Array.from(this.querySelectorAll("[reveal]")));
 -    this.steps = __privateGet(this, _steps).length;
 -    __privateMethod(this, _resizeContent, resizeContent_fn).call(this);
 -    __privateGet(this, _steps).forEach((step, i) => step.setAttribute("step", i + 2));
 -    if (__privateGet(this, _steps).length)
 -      __privateGet(this, _steps)[0].previousElementSibling?.setAttribute("step", 1);
-+    SlidemSlideBase2.#instances.add(this);
-+    this.#steps = Array.from(this.querySelectorAll("[reveal]"));
-+    this.steps = this.#steps.length;
-+    this.#resizeContent();
-+    this.#steps.forEach((step, i) => step.setAttribute("step", i + 2));
-+    if (this.#steps.length)
-+      this.#steps[0].previousElementSibling?.setAttribute("step", 1);
++    this.defineSteps(this.querySelector("[reveal]"));
    }
    disconnectedCallback() {
--    __privateGet(_SlidemSlideBase, _instances).delete(this);
-+    SlidemSlideBase2.#instances.delete(this);
-   }
-   attributeChangedCallback(attr, _, newVal) {
-     if (attr === "step") {
-@@ -203,152 +178,126 @@ var _SlidemSlideBase = class extends HTMLElement {
-         this.setAttribute("step", this.steps + 1);
-         return;
-       }
--      __privateMethod(this, _setStep, setStep_fn).call(this, step);
-+      this.#setStep(step);
+     __privateGet(_SlidemSlideBase, _instances).delete(this);
+@@ -206,6 +205,27 @@ var _SlidemSlideBase = class extends HTMLElement {
+       __privateMethod(this, _setStep, setStep_fn).call(this, step);
      }
    }
--};
--var SlidemSlideBase = _SlidemSlideBase;
--_instances = new WeakMap();
--_steps = new WeakMap();
--_setStep = new WeakSet();
--setStep_fn = function(step) {
--  this.querySelector('[step="1"]')?.toggleAttribute?.("past", step > 1);
--  __privateGet(this, _steps).forEach((el, i) => {
--    const elStep = i + 2;
--    const past = elStep < step;
--    const current = elStep === step;
--    el.toggleAttribute("past", past);
--    el.toggleAttribute("current", current);
--  });
--};
--_resizeContent = new WeakSet();
--resizeContent_fn = function() {
--  const documentStyle = window.getComputedStyle(document.documentElement);
--  const width = Number((documentStyle.getPropertyValue("--slidem-content-width") || "1760px").slice(0, -2));
--  const height = Number((documentStyle.getPropertyValue("--slidem-content-height") || "990px").slice(0, -2));
--  const scale = Math.min(window.innerHeight / 1.09 / height, window.innerWidth / 1.09 / width);
--  if (scale < 1) {
--    document.documentElement.style.setProperty("--slidem-content-scale", scale);
--    this.$.content?.style?.setProperty("scale", scale);
--  } else {
--    document.documentElement.style.setProperty("--slidem-content-scale", 1);
--    this.$.content?.style?.setProperty("scale", 1);
-+  #setStep(step) {
-+    this.querySelector('[step="1"]')?.toggleAttribute?.("past", step > 1);
-+    this.#steps.forEach((el, i) => {
-+      const elStep = i + 2;
-+      const past = elStep < step;
-+      const current = elStep === step;
-+      el.toggleAttribute("past", past);
-+      el.toggleAttribute("current", current);
-+    });
-   }
--};
--__publicField(SlidemSlideBase, "observedAttributes", [
--  "auto",
--  "step"
--]);
--__privateAdd(SlidemSlideBase, _instances, /* @__PURE__ */ new Set());
-+  #resizeContent() {
-+    const documentStyle = window.getComputedStyle(document.documentElement);
-+    const width = Number((documentStyle.getPropertyValue("--slidem-content-width") || "1760px").slice(0, -2));
-+    const height = Number((documentStyle.getPropertyValue("--slidem-content-height") || "990px").slice(0, -2));
-+    const scale = Math.min(window.innerHeight / 1.09 / height, window.innerWidth / 1.09 / width);
-+    if (scale < 1) {
-+      document.documentElement.style.setProperty("--slidem-content-scale", scale);
-+      this.$.content?.style?.setProperty("scale", scale);
-+    } else {
-+      document.documentElement.style.setProperty("--slidem-content-scale", 1);
-+      this.$.content?.style?.setProperty("scale", 1);
-+    }
++  /**
++   * Imperatively set the list of steps for this slide
++   * @example when the steps are located in the shadow root
++   *          ```javascript
++   *          class DeclarativeShadowSlide extends SlidemSlideBase {
++   *            async connectedCallback() {
++   *              super.connectedCallback();
++   *              await polyfillDeclarativeShadowDOM(this);
++   *              this.defineSteps(this.shadowRoot.querySelectorAll('[reveal]'));
++   *            }
++   *          }
++   *          ```
++   */
++  defineSteps(nodelist) {
++    __privateSet(this, _steps, Array.from(nodelist ?? []));
++    this.steps = __privateGet(this, _steps).length;
++    __privateMethod(this, _resizeContent, resizeContent_fn).call(this);
++    __privateGet(this, _steps).forEach((step, i) => step.setAttribute("step", i + 2));
++    if (__privateGet(this, _steps).length)
++      __privateGet(this, _steps)[0].previousElementSibling?.setAttribute("step", 1);
 +  }
-+})();
- 
- // src/slidem-slide.js
--var _contentNodes, contentNodes_get, _layoutNodes, layoutNodes_get, _styleBackground, styleBackground_fn, _styleContentNode, styleContentNode_fn, _styleLayoutNode, styleLayoutNode_fn, _rescale, rescale_fn;
--var SlidemSlide = class extends SlidemSlideBase {
--  constructor() {
--    super(...arguments);
--    __privateAdd(this, _contentNodes);
--    __privateAdd(this, _layoutNodes);
--    __privateAdd(this, _styleBackground);
--    __privateAdd(this, _styleContentNode);
--    __privateAdd(this, _styleLayoutNode);
--    __privateAdd(this, _rescale);
-+var SlidemSlide = (() => class SlidemSlide extends SlidemSlideBase {
-+  static is = "slidem-slide";
-+  static observedAttributes = [
-+    ...SlidemSlideBase.observedAttributes,
-+    "active",
-+    "next",
-+    "background"
-+  ];
-+  get #contentNodes() {
-+    return this.querySelectorAll("h1, h2, h3, h4, h5, h6, p, li, span, em, strong, small");
+ };
+ var SlidemSlideBase = _SlidemSlideBase;
+ _instances = new WeakMap();
+@@ -213,7 +233,7 @@ _steps = new WeakMap();
+ _setStep = new WeakSet();
+ setStep_fn = function(step) {
+   this.querySelector('[step="1"]')?.toggleAttribute?.("past", step > 1);
+-  __privateGet(this, _steps).forEach((el, i) => {
++  __privateGet(this, _steps)?.forEach((el, i) => {
+     const elStep = i + 2;
+     const past = elStep < step;
+     const current = elStep === step;
+@@ -253,7 +273,7 @@ var SlidemSlide = class extends SlidemSlideBase {
+     __privateAdd(this, _styleLayoutNode);
+     __privateAdd(this, _rescale);
    }
 -  async connectedCallback() {
-+  get #layoutNodes() {
-+    return this.querySelectorAll("div");
-+  }
 +  connectedCallback() {
      super.connectedCallback();
--    for (const node of __privateGet(this, _contentNodes, contentNodes_get))
--      __privateMethod(this, _styleContentNode, styleContentNode_fn).call(this, node);
--    for (const node of __privateGet(this, _layoutNodes, layoutNodes_get))
--      __privateMethod(this, _styleLayoutNode, styleLayoutNode_fn).call(this, node);
--    __privateMethod(this, _styleBackground, styleBackground_fn).call(this);
--    __privateMethod(this, _rescale, rescale_fn).call(this);
-+    for (const node of this.#contentNodes)
-+      this.#styleContentNode(node);
-+    for (const node of this.#layoutNodes)
-+      this.#styleLayoutNode(node);
-+    this.#styleBackground();
-+    this.#rescale();
-   }
-   attributeChangedCallback(attr, oldVal, newVal) {
-     super.attributeChangedCallback(attr, oldVal, newVal);
-     if (attr === "active" && newVal != null)
-       this.dispatchEvent(new Event("activated"));
-     if (attr === "active" || attr === "next")
--      __privateMethod(this, _rescale, rescale_fn).call(this);
-+      this.#rescale();
-     if (attr === "background")
--      __privateMethod(this, _styleBackground, styleBackground_fn).call(this);
-+      this.#styleBackground();
-   }
--};
--_contentNodes = new WeakSet();
--contentNodes_get = function() {
--  return this.querySelectorAll("h1, h2, h3, h4, h5, h6, p, li, span, em, strong, small");
--};
--_layoutNodes = new WeakSet();
--layoutNodes_get = function() {
--  return this.querySelectorAll("div");
--};
--_styleBackground = new WeakSet();
--styleBackground_fn = function() {
--  const background = this.getAttribute("background");
--  if (background) {
--    if (background.match(/^--/)) {
--      this.style.setProperty("background", `var(${background})`);
--    } else if (background.match(/^(http|\/|\.)/)) {
--      let image = `url(${background})`;
--      const darken = this.getAttribute("darken-background");
--      if (darken)
--        image = `linear-gradient(rgba(0,0,0,${darken}), rgba(0,0,0,${darken})), ${image}`;
--      this.style.backgroundImage = image;
--    } else {
--      this.style.setProperty("background", background);
-+  #styleBackground() {
-+    const background = this.getAttribute("background");
-+    if (background) {
-+      if (background.match(/^--/)) {
-+        this.style.setProperty("background", `var(${background})`);
-+      } else if (background.match(/^(http|\/|\.)/)) {
-+        let image = `url(${background})`;
-+        const darken = this.getAttribute("darken-background");
-+        if (darken)
-+          image = `linear-gradient(rgba(0,0,0,${darken}), rgba(0,0,0,${darken})), ${image}`;
-+        this.style.backgroundImage = image;
-+      } else {
-+        this.style.setProperty("background", background);
-+      }
-     }
-   }
--};
--_styleContentNode = new WeakSet();
--styleContentNode_fn = function(node) {
--  if (node.hasAttribute("font-size"))
--    node.style.fontSize = node.getAttribute("font-size");
--  if (node.hasAttribute("bold"))
--    node.style.fontWeight = "bold";
--  if (node.hasAttribute("underline"))
--    node.style.textDecoration = "underline";
--  if (node.hasAttribute("italic"))
--    node.style.fontStyle = "italic";
--  if (node.hasAttribute("uppercase"))
--    node.style.textTransform = "uppercase";
--  if (node.hasAttribute("center"))
--    node.style.textAlign = "center";
--  if (node.hasAttribute("line-height"))
--    node.style.lineHeight = node.getAttribute("line-height");
--  const color = node.getAttribute("color");
--  if (color !== null) {
--    if (color.match(/^--/))
--      node.style.color = `var(${color})`;
--    else
--      node.style.color = color;
-+  #styleContentNode(node) {
-+    if (node.hasAttribute("font-size"))
-+      node.style.fontSize = node.getAttribute("font-size");
-+    if (node.hasAttribute("bold"))
-+      node.style.fontWeight = "bold";
-+    if (node.hasAttribute("underline"))
-+      node.style.textDecoration = "underline";
-+    if (node.hasAttribute("italic"))
-+      node.style.fontStyle = "italic";
-+    if (node.hasAttribute("uppercase"))
-+      node.style.textTransform = "uppercase";
-+    if (node.hasAttribute("center"))
-+      node.style.textAlign = "center";
-+    if (node.hasAttribute("line-height"))
-+      node.style.lineHeight = node.getAttribute("line-height");
-+    const color = node.getAttribute("color");
-+    if (color !== null) {
-+      if (color.match(/^--/))
-+        node.style.color = `var(${color})`;
-+      else
-+        node.style.color = color;
-+    }
-   }
--};
--_styleLayoutNode = new WeakSet();
--styleLayoutNode_fn = function(node) {
--  if (node.getAttribute("center") !== null) {
--    node.style.display = "flex";
--    node.style.justifyContent = "center";
--    node.style.alignItems = "center";
-+  #styleLayoutNode(node) {
-+    if (node.getAttribute("center") !== null) {
-+      node.style.display = "flex";
-+      node.style.justifyContent = "center";
-+      node.style.alignItems = "center";
-+    }
-   }
--};
--_rescale = new WeakSet();
--rescale_fn = async function() {
--  await document.fonts.ready;
--  for (const node of __privateGet(this, _contentNodes, contentNodes_get)) {
--    if (node.hasAttribute("fit")) {
--      node.style.display = "table";
--      node.style.whiteSpace = "nowrap";
--      const refFontSize = parseFloat(getComputedStyle(node, null).getPropertyValue("font-size"));
--      const refWidth = this.$.content.clientWidth;
--      node.style.fontSize = `${Math.floor(refFontSize * refWidth / node.clientWidth)}px`;
-+  async #rescale() {
-+    await document.fonts.ready;
-+    for (const node of this.#contentNodes) {
-+      if (node.hasAttribute("fit")) {
-+        node.style.display = "table";
-+        node.style.whiteSpace = "nowrap";
-+        const refFontSize = parseFloat(getComputedStyle(node, null).getPropertyValue("font-size"));
-+        const refWidth = this.$.content.clientWidth;
-+        node.style.fontSize = `${Math.floor(refFontSize * refWidth / node.clientWidth)}px`;
-+      }
-     }
-   }
--};
--__publicField(SlidemSlide, "is", "slidem-slide");
--__publicField(SlidemSlide, "observedAttributes", [
--  ...SlidemSlideBase.observedAttributes,
--  "active",
--  "next",
--  "background"
--]);
-+})();
- customElements.define(SlidemSlide.is, SlidemSlide);
- export {
-   SlidemSlide
+     for (const node of __privateGet(this, _contentNodes, contentNodes_get))
+       __privateMethod(this, _styleContentNode, styleContentNode_fn).call(this, node);
 diff --git a/node_modules/slidem/slidem-slide.js.map b/node_modules/slidem/slidem-slide.js.map
 deleted file mode 100644
 index 6fe7f53..0000000
@@ -1221,35 +515,12 @@ index 6fe7f53..0000000
 -  "names": ["slidem_slide_base_default", "slidem_slide_base_default"]
 -}
 diff --git a/node_modules/slidem/slidem-video-slide.js b/node_modules/slidem/slidem-video-slide.js
-index 0bc194a..93f42b3 100644
+index 0bc194a..3ac84e6 100644
 --- a/node_modules/slidem/slidem-video-slide.js
 +++ b/node_modules/slidem/slidem-video-slide.js
-@@ -29,32 +29,12 @@ var __publicField = (obj, key, value) => {
-   __defNormalProp(obj, typeof key !== "symbol" ? key + "" : key, value);
-   return value;
+@@ -52,9 +52,11 @@ var __privateMethod = (obj, member, method) => {
+   return method;
  };
--var __accessCheck = (obj, member, msg) => {
--  if (!member.has(obj))
--    throw TypeError("Cannot " + msg);
--};
--var __privateGet = (obj, member, getter) => {
--  __accessCheck(obj, member, "read from private field");
--  return getter ? getter.call(obj) : member.get(obj);
--};
--var __privateAdd = (obj, member, value) => {
--  if (member.has(obj))
--    throw TypeError("Cannot add the same private member more than once");
--  member instanceof WeakSet ? member.add(obj) : member.set(obj, value);
--};
--var __privateSet = (obj, member, value, setter) => {
--  __accessCheck(obj, member, "write to private field");
--  setter ? setter.call(obj, value) : member.set(obj, value);
--  return value;
--};
--var __privateMethod = (obj, member, method) => {
--  __accessCheck(obj, member, "access private method");
--  return method;
--};
  
 -// assert-css:/home/ruphin/dev/slidem/src/slidem-slide-base.css
 +// css-constructible:/home/bennyp/Developer/slidem/src/slidem-slide-base.css
@@ -1261,7 +532,7 @@ index 0bc194a..93f42b3 100644
    display: flex;
    flex-direction: row;
    overflow: hidden;
-@@ -126,10 +106,11 @@ sheet.replace(`:host {
+@@ -126,10 +128,11 @@ sheet.replace(`:host {
    }
  }
  
@@ -1275,142 +546,85 @@ index 0bc194a..93f42b3 100644
  var template = document.createElement("template");
  template.innerHTML = `<div id="container">
    <div id="content" part="content">
-@@ -140,29 +121,23 @@ template.innerHTML = `<div id="container">
- var slidem_slide_base_default2 = template;
- 
- // src/slidem-slide-base.js
--var _instances, _steps, _setStep, setStep_fn, _resizeContent, resizeContent_fn;
--var _SlidemSlideBase = class extends HTMLElement {
--  constructor() {
--    super();
--    __privateAdd(this, _setStep);
--    __privateAdd(this, _resizeContent);
--    __privateAdd(this, _steps, void 0);
--    __publicField(this, "steps");
+@@ -148,7 +151,8 @@ var _SlidemSlideBase = class extends HTMLElement {
+     __privateAdd(this, _resizeContent);
+     __privateAdd(this, _steps, void 0);
+     __publicField(this, "steps");
 -    this.attachShadow({ mode: "open" }).append(slidem_slide_base_default2.content.cloneNode(true));
--    this.shadowRoot.adoptedStyleSheets = [...this.shadowRoot.adoptedStyleSheets, slidem_slide_base_default];
--  }
-+var SlidemSlideBase = (() => class SlidemSlideBase2 extends HTMLElement {
-+  static observedAttributes = [
-+    "auto",
-+    "step"
-+  ];
-+  static #instances = /* @__PURE__ */ new Set();
-   static {
-     let resizeTimeout;
-     window.addEventListener("resize", () => {
-       window.clearTimeout(resizeTimeout);
-       resizeTimeout = window.setTimeout(() => {
--        __privateGet(_SlidemSlideBase, _instances).forEach((i) => {
--          var _a;
--          return __privateMethod(_a = i, _resizeContent, resizeContent_fn).call(_a);
--        });
-+        this.#instances.forEach((i) => i.#resizeContent());
-       }, 200);
-     });
-   }
-+  #steps = [];
-+  steps;
-   get auto() {
-     if (!this.hasAttribute("auto"))
-       return false;
-@@ -184,17 +159,23 @@ var _SlidemSlideBase = class extends HTMLElement {
-   get $() {
-     return Object.fromEntries(Array.from(this.shadowRoot.querySelectorAll("[id]"), (el) => [el.id, el]));
-   }
-+  constructor() {
-+    super();
 +    if (!this.shadowRoot)
 +      this.attachShadow({ mode: "open" }).append(slidem_slide_base_default2.content.cloneNode(true));
-+    this.shadowRoot.adoptedStyleSheets = [...this.shadowRoot.adoptedStyleSheets, slidem_slide_base_default];
-+  }
+     this.shadowRoot.adoptedStyleSheets = [...this.shadowRoot.adoptedStyleSheets, slidem_slide_base_default];
+   }
+   static {
+@@ -169,11 +173,11 @@ var _SlidemSlideBase = class extends HTMLElement {
+     else
+       return parseInt(this.getAttribute("auto")) || 5e3;
+   }
+-  set auto(v) {
+-    if (!(typeof v === "number") || Number.isNaN(v))
++  set auto(timer) {
++    if (!(typeof timer === "number") || Number.isNaN(timer))
+       this.removeAttribute("auto");
+     else
+-      this.setAttribute("auto", v.toString());
++      this.setAttribute("auto", timer);
+   }
+   set step(step) {
+     this.setAttribute("step", step);
+@@ -186,12 +190,7 @@ var _SlidemSlideBase = class extends HTMLElement {
+   }
    connectedCallback() {
--    __privateGet(_SlidemSlideBase, _instances).add(this);
+     __privateGet(_SlidemSlideBase, _instances).add(this);
 -    __privateSet(this, _steps, Array.from(this.querySelectorAll("[reveal]")));
 -    this.steps = __privateGet(this, _steps).length;
 -    __privateMethod(this, _resizeContent, resizeContent_fn).call(this);
 -    __privateGet(this, _steps).forEach((step, i) => step.setAttribute("step", i + 2));
 -    if (__privateGet(this, _steps).length)
 -      __privateGet(this, _steps)[0].previousElementSibling?.setAttribute("step", 1);
-+    SlidemSlideBase2.#instances.add(this);
-+    this.#steps = Array.from(this.querySelectorAll("[reveal]"));
-+    this.steps = this.#steps.length;
-+    this.#resizeContent();
-+    this.#steps.forEach((step, i) => step.setAttribute("step", i + 2));
-+    if (this.#steps.length)
-+      this.#steps[0].previousElementSibling?.setAttribute("step", 1);
++    this.defineSteps(this.querySelector("[reveal]"));
    }
    disconnectedCallback() {
--    __privateGet(_SlidemSlideBase, _instances).delete(this);
-+    SlidemSlideBase2.#instances.delete(this);
-   }
-   attributeChangedCallback(attr, _, newVal) {
-     if (attr === "step") {
-@@ -203,47 +184,39 @@ var _SlidemSlideBase = class extends HTMLElement {
-         this.setAttribute("step", this.steps + 1);
-         return;
-       }
--      __privateMethod(this, _setStep, setStep_fn).call(this, step);
-+      this.#setStep(step);
+     __privateGet(_SlidemSlideBase, _instances).delete(this);
+@@ -206,6 +205,27 @@ var _SlidemSlideBase = class extends HTMLElement {
+       __privateMethod(this, _setStep, setStep_fn).call(this, step);
      }
    }
--};
--var SlidemSlideBase = _SlidemSlideBase;
--_instances = new WeakMap();
--_steps = new WeakMap();
--_setStep = new WeakSet();
--setStep_fn = function(step) {
--  this.querySelector('[step="1"]')?.toggleAttribute?.("past", step > 1);
--  __privateGet(this, _steps).forEach((el, i) => {
--    const elStep = i + 2;
--    const past = elStep < step;
--    const current = elStep === step;
--    el.toggleAttribute("past", past);
--    el.toggleAttribute("current", current);
--  });
--};
--_resizeContent = new WeakSet();
--resizeContent_fn = function() {
--  const documentStyle = window.getComputedStyle(document.documentElement);
--  const width = Number((documentStyle.getPropertyValue("--slidem-content-width") || "1760px").slice(0, -2));
--  const height = Number((documentStyle.getPropertyValue("--slidem-content-height") || "990px").slice(0, -2));
--  const scale = Math.min(window.innerHeight / 1.09 / height, window.innerWidth / 1.09 / width);
--  if (scale < 1) {
--    document.documentElement.style.setProperty("--slidem-content-scale", scale);
--    this.$.content?.style?.setProperty("scale", scale);
--  } else {
--    document.documentElement.style.setProperty("--slidem-content-scale", 1);
--    this.$.content?.style?.setProperty("scale", 1);
-+  #setStep(step) {
-+    this.querySelector('[step="1"]')?.toggleAttribute?.("past", step > 1);
-+    this.#steps.forEach((el, i) => {
-+      const elStep = i + 2;
-+      const past = elStep < step;
-+      const current = elStep === step;
-+      el.toggleAttribute("past", past);
-+      el.toggleAttribute("current", current);
-+    });
-   }
--};
--__publicField(SlidemSlideBase, "observedAttributes", [
--  "auto",
--  "step"
--]);
--__privateAdd(SlidemSlideBase, _instances, /* @__PURE__ */ new Set());
-+  #resizeContent() {
-+    const documentStyle = window.getComputedStyle(document.documentElement);
-+    const width = Number((documentStyle.getPropertyValue("--slidem-content-width") || "1760px").slice(0, -2));
-+    const height = Number((documentStyle.getPropertyValue("--slidem-content-height") || "990px").slice(0, -2));
-+    const scale = Math.min(window.innerHeight / 1.09 / height, window.innerWidth / 1.09 / width);
-+    if (scale < 1) {
-+      document.documentElement.style.setProperty("--slidem-content-scale", scale);
-+      this.$.content?.style?.setProperty("scale", scale);
-+    } else {
-+      document.documentElement.style.setProperty("--slidem-content-scale", 1);
-+      this.$.content?.style?.setProperty("scale", 1);
-+    }
++  /**
++   * Imperatively set the list of steps for this slide
++   * @example when the steps are located in the shadow root
++   *          ```javascript
++   *          class DeclarativeShadowSlide extends SlidemSlideBase {
++   *            async connectedCallback() {
++   *              super.connectedCallback();
++   *              await polyfillDeclarativeShadowDOM(this);
++   *              this.defineSteps(this.shadowRoot.querySelectorAll('[reveal]'));
++   *            }
++   *          }
++   *          ```
++   */
++  defineSteps(nodelist) {
++    __privateSet(this, _steps, Array.from(nodelist ?? []));
++    this.steps = __privateGet(this, _steps).length;
++    __privateMethod(this, _resizeContent, resizeContent_fn).call(this);
++    __privateGet(this, _steps).forEach((step, i) => step.setAttribute("step", i + 2));
++    if (__privateGet(this, _steps).length)
++      __privateGet(this, _steps)[0].previousElementSibling?.setAttribute("step", 1);
 +  }
-+})();
+ };
+ var SlidemSlideBase = _SlidemSlideBase;
+ _instances = new WeakMap();
+@@ -213,7 +233,7 @@ _steps = new WeakMap();
+ _setStep = new WeakSet();
+ setStep_fn = function(step) {
+   this.querySelector('[step="1"]')?.toggleAttribute?.("past", step > 1);
+-  __privateGet(this, _steps).forEach((el, i) => {
++  __privateGet(this, _steps)?.forEach((el, i) => {
+     const elStep = i + 2;
+     const past = elStep < step;
+     const current = elStep === step;
+@@ -241,9 +261,11 @@ __publicField(SlidemSlideBase, "observedAttributes", [
+ ]);
+ __privateAdd(SlidemSlideBase, _instances, /* @__PURE__ */ new Set());
  
 -// assert-css:/home/ruphin/dev/slidem/src/slidem-video-slide.css
 +// css-constructible:/home/bennyp/Developer/slidem/src/slidem-video-slide.css
@@ -1422,7 +636,7 @@ index 0bc194a..93f42b3 100644
    background: black;
    color: white;
  }
-@@ -253,10 +226,11 @@ video {
+@@ -253,10 +275,11 @@ video {
    max-height: 100%;
    max-width: 100%;
  }

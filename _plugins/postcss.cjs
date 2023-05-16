@@ -29,24 +29,7 @@ async function postcss(input) {
  * @param{*} options
  */
 module.exports = function(eleventyConfig, options) {
-  // eleventyConfig.addTemplateFormats('css');
-  // eleventyConfig.addExtension('css', {
-  //   outputFileExtension: 'css',
-  //   compile(input, from) {
-  //     if (options.exclude && from.match(options.exclude)) return;
-  //     console.log(from)
-  //     return async function({ page }) {
-  //       try {
-  //         const to = page.outputPath;
-  //         const result = await processor.process(input, { from, to });
-  //         return result.css;
-  //       } catch(e) {
-  //         console.error(e)
-  //         throw e;
-  //       }
-  //     }
-  //   }
-  // });
+  eleventyConfig.addTemplateFormats('css');
   eleventyConfig.addFilter('postcss', postcss);
 }
 
