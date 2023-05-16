@@ -27,7 +27,11 @@ main {
     rotate: -45deg;
     height: 100px;
     max-width: 2em;
-    translate: -30px 10px;
+    translate: -40% 10px;
+
+    &:first-of-type {
+      translate: 0 10px;
+    }
   }
 }
 
