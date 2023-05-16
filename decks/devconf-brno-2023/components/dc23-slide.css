@@ -23,6 +23,35 @@
   grid-template-columns: repeat(var(--columns, 1), 1fr);
 }
 
+.history {
+  --columns: 3;
+}
+
+.comparison #contents,
+.history #contents {
+  grid-auto-columns: 1fr;
+  grid-auto-flow: column;
+  grid-template: min-content 1fr / 1fr 1fr;
+}
+
+.comparison dl,
+.history dl {
+  display: contents;
+}
+
+.comparison dd,
+.history dd {
+  margin: 0;
+}
+
+.comparison dt,
+.history dt {
+  font-size: 1.2em;
+  font-weight: 600;
+  display: flex;
+  gap: .25em;
+}
+
 figure {
   margin: 0;
   grid-column: 1/-1;
@@ -121,7 +150,7 @@ figure figcaption:before {
 .comparison #contents {
   --columns: 2;
 
-  text-align: center;
+  justify-items: center;
 }
 
 svg#divider {

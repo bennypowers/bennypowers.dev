@@ -4,14 +4,16 @@ class: comparison footer
 
 ## Why Two Design Systems? {slot=title}
 
-<div>
+PatternFly Elements
+: - Upstream
+  - White Label
+  - Multipurpose
 
-  ### PatternFly Elements
-  Upstream, unbranded, multipurpose
+Red Hat Design System
+: - Downstream
+  - Branded
+  - Primarily for web pages  
+    (but works for apps as well)
 
-</div> <div>
-
-  ### Red Hat Design System
-  Downstream, branded, primarily for web pages (but works for apps as well)
-
-</div>
+<p slot="notes">
+</p>

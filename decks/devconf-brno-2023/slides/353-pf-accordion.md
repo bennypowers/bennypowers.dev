@@ -31,7 +31,7 @@ hide more detailed information as needed.
     <p>The freedom to run the program as you wish, for any purpose.</p>
   </pf-accordion-panel>
 
-  <pf-accordion-header>
+  <pf-accordion-header expanded>
     <h3>Freedom 1: To Study</h3>
   </pf-accordion-header>
   <pf-accordion-panel>

@@ -29,6 +29,7 @@ async function postcss(input) {
  * @param{*} options
  */
 module.exports = function(eleventyConfig, options) {
+  eleventyConfig.addTemplateFormats('css');
   eleventyConfig.addFilter('postcss', postcss);
 }
 

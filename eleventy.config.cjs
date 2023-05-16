@@ -91,6 +91,7 @@ module.exports = function(eleventyConfig) {
   eleventyConfig.addPlugin(ImportMapPlugin, {
     specs: [
       'tslib',
+      '@patternfly/elements/pf-button/pf-button.js',
       '@patternfly/elements/pf-card/pf-card.js',
       '@patternfly/elements/pf-icon/pf-icon.js',
       '@patternfly/elements/pf-modal/pf-modal.js',

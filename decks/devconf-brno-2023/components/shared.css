@@ -30,10 +30,9 @@ h2 {
   pointer-events: none;
 }
 
-#brno-container {
-  aspect-ratio: var(--deck-aspect);
-  position: relative;
-  width: 100%;
+img {
+  color: red;
+  text-decoration: 2em solid line-through #ff000022;
 }
 
 [reveal] {
@@ -44,6 +43,12 @@ h2 {
 [current],
 [past] {
   opacity: 1;
+}
+
+#brno-container {
+  aspect-ratio: var(--deck-aspect);
+  position: relative;
+  width: 100%;
 }
 
 /*********************************************************

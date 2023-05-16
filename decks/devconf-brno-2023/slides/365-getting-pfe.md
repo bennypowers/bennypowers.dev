@@ -1,7 +1,8 @@
 ---
 class: sidebar
 ---
-## Getting PFE {slot=title}
+## Getting PatternFly Elements {slot=title}
 - NPM
-- CDN (rh / 3rd party)
+- CDN
+- Import Maps
 

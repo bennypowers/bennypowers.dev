@@ -35,6 +35,7 @@ slidem-deck {
   /* adjustments for demo components, because of root font-size changes */
   --pf-global--FontSize--sm: 1em;
   --pf-global--FontSize--md: 1.2em;
-  --pf-global--FontSize--lg: 1.5em;
+  --pf-global--FontSize--lg: 1.3em;
+  --pf-global--icon--FontSize--lg: 1.3em;
 }
 

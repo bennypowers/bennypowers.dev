@@ -1,16 +1,18 @@
 <template shadowrootmode="open">
-<style>
-figure.figure-img figcaption {
-  font-size: 80%;
-}
-</style>
-<figure class="figure-img" webc:root="override">
-  <img :src="src"
-       :alt="alt ?? ''"
-       :width="width ?? false"
-       :height="height ?? false">
-  <figcaption :style="!!width && `max-width: ${width}px;`">
-    <slot></slot>
-  </figcaption>
-</figure>
+  <style>
+    figure.figure-img figcaption { font-size: 80%; }
+    img:not([alt=""]) {
+      color: red;
+      text-decoration: 2em solid line-through #ff000022;
+    }
+  </style>
+  <figure class="figure-img" webc:root="override">
+    <img :src="src"
+         :alt="alt ?? ''"
+         :width="width ?? false"
+         :height="height ?? false">
+    <figcaption :style="!!width && `max-width: ${width}px;`">
+      <slot></slot>
+    </figcaption>
+  </figure>
 </template>

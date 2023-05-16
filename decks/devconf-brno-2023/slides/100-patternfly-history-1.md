@@ -1,6 +1,5 @@
 ---
-style:
-  --columns: 3
+class: history
 ---
 - Bring these in from DX Source Deck
 - Why did we need a design system?
@@ -11,23 +10,14 @@ style:
 
 ## A Brief History {slot=title}
 
-<div>
+*2012:* Design Free for All
+: - Multiple web properties
+  - Each their own design processes
+  - Disparate look and feel
 
-  ### 2012: Design Free for All
-  Multiple properties all with
-  - their own design processes
-  - disparate look and feel
-
-</div> <div>
-
-  ### 2014: PatternFly 1
-  - Proof of concept using Bootstrap
+*2014:* PatternFly 1
+: - Proof of concept using Bootstrap
   - First steps to align **design language**
 
-</div> <div>
-
-  ### 2017: RH Elements
-  Red Hat's first attempt at a component-based design system
-
-</div>
-
+*2017:* RH Elements Web Components
+: Red Hat's first attempt at a component-based design system
