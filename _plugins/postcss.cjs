@@ -12,9 +12,9 @@ const processor = new Processor([
 
 /**
  * @param {string|Promise<string>} input
+ * @param {string} from
  */
-async function postcss(input) {
-  const from = this.page?.inputPath;
+async function postcss(input, from = this.page?.inputPath) {
   try {
     const result = await processor.process(await input, { from });
     return result.css;
@@ -29,7 +29,12 @@ async function postcss(input) {
  * @param{*} options
  */
 module.exports = function(eleventyConfig, options) {
-  eleventyConfig.addTemplateFormats('css');
+  eleventyConfig.addTemplateFormats('postcss');
+  eleventyConfig.addExtension('postcss', {
+    async compile(content, inputPath) {
+      return () => postcss(content, inputPath);
+    }
+  });
   eleventyConfig.addFilter('postcss', postcss);
 }
 

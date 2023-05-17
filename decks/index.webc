@@ -1,0 +1,64 @@
+---
+layout: html.webc
+date: Created
+title: Decks
+---
+<script webc:setup>
+const getScreenShotURL = deck => {
+  const now = new Date();
+  const datecache = `${now.getFullYear()}${now.getMonth()}${now.getDate()}`;
+  const deckURL = `https://bennypowers.dev${deck.data.page.url}`;
+  return `https://v1.screenshot.11ty.dev/${encodeURIComponent(deckURL)}/_${datecache}_wait:2`;
+};
+const byDate = (a, b) => a.date <= b.date ? 1 : a.date > b.date ? -1 : 0;
+</script>
+
+<bp-header></bp-header>
+
+<link rel="stylesheet" href="../sidebar.css">
+
+<style>
+  nav {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, auto));
+    grid-template-rows: masonry;
+    gap: 1em;
+  }
+
+  ol {
+    display: contents;
+    list-style-type: none;
+  }
+
+  main ol li img {
+    border-radius: 4px;
+    overflow: hidden;
+  }
+</style>
+
+<main>
+  <h1 @text="h1 ? h1 : title"></h1>
+  <nav>
+    <ol>
+      <li webc:for="deck of collections.deck.sort(byDate)">
+          <a :href="deck.data.page.url" :title=deck.data.title>
+            <img :src="deck.data.coverImage ?? getScreenShotURL(deck)" alt=''>
+          </a>
+          <h2>
+            <a :href="deck.data.page.url" @html="deck.data.title"></a>
+          </h2>
+          <p webc:if="deck.data.venue">
+            <a :href="deck.data.venue.url"
+                webc:if="deck.data.venue.url"
+                @text="deck.data.venue.name"></a>
+            <span webc:else @text="deck.data.venue.name"></span>
+            <date-time :datetime="deck.date"></date-time>
+          </p>
+          <template webc:type="11ty"
+                    webc:nokeep
+                    11ty:type="njk,md"
+                    :@deck="deck">{{ deck.data.description }}</template>
+      </li>
+    </ol>
+  </nav>
+</main>

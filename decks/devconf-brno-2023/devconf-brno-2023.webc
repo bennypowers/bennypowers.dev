@@ -1,4 +1,17 @@
 ---
+title: 'PatternFly Elements: a Performant Design System'
+description: |
+  In this talk, we'll discover what web components are, and how PatternFly
+  Elements 2.0 implements a high-fidelity PatternFly experience that's 
+  available to developers in any tech stack - Drupal, Java, front-end frameworks
+  (including React), or just plain-old HTML.
+coverImage: /decks/devconf-brno-2023/cover.png
+date: 2023-06-18
+venue:
+  name: DevConf.cz 2023
+  url: https://www.devconf.us/cz/#
+tags:
+  - deck
 eleventyImport:
   collections:
     - devconf23
@@ -20,18 +33,18 @@ eleventyImport:
 <link rel="stylesheet" href="devconf-brno-2023.css">
 
 <style>
-slidem-deck:after {
-  background: #f008;
-  border-radius: .2em;
-  color: white;
-  content: 'draft';
-  display: block;
-  font-size: 2em;
-  font-weight: 900;
-  inset: .5em .5em auto auto;
-  padding: .1em 1em;
-  position: fixed;
-  text-transform: uppercase;
-  z-index: 100000;
-}
+  slidem-deck:after {
+    background: #f008;
+    border-radius: .2em;
+    color: white;
+    content: 'draft';
+    display: block;
+    font-size: 2em;
+    font-weight: 900;
+    inset: .5em .5em auto auto;
+    padding: .1em 1em;
+    position: fixed;
+    text-transform: uppercase;
+    z-index: 100000;
+  }
 </style>
