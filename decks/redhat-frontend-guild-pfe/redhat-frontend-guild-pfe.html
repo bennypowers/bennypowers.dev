@@ -3,6 +3,12 @@ layout: deck.html
 deck: redhat-frontend-guild-pfe
 title: Introduction to Web Components and PatternFly Elements
 date: 2022-12-11
+venue:
+  name: Red Hat Front-End Guild
+description: |
+  About the DOM, Web Components, and how they're used at Red Hat with PatternFly
+  Elements and the Red Hat Design System
+coverImage: /decks/redhat-frontend-guild-pfe/cover.png
 icons:
   - rel: shortcut icon
     href: redhat.svg
@@ -17,6 +23,8 @@ stylesheets:
 preconnect:
   - https://redhat.com
   - https://static.redhat.com
+tags:
+  - deck
 ---
 
 <script webc:keep type="module" src="{{ '/assets/redhat-deck/redhat-theme.js' | url }}"></script>
@@ -24,26 +32,7 @@ preconnect:
 <script type="importmap">{{ importMap | dump | safe }}</script>
 
 <script type="module">import '@rhds/elements';</script>
-<script>
-    function supportsDeclarativeShadowDOM() {
-        return HTMLTemplateElement.prototype.hasOwnProperty("shadowRoot");
-    }
-
-    function polyfillDeclarativeShadowDom(docOrShadowRoot) {
-        docOrShadowRoot.querySelectorAll('template[shadowroot]').forEach((template) => {
-            const mode = template.getAttribute('shadowroot');
-            const shadowRoot = template.parentNode.attachShadow({ mode });
-            shadowRoot.appendChild(template.content);
-            template.remove();
-
-            polyfillDeclarativeShadowDom(shadowRoot);
-        });
-    }
-
-    if (!supportsDeclarativeShadowDOM()) {
-        polyfillDeclarativeShadowDom(document);
-    }
-</script>
+<script>{% include '../../_plugins/dsd/dsd.js' %}</script>
 
 <svg id="icon-sprite-sheet">
   <defs>{% for icon in collections.icon %}{% if page.icons and page.icons.has(icon.fileSlug) %}

@@ -24,11 +24,11 @@ module.exports = function(eleventyConfig) {
   let watchRanOnce = false
   eleventyConfig.on('eleventy.before', async ({ runMode }) => {
     if ((runMode === 'serve' || runMode === 'watch') && watchRanOnce) return;
-    console.log('Copying RHDS elements assets...');
+    console.log('[rhds]: Copying RHDS elements assets...');
     const from = path.join(require.resolve('@rhds/elements'), '..');
     const to = path.join(process.cwd(), '_site', 'assets', '@rhds', 'elements');
     await copyRecursive(from, to);
-    console.log('  ...done');
+    console.log('[rhds]:   ...done');
     watchRanOnce = true;
   });
 

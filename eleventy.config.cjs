@@ -35,6 +35,11 @@ const ImportMapPlugin = require('./_plugins/importMap.cjs');
 /** @param{import('@11ty/eleventy/src/UserConfig.js')} eleventyConfig */
 module.exports = function(eleventyConfig) {
   eleventyConfig.ignores.add('README.md');
+  eleventyConfig.ignores.add('netlify/**/*');
+  eleventyConfig.ignores.add('.netlify/**/*');
+  eleventyConfig.ignores.add('.patches/*');
+  eleventyConfig.ignores.add('.cache/**/*');
+  eleventyConfig.ignores.add('.github/**/*');
   eleventyConfig.setQuietMode(true);
   eleventyConfig.amendLibrary('md', /**@param{import('markdown-it')}md*/md =>
     md.set({ breaks: false })

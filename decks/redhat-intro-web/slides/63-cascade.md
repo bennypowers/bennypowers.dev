@@ -18,7 +18,7 @@ h2 {
 ```
 
 <div reveal style="inset:30% 0 0 50%;position: absolute;">
-  <template shadowroot="open">
+  <template shadowrootmode="open">
     <h1>H1</h1>
     <h2>H2</h2>
     <style>
