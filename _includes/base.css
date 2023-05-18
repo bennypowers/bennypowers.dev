@@ -206,30 +206,6 @@ a {
   }
 }
 
-#tags-list {
-  list-style-type: none;
-  margin: 0;
-  padding: 0.3em 0.6em;
-
-  & li {
-    margin: 0;
-    display: inline-block;
-    border-radius: 1em;
-    background: hsla(0deg 100% 100% / 0.15);
-    padding: 0.3em 0.6em;
-    break-inside: avoid;
-    margin-block-end: 0.3em;
-
-    &#all-tags {
-      display: inline-block;
-      margin-block: 1em;
-      width: 100%;
-      background: none;
-      padding: 0;
-    }
-  }
-}
-
 body code[class*="language-"],
 pre[class*="language-"] {
   font-family: var(--fixed-font);

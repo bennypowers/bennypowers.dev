@@ -1,15 +1,64 @@
+<script webc:setup>
+const getTags = ($data) => {
+  const EXCLUDED_TAGS = new Set([
+    'all',
+    'devconf23',
+    'icon',
+    'posts',
+    'slides',
+    'starting-functional-javascript',
+  ]);
+  return Object.fromEntries(Object.keys($data.collections)
+    .filter(tag => !EXCLUDED_TAGS.has(tag) && !tag.match(/^resume-/))
+    .map(tag => [tag, $data.collections[tag]])
+    .sort(([,a], [,b]) => b.length - a.length));
+};
+</script>
 <style webc:bucket="desktop">
   #tags-list {
     position: sticky;
     top: 64px;
   }
 </style>
-<ul id="tags-list">
-  <li webc:for="tag of Object.keys($data.collections)
-                        .filter(tag => !tag.match(/^(all$|icon$|posts$|slides$|resume-)/))
-                        .sort((a, b) => $data.collections[b].length - $data.collections[a].length)">
+<style>
+  .cloud {
+    list-style-type: none;
+    margin: 0;
+    padding: 0.3em 0.6em;
+
+    & li {
+      margin: 0;
+      display: inline-block;
+      border-radius: 1em;
+      background: hsla(0deg 100% 100% / 0.15);
+      padding: 0.3em 0.6em;
+      break-inside: avoid;
+      margin-block-end: 0.3em;
+
+      &#all-tags {
+        display: inline-block;
+        margin-block: 1em;
+        width: 100%;
+        background: none;
+        padding: 0;
+      }
+    }
+  }
+</style>
+<ul id="tags-list" class="cloud">
+  <li webc:for="(tag, posts) in getTags($data)" webc:if="posts.length>1">
     <a :href="url(`/tags/${slug(tag)}`)"
        @text="tag"></a>
-    (<template webc:nokeep @raw="$data.collections[tag].length"></template> posts)
+    (<template webc:nokeep @raw="posts.length"></template> posts)
   </li>
 </ul>
+<details :open="open ?? false">
+  <summary><i18n-text>More</i18n-text></summary>
+  <ul class="cloud">
+    <li webc:for="(tag, posts) in getTags($data)" webc:if="posts.length === 1">
+      <a :href="url(`/tags/${slug(tag)}`)"
+         @text="tag"></a>
+      (<template webc:nokeep @raw="posts.length"></template> posts)
+    </li>
+  </ul>
+</details>

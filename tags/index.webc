@@ -28,5 +28,5 @@ title: Tags
 
 <main>
   <h1>All Tags</h1>
-  <tag-list></tag-list>
+  <tag-list open></tag-list>
 </main>
