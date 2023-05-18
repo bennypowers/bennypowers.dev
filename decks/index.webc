@@ -54,7 +54,7 @@ const byDate = (a, b) => a.date <= b.date ? 1 : a.date > b.date ? -1 : 0;
                 webc:if="deck.data.venue.url"
                 @text="deck.data.venue.name"></a>
             <span webc:else @text="deck.data.venue.name"></span>
-            <date-time :datetime="deck.date"></date-time>
+            <date-time :datetime="deck.date" month=long year=numeric></date-time>
           </p>
           <template webc:type="11ty"
                     webc:nokeep

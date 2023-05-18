@@ -1,0 +1,6 @@
+README.md
+netlify/**/*
+.netlify/**/*
+.patches/*
+.cache/**/*
+.github/**/*

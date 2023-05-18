@@ -34,12 +34,6 @@ const ImportMapPlugin = require('./_plugins/importMap.cjs');
 
 /** @param{import('@11ty/eleventy/src/UserConfig.js')} eleventyConfig */
 module.exports = function(eleventyConfig) {
-  eleventyConfig.ignores.add('README.md');
-  eleventyConfig.ignores.add('netlify/**/*');
-  eleventyConfig.ignores.add('.netlify/**/*');
-  eleventyConfig.ignores.add('.patches/*');
-  eleventyConfig.ignores.add('.cache/**/*');
-  eleventyConfig.ignores.add('.github/**/*');
   eleventyConfig.setQuietMode(true);
   eleventyConfig.amendLibrary('md', /**@param{import('markdown-it')}md*/md =>
     md.set({ breaks: false })
@@ -48,6 +42,8 @@ module.exports = function(eleventyConfig) {
       .use(footnote)
       .use(attrs, { allowedAttributes: [ 'id', 'slot', 'hidden', 'style',
                                          'reveal', 'current', /^data-.*$/ ] }));
+  eleventyConfig.watchIgnores.add('assets/images/*');
+  eleventyConfig.watchIgnores.add('decks/starting-functional-javascript/images/*');
   eleventyConfig.addDataExtension('yaml', x => YAML.parse(x));
   eleventyConfig.addPassthroughCopy('assets/**/*.{svg,png,jpeg,jpg,gif,webp,webm,js,d.ts,ico,webmanifest,json}');
   eleventyConfig.addGlobalData('isProductionBuild', process.env.NETLIFY && process.env.CONTEXT === 'production');
@@ -75,6 +71,7 @@ module.exports = function(eleventyConfig) {
     components: [
       '_components/**/*.webc',
       'decks/**/components/**/*.webc',
+      'npm:@11ty/eleventy-plugin-syntaxhighlight/*.webc',
     ],
     bundlePluginOptions: {
       transforms: [
