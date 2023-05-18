@@ -264,7 +264,7 @@ index 39c60ee..0000000
 -  "names": ["sheet", "slidem_deck_default", "slidem_deck_default"]
 -}
 diff --git a/node_modules/slidem/slidem-slide-base.js b/node_modules/slidem/slidem-slide-base.js
-index b53b012..2a44ef2 100644
+index b53b012..096f989 100644
 --- a/node_modules/slidem/slidem-slide-base.js
 +++ b/node_modules/slidem/slidem-slide-base.js
 @@ -52,9 +52,11 @@ var __privateMethod = (obj, member, method) => {
@@ -330,7 +330,7 @@ index b53b012..2a44ef2 100644
 -    __privateGet(this, _steps).forEach((step, i) => step.setAttribute("step", i + 2));
 -    if (__privateGet(this, _steps).length)
 -      __privateGet(this, _steps)[0].previousElementSibling?.setAttribute("step", 1);
-+    this.defineSteps(this.querySelector("[reveal]"));
++    this.defineSteps(this.querySelectorAll("[reveal]"));
    }
    disconnectedCallback() {
      __privateGet(_SlidemSlideBase, _instances).delete(this);
