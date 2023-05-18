@@ -18,21 +18,23 @@ const byDate = (a, b) => a.date <= b.date ? 1 : a.date > b.date ? -1 : 0;
 <link rel="stylesheet" href="../sidebar.css">
 
 <style>
-  nav {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, auto));
-    grid-template-rows: masonry;
-    gap: 1em;
-  }
+  main {
+    & nav {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, auto));
+      grid-template-rows: masonry;
+      gap: 1em;
+    }
 
-  ol {
-    display: contents;
-    list-style-type: none;
-  }
+    & ol {
+      display: contents;
+      list-style-type: none;
 
-  main ol li img {
-    border-radius: 4px;
-    overflow: hidden;
+      & li img {
+        border-radius: 4px;
+        overflow: hidden;
+      }
+    }
   }
 </style>
 
