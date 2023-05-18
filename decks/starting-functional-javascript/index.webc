@@ -1,0 +1,179 @@
+---
+title: Starting Functional JavaScript
+description: |
+  A short presentation on functional programming techniques using JavaScript
+coverImage: /decks/starting-functional-javascript/cover.png
+date: 2019-12
+venue:
+  name: Tech Talk @ Forter
+tags:
+  - deck
+eleventyImport:
+  collections:
+    - starting-functional-javascript
+---
+<slide-deck webc:nokeep
+            webc:import="npm:eleventy-plugin-slide-decks"
+            transition="slide-in slide-out"
+            font="Open Sans Condensed"
+            loading
+            :@title="title"
+            :@date="date"
+            @tag="starting-functional-javascript"></slide-deck>
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans+Condensed:700" webc:keep>
+<link rel="stylesheet" href="prism-atom-dark.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+
+<style>
+  :root {
+    background: var(--primary);
+    --primary: #7ED9D9;
+    --secondary: #4362AA;
+    --bottom-offset: 106px;
+  }
+
+  slidem-deck[loading] { display: none; }
+
+  img[center] {
+    margin: 0 auto;
+  }
+
+  h2 {
+    line-height: 1.5;
+    text-transform: uppercase;
+  }
+
+  h2 code {
+    line-height: 1;
+  }
+
+  pre {
+    background: #1d1f21;
+    padding: 0 1em;
+    font-size: 32px;
+    border-radius: 0.5em;
+    color: #c5c8c6;
+    box-shadow: 10px 10px 100px black;
+  }
+
+  [bleed] {
+    min-height: calc(100% - var(--bottom-offset))
+  }
+
+  [active] {
+    z-index: 1;
+  }
+
+  pre:not(:first-child):not([bleed]) {
+    margin-top: 1em;
+  }
+
+  [explanation] {
+    margin: 2em;
+  }
+
+  [fullheight] {
+    height: 100%;
+  }
+
+  [right] {
+    float: right;
+  }
+
+  [large] {
+    font-size: 100%;
+  }
+
+  [flex] {
+    display: flex;
+  }
+
+  [column] {
+    flex-direction: column;
+  }
+
+  [center] {
+    align-items: center;
+  }
+
+  [flex] h2 {
+    align-self: flex-start;
+  }
+
+  .avatar {
+    max-width: 36px;
+  }
+
+  noscript {
+    font-family: "Open Sans Condensed";
+    text-transform: uppercase;
+  }
+
+  noscript h1 {
+    line-height: 0.8;
+    color: white;
+    display: table;
+    white-space: nowrap;
+    font-size: 23vw;
+    max-width: 100vw;
+  }
+
+  noscript p {
+    text-transform: uppercase;
+    color: black;
+    display: table;
+    white-space: nowrap;
+    font-size: 6vw;
+  }
+
+  #pure-functions-header h2 {
+    margin-top: 60vh;
+  }
+
+  #pure-functions,
+  #pure-functions-about,
+  #currying-header {
+    color: white;
+  }
+
+  #currying-header h2 {
+    background: rgba(255, 255, 255, 0.5)
+  }
+
+  #currying-header h3 {
+    background: rgba(0,0,0,0.5)
+  }
+
+  #monad {
+    color: white;
+  }
+
+  #crocks img {
+    width: 80%;
+  }
+
+  .small-code pre {
+    font-size: 80%;
+  }
+</style>
+
+
+<noscript>
+  <h1>
+    <span uppercase fit line-height="0.8" color="white">Starting</span>
+    <span uppercase fit line-height="0.8" color="black">Functional</span>
+    <span uppercase fit line-height="0.8" color="white">JavaScript</span>
+  </h1>
+
+  <p line-height="1.8">&nbsp;</p>
+
+  <p uppercase fit color="black">A Wee Catch Up On the Language</p>
+  <p uppercase fit color="white">you Thought you Knew</p>
+
+  <p line-height="1.8">&nbsp;</p>
+
+  This presentation relies on JavaScript. Please consider enabling JavaScript for this site.
+</noscript>
