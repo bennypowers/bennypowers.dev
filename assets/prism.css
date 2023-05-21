@@ -109,6 +109,11 @@ pre[class*="language-"] {
   color: var(--markdown-syntax-url-color, #005cc5);
 }
 
+.token.url .token.url,
+.token.url .token.content {
+  color: var(--markdown-syntax-tag-color, #22863a);
+}
+
 .token.variable {
   color: var(--markdown-syntax-variable-color, #005cc5);
 }

@@ -33,12 +33,12 @@ bodyClasses: h-entry post sidebar
          webc:if="coverImage">
   </header>
 
-  <div class="e-content">
+  <article class="e-content">
     <template webc:nokeep @raw="content"></template>
     <a id="tldr"
        webc:if="watch || isProductionBuild"
        href="https://brid.gy/publish/mastodon"></a>
-  </div>
+  </article>
 
   <web-mention-replies :@webmentions="webmentions"></web-mentions>
 </main>

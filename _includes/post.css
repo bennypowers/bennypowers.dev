@@ -8,6 +8,17 @@ th code {
   }
 }
 
+article kbd {
+  display: inline-block;
+  margin-inline: 2px;
+  border-radius: 2px;
+  background: var(--grey-200);
+
+  @media (prefers-color-scheme: dark) {
+    background: var(--grey-900);
+  }
+}
+
 main {
   & pre {
     max-width: 100%;
