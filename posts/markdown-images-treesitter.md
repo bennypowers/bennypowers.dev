@@ -1,9 +1,9 @@
 ---
 title: Toggle Markdown Image Syntax with Treesitter
 published: true
-description: |
-    Use Neovim's treesitter and lua APIs to script a function that toggles
-    between HTML and markdown image synax
+tldr: |
+    Use #Neovim's #treesitter and #lua APIs to script a function that toggles
+    between #HTML and #markdown image synax
 templateEngineOverride: webc,md
 coverImage: /assets/images/markdown-images-treesitter.png
 coverImageAlt: a table made of trees
