@@ -1,6 +1,15 @@
-<template shadowrootmode="open">
+<template shadowroot="open" shadowrootmode="open">
   <style>
-    figure.figure-img figcaption { font-size: 80%; }
+    figure {
+      margin: var(--margin, initial);
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      flex-direction: var(--flex-direction, column);
+    }
+    figcaption {
+      font-size: 80%;
+    }
     img:not([alt=""]) {
       color: red;
       text-decoration: 2em solid line-through #ff000022;

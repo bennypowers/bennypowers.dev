@@ -7,14 +7,14 @@
   display: none !important;
 }
 
-h1, h2, h3, h4, h5, h6 {
+:is(h1, h2, h3, h4, h5, h6) {
   font-family: Montserrat, sans-serif;
   font-weight: 600;
   line-height: 1;
   margin: 0;
 }
 
-h2 {
+h2[slot="title"] {
   font-family: Montserrat, sans-serif;
   font-weight: 500;
   font-size: 3em;
@@ -51,6 +51,18 @@ img {
   width: 100%;
 }
 
+.logo-grid li { display: contents; }
+.logo-grid svg { width: 7em; }
+
+.logo-grid {
+  list-style-type: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-flow: row wrap;
+  gap: 1em;
+}
+
 /*********************************************************
  * Prism
  */
@@ -78,3 +90,20 @@ pre .token.punctuation { color: var(--dc23-cyan); }
 pre .token.attr-name { color: var(--dc23-orange); }
 pre .token.attr-value { color: var(--dc23-magenta); }
 pre .token.tag { color: var(--dc23-lilac); }
+pre .token.function { color: var(--dc23-lilac); }
+pre .token.keyword { color: var(--dc23-cyan); }
+pre .token.class-name { color: var(--dc23-orange); }
+
+pre .token.string {
+  color: var(--dc23-green);
+  filter: brightness(200%) saturate(90%) contrast(30%);
+}
+
+pre .token.at.operator {
+  color: var(--dc23-lilac);
+  filter: brightness(.6);
+}
+
+.feature pre {
+  margin: 0;
+}

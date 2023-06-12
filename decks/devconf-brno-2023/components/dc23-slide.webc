@@ -3,13 +3,13 @@
     slide.class?.match(/\bfooter\b|\bsidebar\b/);
 </script>
 
-<template shadowrootmode="open">
+<template shadowroot="open" shadowrootmode="open">
   <link rel="stylesheet" :href="url('components/shared.css')"/>
   <link rel="stylesheet" :href="url('components/dc23-slide.css')"/>
 
-  <div id="brno-container" :class="this.class ?? 'plain'">
+  <div id="brno-container" :class="this.class ?? 'plain'" part="brno-container">
     <slot id="title" name="title" webc:keep></slot>
-    <div id="contents">
+    <div id="contents" part="contents">
       <slot></slot>
       <slot name="feature" webc:if="this.class?.includes('feature')"></slot>
       <svg id="divider"

@@ -11,7 +11,7 @@ hide more detailed information as needed.
 
 ```html
 <pf-accordion>
-  <pf-accordion-header>
+  <pf-accordion-header expanded>
     <h3>Freedom 0: To Run</h3>
   </pf-accordion-header>
   <pf-accordion-panel>
@@ -24,7 +24,7 @@ hide more detailed information as needed.
 ```
 
 <pf-accordion slot="feature" reveal>
-  <pf-accordion-header>
+  <pf-accordion-header expanded>
     <h3>Freedom 0: To Run</h3>
   </pf-accordion-header>
   <pf-accordion-panel>
@@ -54,5 +54,12 @@ hide more detailed information as needed.
 </pf-accordion>
 
 <script type="module">
-import '@patternfly/elements/pf-accordion/pf-accordion.js';
+  import '@patternfly/elements/pf-accordion/pf-accordion.js';
 </script>
+
+<style>
+  pf-accordion {
+    font-size: initial;
+    height: max-content;
+  }
+</style>

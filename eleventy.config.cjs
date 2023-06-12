@@ -66,7 +66,14 @@ module.exports = function(eleventyConfig) {
   eleventyConfig.addPlugin(EleventyPluginDirectoryOutput);
   eleventyConfig.addPlugin(EleventyRenderPlugin);
   eleventyConfig.addPlugin(EleventyPluginRSS);
-  eleventyConfig.addPlugin(EleventyPluginSyntaxhighlight, { init() { require('prismjs/components/index')(['regex']) } });
+  eleventyConfig.addPlugin(EleventyPluginSyntaxhighlight, {
+    init() {
+      require('prismjs/components/index')(['html']);
+      require('prismjs/components/index')(['regex']);
+      require('prismjs/components/index')(['js-templates']);
+      require('prismjs/components/index')(['javascript']);
+    },
+  });
   eleventyConfig.addPlugin(EleventyPluginWebC, {
     components: [
       '_components/**/*.webc',

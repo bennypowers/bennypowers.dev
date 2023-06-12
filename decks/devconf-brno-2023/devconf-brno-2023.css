@@ -39,3 +39,9 @@ slidem-deck {
   --pf-global--icon--FontSize--lg: 1.3em;
 }
 
+.feature::part(contents) {
+  background-color: var(--pf-global--Color--light-200, #f0f0f0);
+  place-content: center;
+  padding: 1em;
+  border-radius: var(--pf-global--borderradius--sm, 3px);
+}

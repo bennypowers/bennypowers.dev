@@ -13,4 +13,12 @@ style:
 - Future Proof
 - Knowledge Transfer
 
-![A sparkling diamond puzzle piece](web-components-advantages.svg)
+<img alt="A sparkling diamond puzzle piece" src="web-components-advantages.svg">
+
+<style>
+#contents img {
+  height: 40vh;
+  aspect-ratio: 1;
+  place-self: center;
+}
+</style>

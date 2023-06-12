@@ -11,5 +11,12 @@ style:
 - Design Systems
 - Progressively Enhanced Pages
 
-![Identical puzzle pieces fit into diverse contexts](web-component-uses.svg) 
+<img alt="Identical puzzle pieces fit into diverse contexts" src="web-component-uses.svg"> 
 
+<style>
+#contents img {
+  height: 40vh;
+  aspect-ratio: 1;
+  place-self: center;
+}
+</style>
