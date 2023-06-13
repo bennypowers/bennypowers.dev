@@ -39,6 +39,10 @@ slidem-deck {
   --pf-global--icon--FontSize--lg: 1.3em;
 }
 
+[slot="notes"] {
+  color: white;
+}
+
 .feature::part(contents) {
   background-color: var(--pf-global--Color--light-200, #f0f0f0);
   place-content: center;

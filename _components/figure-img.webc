@@ -1,18 +1,20 @@
 <template shadowroot="open" shadowrootmode="open">
   <style>
     figure {
-      margin: var(--margin, initial);
       display: flex;
       align-items: center;
       gap: 4px;
+      margin: var(--margin, initial);
       flex-direction: var(--flex-direction, column);
-    }
-    figcaption {
-      font-size: 80%;
     }
     img:not([alt=""]) {
       color: red;
       text-decoration: 2em solid line-through #ff000022;
+    }
+    figcaption {
+      display: inline-table;
+      font-size: 80%;
+      text-align: var(--caption-align, initial);
     }
   </style>
   <figure class="figure-img" webc:root="override">

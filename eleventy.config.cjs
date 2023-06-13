@@ -109,9 +109,16 @@ module.exports = function(eleventyConfig) {
       '@patternfly/elements/pf-accordion/pf-accordion.js',
       '@patternfly/elements/pf-tooltip/pf-tooltip.js',
       '@patternfly/elements/pf-tooltip/BaseTooltip.js',
+      '@patternfly/pfe-core/controllers/logger.js',
+      '@patternfly/pfe-core/controllers/style-controller.js',
       'lit',
       'lit/async-directive.js',
       'lit/decorators.js',
+      'lit/decorators/custom-element.js',
+      'lit/decorators/property.js',
+      'lit/decorators/query.js',
+      'lit/decorators/query-all.js',
+      'lit/decorators/state.js',
       'lit/directive-helpers.js',
       'lit/directive.js',
       'lit/directives/class-map.js',
@@ -122,12 +129,12 @@ module.exports = function(eleventyConfig) {
     ],
     additionalImports(configData) {
       const pathPrefix = configData?.pathPrefix ?? process.env.ELEVENTY_PATH_PREFIX ?? '';
-      const rhdsPrefix = `/${pathPrefix}/assets/@rhds/elements`.replaceAll('//', '/');
+      const rhdsPrefix = `/${pathPrefix}/assets/@rhds/elements`.replace(/\/+/, '/');
       return {
         slidem: `/assets/decks.min.js`,
         'slidem/slidem-slide.js': `/assets/decks.min.js`,
         ['@rhds/elements']: `${rhdsPrefix}/rhds.min.js`,
-        ['@rhds/elements/']: `/${rhdsPrefix}/elements/`,
+        ['@rhds/elements/']: `${rhdsPrefix}/elements/`,
       };
     }
   });

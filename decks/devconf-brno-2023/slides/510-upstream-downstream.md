@@ -6,7 +6,7 @@ class: comparison footer
 
 PatternFly Elements
 : - Upstream
-  - White Label
+  - Unbranded
   - Multipurpose
 
 Red Hat Design System

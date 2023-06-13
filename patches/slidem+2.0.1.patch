@@ -104,7 +104,7 @@ index 0000000..23f7dea
 +  }
 +}
 diff --git a/node_modules/slidem/slidem-deck.js b/node_modules/slidem/slidem-deck.js
-index fb0f471..87ddede 100644
+index fb0f471..ceabb08 100644
 --- a/node_modules/slidem/slidem-deck.js
 +++ b/node_modules/slidem/slidem-deck.js
 @@ -52,9 +52,11 @@ var __privateMethod = (obj, member, method) => {
@@ -237,7 +237,19 @@ index fb0f471..87ddede 100644
      case "PageDown":
      case "ArrowRight":
      case "j":
-@@ -650,9 +676,11 @@ updateNotes_fn = function() {
+@@ -589,8 +615,9 @@ onKeyup_fn = function({ key }) {
+ };
+ _updateTitle = new WeakSet();
+ updateTitle_fn = function() {
+-  if (this.currentSlide.hasAttribute("name"))
+-    document.title = this.currentSlide.getAttribute("name") + " | " + __privateGet(this, _originalTitle);
++  const slideTitle = this.currentSlide.getAttribute("slide-title") || this.currentSlide.getAttribute('name');
++  if (slideTitle)
++    document.title = slideTitle + " | " + __privateGet(this, _originalTitle);
+   else
+     document.title = __privateGet(this, _originalTitle);
+ };
+@@ -650,9 +677,11 @@ updateNotes_fn = function() {
  };
  __privateAdd(SlidemDeck, _changeLocation);
  __publicField(SlidemDeck, "is", "slidem-deck");

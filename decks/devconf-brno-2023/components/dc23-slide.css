@@ -169,6 +169,6 @@ ul {
 }
 
 .grid-2x2 #contents {
-  grid-template: 1fr 1fr / 1fr 1fr;
+  grid-template: min-content min-content / 1fr 1fr;
 }
   
