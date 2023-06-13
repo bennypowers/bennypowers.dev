@@ -6,13 +6,12 @@ class: sidebar
 ```ts
 @customElement('pf-tile')
 export class PfTile extends LitElement {
-  @property({ reflect: true, type: Boolean }) selected = false;
+  @property({ type: Boolean }) selected = false;
   @property({ reflect: true }) stacked?: StackedSize;
 
   render() {
-    const { selected } = this;
     return html`
-      <div part="header" class="${classMap({ selected })}">
+      <div part="header" class="${classMap({ selected: this.selected })}">
         <slot id="icon" name="icon" part="icon"></slot>
         <slot id="title" name="title" part="title"></slot>
       </div>
