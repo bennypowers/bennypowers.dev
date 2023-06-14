@@ -7,9 +7,14 @@ description: |
   (including React), or just plain-old HTML.
 coverImage: /decks/devconf-brno-2023/cover.png
 date: 2023-06-18
+published: true
 venue:
   name: DevConf.cz 2023
   url: https://www.devconf.us/cz/#
+icons: 
+  - rel: shortcut icon
+    sizes: any
+    href: /decks/devconf-brno-2023/devconf-logo.png
 tags:
   - deck
 eleventyImport:
@@ -19,6 +24,7 @@ eleventyImport:
 ---
 <slide-deck webc:nokeep
             webc:import="npm:eleventy-plugin-slide-decks"
+            :draft="!published"
             @title="PatternFly Elements: a Performant Design System"
             @date="2023-06-18"
             @tag="devconf23">
@@ -33,7 +39,7 @@ eleventyImport:
 <link rel="stylesheet" href="devconf-brno-2023.css">
 
 <style>
-  slidem-deck:after {
+  slidem-deck[draft]:after {
     background: #f008;
     border-radius: .2em;
     color: white;

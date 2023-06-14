@@ -6,7 +6,7 @@ class: sidebar
 - More components: dropdown, textfield, [and more][more]
 - React wrappers <span slot=notes>stress that react wrappers is a react problem</span>
 - Declarative Shadow DOM
-  - <abbr title="server-side rendered">SSR</abbr>d `<noscript>` capable experiences
+  - <abbr title="server-side rendered">SSR</abbr>'d `<noscript>` capable experiences
   - Nicer HTML APIs with content attributes
     ```html 
      <pf-link href="#">Home</pf-link>

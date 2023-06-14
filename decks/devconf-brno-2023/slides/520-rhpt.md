@@ -12,7 +12,7 @@ class: footer
 - React injects state and content into custom elements
 
 <rh-cta variant="primary" style="margin: 1em auto;">
-  <a href="https://www.redhat.com/en/technologies/linux-platforms/enterprise-linux/server/trial">Check it out</a>
+  <a target="_blank" href="https://www.redhat.com/en/technologies/linux-platforms/enterprise-linux/server/trial">Check it out</a>
 </rh-cta>
 
 <script type="module">

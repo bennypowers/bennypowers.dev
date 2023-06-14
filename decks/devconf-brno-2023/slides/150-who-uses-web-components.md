@@ -25,7 +25,10 @@ Large Organizations and small Projects
 {slot=notes}
 
 <style>
-h2 { font-size: 2.7em; margin: 0; }
+#contents :is(h2):not([slot="header"]) {
+  font-size: 2.7em;
+  margin: 0;
+}
 .logo-grid {
   margin-block-start: 1em;
 }
