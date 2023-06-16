@@ -1,5 +1,8 @@
 ## Special Thanks {slot=title}
 
+- <read-icon name=github></read-icon>[patternfly/patternfly-elements][pfe]
+- <read-icon name=github></read-icon>[redhat-ux/red-hat-design-system][rhds]
+
 ### Contributors
 <div id="contributors">
   <github-contributors defer repo="patternfly/patternfly-elements"></github-contributors>
@@ -26,6 +29,20 @@ github-contributors:not(:first-of-type) {
   display: flex;
   flex-wrap: wrap;
 }
+ul {
+  list-style-type: none;
+  font-size: 120%;
+  padding: 0 1em;
+}
+ul li {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+ul li svg {
+  width: 20px;
+  aspect-ratio: 1;
+}
 </style>
 
 <script type="module">
@@ -37,3 +54,5 @@ document.querySelector('slidem-deck').addEventListener('change', function(event)
   }
 });
 </script>
+[pfe]: https://github.com/patternfly/patternfly-elements
+[rhds]: https://github.com/redhat-ux/red-hat-design-system
