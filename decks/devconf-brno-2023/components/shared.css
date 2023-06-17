@@ -8,26 +8,26 @@
 }
 
 #contents > h2,
-:is(h1, h2, h3, h4, h5, h6):not([slot=header]) {
+:is(h1, h2, h3, h4, h5, h6):not([slot="header"]) {
   font-family: Montserrat, sans-serif;
   font-weight: 600;
   line-height: 1;
   margin: 0;
 }
 
-#contents :is(h2, h3, h4, h5, h6):not([slot=header])  {
+#contents :is(h2, h3, h4, h5, h6):not([slot="header"])  {
   margin: revert;
 }
 
 #contents > h2,
-h2:not([slot=header]) {
+h2:not([slot="header"]) {
   font-family: Montserrat, sans-serif;
   font-weight: 500;
   font-size: 3em;
   color: var(--deck-primary-color);
 }
 
-#contents > h2:not([slot=header]) {
+#contents > h2:not([slot="header"]) {
   font-size: 2.7em;
 }
 
@@ -120,4 +120,10 @@ pre .token.at.operator {
 
 .feature pre {
   margin: 0;
+}
+
+.comparison.perf #title { display: none; }
+
+.comparison.perf img {
+  max-height: 80vh;
 }
