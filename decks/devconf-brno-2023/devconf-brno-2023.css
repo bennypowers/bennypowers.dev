@@ -23,6 +23,9 @@
 
 #slides-progress {
   --indicator-color: var(--dc23-cyan);
+
+  position: fixed;
+  inset: 0;
 }
 
 slidem-deck {
