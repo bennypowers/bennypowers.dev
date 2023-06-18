@@ -126,4 +126,5 @@ pre .token.at.operator {
 
 .comparison.perf img {
   max-height: 80vh;
+  width: auto;
 }

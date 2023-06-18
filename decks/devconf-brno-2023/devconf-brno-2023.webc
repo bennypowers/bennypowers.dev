@@ -54,3 +54,13 @@ eleventyImport:
     z-index: 100000;
   }
 </style>
+<script webc:bucket="after">
+(async function() {
+  await customElements.whenDefined('dc23-slide');
+  await customElements.whenDefined('dc23-slide-bold');
+  await customElements.whenDefined('dc23-slide-divider');
+  await new Promise(r => setTimeout(r, 500));
+  for (const slide of document.querySelectorAll('#deck > *'))
+    slide.afterStamp?.();
+})();
+</script>
