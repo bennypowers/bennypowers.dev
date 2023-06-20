@@ -17,12 +17,16 @@
 
   font-family: Montserrat, sans-serif;
   line-height: 1.5;
+
+  @media (width <= 500px) {
+    --deck-aspect: 161/287
+  }
 }
 
 :not(:defined),[hidden] { display: none !important; }
 
 #slides-progress {
-  --indicator-color: var(--dc23-cyan);
+  --indicator-color: var(--dc23-lilac);
 
   position: fixed;
   inset-block-start: 0;
@@ -35,6 +39,10 @@ slidem-deck {
   font-family: Montserrat, sans-serif;
   font-weight: 300;
   font-size: 1.4vw;
+
+  @media (width <= 500px) {
+    font-size: 16px;
+  }
 
   /* adjustments for demo components, because of root font-size changes */
   --pf-global--FontSize--sm: 1em;

@@ -43,6 +43,10 @@ ul li svg {
   width: 20px;
   aspect-ratio: 1;
 }
+@media (width <= 500px) {
+#contributors {
+  --avatar-size: 60px;
+}
 </style>
 
 <script type="module">

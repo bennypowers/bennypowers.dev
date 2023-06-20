@@ -31,4 +31,10 @@ img {
   color: inherit !important;
   font-size: 1.75em;
 }
-  
+
+@media (width <= 500px) {
+  #title * {
+    font-size: 1.3em;
+  }
+}
+
