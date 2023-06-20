@@ -13,3 +13,9 @@ class: sidebar
 
 Lit, TypeScript, CSS, PatternFly design tokens
 {slot=notes}
+
+<style>
+.logo-grid {
+  padding-inline-end: calc(var(--spacer-inline) + 43px);
+}
+</style>

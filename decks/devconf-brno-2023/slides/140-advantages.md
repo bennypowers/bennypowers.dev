@@ -27,7 +27,7 @@ style:
 
 <style>
 #contents svg {
-  height: 40vh;
+  max-height: 40vh;
   aspect-ratio: 1;
   place-self: start center;
 }

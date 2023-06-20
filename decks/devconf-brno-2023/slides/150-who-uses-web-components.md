@@ -34,4 +34,14 @@ Large Organizations and small Projects
 }
 #youtube svg {
   fill: #f00;
-}</style>
+}
+@media (width <= 500px) {
+  #contents :is(h2):not([slot="header"]) {
+    line-break: anywhere;
+  }
+  ul {
+    margin-inline: 0;
+    padding-inline: 0;
+  }
+}
+</style>

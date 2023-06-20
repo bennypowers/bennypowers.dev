@@ -1,4 +1,3 @@
-
 #brno-container {
   display: grid;
   align-items: initial;
@@ -154,11 +153,59 @@ figure figcaption:before {
   justify-items: center;
 }
 
+.comparison.perf #title { display: none; }
+
+.comparison.perf img {
+  max-height: 80vh;
+  max-width: 40vw;
+  width: auto;
+}
+
 svg#divider {
   position: absolute;
   width: 0.2em;
   inset-inline-start: calc(50% - 0.1em);
   inset-block-start: 25%;
+}
+
+@media (width <= 500px) {
+  .comparison #contents,
+  .history #contents {
+    grid-template: repeat(1000, min-content) / 1fr;
+  }
+
+  .feature #contents {
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr;
+  }
+
+  .sidebar #stripe {
+    padding-block: 1em;
+    grid-column: 1/-1;
+    padding-inline: var(--spacer-inline);
+    justify-content: end;
+    inset-inline: 0 0;
+    inset-block: auto 0;
+  }
+
+  .comparison.perf img {
+    max-height: 35vh;
+    max-width: 70vw;
+    width: auto;
+  }
+
+  svg#divider {
+    rotate: 90deg;
+    inset-block-start: 30%;
+  }
+
+  ul {
+    min-width: 0;
+  }
+
+  li pre {
+    line-break: anywhere;
+  }
 }
 
 ul {
@@ -171,4 +218,3 @@ ul {
 .grid-2x2 #contents {
   grid-template: min-content min-content / 1fr 1fr;
 }
-  

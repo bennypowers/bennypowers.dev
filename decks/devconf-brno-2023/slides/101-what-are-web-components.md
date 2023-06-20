@@ -13,7 +13,7 @@ APIs
 
 <style>
 #btn-diag {
-  height: 200px;
+  max-height: 200px;
   margin-inline: auto;
 }
 </style>

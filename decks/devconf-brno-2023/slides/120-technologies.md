@@ -21,4 +21,14 @@ figure-img {
   --margin: 0;
   font-size: 1.5em;
 }
+@media (width <= 500px) {
+  #contents {
+    grid-template: 1fr 1fr / 1fr 1fr;
+    column-gap: 0;
+  }
+  figure-img {
+    scale: .75;
+  }
+}
+
 </style>

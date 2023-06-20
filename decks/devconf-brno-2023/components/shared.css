@@ -73,6 +73,10 @@ img {
   gap: 1em;
 }
 
+@media (width <= 500px) {
+  .logo-grid svg { width: 4em; }
+}
+
 ul {
   margin-block: 0;
 }
@@ -92,6 +96,12 @@ pre[class*="language-"] {
   line-height: 1.5;
   tab-size: 2;
   hyphens: none;
+}
+
+@media (width <= 500px) {
+  pre[class*="language-"] {
+    overflow-x: scroll;
+  }
 }
 
 pre[class*="language-"]::selection,
@@ -122,9 +132,3 @@ pre .token.at.operator {
   margin: 0;
 }
 
-.comparison.perf #title { display: none; }
-
-.comparison.perf img {
-  max-height: 80vh;
-  width: auto;
-}
