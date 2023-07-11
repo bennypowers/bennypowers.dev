@@ -1,18 +1,14 @@
 <template shadowroot="open" shadowrootmode="open">
   <link rel="stylesheet" :href="url('components/redhat-theme.css')"/>
   <link rel="stylesheet" :href="url('components/redhat-slide.css')"/>
-  <div id="container" part="container">
-    <header id="slide-header">
-      <slot name="heading"></slot>
-      <small id="confidential">
-        <slot name="confidential"></slot>
-      </small>
-    </header>
-    <section id="content" part="content">
-      <slot id="slot"></slot>
-    </section>
-    <redhat-slide-footer></redhat-slide-footer>
-  </div>
+  <header id="slide-header">
+    <slot name="heading"></slot>
+    <small id="confidential">
+      <slot name="confidential"></slot>
+    </small>
+  </header>
+  <div id="slide-body"><slot></slot></div>
+  <redhat-slide-footer></redhat-slide-footer>
 </template>
 
 <script type="module">

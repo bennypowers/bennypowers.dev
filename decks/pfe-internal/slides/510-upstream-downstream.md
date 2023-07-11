@@ -2,7 +2,9 @@
 class: comparison footer
 ---
 
-## Why Two Design Systems? {slot=title}
+## Red Hat Design Systems {slot=heading}
+
+### Why Two Design Systems?
 
 PatternFly Elements
 : - Upstream

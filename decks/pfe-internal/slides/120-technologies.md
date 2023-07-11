@@ -1,4 +1,5 @@
-<h2 slot="title">Web Component Core Technologies</h2>
+## Web Component Core Technologies {slot=heading}
+
 <figure-img src="ce.svg" alt="painter's palette" height="150">Custom Elements</figure-img>
 <figure-img src="sd.svg" alt="sunglasses" height="150">Shadow DOM</figure-img>
 <figure-img src="te.svg" alt="rubber stamp" width="150"><code>&lt;template></code></figure-img>

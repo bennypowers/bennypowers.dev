@@ -1,32 +1,3 @@
-:root {
-  --deck-primary-background: var(--rh-color-surface-lightest);
-  --deck-secondary-background: var(--rh-color-surface--light);
-  --deck-primary-color: var(--rh-color-brand-red);
-  --deck-secondary-color: var(--rh-color-accent-brand-on-light);
-  --fixed-font: var(--rh-font-family-code);
-  --markdown-syntax-color: var(--rh-color-text-primary-on-light);
-  --markdown-syntax-comment-color: var(--surface2);
-  --markdown-code-background-color: var(--base);
-  --markdown-syntax-keyword-color: var(--mauve);
-  --markdown-syntax-background-color: var(--base);
-  --markdown-syntax-function-color: var(--blue);
-  --markdown-syntax-regex-color: var(--peach);
-  --markdown-syntax-punctuation-color: var(--subtext1);
-  --markdown-syntax-operator-color: var(--sky);
-  --markdown-syntax-class-name-color: var(--maroon);
-  --markdown-syntax-number-color: var(--yellow);
-
-  color: var(--rh-color-text-primary-on-light);
-  font-family: var(--rh-font-family-body-text);
-  line-height: var(--rh-line-height-body-text);
-}
-
-:not(:defined) { display: none !important; }
-
-slidem-deck {
-  line-height: inherit;
-}
-
 p,
 pre[class^="language-"] {
   margin-block: var(--rh-space-lg);
@@ -45,24 +16,25 @@ pre[class^="language-"] {
   margin-block: var(--rh-space-xl);
   line-height: 1;
 
-  @nest rh-alert & {
-    margin-block: 0;
-  }
+}
+
+rh-alert :is(h1, h2, h3, h4, h5, h6) {
+  margin-block: 0;
 }
 
 a {
   color: inherit;
   text-decoration: none;
+}
 
-  &[href^="http"] {
-    color: var(--rh-context-light-color-text-link);
-    text-decoration: underline;
-    text-decoration-thickness: 5px;
-  }
+a[href^="http"] {
+  color: var(--rh-context-light-color-text-link);
+  text-decoration: underline;
+  text-decoration-thickness: 5px;
+}
 
-  &[href^="#"] {
-    pointer-events: none;
-  }
+a[href^="#"] {
+  pointer-events: none;
 }
 
 ol {
@@ -71,32 +43,25 @@ ol {
 
 ul li {
   padding-inline-start: 0.5em;
+}
 
-  &::marker {
-    content: "▶";
-    color: var(--rh-color-brand-red-on-light);
-    font-size: 80%;
-  }
+ul li::marker {
+  content: "▶";
+  color: var(--rh-color-brand-red-on-light);
+  font-size: 80%;
 }
 
 summary::marker {
   color: var(--rh-color-brand-red-on-light);
 }
 
-figure blockquote + figcaption {
-  text-align: end;
+[reveal] {
+  opacity: 0;
+  transition: opacity 0.2s;
 }
 
-blockquote {
-  position: relative;
-
-  &:before {
-    content: "“";
-    font-size: 400%;
-    position: absolute;
-    inset-block-start: -0.5em;
-    inset-inline-start: -0.5em;
-    opacity: 0.5;
-  }
+[current],
+[past] {
+  opacity: 1;
 }
 

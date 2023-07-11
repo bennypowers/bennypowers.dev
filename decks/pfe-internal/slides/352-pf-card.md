@@ -1,7 +1,7 @@
 ---
-class: feature
+reveal: pf-card
 ---
-## `<pf-card>` {slot=title}
+## `<pf-card>`
 
 A **card** is a square or rectangular container that can contain any kind of 
 content. Cards symbolize units of information, and each one acts as an entry 
@@ -23,7 +23,7 @@ data displays like card views, or for positioning content on a page.
 </pf-card>
 ```
 
-<pf-card rounded slot="feature" reveal>
+<pf-card rounded>
   <h3 slot="header">PatternFly Card</h3>
   <p>
     Provides header, body, and Footer Slots.
@@ -38,3 +38,10 @@ data displays like card views, or for positioning content on a page.
 import '@patternfly/elements/pf-card/pf-card.js';
 import '@patternfly/elements/pf-button/pf-button.js';
 </script>
+
+<style>
+pf-card {
+  position: absolute;
+  inset: 1em 1em 1em 50%;
+}
+</style>

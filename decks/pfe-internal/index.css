@@ -1,20 +1,33 @@
 :root {
-  --deck-primary-background: white;
-  --deck-primary-color: var(--rh-color-brand-red-on-light);
-  --deck-primary-text: var(--rh-color-text-primary-on-light);
-  --deck-aspect: 287/161;
+  --deck-primary-background: var(--rh-color-surface-lightest);
+  --deck-secondary-background: var(--rh-color-surface--light);
+  --deck-primary-color: var(--rh-color-brand-red);
+  --deck-secondary-color: var(--rh-color-accent-brand-on-light);
   --fixed-font: var(--rh-font-family-code);
-  --spacer-block: 4.8vw;
-  --spacer-inline: calc(var(--spacer-block) * var(--deck-aspect));
+  --markdown-syntax-color: var(--rh-color-text-primary-on-light);
+  --markdown-syntax-comment-color: var(--surface2);
+  --markdown-code-background-color: var(--base);
+  --markdown-syntax-keyword-color: var(--mauve);
+  --markdown-syntax-background-color: var(--base);
+  --markdown-syntax-function-color: var(--blue);
+  --markdown-syntax-regex-color: var(--peach);
+  --markdown-syntax-punctuation-color: var(--subtext1);
+  --markdown-syntax-operator-color: var(--sky);
+  --markdown-syntax-class-name-color: var(--maroon);
+  --markdown-syntax-number-color: var(--yellow);
 
+  color: var(--rh-color-text-primary-on-light);
   font-family: var(--rh-font-family-body-text);
+  line-height: var(--rh-line-height-body-text);
 
   @media (width <= 500px) {
     --deck-aspect: 161/287
+  
   }
+
 }
 
-:not(:defined),[hidden] { display: none !important; }
+[hidden] { display: none !important; }
 
 #slides-progress {
   --indicator-color: var(--rh-color-brand-red-on-light);
@@ -29,15 +42,17 @@ slidem-deck {
   color: var(--deck-primary-text);
   font-family: var(--rh-font-family-body-text);
 
-  @media (width <= 500px) {
-    font-size: 16px;
-  }
-
   /* adjustments for demo components, because of root font-size changes */
   --pf-global--FontSize--sm: 1em;
   --pf-global--FontSize--md: 1.2em;
   --pf-global--FontSize--lg: 1.3em;
   --pf-global--icon--FontSize--lg: 1.3em;
+}
+
+@media (width <= 500px) {
+  :root {
+    font-size: 16px;
+  }
 }
 
 [slot="notes"] {

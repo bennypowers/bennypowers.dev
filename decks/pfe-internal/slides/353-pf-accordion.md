@@ -1,7 +1,7 @@
 ---
-class: feature
+reveal: pf-accordion
 ---
-## `<pf-accordion>` {slot=title}
+## `<pf-accordion>`
 
 An **accordion** is an interactive container that expands and collapses to hide 
 or reveal nested content. It takes advantage of progressive disclosure to help 
@@ -23,7 +23,7 @@ hide more detailed information as needed.
 </pf-accordion>
 ```
 
-<pf-accordion slot="feature" reveal>
+<pf-accordion>
   <pf-accordion-header expanded>
     <h3>Freedom 0: To Run</h3>
   </pf-accordion-header>
@@ -59,7 +59,9 @@ hide more detailed information as needed.
 
 <style>
   pf-accordion {
-    font-size: initial;
-    height: max-content;
+    /* font-size: initial; */
+    /* height: max-content; */
+    position: absolute;
+    inset: 1em 1em 1em 50%;
   }
 </style>
