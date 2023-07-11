@@ -1,0 +1,16 @@
+<redhat-slide webc:nokeep></redhat-slide>
+
+<template shadowrootmode="open">
+  <link rel="stylesheet" :href="url('components/redhat-theme.css')"/>
+  <link rel="stylesheet" :href="url('components/redhat-slide-divider.css')"/>
+  <slot id="title" name="title"></slot>
+  <slot id="image" name="image"></slot>
+  <aside id="aside">
+    <slot name="aside"></slot>
+  </aside>
+  <redhat-slide-footer></redhat-slide-footer>
+</template>
+
+<script type="module">
+  customElements.define('redhat-slide-divider', class RedhatSlideDivider extends RedhatSlide { });
+</script>

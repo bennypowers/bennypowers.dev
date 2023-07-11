@@ -1,0 +1,30 @@
+<svg viewBox="0 0 155 62" xmlns="http://www.w3.org/2000/svg">
+  <g fill="none" fill-rule="evenodd">
+    <g transform="translate(50 26)">
+      <rect fill="#FF4738" width="105" height="36" rx="3"/>
+      <text font-family="RedHatText-Regular, Red Hat Text, Overpass, Helvetica, Arial" font-size="16" fill="#FFF">
+        <tspan x="11.5" y="22">Delete </tspan>
+      </text>
+    </g>
+    <g transform="translate(116 35)">
+      <rect stroke="#FFF" x="4" width="25" height="18" rx="9"/>
+      <text font-family="RedHatText-Medium, Red Hat Text, Overpass, Helvetica, Arial" font-size="12" font-weight="400" fill="#FFF">
+        <tspan x="13.49" y="12">7</tspan>
+      </text>
+    </g>
+    <path stroke="#4F5255" stroke-width=".5" d="M51.5 43.5h-35"/>
+    <path stroke="#4F5255" stroke-width=".5" stroke-linecap="square" d="M16.5 43.5v-27"/>
+    <text font-family="RedHatText-Regular, Red Hat Text, Overpass, Helvetica, Arial" font-size="7" fill="#212427">
+      <tspan x=".435" y="14">Container</tspan>
+    </text>
+    <path stroke="#4F5255" stroke-width=".5" d="M89.5 36.5v-27"/>
+    <text font-family="RedHatText-Regular, Red Hat Text, Overpass, Helvetica, Arial" font-size="7" fill="#212427">
+      <tspan x="81.864" y="7">Text</tspan>
+    </text>
+    <path stroke="#4F5255" stroke-width=".5" d="M132.5 36.5v-27"/>
+    <text font-family="RedHatText-Regular, Red Hat Text, Overpass, Helvetica, Arial" font-size="7" fill="#212427">
+      <tspan x="121.794" y="7">Badge</tspan>
+    </text>
+  </g>
+</svg>
+

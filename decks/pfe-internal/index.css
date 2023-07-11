@@ -1,0 +1,45 @@
+:root {
+  --deck-primary-background: white;
+  --deck-primary-color: var(--rh-color-brand-red-on-light);
+  --deck-primary-text: var(--rh-color-text-primary-on-light);
+  --deck-aspect: 287/161;
+  --fixed-font: var(--rh-font-family-code);
+  --spacer-block: 4.8vw;
+  --spacer-inline: calc(var(--spacer-block) * var(--deck-aspect));
+
+  font-family: var(--rh-font-family-body-text);
+
+  @media (width <= 500px) {
+    --deck-aspect: 161/287
+  }
+}
+
+:not(:defined),[hidden] { display: none !important; }
+
+#slides-progress {
+  --indicator-color: var(--rh-color-brand-red-on-light);
+
+  position: fixed;
+  inset-block-start: 0;
+  inset-inline: 0;
+}
+
+slidem-deck {
+  line-height: inherit;
+  color: var(--deck-primary-text);
+  font-family: var(--rh-font-family-body-text);
+
+  @media (width <= 500px) {
+    font-size: 16px;
+  }
+
+  /* adjustments for demo components, because of root font-size changes */
+  --pf-global--FontSize--sm: 1em;
+  --pf-global--FontSize--md: 1.2em;
+  --pf-global--FontSize--lg: 1.3em;
+  --pf-global--icon--FontSize--lg: 1.3em;
+}
+
+[slot="notes"] {
+  color: white;
+}

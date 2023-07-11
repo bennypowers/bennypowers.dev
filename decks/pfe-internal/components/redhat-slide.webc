@@ -1,0 +1,51 @@
+<template shadowroot="open" shadowrootmode="open">
+  <link rel="stylesheet" :href="url('components/redhat-theme.css')"/>
+  <link rel="stylesheet" :href="url('components/redhat-slide.css')"/>
+  <div id="container" part="container">
+    <header id="slide-header">
+      <slot name="heading"></slot>
+      <small id="confidential">
+        <slot name="confidential"></slot>
+      </small>
+    </header>
+    <section id="content" part="content">
+      <slot id="slot"></slot>
+    </section>
+    <redhat-slide-footer></redhat-slide-footer>
+  </div>
+</template>
+
+<script type="module">
+  import { SlidemSlide as RedhatSlideBase } from 'slidem/slidem-slide.js';
+  class RedhatSlide extends RedhatSlideBase {
+    connectedCallback() {
+      super.connectedCallback();
+      if (!HTMLTemplateElement.prototype.hasOwnProperty('shadowRoot') || !HTMLTemplateElement.prototype.hasOwnProperty('shadowRootMode'))
+        this.addEventListener('declarative-shadow-dom-stamped', this.afterStamp, { once: true });
+      else
+        this.afterStamp();
+    }
+
+    attributeChangedCallback(name, old, val) {
+      super.attributeChangedCallback(name, old, val);
+      switch (name) {
+        case 'slide': this.slide = parseInt(val) || 0;
+      }
+    }
+
+    get #counter() { return this.shadowRoot.getElementById('counter'); }
+
+    afterStamp() {
+      this.defineSteps(this.shadowRoot.querySelectorAll('[reveal]') ?? [])
+      const deck = this.closest('slidem-deck');
+      const allSlides = Array.from(deck.querySelectorAll('*')).filter(x => x instanceof RedhatSlideBase);
+      const notes = this.shadowRoot.querySelectorAll('[slot=notes]');
+      this.#counter.textContent = this.getAttribute('slide');
+      for (const note of notes) {
+        note.setAttribute('slide', allSlides.indexOf(this) + 1);
+        deck.append(note);
+      }
+    }
+  }
+  customElements.define('redhat-slide', RedhatSlide);
+</script>

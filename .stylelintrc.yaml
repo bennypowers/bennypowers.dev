@@ -8,7 +8,7 @@ overrides:
     rules:
       csstools/use-nesting: always
   - files:
-    - decks/devconf-brno-2023/components/*.css
+    - decks/*/components/*.css
     rules:
       csstools/use-nesting: never
   - files:

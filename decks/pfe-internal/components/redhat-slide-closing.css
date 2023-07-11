@@ -1,0 +1,70 @@
+#slide-header {
+  inset: 0;
+  height: 100vh;
+  background-image: url("/assets/redhat-deck/technologies.png");
+  background-size: 100vw;
+  background-repeat: repeat-y;
+  padding: 0;
+  display: block;
+  color: white;
+}
+
+#heading,
+#slide-header ::slotted(*) {
+  color: inherit !important;
+}
+
+#slide-footer {
+  grid-row: foot;
+  grid-column: head / foot;
+}
+
+#content {
+  inset-inline-start: 20%;
+  width: 60%;
+  font-size: 60%;
+  z-index: 2;
+}
+
+img {
+  height: 100%;
+}
+
+#heading {
+  transform-origin: top left;
+  rotate: 90deg;
+  translate: 4.5vw var(--rh-space-4xl);
+}
+
+#heading ::slotted(*) {
+  margin: 0;
+  padding: 0;
+}
+
+h2 { font-size: 54pt; }
+
+ul {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1em;
+  margin-inline: 0;
+  margin-block: var(--rh-space-5xl);
+  padding: 0;
+  list-style-type: none;
+}
+
+li {
+  display: flex;
+  align-items: center;
+  gap: var(--rh-space-2xl);
+  font-size: 60%;
+}
+
+li a {
+  color: inherit;
+  text-decoration: none;
+}
+
+#content svg {
+  width: var(--rh-size-icon-04);
+}
