@@ -1,8 +1,4 @@
----
-style:
-  --columns: 2
----
-## What can you Build with Web Components? {slot=title}
+## Web component uses {slot=heading}
 
 <svg aria-describedby="wcu-desc"
      xmlns="http://www.w3.org/2000/svg"

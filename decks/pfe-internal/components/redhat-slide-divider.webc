@@ -3,12 +3,14 @@
 <template shadowrootmode="open">
   <link rel="stylesheet" :href="url('components/redhat-theme.css')"/>
   <link rel="stylesheet" :href="url('components/redhat-slide-divider.css')"/>
-  <slot id="title" name="title"></slot>
-  <slot id="image" name="image"></slot>
-  <aside id="aside">
-    <slot name="aside"></slot>
-  </aside>
-  <redhat-slide-footer></redhat-slide-footer>
+  <div id="container">
+    <div id="title"><slot name="title"></slot></div>
+    <div id="image"><slot name="image"></slot></div>
+    <aside id="aside">
+      <slot name="aside"></slot>
+    </aside>
+    <redhat-slide-footer></redhat-slide-footer>
+  </div>
 </template>
 
 <script type="module">

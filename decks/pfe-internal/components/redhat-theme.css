@@ -1,3 +1,7 @@
+:host {
+  background-color: white;
+}
+
 p,
 pre[class^="language-"] {
   margin-block: var(--rh-space-lg);

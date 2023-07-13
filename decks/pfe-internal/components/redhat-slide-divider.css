@@ -36,10 +36,7 @@
   font-size: 70%;
   background-color: var(--aside-background, var(--rh-color-surface-light));
   color: var(--aside-color, var(--rh-color-primary-on-light));
-}
-
-::slotted(figure) {
-  margin-block: 0;
+  padding-inline: var(--rh-space-2xl);
 }
 
 :host(.dark) {
@@ -50,29 +47,36 @@
   --heading-color: var(--rh-color-primary-on-dark);
 }
 
-[slot="image"] {
+#image {
   display: grid;
   grid-template: 1fr / 1fr;
   object-fit: contain;
   object-position: center;
   max-width: 16em;
-  max-height: 7em;
-  translate: calc(-1 * var(--rh-space-3xl));
   overflow: hidden;
   scale: 1.2;
-
-  & :is(img, figcaption) {
-    grid-column: 1 / 1;
-    grid-row: 1 / 1;
-  }
-
-  & img {
-    width: 100%;
-    height: auto;
-  }
 }
 
-figure[slot="image"] figcaption {
+
+#image :is(img, figcaption),
+#image ::slotted(:is(img, figcaption)) {
+  grid-column: 1 / 1;
+  grid-row: 1 / 1;
+}
+
+#image figure,
+#image ::slotted(figure) {
+  margin-block: 0;
+}
+
+#image img,
+#image ::slotted(img) {
+  width: 100%;
+  height: auto;
+}
+
+#image figcaption,
+#image ::slotted(figcaption) {
   place-self: end end;
   font-size: 25%;
 }

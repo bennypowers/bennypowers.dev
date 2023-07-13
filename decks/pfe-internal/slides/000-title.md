@@ -2,7 +2,7 @@
 is: redhat-slide-title
 ---
 
-# PatternFly Elements
+# PatternFly elements
 
 Catching up on collaboration {slot=subheading}
 

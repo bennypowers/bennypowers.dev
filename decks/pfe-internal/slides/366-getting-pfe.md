@@ -1,7 +1,4 @@
----
-class: sidebar
----
-## Getting PatternFly Elements {slot=title}
+## Getting PatternFly Elements {slot=heading}
 
 ### Import Maps
 
@@ -9,7 +6,7 @@ class: sidebar
 <script type="importmap">
 {
   "imports": {
-    "@patternfly/elements/": "https://jspm.dev/@patternfly/elements/"
+    "@patternfly/elements/": "https://redhatstatic.com/dx/v1-alpha/@patternfly/elements@2.3.2/"
   }
 }
 </script>

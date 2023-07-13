@@ -1,14 +1,16 @@
-<template shadowroot="open" shadowrootmode="open">
+<template shadowrootmode="open">
   <link rel="stylesheet" :href="url('components/redhat-theme.css')"/>
   <link rel="stylesheet" :href="url('components/redhat-slide.css')"/>
-  <header id="slide-header">
-    <slot name="heading"></slot>
-    <small id="confidential">
-      <slot name="confidential"></slot>
-    </small>
-  </header>
-  <div id="slide-body"><slot></slot></div>
-  <redhat-slide-footer></redhat-slide-footer>
+  <div id="container">
+    <header id="slide-header">
+      <slot name="heading"></slot>
+      <small id="confidential">
+        <slot name="confidential"></slot>
+      </small>
+    </header>
+    <div id="slide-body"><slot></slot></div>
+    <redhat-slide-footer></redhat-slide-footer>
+  </div>
 </template>
 
 <script type="module">
@@ -16,6 +18,7 @@
   class RedhatSlide extends RedhatSlideBase {
     connectedCallback() {
       super.connectedCallback();
+      this.shadowRoot.adoptedStyleSheets = [];
       if (!HTMLTemplateElement.prototype.hasOwnProperty('shadowRoot') || !HTMLTemplateElement.prototype.hasOwnProperty('shadowRootMode'))
         this.addEventListener('declarative-shadow-dom-stamped', this.afterStamp, { once: true });
       else
