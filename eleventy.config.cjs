@@ -48,6 +48,7 @@ module.exports = function(eleventyConfig) {
   eleventyConfig.addPassthroughCopy('assets/**/*.{svg,png,jpeg,jpg,gif,webp,webm,js,d.ts,ico,webmanifest,json}');
   eleventyConfig.addGlobalData('isProductionBuild', process.env.NETLIFY && process.env.CONTEXT === 'production');
   eleventyConfig.addPlugin(DecksPlugin, { assetsExtensions: ['jpg', 'png', 'webp', 'svg', 'js']});
+  eleventyConfig.addWatchTarget('decks/*/components/*.css');
   eleventyConfig.addPlugin(EmbedPlugin, { lite: true });
   eleventyConfig.addPlugin(EmojiWrapPlugin, { exclude: /^_site\/.*-repro\.html$/ });
   eleventyConfig.addPlugin(FiltersPlugin);
