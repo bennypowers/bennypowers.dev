@@ -1,7 +1,9 @@
 <redhat-slide webc:nokeep></redhat-slide>
 
 <template shadowrootmode="open">
-  <link rel="stylesheet" :href="url('components/redhat-slide-closing.css')"/>
+  <link rel="stylesheet" :href="url('components/redhat-slide.css')">
+  <link rel="stylesheet" :href="url('components/redhat-slide-closing.css')">
+  <link rel="stylesheet" :href="url('components/shared.css')">
   <div id="container" part="container">
     <header id="slide-header">
       <div id="heading">

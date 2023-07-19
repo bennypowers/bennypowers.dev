@@ -1,8 +1,9 @@
 <redhat-slide webc:nokeep></redhat-slide>
 
 <template shadowrootmode="open">
-  <link rel="stylesheet" :href="url('components/redhat-theme.css')"/>
-  <link rel="stylesheet" :href="url('components/redhat-slide-title.css')"/>
+  <link rel="stylesheet" :href="url('components/redhat-slide.css')">
+  <link rel="stylesheet" :href="url('components/redhat-slide-title.css')">
+  <link rel="stylesheet" :href="url('components/shared.css')">
   <div id="container">
     <slot id="product-logo" name="product-logo"></slot>
     <section id="title-container">

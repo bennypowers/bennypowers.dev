@@ -3,9 +3,15 @@ is: redhat-slide-divider
 ---
 ## Web components {slot=title}
 
-The browser's built-in component model {slot=aside}
+Graphic: Molecular model of spider silk protein {id=figcaption slot=aside}
 
-<figure slot=image>
-  <img alt="" src="images/spider-silk-protein.png">
-  <figcaption>Molecular model of spider silk protein</figcaption>
-</figure>
+<div slot="image">
+  <img aria-labelledby="figcaption" alt="" src="images/spider-silk-protein.png">
+</div>
+
+<style>
+  #image {
+    overflow: visible;
+    height: 1px;
+  }
+</style>

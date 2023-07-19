@@ -1,4 +1,4 @@
-## Web components core technologies {slot=heading}
+## Web components {slot=heading}
 
 <div id="technologies">
   <figure-img src="images/code.svg" alt="angle brackets, representing html code" height="150">Custom Elements</figure-img>

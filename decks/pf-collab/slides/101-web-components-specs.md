@@ -1,4 +1,4 @@
-## What are web components {slot=heading}
+## Web components {slot=heading}
 
 (large scale - compare to native ui frameworks) {slot=notes}
 
