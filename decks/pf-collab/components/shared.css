@@ -8,6 +8,10 @@ pf-card
   line-height: 1;
 }
 
+rh-blockquote {
+  font-size: 1em;
+}
+
 rh-alert :is(h1, h2, h3, h4, h5, h6) {
   margin-block: 0;
 }
@@ -25,9 +29,17 @@ figure-img {
   gap: 1em;
 }
 
-.logo-grid li { display: contents; }
-.logo-grid svg { width: 3em; }
-.logo-grid li::marker { content: ""; }
+.logo-grid li {
+  display: contents;
+}
+
+.logo-grid svg {
+  width: 3em;
+}
+
+.logo-grid li::marker {
+  content: "";
+}
 
 @media (width <= 500px) {
   .logo-grid svg { width: 2em; }

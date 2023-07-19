@@ -1,18 +1,13 @@
 ---
 is: redhat-slide-closing
 ---
-## Special Thanks {slot=title}
 
-- <read-icon name=github></read-icon>[patternfly/patternfly-elements][pfe]
-- <read-icon name=github></read-icon>[redhat-ux/red-hat-design-system][rhds]
-
+## PatternFly elements {slot=heading}
 ### Contributors
 <div id="contributors">
   <github-contributors defer repo="patternfly/patternfly-elements"></github-contributors>
   <github-contributors defer repo="redhat-ux/red-hat-design-system" exclude-repo="patternfly/patternfly-elements"></github-contributors>
 </div>
-
-<small>Icon Credits (CC BY 3.0): Yuval Galanti, Smashicons, Prime Icons</small>
 
 <style>
 #contributors {

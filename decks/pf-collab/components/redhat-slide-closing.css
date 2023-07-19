@@ -1,27 +1,29 @@
-#slide-header {
-  inset: 0;
-  height: 100vh;
-  background-image: url("/assets/redhat-deck/technologies.png");
-  background-size: 100vw;
+:host {
+  background-image: url("technologies.png");
   background-repeat: repeat-y;
+  background-size: 100%;
+}
+
+#slide-header {
   padding: 0;
   display: block;
   color: white;
 }
 
+#counter,
 #heading,
+#slide-header [slot="heading"],
 #slide-header ::slotted(*) {
-  color: inherit !important;
+  color: white !important;
 }
 
 #slide-footer {
-  grid-row: foot;
-  grid-column: head / foot;
+  grid-column: 1/-1;
 }
 
 #content {
-  inset-inline-start: 20%;
-  width: 60%;
+  padding-inline-start: 40%;
+  padding-block-start: var(--s6);
   font-size: 60%;
   z-index: 2;
 }

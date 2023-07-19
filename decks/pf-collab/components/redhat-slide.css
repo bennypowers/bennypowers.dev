@@ -1,5 +1,6 @@
 :host {
   background-color: white;
+  overflow: hidden;
 
   --s4: var(--rh-space-4xl);
   --s6: calc(var(--s4) + var(--rh-space-2xl));
@@ -35,7 +36,6 @@
 #slide-footer {
   grid-area: footer;
   padding-inline: var(--s4);
-  background: white;
 }
 
 #slide-body {
@@ -90,10 +90,6 @@
   justify-content: center;
 }
 
-ol {
-  padding-inline-start: 2em;
-}
-
 p:empty {
   display: none;
 }
@@ -106,7 +102,6 @@ a {
 a[href^="http"] {
   color: var(--rh-color-interactive-blue-darker);
   text-decoration: underline;
-  text-decoration-thickness: 5px;
 }
 
 a[href^="#"] {
@@ -114,6 +109,7 @@ a[href^="#"] {
 }
 
 ol {
+  padding-inline-start: 2em;
   margin-inline-start: 1em;
 }
 

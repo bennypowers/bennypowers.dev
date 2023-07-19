@@ -11,10 +11,12 @@ HTML and DOM specification and are implemented in all major browsers.
   <img alt="whatwg logo: a circled green question mark"
        src="https://resources.whatwg.org/logo.svg">
 </div>
-<img id="screenshot"
-     alt="screenshot of custom elements spec on whatwg website"
-     src="images/spec-ce.png"
-     reveal>
+
+<div reveal style="height: 1px;overflow:visible;">
+  <img id="screenshot"
+       alt="screenshot of custom elements spec on whatwg website"
+       src="images/spec-ce.png">
+</div>
 
 <style>
 #spec-logos {

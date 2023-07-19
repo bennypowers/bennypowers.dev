@@ -21,4 +21,10 @@ Training up **web** developers, not **framework** developers.
 - reduce framework churn
 - ~30000 lines of package lock vs ~10 lines of import map
 
+- what users want
+  - quick changes
+  - easy to maintain
+  - easy to understand
+  - no big rewrite
+
 </div>

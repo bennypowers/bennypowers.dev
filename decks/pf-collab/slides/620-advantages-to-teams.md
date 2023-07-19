@@ -19,6 +19,7 @@ Using shared **APIs** across common **interfaces** and enabling piecemeal
 
 <div slot=notes>
 
+Why use pfe instead of react?
 Allows teams to migrate from framework to framework,
 or away from frameworks,
 without breaking the experience
