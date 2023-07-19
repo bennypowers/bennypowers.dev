@@ -1,0 +1,10 @@
+#slide-body {
+  display: grid;
+  grid-template-areas: "all";
+  place-items: center;
+}
+
+:is(#slide-body > *) {
+  grid-area: all;
+}
+

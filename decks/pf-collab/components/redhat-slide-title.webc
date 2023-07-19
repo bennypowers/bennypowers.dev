@@ -1,0 +1,21 @@
+<redhat-slide webc:nokeep></redhat-slide>
+
+<template shadowrootmode="open">
+  <link rel="stylesheet" :href="url('components/redhat-slide.css')">
+  <link rel="stylesheet" :href="url('components/redhat-slide-title.css')">
+  <link rel="stylesheet" :href="url('components/shared.css')">
+  <div id="container">
+    <slot id="product-logo" name="product-logo"></slot>
+    <section id="title-container">
+      <slot id="title"></slot>
+      <slot id="subheading" name="subheading"></slot>
+      <slot id="presenter" name="presenter"></slot>
+    </section>
+    <redhat-slide-footer></redhat-slide-footer>
+  </div>
+</template>
+
+<script type="module">
+  customElements.define('redhat-slide-title',
+    class RedhatSlideTitle extends RedhatSlide {});
+</script>

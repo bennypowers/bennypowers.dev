@@ -24,6 +24,7 @@ ol {
 
 #slide-footer {
   padding-inline: var(--s4);
+  background: white;
 }
 
 #slide-header { inset-block-start: 0; }

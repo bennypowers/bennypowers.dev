@@ -1,0 +1,88 @@
+:host(.dark) {
+  --container-bg: var(--rh-color-surface-light);
+  --color: var(--rh-color-primary-on-light);
+  --aside-background: var(--rh-color-surface-lightest);
+  --aside-color: var(--rh-color-primary-on-light);
+  --heading-color: var(--rh-color-primary-on-dark);
+}
+
+#container {
+  display: grid;
+  color: var(--color);
+  background-color: var(--container-bg);
+  grid-template-rows:
+    var(--s6)
+    1fr
+    2fr
+    var(--s6);
+  grid-template-columns: 5fr 3fr;
+  grid-template-areas:
+    "header aside"
+    "title  aside"
+    "image  aside"
+    "footer aside";
+}
+
+#slide-header { grid-column: header / aside; }
+
+#slide-footer {
+  grid-column: footer / aside;
+  background: transparent;
+}
+
+#content {
+  display: contents;
+}
+
+#title {
+  grid-area: title;
+  color: var(--heading-color, var(--rh-color-brand-red-on-light));
+  padding:
+    var(--rh-space-3xl)
+    var(--rh-space-7xl);
+}
+
+#image {
+  grid-area: image;
+  display: grid;
+  grid-template: 1fr / 1fr;
+  object-fit: contain;
+  object-position: center;
+  max-width: 16em;
+  overflow: hidden;
+}
+
+#aside {
+  grid-area: aside;
+  height: 100vh;
+  display: flex;
+  flex-flow: column;
+  justify-content: center;
+  font-size: 70%;
+  background-color: var(--aside-background, var(--rh-color-surface-light));
+  color: var(--aside-color, var(--rh-color-primary-on-light));
+  padding-inline: var(--rh-space-2xl);
+}
+
+#image :is(img, figcaption),
+#image ::slotted(:is(img, figcaption)) {
+  grid-column: 1 / 1;
+  grid-row: 1 / 1;
+}
+
+#image figure,
+#image ::slotted(figure) {
+  margin-block: 0;
+}
+
+#image img,
+#image ::slotted(img) {
+  width: 100%;
+  height: auto;
+}
+
+#image figcaption,
+#image ::slotted(figcaption) {
+  place-self: end end;
+  font-size: 25%;
+}

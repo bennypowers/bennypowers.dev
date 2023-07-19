@@ -4,6 +4,9 @@
 [[redirects]]
   from = "/stripe-elements/"
   to = "https://stripe-elements.netlify.app"
+[[redirects]]
+  from = "/decks/pf-collab/demo/"
+  to = "/decks/pf-collab/demo/pfe-dev/"
 
 [[edge_functions]]
   function = "webfinger"

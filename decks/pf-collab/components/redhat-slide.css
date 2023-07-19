@@ -1,0 +1,145 @@
+:host {
+  background-color: white;
+  overflow: hidden;
+
+  --s4: var(--rh-space-4xl);
+  --s6: calc(var(--s4) + var(--rh-space-2xl));
+}
+
+[slot="notes"] {
+  color: var(--rh-color-text-primary-on-dark);
+}
+
+#slides-progress {
+  --indicator-color: var(--rh-color-brand-red);
+}
+
+#container {
+  display: grid;
+  grid-template-areas: "header" "body" "footer";
+  grid-template-rows: var(--s6) auto var(--s6);
+  font-size: calc(var(--rh-font-size-body-text-2xl) * 2);
+  height: 100%;
+}
+
+#slide-header,
+#slide-footer {
+  z-index: 2;
+  position: relative;
+  inset-inline: 0;
+  display: flex;
+  align-items: center;
+}
+
+#slide-header { grid-area: header; }
+
+#slide-footer {
+  grid-area: footer;
+  padding-inline: var(--s4);
+  position: absolute;
+  inset-block-end: 0;
+}
+
+#slide-body {
+  grid-area: body;
+  padding:
+    var(--rh-space-3xl)
+    var(--rh-space-7xl);
+}
+
+#slide-header [slot="heading"],
+#slide-header ::slotted([slot="heading"]) {
+  margin: 0;
+  font-weight: 400 !important;
+  color: var(--rh-color-brand-red-on-light);
+  font-size: var(--rh-font-size-heading-md);
+}
+
+#slide-header:after,
+#slide-footer:after {
+  order: -1;
+  content: "";
+  display: block;
+  height: 100%;
+  margin-inline-end: var(--s4);
+  border-inline-start: 2px solid var(--rh-color-brand-red-on-light);
+  translate: -1px;
+}
+
+#slide-footer:after {
+  margin-block-start: var(--rh-space-3xl);
+  height: var(--rh-space-3xl);
+}
+
+#confidential,
+#tag {
+  margin-inline-start: auto;
+  font-size: var(--rh-font-size-body-text-md);
+}
+
+#slide-footer svg { height: var(--rh-length-3xl); }
+
+#counter {
+  font-size: 12px;
+  position: absolute;
+  text-align: center;
+  display: flex;
+  width: 2em;
+  height: 2em;
+  inset-block-start: 1em;
+  inset-inline-start: 4.5em;
+  align-items: center;
+  justify-content: center;
+}
+
+p:empty {
+  display: none;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+a[href^="http"] {
+  color: var(--rh-color-interactive-blue-darker);
+  text-decoration: underline;
+}
+
+a[href^="#"] {
+  pointer-events: none;
+}
+
+ol {
+  padding-inline-start: 2em;
+  margin-inline-start: 1em;
+}
+
+ul li {
+  padding-inline-start: 0.5em;
+}
+
+ul li::marker {
+  content: "▶";
+  color: var(--rh-color-brand-red-on-light);
+  font-size: 80%;
+}
+
+summary::marker {
+  color: var(--rh-color-brand-red-on-light);
+}
+
+[reveal] {
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+[reveal]:not([current], [past]) {
+  pointer-events: none;
+}
+
+[current],
+[past] {
+  opacity: 1;
+}
+

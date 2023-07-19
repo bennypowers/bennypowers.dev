@@ -36,8 +36,8 @@
 </template>
 
 <script type="module">
-  import { SlidemSlide } from 'slidem/slidem-slide.js';
-  class Dc23Slide extends SlidemSlide {
+  import { SlidemSlide as Dc23SlideBase } from 'slidem/slidem-slide.js';
+  class Dc23Slide extends Dc23SlideBase {
     connectedCallback() {
       super.connectedCallback();
       if (!HTMLTemplateElement.prototype.hasOwnProperty('shadowRoot') || !HTMLTemplateElement.prototype.hasOwnProperty('shadowRootMode'))

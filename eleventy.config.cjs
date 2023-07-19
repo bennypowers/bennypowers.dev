@@ -46,15 +46,20 @@ module.exports = function(eleventyConfig) {
   eleventyConfig.watchIgnores.add('decks/starting-functional-javascript/images/*');
   eleventyConfig.addDataExtension('yaml', x => YAML.parse(x));
   eleventyConfig.addPassthroughCopy('assets/**/*.{svg,png,jpeg,jpg,gif,webp,webm,js,d.ts,ico,webmanifest,json}');
+  eleventyConfig.addPassthroughCopy('decks/**/*.gif');
+  eleventyConfig.addPassthroughCopy('decks/pf-collab/demo/react-dist/fonts');
   eleventyConfig.addGlobalData('isProductionBuild', process.env.NETLIFY && process.env.CONTEXT === 'production');
   eleventyConfig.addPlugin(DecksPlugin, { assetsExtensions: ['jpg', 'png', 'webp', 'svg', 'js']});
+  eleventyConfig.addWatchTarget('decks/*/components/*.css');
   eleventyConfig.addPlugin(EmbedPlugin, { lite: true });
   eleventyConfig.addPlugin(EmojiWrapPlugin, { exclude: /^_site\/.*-repro\.html$/ });
   eleventyConfig.addPlugin(FiltersPlugin);
   eleventyConfig.addPlugin(FontsPlugin);
   eleventyConfig.addPlugin(GlitchPlugin);
   eleventyConfig.addPlugin(IconsPlugin);
-  eleventyConfig.addPlugin(JamPackPlugin);
+  eleventyConfig.addPlugin(JamPackPlugin, {
+    exclude: 'decks/pf-collab/**/*',
+  });
   eleventyConfig.addPlugin(OpenGraphCardPlugin);
   eleventyConfig.addPlugin(PostCSSPlugin, { include: /devconf-brno-2023\/components\/.*\.css/ });
   eleventyConfig.addPlugin(PostsPlugin);

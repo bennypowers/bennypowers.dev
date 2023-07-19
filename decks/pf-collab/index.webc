@@ -1,0 +1,75 @@
+---
+title: PatternFly Elements Catch Up
+description: |
+  Exploring the benefits that web components and
+  PatternFly elements can bring to cross-team collaboration.
+coverImage: /decks/pf-collab/patternfly.svg
+date: 2023-07-10
+published: false
+venue:
+  name: Red Hat
+icons:
+  - rel: shortcut icon
+    sizes: any
+    href: /decks/pf-collab/patternfly.svg
+tags:
+  - deck
+eleventyImport:
+  collections:
+    - pf-collab
+    - icon
+---
+<slide-deck webc:nokeep
+            webc:import="npm:eleventy-plugin-slide-decks"
+            :draft="!published"
+            @title="PatternFly Elements Catch Up"
+            @date="2023-07-10"
+            @tag="pf-collab">
+  <link slot="before" rel="shortcut icon" href="/decks/pf-collab/patternfly.svg">
+  <link slot="before" rel="preconnect" href="https://fonts.googleapis.com">
+  <link slot="before" rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+</slide-deck>
+<script src="../../_plugins/dsd/dsd.js" webc:bucket="after"></script>
+<link rel="stylesheet" href="index.css">
+<link rel="stylesheet" href="../../node_modules/@rhds/tokens/css/global.css">
+<link rel="stylesheet" href="https://ux.redhat.com/assets/redhat/redhat-font/2/webfonts/red-hat-font.css" webc:keep>
+
+
+<script type="module" webc:bundle="modules">
+  import '@patternfly/elements/pf-accordion/pf-accordion.js';
+  import '@patternfly/elements/pf-button/pf-button.js';
+  import '@patternfly/elements/pf-card/pf-card.js';
+  import '@patternfly/elements/pf-modal/pf-modal.js';
+  import '@rhds/elements/rh-blockquote/rh-blockquote.js';
+  import '@rhds/elements/rh-code-block/rh-code-block.js';
+</script>
+
+<script type="module" webc:bundle="modules">
+  // hack for block quote icon size
+  import { RhBlockquote } from '@rhds/elements/rh-blockquote/rh-blockquote.js';
+  const orig = RhBlockquote.prototype.updated;
+  RhBlockquote.prototype.updated = function(changed) {
+    orig?.call(this, changed);
+    const icon = this.shadowRoot.querySelector('svg');
+    icon.removeAttribute('height');
+    icon.removeAttribute('weight');
+    icon.style.width = '1.5em'; // let's say
+  };
+</script>
+
+<style>
+  slidem-deck[draft]:after {
+    background: #f008;
+    border-radius: .2em;
+    color: white;
+    content: 'draft';
+    display: block;
+    font-size: 2em;
+    font-weight: 900;
+    inset: .5em .5em auto auto;
+    padding: .1em 1em;
+    position: fixed;
+    text-transform: uppercase;
+    z-index: 100000;
+  }
+</style>
