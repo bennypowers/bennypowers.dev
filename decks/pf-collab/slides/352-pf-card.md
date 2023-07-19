@@ -1,7 +1,7 @@
 ---
 reveal: pf-card
 ---
-## PatternFly elements - `<pf-card>` {slot=heading}
+## PatternFly Elements - `<pf-card>` {slot=heading}
 
 A **card** is a square or rectangular container that can contain any kind of 
 content. Cards symbolize units of information, and each one acts as an entry 

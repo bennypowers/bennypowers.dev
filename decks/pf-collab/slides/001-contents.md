@@ -1,4 +1,4 @@
-## PatternFly elements {slot=heading}
+## PatternFly Elements {slot=heading}
 
 ### In this presentation
 

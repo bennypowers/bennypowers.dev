@@ -1,6 +1,6 @@
-## PatternFly elements - development {slot=heading}
+## PatternFly Elements - development {slot=heading}
 
-### Using PatternFly elements
+### Using PatternFly Elements
 
 <ul class="logo-grid">
   <li><read-icon name="html5"></read-icon></li>
@@ -10,7 +10,7 @@
   <li><read-icon name="patternfly"></read-icon></li>
 </ul>
 
-PatternFly elements work in *any* web browser, in *any* framework or *none*.
+PatternFly Elements work in *any* web browser, in *any* framework or *none*.
 **You don't have to adopt our framework or drop your own to use them.**
 
 <p slot="notes">

@@ -1,7 +1,7 @@
 ---
 "reveal": pf-button
 ---
-## PatternFly elements - `<pf-modal>` {slot=heading}
+## PatternFly Elements - `<pf-modal>` {slot=heading}
 
 A **modal** displays important information to a user without requiring them to 
 navigate to a new page.

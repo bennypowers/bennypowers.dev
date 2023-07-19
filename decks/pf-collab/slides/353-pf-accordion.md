@@ -1,7 +1,7 @@
 ---
 reveal: pf-accordion
 ---
-## PatternFly elements - `<pf-accordion>` {slot=heading}
+## PatternFly Elements - `<pf-accordion>` {slot=heading}
 
 An **accordion** is an interactive container that expands and collapses to hide 
 or reveal nested content. It takes advantage of progressive disclosure to help 

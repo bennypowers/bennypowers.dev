@@ -2,7 +2,7 @@
 is: redhat-slide-closing
 ---
 
-## PatternFly elements {slot=heading}
+## PatternFly Elements {slot=heading}
 ### Contributors
 <div id="contributors">
   <github-contributors defer repo="patternfly/patternfly-elements"></github-contributors>
