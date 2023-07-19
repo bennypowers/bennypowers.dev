@@ -1,3 +1,6 @@
+---
+is: redhat-slide-closing
+---
 ## Special Thanks {slot=title}
 
 - <read-icon name=github></read-icon>[patternfly/patternfly-elements][pfe]

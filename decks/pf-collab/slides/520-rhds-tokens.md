@@ -1,6 +1,6 @@
 ## Red Hat design system {slot=heading}
 
-## Red Hat design tokens
+### Red Hat design tokens
 
 <rh-code-block>
 

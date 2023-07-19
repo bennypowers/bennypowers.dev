@@ -9,14 +9,19 @@
     <div id="slide-body"><slot></slot></div>
     <redhat-slide-footer></redhat-slide-footer>
   </div>
-  <link rel="stylesheet" :href="url('components/redhat-prism-theme.css')">
-  <link rel="stylesheet" :href="url('components/redhat-theme.css')">
   <link rel="stylesheet" :href="url('components/redhat-slide.css')">
+  <link rel="stylesheet" :href="url('components/redhat-prism-theme.css')">
+  <link rel="stylesheet" :href="url('components/shared.css')">
 </template>
 
 <script type="module">
   import { SlidemSlide as RedhatSlideBase } from 'slidem/slidem-slide.js';
   class RedhatSlide extends RedhatSlideBase {
+    static observedAttributes = [
+      ...RedhatSlideBase.observedAttributes ?? [],
+      'slide',
+    ]
+
     connectedCallback() {
       super.connectedCallback();
       this.#destroyExistingStyles();
@@ -29,11 +34,21 @@
     attributeChangedCallback(name, old, val) {
       super.attributeChangedCallback(name, old, val);
       switch (name) {
-        case 'slide': this.slide = parseInt(val) || 0;
+        case 'slide': {
+          this.slide = parseInt(val) || 0;
+          break;
+        }
       }
     }
 
     get #counter() { return this.shadowRoot.getElementById('counter'); }
+
+    get slide() { return super.slide ?? parseInt(this.getAttribute('slide')) }
+
+    set slide(value) {
+      super.slide = value;
+      this.#updateCounter();
+    }
 
     #destroyExistingStyles() {
       for (const sheet of this.shadowRoot.adoptedStyleSheets) {
@@ -42,16 +57,26 @@
       this.shadowRoot.adoptedStyleSheets = [];
     }
 
-    afterStamp() {
-      this.defineSteps(this.shadowRoot.querySelectorAll('[reveal]') ?? [])
+    #moveNotes() {
       const deck = this.closest('slidem-deck');
       const allSlides = Array.from(deck.querySelectorAll('*')).filter(x => x instanceof RedhatSlideBase);
       const notes = this.shadowRoot.querySelectorAll('[slot=notes]');
-      this.#counter.textContent = this.getAttribute('slide');
       for (const note of notes) {
         note.setAttribute('slide', allSlides.indexOf(this) + 1);
         deck.append(note);
       }
+    }
+
+    #updateCounter() {
+      if (this.#counter)
+        this.#counter.textContent = this.slide.toString();
+    }
+
+    async afterStamp() {
+      this.defineSteps(this.shadowRoot.querySelectorAll('[reveal]') ?? [])
+      this.#moveNotes();
+      await new Promise(requestAnimationFrame);
+      this.#updateCounter();
     }
   }
   customElements.define('redhat-slide', RedhatSlide);

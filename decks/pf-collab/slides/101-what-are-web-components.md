@@ -13,7 +13,7 @@ HTML and DOM specification and are implemented in all major browsers.
 </div>
 <img id="screenshot"
      alt="screenshot of custom elements spec on whatwg website"
-     src="spec-ce.png"
+     src="images/spec-ce.png"
      reveal>
 
 <style>

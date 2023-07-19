@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>PatternFly Elements</title>
+    <link rel="icon" href="https://patternflyelements.org/images/favicon.ico"/>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Red Hat Text&display=swap"/>
+
+    <style>
+      :root {
+        scale: 2;
+        height: 100vh;
+      }
+      body {
+        display: grid;
+        font-family: 'Red Hat Text', sans-serif;
+        place-content: center;
+        height: 100%;
+        background-color:rebeccapurple;
+      }
+      pf-card {
+        width: 35vw;
+      }
+    </style>
+
+    <script type="importmap">
+      {
+        "imports": {
+          "@patternfly/elements": "https://ga.jspm.io/npm:@patternfly/elements@2.2.1/pfe.min.js",
+          "@patternfly/elements/pf-card/pf-card.js": "https://ga.jspm.io/npm:@patternfly/elements@2.2.1/pf-card/pf-card.js",
+          "@patternfly/elements/pf-label/pf-label.js": "https://ga.jspm.io/npm:@patternfly/elements@2.2.1/pf-label/pf-label.js",
+          "@patternfly/elements/pf-switch/pf-switch.js": "https://ga.jspm.io/npm:@patternfly/elements@2.2.1/pf-switch/pf-switch.js",
+          "@patternfly/elements/pf-tooltip/pf-tooltip.js": "https://ga.jspm.io/npm:@patternfly/elements@2.2.1/pf-tooltip/pf-tooltip.js"
+        },
+        "scopes": {
+          "https://ga.jspm.io/": {
+            "@floating-ui/core": "https://ga.jspm.io/npm:@floating-ui/core@1.3.1/dist/floating-ui.core.browser.mjs",
+            "@floating-ui/dom": "https://ga.jspm.io/npm:@floating-ui/dom@1.4.0/dist/floating-ui.dom.browser.mjs",
+            "@lit/reactive-element": "https://ga.jspm.io/npm:@lit/reactive-element@1.6.2/development/reactive-element.js",
+            "@lit/reactive-element/decorators/": "https://ga.jspm.io/npm:@lit/reactive-element@1.6.2/development/decorators/",
+            "@patternfly/elements/": "https://ga.jspm.io/npm:@patternfly/elements@2.2.1/",
+            "@patternfly/pfe-core": "https://ga.jspm.io/npm:@patternfly/pfe-core@2.3.1/core.js",
+            "@patternfly/pfe-core/controllers/": "https://ga.jspm.io/npm:@patternfly/pfe-core@2.3.1/controllers/",
+            "lit": "https://ga.jspm.io/npm:lit@2.6.1/index.js",
+            "lit-element/lit-element.js": "https://ga.jspm.io/npm:lit-element@3.3.2/development/lit-element.js",
+            "lit-html": "https://ga.jspm.io/npm:lit-html@2.7.4/development/lit-html.js",
+            "lit-html/": "https://ga.jspm.io/npm:lit-html@2.7.4/development/",
+            "lit/": "https://ga.jspm.io/npm:lit@2.6.1/",
+            "tslib": "https://ga.jspm.io/npm:tslib@2.5.3/tslib.es6.mjs"
+          }
+        }
+      }
+    </script>
+
+    <script type="module">
+      import '@patternfly/elements/pf-card/pf-card.js';
+      import '@patternfly/elements/pf-switch/pf-switch.js';
+      import '@patternfly/elements/pf-label/pf-label.js';
+      import '@patternfly/elements/pf-tooltip/pf-tooltip.js';
+    </script>
+
+  </head>
+  <body>
+
+    <pf-card size="large">
+      <h1 slot="header">PatternFly Elements</h1>
+      <p>
+        A performant design system, made with
+        <pf-label color="blue">☕</pf-label> and
+        <pf-tooltip content="Performant, progressively-enhanced experiences">
+          <pf-label color="orange">Web Components</pf-label>
+        </pf-tooltip>
+      </p>
+      <label slot="footer">Rounded?
+        <pf-switch onchange="this.closest('pf-card').rounded = this.checked"></pf-switch>
+      </label>
+      <label slot="footer">Compact?
+        <pf-switch onchange="this.closest('pf-card').size = this.checked ? 'compact' : 'large'"></pf-switch>
+      </label>
+    </pf-card>
+
+
+  </body>
+</html>

@@ -1,7 +1,7 @@
 ---
 reveal: pf-accordion
 ---
-## `<pf-accordion>` {slot=heading}
+## PatternFly elements - `<pf-accordion>` {slot=heading}
 
 An **accordion** is an interactive container that expands and collapses to hide 
 or reveal nested content. It takes advantage of progressive disclosure to help 
@@ -20,7 +20,6 @@ hide more detailed information as needed.
     <p>The freedom to run the program
        as you wish, for any purpose.</p>
   </pf-accordion-panel>
-
   ...
 </pf-accordion>
 ```
@@ -40,8 +39,8 @@ hide more detailed information as needed.
   </pf-accordion-header>
   <pf-accordion-panel>
     <p>The freedom to study how the program works, and change it so it does your computing as you wish. Access to the source code is a precondition for this. </p>
-
   </pf-accordion-panel>
+
   <pf-accordion-header>
     <h3>Freedom 2: To Redistribute</h3>
   </pf-accordion-header>
