@@ -57,7 +57,9 @@ module.exports = function(eleventyConfig) {
   eleventyConfig.addPlugin(FontsPlugin);
   eleventyConfig.addPlugin(GlitchPlugin);
   eleventyConfig.addPlugin(IconsPlugin);
-  eleventyConfig.addPlugin(JamPackPlugin);
+  eleventyConfig.addPlugin(JamPackPlugin, {
+    exclude: 'decks/pf-collab/**/*',
+  });
   eleventyConfig.addPlugin(OpenGraphCardPlugin);
   eleventyConfig.addPlugin(PostCSSPlugin, { include: /devconf-brno-2023\/components\/.*\.css/ });
   eleventyConfig.addPlugin(PostsPlugin);
