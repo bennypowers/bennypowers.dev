@@ -21,7 +21,7 @@ eleventyImport:
 ---
 <slide-deck webc:nokeep
             webc:import="npm:eleventy-plugin-slide-decks"
-            :draft="!published"
+            :draft="!$data.published"
             @title="PatternFly Elements Catch Up"
             @date="2023-07-10"
             @tag="pf-collab">
