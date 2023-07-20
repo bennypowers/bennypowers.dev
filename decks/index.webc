@@ -11,6 +11,7 @@ const getScreenShotURL = deck => {
   return `https://v1.screenshot.11ty.dev/${encodeURIComponent(deckURL)}/_${datecache}_wait:2`;
 };
 const byDate = (a, b) => a.date <= b.date ? 1 : a.date > b.date ? -1 : 0;
+const isPublished = x => x.data.watch || x.data.published !== false;
 </script>
 
 <bp-header></bp-header>
@@ -30,12 +31,43 @@ const byDate = (a, b) => a.date <= b.date ? 1 : a.date > b.date ? -1 : 0;
       display: contents;
       list-style-type: none;
 
-      & li img {
-        border-radius: 4px;
-        overflow: hidden;
-        display: block;
-        aspect-ratio: 5/3;
+      & li {
+        position: relative;
+        img {
+          border-radius: 4px;
+          overflow: hidden;
+          display: block;
+          aspect-ratio: 5/3;
+        }
       }
+    }
+  }
+</style>
+
+<style webc:if="watch">
+  main ol li.draft {
+    &::before {
+      content: 'DRAFT';
+      position: absolute;
+      text-align: center;
+      font-size: 2em;
+      font-weight: bold;
+      padding: 10px 16px;
+      inset-block-start: 1em;
+      inset-inline-start: 1em;
+      background: red;
+      opacity: .8;
+      pointer-events: none;
+      border-radius: .5em;
+      line-height: 1;
+    }
+    &::after {
+      content: '';
+      position: absolute;
+      inset: -4px;
+      border: 4px solid hotpink;
+      border-radius: 4px;
+      pointer-events: none;
     }
   }
 </style>
@@ -44,24 +76,25 @@ const byDate = (a, b) => a.date <= b.date ? 1 : a.date > b.date ? -1 : 0;
   <h1 @text="h1 ? h1 : title"></h1>
   <nav>
     <ol>
-      <li webc:for="deck of collections.deck.sort(byDate)">
-          <a :href="deck.data.page.url" :title=deck.data.title>
-            <img :src="deck.data.coverImage ?? getScreenShotURL(deck)" alt=''>
-          </a>
-          <h2>
-            <a :href="deck.data.page.url" @html="deck.data.title"></a>
-          </h2>
-          <p webc:if="deck.data.venue">
-            <a :href="deck.data.venue.url"
-                webc:if="deck.data.venue.url"
-                @text="deck.data.venue.name"></a>
-            <span webc:else @text="deck.data.venue.name"></span>
-            <date-time :datetime="deck.date" month=long year=numeric></date-time>
-          </p>
-          <template webc:type="11ty"
-                    webc:nokeep
-                    11ty:type="njk,md"
-                    :@deck="deck">{{ deck.data.description }}</template>
+      <li webc:for="deck of collections.deck.filter(isPublished).sort(byDate)"
+          :class="deck.data.published === false ? 'draft' : ''">
+        <a :href="deck.data.page.url" :title=deck.data.title>
+          <img :src="deck.data.coverImage ?? getScreenShotURL(deck)" alt=''>
+        </a>
+        <h2>
+          <a :href="deck.data.page.url" @html="deck.data.title"></a>
+        </h2>
+        <p webc:if="deck.data.venue">
+          <a :href="deck.data.venue.url"
+              webc:if="deck.data.venue.url"
+              @text="deck.data.venue.name"></a>
+          <span webc:else @text="deck.data.venue.name"></span>
+          <date-time :datetime="deck.date" month=long year=numeric></date-time>
+        </p>
+        <template webc:type="11ty"
+                  webc:nokeep
+                  11ty:type="njk,md"
+                  :@deck="deck">{{ deck.data.description }}</template>
       </li>
     </ol>
   </nav>
