@@ -11,7 +11,7 @@
 
   - Apps (<abbr title="single page application">SPA</abbr>s or <abbr 
     title="multipage application">MPA</abbr>s)
-  - Design Systems
+  - Design systems
   - Micro-frontends
 
   <img alt="puzzle piece"
@@ -24,39 +24,39 @@ Good for heavy client side apps and lightweight server-rendered pages
 {slot=notes}
 
 <style>
-p { display: contents; }
+  p { display: contents; }
 
-#technologies {
-  display: flex;
-  place-content: start center;
-  max-width: 100%;
-  margin-inline: auto;
-  gap: 40px;
-}
-
-figure-img {
-  --caption-align: center;
-  --margin: 0;
-  font-size: 1.5em;
-}
-
-@media (width <= 500px) {
   #technologies {
-    gap: 10px;
+    display: flex;
+    place-content: start center;
+    max-width: 100%;
+    margin-inline: auto;
+    gap: 40px;
   }
+
   figure-img {
-    scale: .75;
+    --caption-align: center;
+    --margin: 0;
+    font-size: 1.5em;
   }
-}
 
-#uses {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
+  @media (width <= 500px) {
+    #technologies {
+      gap: 10px;
+    }
+    figure-img {
+      scale: .75;
+    }
+  }
 
-#uses img {
-  max-height: 40vh;
-  aspect-ratio: 1;
-}
+  #uses {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  #uses img {
+    max-height: 40vh;
+    aspect-ratio: 1;
+  }
 </style>
