@@ -2,6 +2,12 @@
 layout: html.webc
 ---
 
+<script webc:setup>
+const isPublished = x => x.data.watch || x.data.published;
+const latestPublished = xs =>
+  xs.filter(isPublished).slice(-8).reverse() ?? [];
+</script>
+
 <link rel="stylesheet" href="index.css"></link>
 
 <bp-header></bp-header>
@@ -20,11 +26,13 @@ layout: html.webc
   <nav id="latest">
     <h2>Latest</h2>
     <ol>
-      <li webc:for="post of collections.posts.filter(x => watch || x.data.published).slice(-6).reverse() ?? []">
+      <li webc:for="post of latestPublished(collections.posts)">
         <post-thumbnail :@post="post"
                         :class="watch && !post.data.published ? 'unpublished' : ''"></post-thumbnail>
       </li>
     </ol>
   </nav>
+
+  <p><small>Feeling homesick? Don't forget to call your mom...</small></p>
 </main>
 
