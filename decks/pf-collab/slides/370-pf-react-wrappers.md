@@ -1,4 +1,4 @@
-## Patternfly elements - react wrappers {slot=heading}
+## Patternfly Elements - react wrappers {slot=heading}
 
 <span slot=notes>stress that react wrappers is a react problem</span>
 

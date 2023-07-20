@@ -6,8 +6,8 @@
      src="images/training.svg"
      style="
        float: right;
-       max-height: 40vh;
-       aspect-ratio: 1;
+       height: 360px;
+       width: 360px;
      ">
 
 - Knowledge transfer

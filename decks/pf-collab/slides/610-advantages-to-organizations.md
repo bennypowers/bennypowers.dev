@@ -6,8 +6,7 @@
      src="images/northstar.svg"
      style="
        float: right;
-       max-height: 40vh;
-       aspect-ratio: 1;
+       height: 360px;
      ">
 
 - Interoperability
