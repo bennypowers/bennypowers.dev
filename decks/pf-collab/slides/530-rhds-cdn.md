@@ -1,4 +1,4 @@
-## Red Hat design system {slot=heading}
+## Red Hat Design System {slot=heading}
 
 ### Design systems CDN
 

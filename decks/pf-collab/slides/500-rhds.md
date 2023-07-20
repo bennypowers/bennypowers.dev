@@ -1,7 +1,7 @@
 ---
 is: redhat-slide-divider
 ---
-## Red Hat design system {slot=title}
+## Red Hat Design System {slot=title}
 
 <div slot="image">
   <img alt="examples of design system elements"

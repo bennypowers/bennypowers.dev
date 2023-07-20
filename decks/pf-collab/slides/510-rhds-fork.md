@@ -1,4 +1,4 @@
-## Red Hat design system {slot=heading}
+## Red Hat Design System {slot=heading}
 
 ### Why two design systems?
 
