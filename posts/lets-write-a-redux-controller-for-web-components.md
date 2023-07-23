@@ -14,6 +14,13 @@ tags:
   - lit
 ---
 
+<aside style="font-style:italic">
+
+  **Update**: Elliott has since published an excellent [lit/redux integration 
+  example in a lit playground][playground]. I highly recommend you check it out.
+
+</aside>
+
 [Elliott Marquez][elliott] challenged me to write a redux controller in the [Lit community][litcomm].
 
 So let's get cracking!
@@ -109,3 +116,4 @@ LitElement) and we're off to the races:
 
 [elliott]: https://dev.to/elliott
 [litcomm]: https://discord.gg/buildWithLit
+[playground]: https://lit.dev/playground/#gist=b7e3c1e58657a3b130521f17b1a15af2
