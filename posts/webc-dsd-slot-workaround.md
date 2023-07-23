@@ -10,11 +10,10 @@ coverImageAlt: spider's web with a large gap in the center
 tags:
   - eleventy
   - webc
-  - opinion
   - web components
 ---
 
-I wrote earlier this year about WebC, the new framework for templating HTML in
+I [wrote earlier this year about WebC][post], the new framework for templating HTML in
 11ty. WebC's standards-aligned approach is refreshing and encouraging, and my
 conclusion was that it's support for the real-deal web components standards
 needs some polishing.
@@ -166,6 +165,7 @@ transform, but that's it.
 I hope this workaround is helpful to you and I look forward to updating this
 post with news of improved DSD support in WebC.
 
+[post]: /posts/webc-impressions/
 [ae]: https://apolloelements.dev
 [examples]: https://github.com/11ty/demo-webc-shadow-dom/blob/main/_components/sample-component-dsd.webc
 [mdn-slot]: https://developer.mozilla.org/en-US/docs/Web/HTML/Element/slot
