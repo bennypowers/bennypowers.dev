@@ -131,11 +131,11 @@ workarounds with native slots:
   const isShadowRootMode = attr =>
     attr.name === 'shadowrootmode';
   const isWorkaround = node =>
-    isElementNode(node) && node.tagName === TAG_NAME;
+      isElementNode(node) && node.tagName === 'webc-dsd-slot-workaround';
   const isDSDTemplate = node =>
     isTemplateNode(node) && node.attrs?.find(isShadowRootMode);
 
-  export function transform(content) {
+  export function transform(content, options) {
     const document = parse(content)
     for (const template of queryAll(document, isDSDTemplate)) {
       const { content } = template;
