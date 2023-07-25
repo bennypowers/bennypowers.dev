@@ -17,12 +17,14 @@
 Using shared **APIs** across common **interfaces** and enabling piecemeal 
 **migration**.
 
-<div slot=notes>
+<div slot="notes">
 
-Why use pfe instead of react?
-Allows teams to migrate from framework to framework,
-or away from frameworks,
-without breaking the experience
+Why use pfe instead of react?  
+Allows teams to migrate from framework to framework,  
+or away from frameworks,  
+without breaking the experience  
+incremental adoption  
+experiment with different or new technologies  
 
 </div>
 
