@@ -27,5 +27,11 @@
     display: flex;
     align-items: center;
     gap: 1em;
+    margin: 0;
+    font-size: 80%;
+  }
+  figure img {
+    height: 600px;
+    width: auto;
   }
 </style>
