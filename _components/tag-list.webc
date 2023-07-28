@@ -3,6 +3,7 @@ const getTags = ($data) => {
   const EXCLUDED_TAGS = new Set([
     'all',
     'devconf23',
+    'pf-collab',
     'icon',
     'posts',
     'slides',
