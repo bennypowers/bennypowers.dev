@@ -32,6 +32,9 @@ const JamPackPlugin = require('./_plugins/jampack.cjs');
 const WebmentionsPlugin = require('./_plugins/webmentions.cjs');
 const ImportMapPlugin = require('./_plugins/importMap.cjs');
 
+const isWatch =
+  process.argv.some(x => x === '--serve' || x === '--watch');
+
 /** @param{import('@11ty/eleventy/src/UserConfig.js')} eleventyConfig */
 module.exports = function(eleventyConfig) {
   eleventyConfig.setQuietMode(true);
@@ -51,6 +54,9 @@ module.exports = function(eleventyConfig) {
   eleventyConfig.addGlobalData('isProductionBuild', process.env.NETLIFY && process.env.CONTEXT === 'production');
   eleventyConfig.addPlugin(DecksPlugin, { assetsExtensions: ['jpg', 'png', 'webp', 'svg', 'js']});
   eleventyConfig.addWatchTarget('decks/*/components/*.css');
+
+  !isWatch && eleventyConfig.addPlugin(EleventyPluginDirectoryOutput);
+
   eleventyConfig.addPlugin(EmbedPlugin, { lite: true });
   eleventyConfig.addPlugin(EmojiWrapPlugin, { exclude: /^_site\/.*-repro\.html$/ });
   eleventyConfig.addPlugin(FiltersPlugin);
@@ -68,7 +74,6 @@ module.exports = function(eleventyConfig) {
   eleventyConfig.addPlugin(RedHatDeckPlugin);
   eleventyConfig.addPlugin(TableOfContentsPlugin);
   eleventyConfig.addPlugin(TimeToReadPlugin);
-  eleventyConfig.addPlugin(EleventyPluginDirectoryOutput);
   eleventyConfig.addPlugin(EleventyRenderPlugin);
   eleventyConfig.addPlugin(EleventyPluginRSS);
   eleventyConfig.addPlugin(EleventyPluginSyntaxhighlight, {
