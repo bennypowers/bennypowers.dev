@@ -7,7 +7,6 @@ tldr: |
 templateEngineOverride: webc,md
 coverImage: /assets/images/markdown-images-treesitter.png
 coverImageAlt: a table made of trees
-datePublished: 2023-05-21
 tags:
   - lua
   - neovim

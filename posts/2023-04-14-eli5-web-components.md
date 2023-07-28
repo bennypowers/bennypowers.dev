@@ -11,7 +11,6 @@ tldr: >
     they're different from #javascript-heavy #frameworks
 coverImage: /assets/images/Lego_Color_Bricks.jpg
 coverImageAlt: a loose pile of colourful lego bricks
-datePublished: 2023-04-14
 tags:
   - eli5
   - html

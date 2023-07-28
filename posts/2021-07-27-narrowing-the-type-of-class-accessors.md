@@ -1,7 +1,6 @@
 ---
 title: Narrowing the Type of Class Accessors
 published: true
-datePublished: 2021-07-27
 tags:
   - typescript
   - javascript

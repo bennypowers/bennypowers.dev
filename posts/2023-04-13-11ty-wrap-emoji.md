@@ -9,7 +9,6 @@ tldr: >
   pages.
 coverImage: /assets/images/emoji-sticker.png
 coverImageAlt: dozens of emoji stickers piled one on top of the other
-datePublished: 2023-04-13
 tags:
   - eleventy
   - html

@@ -2,7 +2,6 @@
 title: WebC First Impressions
 published: true
 description: Thoughts from my first attempt at understanding the new WebC framework from 11ty
-datePublished: 2023-04-11
 coverImage: /assets/images/webc-impressions.jpg
 coverImageAlt: a wizard conjures web components using his staff
 tags:

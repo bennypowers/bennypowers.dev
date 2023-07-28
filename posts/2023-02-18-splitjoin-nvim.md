@@ -3,7 +3,6 @@ title: splitjoin.nvim
 published: true
 description: New Neovim Plugin - separate lists into multiple lines then glue them back together
 coverImage: /assets/images/splitjoin.png
-datePublished: 2023-02-18
 tags:
   - lua
   - neovim

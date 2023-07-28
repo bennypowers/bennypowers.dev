@@ -3,7 +3,6 @@ title: SVG Icon Sprites in Eleventy
 published: true
 templateEngineOverride: webc,md
 description: Use SVG icons in Eleventy and only ship the code you need.
-datePublished: 2023-01-15
 coverImage: /assets/images/sprite-sheet.png
 coverImageAlt: sprite sheet for a pixel-art game featuring a female mage character
 tags:
@@ -24,9 +23,11 @@ eleventyImport:
     justify-content: center;
 
     & svg {
-      fill: currentcolor;
       height: 40px;
       aspect-ratio: 1;
+      &:not([name=redhat]) {
+        fill: currentcolor;
+      }
     }
   }
 

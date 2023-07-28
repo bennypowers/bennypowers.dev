@@ -2,7 +2,6 @@
 title: Microcopy Translations as a Reactive Controller
 published: false
 description: Adding i18n with a little Platform-centric JavaScript and Reactive Controllers
-datePublished: 2023-02-19
 tags:
   - javascript
   - typescript

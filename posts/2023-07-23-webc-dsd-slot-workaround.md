@@ -4,7 +4,6 @@ published: true
 description: |
   A cheeky hack to make &lt;slot> elements work as expected in
   11ty's WebC framework.
-datePublished: 2023-17-23
 coverImage: /assets/images/webc-slot-workaround.png
 coverImageAlt: spider's web with a large gap in the center
 tags:

@@ -2,7 +2,6 @@
 title: You Should be Using esm
 description: esm lets you seamlessly combine cjs and js modules with little fuss, if you're transpiling just to use import, chances are you shouldn't.
 published: true
-datePublished: 2018-09-16
 tags:
   - javascript
   - esm

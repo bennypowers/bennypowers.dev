@@ -1,7 +1,6 @@
 ---
 title: Building a static storage import-map CDN
 published: true
-datePublished: 2023-05-09
 templateEngineOverride: webc,md
 coverImage: /assets/images/import-map-cdn.png
 coverImageAlt: >

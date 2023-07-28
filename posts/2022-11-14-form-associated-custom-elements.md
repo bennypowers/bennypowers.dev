@@ -1,7 +1,6 @@
 ---
 title: Form-Associated Custom Elements
 published: true
-datePublished: 2022-11-14
 coverImage: /assets/images/faces.jpg
 coverImageAlt: autonomous faces. courtesy of stable diffusion
 description: >

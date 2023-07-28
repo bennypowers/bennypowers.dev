@@ -4,7 +4,6 @@ published: true
 description: >
   How to run a nested gnome session (wayland) so you can test out 
   changes to a GNOME extension without having to log out.
-datePublished: 2023-07-10
 coverImage: /assets/images/gnome-ai-nightmare.png
 coverImageAlt: >
   a generative ai nightmare for which the prompt was:

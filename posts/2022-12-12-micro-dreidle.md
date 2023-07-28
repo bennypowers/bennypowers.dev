@@ -2,7 +2,6 @@
 title: Make a Micro Dreidle
 published: true
 description: Let's use makecode to turn a micro:bit into a dreidle!
-datePublished: 2022-12-12
 coverImage: /assets/images/micro-dreidle.png
 tags:
   - micro:bit

@@ -4,7 +4,6 @@ published: true
 description: >
   Save money and build minutes while rebuilding your 11ty site using GitHub 
   Actions and the netlify CLI
-datePublished: 2023-01-31
 coverImage: /assets/images/duck-coins.jpg
 coverImageAlt: >
   rich duck, diving into a pool of gold coins, in the style of 90s saturday 

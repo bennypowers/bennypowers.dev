@@ -2,7 +2,6 @@
 title: Micro:bit countdown
 published: true
 description: Let's spice up the stock makecode countdown tutorial
-datePublished: 2023-01-01
 coverImage: /assets/images/microbit.png
 tags:
   - micro:bit

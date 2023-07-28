@@ -1,7 +1,6 @@
 ---
 title: Let's Write a Redux Controller for Web Components
 published: true
-datePublished: 2022-01-07
 description: |
   Using Lit-style reactive controllers, learn how to easily add redux-style 
   state reducers to your web components.

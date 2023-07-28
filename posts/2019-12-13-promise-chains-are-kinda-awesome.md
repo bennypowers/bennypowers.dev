@@ -2,7 +2,6 @@
 title: Promise Chains are Kinda Awesome
 description: Some say that promises shouldn't be used when async await is available but that's not always true. Here's why 'promise chains' are actually amazing.
 published: true
-datePublished: 2019-12-13
 tags:
   - promise
   - async

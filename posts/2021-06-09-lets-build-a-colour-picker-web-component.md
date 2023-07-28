@@ -4,7 +4,6 @@ description: >
   Build and accessible, web-native colour picker component that works in any 
   framework with the web components APIs.
 published: true
-datePublished: 2021-06-09
 coverImage: https://dev-to-uploads.s3.amazonaws.com/uploads/articles/01rg22y3j3s2bw61t8w9.png
 coverImageAlt: >
   screenshot of JavaScript code for colour picker element with demo of element 
