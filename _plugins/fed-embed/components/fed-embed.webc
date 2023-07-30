@@ -1,30 +1,30 @@
 <template shadowrootmode="open" webc:keep webc:raw>
-  <style>
-    :host {
-      display: contents;
-    }
-    article {
-      background: var(--markdown-syntax-background-color);
-      border-radius: 16px;
-      margin-inline: 2em;
-      padding: 1em;
-    }
-    header {
-      display: flex;
-      align-items: center;
-      gap: 1em;
-    }
-    header ::slotted(img) {
-      border-radius: 100%;
-      width: 40px;
-      height: auto;
-    }
-    header ::slotted(a:first-of-type) {
-      margin-inline-start: auto;
-    }
-    #body {
-      display: block;
-    }
+  <style webc:raw>
+  :host {
+    display: contents;
+  }
+  article {
+    background: var(--markdown-syntax-background-color);
+    border-radius: 16px;
+    margin-inline: 2em;
+    padding: 1em;
+  }
+  header {
+    display: flex;
+    align-items: center;
+    gap: 1em;
+  }
+  header ::slotted(img) {
+    border-radius: 100%;
+    width: 40px;
+    height: auto;
+  }
+  header ::slotted(a:first-of-type) {
+    margin-inline-start: auto;
+  }
+  #body {
+    display: block;
+  }
   </style>
   <article>
     <header>
@@ -35,7 +35,7 @@
 </template>
 
 <script webc:type="js">
-getFediPost(webc.attributes.post).then(post => {
+getFediPost(webc.attributes.postUrl).then(post => {
   const userURL = new URL(post.account.url);
   return /*html*/`
 <img slot="header"
@@ -66,8 +66,7 @@ getFediPost(webc.attributes.post).then(post => {
 ${post.content}`;
 });
 </script>
-
-<script src="../_plugins/dsd/dsd.js"></script>
+<script src="../../dsd/dsd.js"></script>
 <script>
   customElements.define('fed-embed', class FedEmbed extends HTMLElement {
     async connectedCallback() {

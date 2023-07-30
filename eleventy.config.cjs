@@ -32,7 +32,7 @@ const JamPackPlugin = require('./_plugins/jampack.cjs');
 const WebmentionsPlugin = require('./_plugins/webmentions.cjs');
 const ImportMapPlugin = require('./_plugins/importMap.cjs');
 const WebCDSDWorkaroundPlugin = require('./_plugins/dsd/webc-dsd-slot-workaround.cjs');
-const FedEmbedPlugin = require('./_plugins/fedembed.cjs');
+const FedEmbedPlugin = require('./_plugins/fed-embed/fed-embed.cjs');
 
 const isWatch =
   process.argv.some(x => x === '--serve' || x === '--watch');
@@ -91,6 +91,7 @@ module.exports = function(eleventyConfig) {
   eleventyConfig.addPlugin(EleventyPluginWebC, {
     components: [
       '_components/**/*.webc',
+      '_plugins/fed-embed/components/*.webc',
       'decks/**/components/**/*.webc',
       'npm:@11ty/eleventy-plugin-syntaxhighlight/*.webc',
     ],

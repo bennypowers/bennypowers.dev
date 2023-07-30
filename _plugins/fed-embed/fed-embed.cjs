@@ -2,15 +2,12 @@ const EleventyFetch = require('@11ty/eleventy-fetch');
 
 class FedEmbed {
   constructor(props) {
-    const { source, timeout, user, post } = props;
-    try {
-      this.post = new URL(post);
-    } catch (_error) {}
+    const { post } = props;
+    this.post = new URL(post);
   }
 
   async render() {
     switch (true) {
-      case (!!this.user): return this.renderJSONFeed();
       case (!!this.post): return this.renderPost();
       default:
         console.error(`No valid URLs found on ${JSON.stringify(props)}`);
@@ -28,12 +25,12 @@ class FedEmbed {
       return;
     }
 
-    const { error, ...rest } = await this.fetch(postURL, { type: 'text' });
+    const res = await this.fetch(postURL);
 
-    if (error) {
-      return console.error(error);
+    if (res.error) {
+      throw new Error(res.error);
     } else {
-      return rest;
+      return res;
     }
   }
 
@@ -50,7 +47,10 @@ class FedEmbed {
 }
 
 module.exports = function(eleventyConfig) {
-  eleventyConfig.addJavaScriptFunction('getFediPost', post =>
-    new FedEmbed({ post }).getPost());
-}
+  eleventyConfig.addJavaScriptFunction('getFediPost', async post => {
+    const embed = new FedEmbed({ post });
+    const res = await embed.getPost();
+    return res;
+  });
+};
 

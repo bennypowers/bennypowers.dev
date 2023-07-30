@@ -13,7 +13,6 @@ tags:
   - javascript
   - react
   - html
-
 templateEngineOverride: webc,md
 ---
 
@@ -135,9 +134,7 @@ is just another example of how React breaks web development, the web platform,
 and ultimately web developers' understanding of the medium in which they work.
 
 <div>
-  <fed-embed
-    post="https://hachyderm.io/@collinsworth/110799881063292165"
-  ></fed-embed>
+<fed-embed post-url="https://hachyderm.io/@collinsworth/110799881063292165"/>
 </div>
 
 If you're still using React, and wondering why web development is so
