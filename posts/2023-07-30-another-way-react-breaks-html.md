@@ -94,10 +94,10 @@ export default App;
 </template>
 
 If this was HTML, it would Just Work™: we should see our components' content projected into
-the slots specified with the `slot` attribute, two in the head, two in the body, and two in the first. But this is not HTML, iTs jUSt 
+the slots specified with the `slot` attribute, two in the head, two in the body, and two in the footer. But this is not HTML, iTs jUSt 
 jAVasCriPt, *bruh*, so it should cOmPOse beTteR, right?
 
-<iframe style="border: 1px solid rgba(0, 0, 0, 0.1);border-radius:2px;"
+<iframe style="border: 1px solid rgba(0, 0, 0, 0.1);border-radius:2px;max-width:100%;"
         width="800"
         height="450"
         src="https://codesandbox.io/p/sandbox/react-breaks-native-html-slot-wkhygs?file=%2Fsrc%2FApp.tsx%3A11%2C37&embed=1"
