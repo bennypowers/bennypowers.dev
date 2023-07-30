@@ -31,6 +31,8 @@ const DC23Plugin = require('./_plugins/devconf-brno-2023.cjs');
 const JamPackPlugin = require('./_plugins/jampack.cjs');
 const WebmentionsPlugin = require('./_plugins/webmentions.cjs');
 const ImportMapPlugin = require('./_plugins/importMap.cjs');
+const WebCDSDWorkaroundPlugin = require('./_plugins/dsd/webc-dsd-slot-workaround.cjs');
+const FedEmbedPlugin = require('./_plugins/fedembed.cjs');
 
 const isWatch =
   process.argv.some(x => x === '--serve' || x === '--watch');
@@ -57,6 +59,8 @@ module.exports = function(eleventyConfig) {
 
   !isWatch && eleventyConfig.addPlugin(EleventyPluginDirectoryOutput);
 
+  eleventyConfig.addPlugin(FedEmbedPlugin);
+  eleventyConfig.addPlugin(WebCDSDWorkaroundPlugin);
   eleventyConfig.addPlugin(EmbedPlugin, { lite: true });
   eleventyConfig.addPlugin(EmojiWrapPlugin, { exclude: /^_site\/.*-repro\.html$/ });
   eleventyConfig.addPlugin(FiltersPlugin);

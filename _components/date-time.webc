@@ -1,4 +1,5 @@
 <time :datetime="datetime"
+      @attributes
       @text="formatDate(datetime, { lang, dateStyle, dayPeriod,
                                     hour, hourCycle,
                                     timeStyle, timeZoneName,

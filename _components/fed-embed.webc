@@ -1,0 +1,80 @@
+<template shadowrootmode="open" webc:keep webc:raw>
+  <style>
+    :host {
+      display: contents;
+    }
+    article {
+      background: var(--markdown-syntax-background-color);
+      border-radius: 16px;
+      margin-inline: 2em;
+      padding: 1em;
+    }
+    header {
+      display: flex;
+      align-items: center;
+      gap: 1em;
+    }
+    header ::slotted(img) {
+      border-radius: 100%;
+      width: 40px;
+      height: auto;
+    }
+    header ::slotted(a:first-of-type) {
+      margin-inline-start: auto;
+    }
+    #body {
+      display: block;
+    }
+  </style>
+  <article>
+    <header>
+      <webc-dsd-slot-workaround name="header"></webc-dsd-slot-workaround>
+    </header>
+    <webc-dsd-slot-workaround id="body"></webc-dsd-slot-workaround>
+  </article>
+</template>
+
+<script webc:type="js">
+getFediPost(webc.attributes.post).then(post => {
+  const userURL = new URL(post.account.url);
+  return /*html*/`
+<img slot="header"
+     alt="${post.account.username}"
+     title="${post.account.username}"
+     src="${post.account.avatar}">
+<span slot="header">
+  <a href="${post.account.url}">${post.account.display_name}</a>
+  <span>@</span>
+  <a href="${userURL.origin}">${userURL.host}</a>
+</span>
+<a slot="header" title="replies" href="${post.uri}">
+  <span class="emoji">✏️ </span>
+  ${post.replies_count}
+</a>
+<a slot="header" title="boosts" href="${post.uri}">
+  <span class="emoji">🔁</span>
+  ${post.reblogs_count}
+</a>
+<a slot="header" title="likes" href="${post.uri}">
+  <span class="emoji">❤️</span>
+  ${post.favourites_count}
+</a>
+<a slot="header" href="${post.uri}">
+  <date-time datetime="${post.edited_at ?? post.created_at}"
+             date-style="medium"></date-time>
+</a>
+${post.content}`;
+});
+</script>
+
+<script src="../_plugins/dsd/dsd.js"></script>
+<script>
+  customElements.define('fed-embed', class FedEmbed extends HTMLElement {
+    async connectedCallback() {
+      if (!this.shadowRoot) {
+        await new Promise(requestAnimationFrame);
+        polyfillDeclarativeShadowDOMTemplate(this.querySelector('template[shadowrootmode]'));
+      }
+    }
+  });
+</script>
