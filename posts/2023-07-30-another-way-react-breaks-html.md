@@ -38,9 +38,9 @@ regions, respectfully.
 #card::part(footer) { background-color: #00f8; }
 ```
 
-Now let's write two react components, one which forwards its slot component and 
+Now let's write two react components, one which forwards its slot prop, and 
 one which does not. We'll write an "App" component which sets our examples as 
-children of a card, in each of the three slots.
+children of a card, in each of the three slots. We'll have our examples print out which slot they are meant to be projected into, and sandwich them with DOM nodes, so that we'll be able to tell right away which react components are rendering out of place.
 
 <template webc:raw webc:nokeep>
 
@@ -93,8 +93,8 @@ export default App;
 
 </template>
 
-If this was HTML, it would Just Work™: we should see our content projected into
-the slots specified with the `slot` attribute. But this is not HTML, iTs jUSt 
+If this was HTML, it would Just Work™: we should see our components' content projected into
+the slots specified with the `slot` attribute, two in the head, two in the body, and two in the first. But this is not HTML, iTs jUSt 
 jAVasCriPt, *bruh*, so it should cOmPOse beTteR, right?
 
 <iframe style="border: 1px solid rgba(0, 0, 0, 0.1);border-radius:2px;"
@@ -103,7 +103,9 @@ jAVasCriPt, *bruh*, so it should cOmPOse beTteR, right?
         src="https://codesandbox.io/p/sandbox/react-breaks-native-html-slot-wkhygs?file=%2Fsrc%2FApp.tsx%3A11%2C37&embed=1"
         allowfullscreen></iframe>
 
-Not so much. So what can web developers stuck in react codebases do? In cases 
+Not so much. Instead, the subtle bug in react's virtual DOM abstraction has our non-forwarding components rendering into the default slot of the card. If there was no default slot, they would disappear.
+
+So what can web developers stuck in react codebases do? In cases 
 where the user is able to control the slotted react component, they should be 
 sure to forward the `slot` prop to the container. Otherwise, they must wrap the 
 react component in a DOM node and place the `slot` attribute on the wrapper.
