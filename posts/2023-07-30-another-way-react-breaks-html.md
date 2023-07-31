@@ -2,6 +2,11 @@
 title: Another way React Breaks HTML
 published: true
 audience: react stans
+description: |
+  Unsuspecting react users may come to believe that web components break
+  react, but the truth is - as usual - exactly the opposite. Despite the
+  superficial similarity to HTML, react's JSX language breaks the web
+  platform's powerful native slot element.
 tldr: |
   Unsuspecting #react users may come to believe that #WebComponents break
   react, but the truth is - as usual - exactly the opposite. Despite the
@@ -212,10 +217,10 @@ was no default slot, they would disappear.
 
 ## Workarounds
 
-So what can web developers stuck in react codebases do? In cases 
-where the user is able to control the slotted react component, they should be 
-sure to forward the `slot` prop to the container. Otherwise, they must wrap the 
-react component in a DOM node and place the `slot` attribute on the wrapper.
+So what can web developers stuck in react codebases do? In cases where the user 
+is able to control the slotted react component, they should be sure to forward 
+the `slot` prop to the container. Otherwise, they must wrap the react component 
+in a DOM node and place the `slot` attribute on the wrapper.
 
 <template webc:raw webc:nokeep>
 
