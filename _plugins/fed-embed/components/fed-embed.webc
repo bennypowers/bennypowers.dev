@@ -35,38 +35,8 @@
   </article>
 </template>
 
-<script webc:type="js">
-getFediPost(webc.attributes.postUrl).then(post => {
-  const userURL = new URL(post.account.url);
-  return /*html*/`
-<img slot="header"
-     alt="${post.account.username}"
-     title="${post.account.username}"
-     src="${post.account.avatar}">
-<span slot="header">
-  <a href="${post.account.url}">${post.account.display_name}</a>
-  <span>@</span>
-  <a href="${userURL.origin}">${userURL.host}</a>
-</span>
-<a slot="header" title="replies" href="${post.uri}">
-  <span class="emoji">✏️ </span>
-  ${post.replies_count}
-</a>
-<a slot="header" title="boosts" href="${post.uri}">
-  <span class="emoji">🔁</span>
-  ${post.reblogs_count}
-</a>
-<a slot="header" title="likes" href="${post.uri}">
-  <span class="emoji">❤️</span>
-  ${post.favourites_count}
-</a>
-<a slot="header" href="${post.uri}">
-  <date-time datetime="${post.edited_at ?? post.created_at}"
-             date-style="medium"></date-time>
-</a>
-${post.content}`;
-});
-</script>
+<fed-embed-post :@post="getFediPost(postUrl)"/>
+
 <script src="../../dsd/dsd.js"></script>
 <script>
   customElements.define('fed-embed', class FedEmbed extends HTMLElement {
