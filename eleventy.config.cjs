@@ -50,6 +50,7 @@ module.exports = function(eleventyConfig) {
   eleventyConfig.watchIgnores.add('assets/images/*');
   eleventyConfig.watchIgnores.add('decks/starting-functional-javascript/images/*');
   eleventyConfig.addDataExtension('yaml', x => YAML.parse(x));
+  eleventyConfig.addPassthroughCopy('manifest.webmanifest');
   eleventyConfig.addPassthroughCopy('assets/**/*.{svg,png,jpeg,jpg,gif,webp,webm,js,d.ts,ico,webmanifest,json}');
   eleventyConfig.addPassthroughCopy('decks/**/*.gif');
   eleventyConfig.addPassthroughCopy('decks/pf-collab/demo/react-dist/fonts');
