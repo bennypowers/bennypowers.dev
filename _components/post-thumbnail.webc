@@ -75,10 +75,10 @@ post-thumbnail {
 </style>
 <img width="192"
      height="125"
+     sizes="192px,100w"
     :alt="post.data.coverImageAlt ?? ''"
     :src="post.data.coverImage"
      webc:if="post.data.coverImage">
-
 <template webc:if="expanded" webc:nokeep>
   <h2><a :href="post.url" @text="post.data.title"></a></h2>
   <div>
