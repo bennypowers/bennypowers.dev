@@ -1,40 +1,41 @@
 <!--- this is the light-dom content for a post --->
 <img slot="header"
-     :alt="post.account.username"
-     :title="post.account.username"
-     :src="post.account.avatar">
+  :alt="post.account.username"
+  :title="post.account.username"
+  :src="post.account.avatar">
 <span slot="header">
   <a :href="post.account.url"
-      @text="post.account.display_name"></a>
+    @text="post.account.display_name"></a>
   <span>@</span>
   <a :href="new URL(post.account.url).origin"
-     @text="new URL(post.account.url).host"></a>
+    @text="new URL(post.account.url).host"></a>
 </span>
 <a slot="header"
-   title="replies"
-   :href="post.uri">
+  title="replies"
+  :href="post.uri">
   <span class="emoji">✏️ </span>
   <template webc:nokeep
-            @text="post.replies_count"></template>
+    @text="post.replies_count"></template>
 </a>
 <a slot="header"
-   title="boosts"
-   :href="post.uri">
+  title="boosts"
+  :href="post.uri">
   <span class="emoji">🔁</span>
   <template webc:nokeep
-            @text="post.reblogs_count"></template>
+    @text="post.reblogs_count"></template>
 </a>
 <a slot="header"
-   title="likes"
-   :href="post.uri">
+  title="likes"
+  :href="post.uri">
   <span class="emoji">❤️</span>
   <template webc:nokeep
-            @text="post.favourites_count"></template>
+    @text="post.favourites_count"></template>
 </a>
 <a slot="header"
-   :href="post.uri">
+  :href="post.uri">
   <date-time :datetime="post.edited_at ?? post.created_at"
-             date-style="medium"></date-time>
+    date-style="medium"></date-time>
 </a>
 <template webc:nokeep
-          @html="post.content"></template>
+  @html="post.content"></template>
+

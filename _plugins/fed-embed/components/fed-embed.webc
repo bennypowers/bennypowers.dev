@@ -35,16 +35,20 @@
   </article>
 </template>
 
-<fed-embed-post :@post="getFediPost(postUrl)"/>
+<fed-embed-post :@post="getFediPost(postUrl)"></fed-embed-post>
 
-<script src="../../dsd/dsd.js"></script>
 <script>
   customElements.define('fed-embed', class FedEmbed extends HTMLElement {
     async connectedCallback() {
       if (!this.shadowRoot) {
         await new Promise(requestAnimationFrame);
-        polyfillDeclarativeShadowDOMTemplate(this.querySelector('template[shadowrootmode]'));
+        const t = this.querySelector('template[shadowrootmode]')
+        if (t) {
+          this.attachShadow({ mode: 'open' }).appendChild(t.content);
+          t.remove();
+        }
       }
     }
   });
 </script>
+

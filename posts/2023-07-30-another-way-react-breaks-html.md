@@ -206,11 +206,6 @@ body, and two in the footer. If this was HTML, it would Just Work™. But this i
 not HTML, iTs jUSt jAVasCriPt, so it should cOmPOse beTteR, *bruh*. Will we see 
 our content in order?
 
-<iframe src="https://codesandbox.io/p/sandbox/react-breaks-native-html-slot-wkhygs?file=%2Fsrc%2FApp.tsx%3A11%2C37&embed=1"
-        width="800"
-        height="450"
-        allowfullscreen></iframe>
-
 Not so much. Instead, the subtle bug in react's virtual DOM abstraction has our 
 non-forwarding components rendering into the default slot of the card. If there 
 was no default slot, they would disappear.
@@ -249,7 +244,7 @@ It's often said how react improves the developer experience, but this right here
 is just another example of how React breaks web development, the web platform, 
 and ultimately web developers' understanding of the medium in which they work.
 
-<div><fed-embed post-url="https://hachyderm.io/@collinsworth/110799881063292165"/></div>
+<div><fed-embed post-url="https://hachyderm.io/@collinsworth/110799881063292165"></fed-embed></div>
 
 If you're still using React, and wondering why web development is so
 complicated, take Josh' words to heart.

@@ -48,9 +48,11 @@ class FedEmbed {
 
 module.exports = function(eleventyConfig) {
   eleventyConfig.addJavaScriptFunction('getFediPost', async post => {
-    const embed = new FedEmbed({ post });
-    const res = await embed.getPost();
-    return res;
+    if (post) {
+      const embed = new FedEmbed({ post });
+      const res = await embed.getPost();
+      return res;
+    }
   });
 };
 
