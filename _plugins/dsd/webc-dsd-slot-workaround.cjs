@@ -4,5 +4,6 @@ module.exports = function(eleventyConfig) {
       const { transform } = await import('./transform.js');
       return transform(content);
     }
+    return content;
   });
 }

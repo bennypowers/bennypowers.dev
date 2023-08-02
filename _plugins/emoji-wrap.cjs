@@ -28,5 +28,6 @@ module.exports = function(eleventyConfig, { exclude }) {
         });
         return document.toString();
       }
+      return content;
     });
 }
