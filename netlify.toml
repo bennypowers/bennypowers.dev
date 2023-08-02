@@ -15,7 +15,7 @@
 [[plugins]]
   package = "netlify-plugin-cache"
     [plugins.inputs]
-    paths = [ ".cache" ]
+    paths = [ ".cache", ".jampack/cache" ]
 [[plugins]]
   package = "netlify-plugin-webmentions"
     [plugins.inputs]
