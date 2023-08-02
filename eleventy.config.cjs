@@ -1,10 +1,4 @@
 require('dotenv').config();
-const YAML = require('yaml');
-
-const attrs = require('markdown-it-attrs');
-const anchor = require('markdown-it-anchor');
-const deflist = require('markdown-it-deflist');
-const footnote = require('markdown-it-footnote');
 
 const { EleventyRenderPlugin } = require('@11ty/eleventy');
 
@@ -17,6 +11,8 @@ const EleventyPluginSyntaxhighlight = require('@11ty/eleventy-plugin-syntaxhighl
 const EleventyPluginRSS = require('@11ty/eleventy-plugin-rss');
 const EleventyPluginWebC = require('@11ty/eleventy-plugin-webc');
 
+const YAMLDataPlugin = require('./_plugins/yaml-data.cjs');
+const MarkdownTweaksPlugin = require('./_plugins/markdown/tweaks.cjs');
 const EmojiWrapPlugin = require('./_plugins/emoji-wrap.cjs');
 const GlitchPlugin = require('./_plugins/glitch.cjs');
 const IconsPlugin = require('./_plugins/icons.cjs');
@@ -29,7 +25,7 @@ const RedHatDeckPlugin = require('./_plugins/redhat-deck.cjs');
 const RHDSPlugin = require('./_plugins/rhds.cjs');
 const DC23Plugin = require('./_plugins/devconf-brno-2023.cjs');
 const JamPackPlugin = require('./_plugins/jampack.cjs');
-const WebmentionsPlugin = require('./_plugins/webmentions.cjs');
+const WebmentionsPlugin = require('./_plugins/webmentions/webmentions.cjs');
 const ImportMapPlugin = require('./_plugins/importMap.cjs');
 const WebCDSDWorkaroundPlugin = require('./_plugins/dsd/webc-dsd-slot-workaround.cjs');
 const FedEmbedPlugin = require('./_plugins/fed-embed/fed-embed.cjs');
@@ -39,40 +35,28 @@ const isWatch =
 
 /** @param{import('@11ty/eleventy/src/UserConfig.js')} eleventyConfig */
 module.exports = function(eleventyConfig) {
-  eleventyConfig.setQuietMode(true);
-  eleventyConfig.amendLibrary('md', /**@param{import('markdown-it')}md*/md =>
-    md.set({ breaks: false })
-      .use(anchor, { permalink: anchor.permalink.headerLink(), })
-      .use(deflist)
-      .use(footnote)
-      .use(attrs, { allowedAttributes: [ 'id', 'slot', 'hidden', 'style',
-                                         'reveal', 'current', /^data-.*$/ ] }));
-  eleventyConfig.watchIgnores.add('assets/images/*');
-  eleventyConfig.watchIgnores.add('decks/starting-functional-javascript/images/*');
   eleventyConfig.addDataExtension('yaml', x => YAML.parse(x));
+  eleventyConfig.setQuietMode(true);
   eleventyConfig.addPassthroughCopy('manifest.webmanifest');
   eleventyConfig.addPassthroughCopy('assets/**/*.{svg,png,jpeg,jpg,gif,webp,webm,js,d.ts,ico,webmanifest,json}');
   eleventyConfig.addPassthroughCopy('decks/**/*.gif');
   eleventyConfig.addPassthroughCopy('decks/pf-collab/demo/react-dist/fonts');
   eleventyConfig.addGlobalData('isProductionBuild', process.env.NETLIFY && process.env.CONTEXT === 'production');
-  eleventyConfig.addPlugin(DecksPlugin, { assetsExtensions: ['jpg', 'png', 'webp', 'svg', 'js']});
   eleventyConfig.addWatchTarget('decks/*/components/*.css');
+  eleventyConfig.watchIgnores.add('assets/images/*');
+  eleventyConfig.watchIgnores.add('decks/starting-functional-javascript/images/*');
 
   !isWatch && eleventyConfig.addPlugin(EleventyPluginDirectoryOutput);
 
+  eleventyConfig.addPlugin(YAMLDataPlugin);
+  eleventyConfig.addPlugin(MarkdownTweaksPlugin);
   eleventyConfig.addPlugin(FedEmbedPlugin);
   eleventyConfig.addPlugin(WebCDSDWorkaroundPlugin);
-  eleventyConfig.addPlugin(EmbedPlugin, { lite: true });
-  eleventyConfig.addPlugin(EmojiWrapPlugin, { exclude: /^_site\/.*-repro\.html$/ });
+  eleventyConfig.addPlugin(OpenGraphCardPlugin);
   eleventyConfig.addPlugin(FiltersPlugin);
   eleventyConfig.addPlugin(FontsPlugin);
   eleventyConfig.addPlugin(GlitchPlugin);
   eleventyConfig.addPlugin(IconsPlugin);
-  eleventyConfig.addPlugin(JamPackPlugin, {
-    exclude: 'decks/pf-collab/**/*',
-  });
-  eleventyConfig.addPlugin(OpenGraphCardPlugin);
-  eleventyConfig.addPlugin(PostCSSPlugin, { include: /devconf-brno-2023\/components\/.*\.css/ });
   eleventyConfig.addPlugin(PostsPlugin);
   eleventyConfig.addPlugin(RHDSPlugin);
   eleventyConfig.addPlugin(DC23Plugin);
@@ -81,6 +65,13 @@ module.exports = function(eleventyConfig) {
   eleventyConfig.addPlugin(TimeToReadPlugin);
   eleventyConfig.addPlugin(EleventyRenderPlugin);
   eleventyConfig.addPlugin(EleventyPluginRSS);
+
+  eleventyConfig.addPlugin(EmbedPlugin, { lite: true });
+  eleventyConfig.addPlugin(EmojiWrapPlugin, { exclude: /^_site\/.*-repro\.html$/ });
+  eleventyConfig.addPlugin(JamPackPlugin, { exclude: 'decks/pf-collab/**/*', });
+  eleventyConfig.addPlugin(DecksPlugin, { assetsExtensions: ['jpg', 'png', 'webp', 'svg', 'js']});
+  eleventyConfig.addPlugin(PostCSSPlugin, { include: /devconf-brno-2023\/components\/.*\.css/ });
+
   eleventyConfig.addPlugin(EleventyPluginSyntaxhighlight, {
     init() {
       require('prismjs/components/index')(['html']);
@@ -89,10 +80,11 @@ module.exports = function(eleventyConfig) {
       require('prismjs/components/index')(['javascript']);
     },
   });
+
   eleventyConfig.addPlugin(EleventyPluginWebC, {
     components: [
       '_components/**/*.webc',
-      '_plugins/fed-embed/components/*.webc',
+      '_plugins/*/components/*.webc',
       'decks/**/components/**/*.webc',
       'npm:@11ty/eleventy-plugin-syntaxhighlight/*.webc',
     ],
@@ -108,11 +100,13 @@ module.exports = function(eleventyConfig) {
       ]
     }
   });
+
   eleventyConfig.addPlugin(WebmentionsPlugin, {
     domain: 'bennypowers.dev',
     webmentionIoToken: process.env.WEBMENTION_IO_TOKEN,
     devToToken: process.env.DEV_TO_TOKEN,
   });
+
   eleventyConfig.addPlugin(ImportMapPlugin, {
     specs: [
       'tslib',
