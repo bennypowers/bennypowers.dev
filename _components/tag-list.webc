@@ -1,22 +1,22 @@
 <script webc:setup>
-const getTags = ($data) => {
-  const EXCLUDED_TAGS = new Set([
-    'all',
-    'devconf23',
-    'pf-collab',
-    'icon',
-    'posts',
-    'slides',
-    'starting-functional-javascript',
-  ]);
-  return Object.fromEntries(Object.keys($data.collections)
-    .filter(tag => !EXCLUDED_TAGS.has(tag) && !tag.match(/^resume-/))
-    .map(tag => [tag, $data.collections[tag]])
-    .sort(([,a], [,b]) => b.length - a.length));
-};
+  const getTags = ($data) => {
+    const EXCLUDED_TAGS = new Set([
+      'all',
+      'devconf23',
+      'pf-collab',
+      'icon',
+      'posts',
+      'slides',
+      'starting-functional-javascript',
+    ]);
+    return Object.fromEntries(Object.keys($data.collections)
+      .filter(tag => !EXCLUDED_TAGS.has(tag) && !tag.match(/^resume-/))
+      .map(tag => [tag, $data.collections[tag]])
+      .sort(([,a], [,b]) => b.length - a.length));
+  };
 </script>
 <style webc:bucket="desktop">
-  #tags-list {
+  tag-list {
     position: sticky;
     top: 64px;
   }
