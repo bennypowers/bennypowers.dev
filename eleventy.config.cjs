@@ -43,6 +43,7 @@ module.exports = function(eleventyConfig) {
   eleventyConfig.addPassthroughCopy('decks/pf-collab/demo/react-dist/fonts');
   eleventyConfig.addGlobalData('isProductionBuild', process.env.NETLIFY && process.env.CONTEXT === 'production');
   eleventyConfig.addWatchTarget('decks/*/components/*.css');
+  eleventyConfig.addWatchTarget('decks/*/index.webc');
   eleventyConfig.watchIgnores.add('assets/images/*');
   eleventyConfig.watchIgnores.add('decks/starting-functional-javascript/images/*');
 
@@ -121,6 +122,7 @@ module.exports = function(eleventyConfig) {
       '@patternfly/elements/pf-tooltip/BaseTooltip.js',
       '@patternfly/pfe-core/controllers/logger.js',
       '@patternfly/pfe-core/controllers/style-controller.js',
+      '@rhds/tokens/media.js',
       'lit',
       'lit/async-directive.js',
       'lit/decorators.js',
@@ -145,6 +147,7 @@ module.exports = function(eleventyConfig) {
         'slidem/slidem-slide.js': `/assets/decks.min.js`,
         ['@rhds/elements']: `${rhdsPrefix}/rhds.min.js`,
         ['@rhds/elements/']: `${rhdsPrefix}/elements/`,
+        ['@rhds/elements/lib/']: `${rhdsPrefix}/lib/`,
       };
     }
   });
