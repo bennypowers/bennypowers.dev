@@ -17,10 +17,13 @@ jobs:
           cache: 'npm'
       - run: npm ci --prefer-offline
       - run: npm run build
+        env:
+          WEBMENTION_IO_TOKEN: ${{ secrets.WEBMENTION_IO_TOKEN }}
 
       - name: Publish to Netlify
         env:
           NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+          WEBMENTION_IO_TOKEN: ${{ secrets.WEBMENTION_IO_TOKEN }}
         run: npx netlify-cli deploy --prod --message "deploy from GitHub Action" --dir=_site
 
