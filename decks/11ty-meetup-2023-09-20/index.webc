@@ -1,0 +1,485 @@
+---
+title: 'WebC: Prerelease, Promise, and Pitfalls'
+description: >
+  How is it migrating from Nunjucks?
+  How well does it work with Web Components technologies?
+  Does it play nice with other tools?
+  Is it ready to adopt at work?
+coverImage: /decks/11ty-meetup-2023-09-20/cover.png
+date: 2023-09-20
+venue:
+  name: 11ty Meetup
+tags:
+  - deck
+---
+<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" webc:keep href="https://ux.redhat.com/assets/redhat/redhat-font/2/webfonts/red-hat-font.css">
+<link rel="preconnect" webc:keep href="https://ux.redhat.com">
+<link rel="preconnect" webc:keep href="https://ga.jspm.io">
+<link rel="preconnect" webc:keep href="https://fonts.googleapis.com">
+<link rel="preconnect" webc:keep href="https://fonts.gstatic.com" crossorigin>
+
+<slide-deck webc:nokeep
+            webc:import="npm:eleventy-plugin-slide-decks"
+            transition="slide-in slide-out"
+            font="RedHatText"
+            loading
+            :@title="title"
+            :@date="date">
+  <template webc:nokeep slot="slides">
+    <webc-ppp-slide>
+      <hgroup>
+        <h2>WebC</h2>
+        <h3>Prerelease, Promise, and Pitfalls</h3>
+      </hgroup>
+      <rh-avatar
+          name="Benny Powers"
+          subtitle="Principal UX Engineer, Digital Experience, Red Hat"
+          src="avatar.jpg"
+      ></rh-avatar>
+    </webc-ppp-slide>
+
+    <webc-ppp-slide>
+      <h2>Web Components Bona-Fides</h2>
+      <ul>
+        <li>Web Components <strong>stan account</strong> since 2015</li>
+        <li>Author of award-winning "<strong>Let's Build Web Components</strong>" series<sup>*</sup></li>
+        <li>Apollo Elements, <code>&lt;stripe-elements></code>, etc.</li>
+        <li>Day job: Design Systems @ <strong>Red Hat</strong></li>
+      </ul>
+      <small><sup>*</sup>Not actually award winning</small>
+    </webc-ppp-slide>
+
+    <webc-ppp-slide>
+      <h2>11ty Bona-Fides</h2>
+      <ul>
+        <li><strong>This website</strong> is made with 11ty</li>
+        <li>Use and <strong>Advocate</strong> for 11ty at work</li>
+        <li>Contributed to <strong>Rocket</strong> pre-release</li>
+        <li>
+          <a href="https://github.com/bennypowers/eleventy-plugin-slide-decks">
+            <code>eleventy-plugin-slide-decks</code>
+          </a>
+        </li>
+        <li>
+          <a href="https://github.com/bennypowers/webc.nvim">
+            <code>webc.nvim</code>
+          </a>
+        </li>
+      </ul>
+    </webc-ppp-slide>
+
+    <webc-ppp-slide>
+      <h2>11ty at Work</h2>
+      <ul>
+        <li><a href="https://ux.redhat.com">ux.redhat.com</a></li>
+        <li><a href="https://patternflyelements.org">patternflyelements.org</a></li>
+        <li>Our design system <strong>docs sites</strong>, including:
+          <ul>
+            <li>Custom Element <strong>API</strong> docs</li>
+            <li>Live Code <strong>Playgrounds</strong></li>
+            <li>Component <strong>Demo</strong> Pages</li>
+          </ul>
+        </li>
+      </ul>
+    </webc-ppp-slide>
+
+    <webc-ppp-slide>
+      <h2>Why we Like <strong>11ty</strong></h2>
+      <dl class="grid">
+        <dt>📐 Standards-aligned</dt>
+        <dd>Build and preserve <strong>team skills</strong></dd>
+
+        <dt>🚚 Portable</dt>
+        <dd>Any <strong>build</strong> environment, any web <strong>host</strong></dd>
+
+        <dt>💄 Deploy previews</dt>
+        <dd>Drastically better <strong>review</strong> workflow</dd>
+
+        <dt>👐 Low barrier to entry</dt>
+        <dd>Design / developer collaboration</dd>
+      </dl>
+    </webc-ppp-slide>
+
+    <webc-ppp-slide>
+      <h2>Why we Like <strong>Web Components</strong></h2>
+      <dl class="grid">
+        <dt>📐 Standards-aligned</dt>
+        <dd>Build and preserve <strong>Platform skills</strong></dd>
+
+        <dt>🚚 Portable</dt>
+        <dd>Any <strong>framework</strong>, any <strong>backend</strong></dd>
+
+        <dt>💄 Save-and-reload</dt>
+        <dd>Drastically reduce <strong>tooling burden</strong></dd>
+
+        <dt>🌴 Good-old HTML vibes</dt>
+        <dd><code>sudo dnf remove nodejs</code></dd>
+      </dl>
+      <template webc:raw webc:nokeep>
+        <ul slot="notes">
+          <li>Initially drawn in by the “good-old html” vibes</li>
+          <li>
+            ~ Polymer 3, Bower => npm, <code>.html</code> to <code>.js</code>
+            <ul>
+              <li>msg shifted: emphasis on html => emphasis on framework interop</li>
+              <li>Maybe that was a strategic mistake?</li>
+            </ul>
+          </li>
+          <li>Apollo Elements - built to show off the framework interop aspect.
+            <ul>
+              <li>Chose GraphQL as a typically framework-centric space</li>
+              <li>Maybe this was also a mistake?</li>
+              <li>Anyways learned different frameworks from writing demos</li>
+            </ul>
+          </li>
+          <li>But that project gave me experience with implementing the same
+          patterns in multiple frameworks</li>
+          <li>So David East talk about njk shortcodes being the same as
+          components. - resonated with my experience making apollo-elements.</li>
+        </ul>
+      </template>
+    </webc-ppp-slide>
+
+    <webc-ppp-slide>
+      <p>When we first heard about WebC, it sounded like a slam-dunk.</p>
+      <ol>
+        <li>Component framework for 11ty</li>
+        <li>Standards-aligned development</li>
+        <li>A ✨ <strong style="color: var(--rh-color-accent-base-on-dark, #73bcf7)">Zack Leatherman</strong> 💃 joint</li>
+      </ol>
+      <p>So: What’s not to like?</p>
+      <template webc:raw webc:nokeep>
+        <p slot="notes">
+          So in this talk we’re going to present some of our impressions of 
+          working with WebC, from the perspective of design system and web 
+          components engineers with a strong standards-aligned development 
+          ethos.
+        </p>
+      </template>
+    </webc-ppp-slide>
+
+    <webc-ppp-slide>
+      <h2>🥦 Freshness</h2>
+      <ul>
+        <li>Low barrier to entry</li>
+        <li>Instant familiarity with HTML / CSS experience</li>
+        <li>Component mindframe ➡️  Quick iteration</li>
+      </ul>
+      <template webc:raw webc:nokeep>
+        <ul slot="notes">
+          <li>Brand-new WebC projects benefit from a low barrier to entry and
+              immediate familiarity to anyone with some HTML and CSS experience.</li>
+          <li>Internal experiment: evaluate migrating a CMS site to 11ty/WebC
+            <ul>
+              <li>Designers and technical writers were able to quickly pick WebC up
+                  after a couple of short training sessions, and were quickly off and
+                  building.</li>
+            </ul>
+          </li>
+          <li>Taken an existing CMS site which had its own raw HTML layouts</li>
+          <li>We identified repeating patterns, abstracted out webc layouts.</li>
+          <li>This was particularly good for layout components like card
+              grid. We think that 11ty could have done this great with dsd / standard
+              custom elements, even without clientside javascript to register the tag
+              names</li>
+          <li>Most of our interactive bits or javascript parts were about
+              reflecting attributes for css selectors, etc</li>
+        </ul>
+      </template>
+    </webc-ppp-slide>
+
+    <webc-ppp-slide>
+      <h2>🥦 Freshness</h2>
+      <li>Less intimidating than Nunjucks - fewer specialized syntax forms</li>
+      <li>Progressive learning path - builds on existing HTML knowledge</li>
+      <li>Works very similarly to HTML<sup>*</sup></li>
+      <template webc:nokeep webc:raw>
+        <ul slot="notes">
+          <li>But it’s not html: slots and templates.</li>
+        </ul>
+      </template>
+    </webc-ppp-slide>
+
+    <webc-ppp-slide center>
+      <h2 style="margin: 0;">WebC is <strong>Prerelease</strong> Software</h2>
+      <img alt="npm info @11ty/webc version: 0.11.4" src="version.png">
+      <template webc:nokeep webc:raw>
+        <ul slot="notes">
+          <li>Changes are expected</li>
+          <li>Those changes have been and might again be breaking before 1.0</li>
+        </ul>
+        <p slot="notes">∴ WebC's current state and APIs are like a taste of what's to come</p>
+      </template>
+    </webc-ppp-slide>
+
+    <webc-ppp-slide>
+      <h2>🧀 Less-than-Fresh</h2>
+      <img alt="freeze frame of seinfeld clip: festivus airing of grievances"
+           style="width: 100%;"
+           src="grievances.jpg">
+      <template webc:nokeep webc:raw>
+        <p slot="notes">Put critique in proper perspective</p>
+        <p slot="notes">And to understand where critique is coming from - the desire to use this</p>
+      </template>
+    </webc-ppp-slide>
+
+    <webc-ppp-slide>
+      <h2>🧀 Less-than-Fresh</h2>
+      <ul class="balanced">
+        <li>
+          <span>WebC</span>
+          <strong>≠</strong>
+          <span>Web Components</span>
+        </li>
+        <li>
+          <span>WebC <code>&lt;slot></code></span>
+          <strong>≠</strong>
+          <span><code>&lt;slot></code> in HTML</span>
+        </li>
+        <li>
+          <span>WebC scoping</span>
+          <strong>≠</strong>
+          <span>Shadow DOM</span>
+        </li>
+        <li class="full-width">In some cases, data management is awkward</li>
+      </ul>
+    </webc-ppp-slide>
+
+    <webc-ppp-slide>
+      <h2>What is a Web Component?</h2>
+      <p style="margin: 0;">Make-your-own HTML</p>
+      <dl>
+        <dt><strong>Custom Elements</strong></dt>
+        <dd>
+          <ul>
+            <li>(Currently) requires JavaScript</li>
+            <li>Progressive enhancement with <code>:defined</code></li>
+          </ul>
+        </dd>
+
+        <dt><strong>Shadow DOM</strong></dt>
+        <dd>
+          <ul>
+            <li>Does <strong>not</strong> require JavaScript</li>
+            <li>SSR with <strong>Declarative Shadow DOM</strong></li>
+          </ul>
+        </dd>
+      </dl>
+      <template webc:nokeep webc:raw>
+        <p slot="notes">Client-side upgrade (aka "hydration") via libraries</p>
+        <p slot="notes">
+          Either or both, but not none
+        </p>
+      </template>
+    </webc-ppp-slide>
+
+    <webc-ppp-slide>
+      <h2>Slots</h2>
+      <dl>
+        <dt>HTML <code>&lt;slot></code> element</dt>
+        <dd><strong>Projects</strong> content into a shadow root</dd>
+
+        <dt>WebC <code>&lt;slot></code> component</dt>
+        <dd><strong>Moves</strong> content from one place to another</dd>
+      </dl>
+      <template webc:nokeep webc:raw>
+        <p slot="notes">When writing WebC framework slots, doing basic things like card -
+          slots are like layout, transclusion layout targets. That was easy to
+          use, and it lines up with user expectations, and is very similar to how
+          real shadow dom slots work</p>
+      </template>
+    </webc-ppp-slide>
+
+    <webc-ppp-slide>
+      <h2>Slots - Broken Platform Features</h2>
+      <ul>
+        <li><code>::slotted</code></li>
+        <li><code>slot="named-slot"</code></li>
+        <li>Global CSS targeting content</li>
+      </ul>
+      <p>Can lead to <a href="https://github.com/bennypowers/bennypowers.dev/tree/main/decks/11ty-meetup-2023-09-20/index.webc">Unintended consequences</a></p>
+    </webc-ppp-slide>
+
+    <webc-ppp-slide>
+      <h2>A Humble Suggestion: <strong>Disambiguation</strong></h2>
+
+      <template webc:type="11ty" 11ty:type="md" webc:raw webc:nokeep>
+```html
+<webc:slot></webc:slot>
+<webc-slot></webc-slot>
+<slot webc:transclude
+      webc:nokeep></slot>
+```
+      </template>
+
+      <template webc:nokeep webc:raw>
+        <p slot="notes">Why not an alternative, opt in syntax, which layers server-side features on top of HTML?
+           The specific syntax is less important, although we tend to prefer colon, which is illegal
+           in real HTML, and thus safe for framework use</p>
+      </template>
+    </webc-ppp-slide>
+
+    <webc-ppp-slide>
+      <h2>Scoping</h2>
+      <rh-blockquote color-palette="darker" style="transform-origin: top; width: 50%;">
+        When you’re used to writing encapsulated shadow CSS, going back to global styles for
+        component stuff is jarring.
+        <span slot="author">Steven Spriggs</span>
+        <span slot="title">Senior UX Engineer</span>
+      </rh-blockquote>
+      <template webc:nokeep webc:raw>
+        <p slot="notes">WebC's style scoping, while fresh, doesn't take
+                        advantage of the platform's native scoping ability, Shadow DOM.
+                        Styles can collide.</p>
+      </template>
+    </webc-ppp-slide>
+
+    <webc-ppp-slide>
+      <h2>Data scoping</h2>
+      <ul>
+        <li><code>$data</code> vs global scope</li>
+        <li><code>_components</code> vs <code>_includes</code></li>
+        <li>Ejecting to NJK or JS to assign names to data</li>
+        <li><code>11ty:type=js</code> semantics</li>
+      </ul>
+      <template webc:raw webc:nokeep>
+        <p slot="notes">In general, WebC's data binding is pleasant enough to work with. Sticking points:</p>
+      </template>
+    </webc-ppp-slide>
+
+    <webc-ppp-slide>
+      <h2>Open questions and Ideas</h2>
+      <ul>
+        <li>DSD Hydration and bundling
+          <ul>
+            <li>With Lit, etc. or without</li>
+          </ul>
+        </li>
+        <li>Enterprise scale translations
+          <ul>
+            <li>in concert with CMSs?</li>
+          </ul>
+        </li>
+        <li>
+          Working with existing custom elements
+          <ul>
+            <li>Codegen WebC from <abbr title="custom elements manifest">CEM</abbr></li>
+          </ul>
+        </li>
+      </ul>
+    </webc-ppp-slide>
+
+    <webc-ppp-slide>
+      <h2>Takeaways</h2>
+      <dl class="grid auto" style="margin-block-end:0;">
+        <dt>Adopt 11ty?</dt>
+        <dd><abbr title="definitely">👍</abbr></dd>
+
+        <dt>Adopt WebC?</dt>
+        <dd><abbr title="think about it">🤔</abbr></dd>
+      </dl>
+
+      <dl class="grid auto" style="margin-inline-start: 1em;margin-block-start: .25em">
+        <dt>Don't use web components?</dt>
+        <dd><abbr title="definitely adopt">👍</abbr></dd>
+        <dt>Ready to employ workarounds?</dt>
+        <dd><abbr title="definitely adopt">👍</abbr></dd>
+        <dt>Looking to FAFO?</dt>
+        <dd><abbr title="definitely adopt">👍</abbr></dd>
+      </dl>
+      <template webc:raw webc:nokeep>
+        <div slot="notes">
+          <p>SFCs are nice. Fewer (but not none - b) helper functions (no need to context switch back up to 11y config)</p>
+
+          <p>Prototype design system elements or patterns in WebC, and the migration path to custom elements will be easier later on.
+            Another case: wrapping existing custom elements in WebC components.</p>
+
+          <p>Templating features: custom elements with complex child elements (e.g. nav, tables, accordions) webc’s templating is really useful</p>
+
+          <p>Steve’s takeaway: someone unfamiliar with real web components,
+          wanting to componentize a site on the server, but without investing in a
+          react metaframework. Great for cms content authors who are backed up by
+          javascript developers</p>
+        </div>
+      </template>
+    </webc-ppp-slide>
+
+    <webc-ppp-slide>
+      <h2>Thank You!</h2>
+      <rh-avatar
+          name="Benny Powers"
+          subtitle="Principal UX Engineer, Digital Experience, Red Hat"
+          src="avatar.jpg"
+      ></rh-avatar>
+    </webc-ppp-slide>
+  </template>
+</slide-deck>
+
+<noscript>
+  <p>This presentation relies on JavaScript. Please consider enabling JavaScript for this site.</p>
+  <style>
+  slidem-deck {
+    scroll-snap-type: y mandatory;
+    scroll-snap-align: start;
+    scroll-snap-points-y: repeat(100vh);
+  }
+  </style>
+</noscript>
+
+<script type="module" webc:keep>
+  import '@rhds/elements/rh-avatar/rh-avatar.js';
+  import '@rhds/elements/rh-blockquote/rh-blockquote.js';
+  const SlidemSlide = await customElements.whenDefined('slidem-slide');
+  const SlidemSlideBase = Object.getPrototypeOf(SlidemSlide);
+  const css = String.raw;
+  class WebCPPPSlide extends SlidemSlideBase {
+    static template = document.createElement('template');
+    static {
+      this.template.innerHTML = `
+        <slot></slot>
+      `;
+    }
+
+    static style = new CSSStyleSheet();
+    static {
+      this.style.replaceSync(css`
+        :host {
+          padding: 1em 1.6em;
+          background: var(--rh-color-surface-darker, #1f1f1f);
+          color: var(--rh-color-text-primary-on-dark, #ffffff);
+        }
+
+        slot {
+          display: flex;
+          flex-flow: column nowrap;
+          height: 100%;
+        }
+
+        :host([center]) slot {
+          display: grid;
+          place-content: center;
+          place-items: center;
+        }
+      `);
+    }
+
+    static {
+      customElements.define('webc-ppp-slide', this);
+    }
+
+    constructor() {
+      super();
+    }
+
+    connectedCallback() {
+      super.connectedCallback();
+      this.shadowRoot.adoptedStyleSheets = [WebCPPPSlide.style];
+      this.shadowRoot.innerHTML = '';
+      this.shadowRoot
+        .append(WebCPPPSlide.template.content.cloneNode(true));
+      for (const el of this.querySelectorAll('rh-avatar'))
+        el.on = 'dark'
+    }
+  }
+</script>
