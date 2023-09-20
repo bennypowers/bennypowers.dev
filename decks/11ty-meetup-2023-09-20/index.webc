@@ -325,8 +325,10 @@ tags:
       <rh-blockquote color-palette="darker" style="transform-origin: top; width: 50%;">
         When you’re used to writing encapsulated shadow CSS, going back to global styles for
         component stuff is jarring.
-        <span slot="author">Steven Spriggs</span>
-        <span slot="title">Senior UX Engineer</span>
+        <template webc:nokeep webc:raw>
+          <span slot="author">Steven Spriggs</span>
+          <span slot="title">Senior UX Engineer</span>
+        </template>
       </rh-blockquote>
       <template webc:nokeep webc:raw>
         <p slot="notes">WebC's style scoping, while fresh, doesn't take
