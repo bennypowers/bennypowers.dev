@@ -49,11 +49,6 @@
       }
     }
 
-    #fidf { grid-area: f; }
-    #hatz { grid-area: u; }
-    #mdai { grid-area: m; }
-    #zaka { grid-area: z; }
-
     h2, a { color: blue; }
 
     h2 {
