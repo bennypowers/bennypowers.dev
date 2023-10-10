@@ -10,6 +10,8 @@ tags:
   - html
   - web components
   - israel
+coverImageAlt: Israel Flag
+coverImage: /assets/images/israel-flag.svg
 templateEngineOverride: webc,md
 ---
 
