@@ -3,6 +3,7 @@
     place-self: end;
   }
 </style>
+
 <header id="main-header" webc:if="!$data.noHeader" webc:root="override">
   <a :href="url('/')">
     <img alt="bp"

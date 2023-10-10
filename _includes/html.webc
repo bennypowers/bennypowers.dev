@@ -118,6 +118,7 @@
     <script data-goatcounter="https://bp-dev.goatcounter.com/count" async src="https://gc.zgo.at/count.js" webc:keep></script>
   </head>
   <body :class="bodyClasses ?? ''">
+    <am-yisrael-hai class="banner"></am-yisrael-hai>
     <template @raw="content" webc:nokeep></template>
     <bp-footer></bp-footer>
   </body>

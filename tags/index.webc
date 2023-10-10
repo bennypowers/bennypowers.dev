@@ -9,6 +9,7 @@ title: Tags
     grid-template-rows: min-content auto min-content;
     grid-template-columns: minmax(0, 1fr) 300px;
     grid-template-areas:
+      "banner banner"
       "head head"
       "main menu"
       "foot foot";
@@ -18,6 +19,7 @@ title: Tags
     grid-template-rows: min-content auto min-content;
     grid-template-columns: minmax(0, 1fr) 300px;
     grid-template-areas:
+      "banner banner"
       "head head"
       "main menu"
       "foot foot";

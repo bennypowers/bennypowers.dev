@@ -85,13 +85,18 @@ body {
 }
 
 body {
-  padding: 1em 1.6em;
-  max-width: 1200px;
-  width: 100%;
   position: relative;
-  margin-inline: auto;
   display: flex;
   flex-direction: column;
+}
+
+#main-header,
+body > main,
+#footer {
+  max-width: 1200px;
+  width: calc(100% - 2 * 1.6em);
+  margin-inline: auto;
+  padding: 1em 1.6em;
 }
 
 img {
