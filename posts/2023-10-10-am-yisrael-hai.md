@@ -20,8 +20,6 @@ Use this HTML web component to direct your website's visitors to make donations.
 ```html
 <am-yisrael-hai>
   <template shadowrootmode="open">
-    <!-- @license public domain -->
-    <!-- @author bennypowers.dev -->
     <style>
       :host {
         display: contents;
@@ -52,26 +50,17 @@ Use this HTML web component to direct your website's visitors to make donations.
       }
 
       #donate {
-        display: grid;
-        place-items: center;
+        display: flex;
+        flex-flow: row wrap;
+        align-items: center;
+        justify-content: center;
         padding-inline: 10px;
         gap: 4px;
-        grid-template-areas:
-          'h'
-          'f'
-          'u'
-          'm'
-          'z';
       }
 
       @media (min-width: 600px) {
         #donate {
           padding-block: 60px 100px;
-          grid-template-columns: repeat(auto-fit, minmax(300px, auto));
-          grid-template-rows: max-content max-content;
-          grid-template-areas:
-            'h h h h'
-            'f u m z';
         }
       }
 
@@ -106,7 +95,7 @@ Use this HTML web component to direct your website's visitors to make donations.
         background: #fff8;
         border-radius: 4px;
         padding: 6px 10px;
-        max-width: calc(100% - 30px);
+        max-width: 320px;
         max-height: 100%;
         transition:
           background-color 200ms ease,
