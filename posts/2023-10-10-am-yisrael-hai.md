@@ -40,13 +40,10 @@ Use this HTML web component to direct your website's visitors to make donations.
       #flag {
         pointer-events: none;
         position: absolute;
-        width: 100%;
-        height: 100%;
+        inset: 0;
         z-index: -1;
         object-fit: cover;
         object-position: center;
-        inset-block-start: 0;
-        inset-inline-start: 0;
         mix-blend-mode: hard-light;
         opacity: .25;
       }
@@ -71,11 +68,6 @@ Use this HTML web component to direct your website's visitors to make donations.
           padding-inline: 50px;
         }
       }
-
-      #fidf { grid-area: f; }
-      #hatz { grid-area: u; }
-      #mdai { grid-area: m; }
-      #zaka { grid-area: z; }
 
       h2, a { color: blue; }
 
@@ -111,6 +103,7 @@ Use this HTML web component to direct your website's visitors to make donations.
         background-color: white;
         box-shadow: 2px 2px 2px 2px #0005;
       }
+
       a img,
       a svg {
         max-width: 100%;
@@ -183,15 +176,14 @@ Use this HTML web component to direct your website's visitors to make donations.
       </div>
     </header>
   </template>
+  <script type="module" webc:keep>
+    if (!('shadowRootMode' in HTMLTemplateElement)) {
+      const t = document.querySelector('am-yisrael-hai template')
+      t.parentNode
+       .attachShadow({ mode: t.getAttribute('shadowrootmode') })
+       .appendChild(t.content);
+      t.remove();
+    }
+  </script>
 </am-yisrael-hai>
-
-<script type="module">
-  if (!('shadowRootMode' in HTMLTemplateElement)) {
-    const t = document.querySelector('am-yisrael-hai template')
-    t.parentNode
-     .attachShadow({ mode: t.getAttribute('shadowrootmode') })
-     .appendChild(t.content);
-    t.remove();
-  }
-</script>
 ```
