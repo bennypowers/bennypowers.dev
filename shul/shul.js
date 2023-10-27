@@ -18,12 +18,18 @@ for (const field of editable) {
 
 fullscreen.addEventListener('click', async function() {
   await document.body.requestFullscreen();
-  exitFullsc.hidden = false;
-  fullscreen.hidden = true;
 });
 
 exitFullsc.addEventListener('click', async function() {
   await document.exitFullscreen();
-  exitFullsc.hidden = true;
-  fullscreen.hidden = false;
 });
+
+globalThis.addEventListener('fullscreenchange', onFullscreenchange)
+
+function onFullscreenchange() {
+  exitFullsc.hidden = !document.fullscreenElement;
+  fullscreen.hidden = !!document.fullscreenElement;
+}
+
+onFullscreenchange();
+
