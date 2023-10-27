@@ -101,12 +101,34 @@
       <strong>ביחד ננצח!</strong>
     </header>
     <header id="main-header">
-      <h1>בית הכסנת <span data-storage-key="shul-name" contenteditable></span></h1>
+      <h1>בית הכנסת <span data-storage-key="shul-name" contenteditable></span></h1>
+      <button id="fullscreen">
+        <svg xmlns="http://www.w3.org/2000/svg"
+             fill="none"
+             stroke="currentcolor"
+             stroke-linecap="round"
+             stroke-linejoin="round"
+             stroke-width="2"
+             viewBox="0 0 32 32">
+          <path d="M4 12V4h8m8 0h8v8M4 20v8h8m16-8v8h-8"/>
+        </svg>
+      </button>
+      <button id="exit-fullscreen" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg"
+             fill="none"
+             stroke="currentcolor"
+             stroke-linecap="round"
+             stroke-linejoin="round"
+             stroke-width="2"
+             viewBox="0 0 32 32">
+        <path d="M4 12h8V4m8 0v8h8M4 20h8v8m16-8h-8v8"/>
+        </svg>
+      </button>
     </header>
     <main>
-      <h2>זמנים</h2>
       <heb-cal city="Jerusalem"
                candles-minutes-before-sundown="40">
+        <h2>זמנים</h2>
         <zmanim-times></zmanim-times>
         <shabbat-times></shabbat-times>
       </heb-cal>

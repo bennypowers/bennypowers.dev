@@ -21,7 +21,7 @@ body {
   & strong {
     font-size: 5em;
     text-align: center;
-       -moz-text-stroke: 10px white;
+    -moz-text-stroke: 10px white;
     -webkit-text-stroke: 10px white;
     paint-order: stroke fill;
     z-index: 1;
@@ -39,8 +39,15 @@ body {
 
 #main-header {
   text-align: center;
+
+  & button {
+    background: none;
+    border: none;
+    height: 1em;
+  }
 }
 
 main {
   padding-inline: 1em;
+  font-size: 2em;
 }
