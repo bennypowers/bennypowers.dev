@@ -41,6 +41,7 @@ module.exports = function(eleventyConfig) {
   eleventyConfig.addPassthroughCopy('assets/**/*.{svg,png,jpeg,jpg,gif,webp,webm,js,d.ts,ico,webmanifest,json}');
   eleventyConfig.addPassthroughCopy('decks/**/*.gif');
   eleventyConfig.addPassthroughCopy('decks/pf-collab/demo/react-dist/fonts');
+  eleventyConfig.addPassthroughCopy('shul/*');
   eleventyConfig.addGlobalData('isProductionBuild', process.env.NETLIFY && process.env.CONTEXT === 'production');
   eleventyConfig.addWatchTarget('decks/*/components/*.css');
   eleventyConfig.addWatchTarget('decks/*/index.webc');

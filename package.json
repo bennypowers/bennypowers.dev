@@ -28,6 +28,7 @@
     "@11ty/eleventy-plugin-syntaxhighlight": "^5.0.0",
     "@11ty/eleventy-plugin-webc": "^0.11.1",
     "@divriots/jampack": "^0.13.0",
+    "@hebcal/core": "^4.4.1",
     "@jspm/generator": "^1.1.9",
     "@parse5/tools": "^0.1.0",
     "@rhds/elements": "^1.1.0",

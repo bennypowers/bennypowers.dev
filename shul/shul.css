@@ -1,0 +1,46 @@
+html,
+body {
+  height: 100%;
+  padding: 0;
+  margin: 0;
+  background: cornsilk;
+}
+
+[contenteditable]:is(:empty,:hover):after {
+  content: "✏️";
+}
+
+#victory {
+  width: 100%;
+  height: 240px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  & strong {
+    font-size: 5em;
+    text-align: center;
+       -moz-text-stroke: 10px white;
+    -webkit-text-stroke: 10px white;
+    paint-order: stroke fill;
+    z-index: 1;
+  }
+
+  & img {
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+    object-position: center;
+    position: absolute;
+    opacity: 0.8;
+  }
+}
+
+#main-header {
+  text-align: center;
+}
+
+main {
+  padding-inline: 1em;
+}
