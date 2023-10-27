@@ -14,7 +14,7 @@ class HebCalChild extends LitElement {
       }
 
       dt {
-        font-family: 'Noto Rashi Hebrew', serif;
+        font-family: sans;
         text-align: left;
       }
 
@@ -59,7 +59,7 @@ export class HebCal extends LitElement {
 
   static i18n = {
     'he-IL': {
-      alotHaShachar: 'עלות',
+      alotHaShachar: 'עלות השחר',
       misheyakir: 'משיכיר',
       sunrise: 'נץ',
       sofZmanShmaMGA: 'סוף זמן קריאת שמע (מג״א)',
@@ -134,6 +134,11 @@ export class HebCal extends LitElement {
     }
   }
 
+  connectedCallback() {
+    super.connectedCallback();
+    setInterval(() => this.updateZmanim(), 1000 * 60 * 60 * 6);
+  }
+
   render() {
     const locale = this.locale.substring(0, 2);
     const timeZoneName = new Intl.DateTimeFormat(locale, { timeZoneName: 'long' })
@@ -200,11 +205,11 @@ export class ZmanimTimes extends HebCalChild {
     return html`
       <slot></slot>
       <dl>${Object.entries(zmanim ?? {}).map(([name, date]) => html`
-        <dt>
+        <dt part="list term">
           ${name}
           <small ?hidden="${name !== i18n.tzeit}">(${this.hebcal.tzeitAngle}°)</small>
         </dt>
-        <dd>
+        <dd part="list definition">
           <time datetime="${date.toISOString()}">
             ${date.toLocaleTimeString('he-IL', { timeStyle: 'medium' })}
           </time>
@@ -220,7 +225,7 @@ export class ShabbatTimes extends HebCalChild {
   static styles = [
     ...HebCalChild.styles,
     css`
-    #events {
+      #events {
         font-size: 200%;
       }
     `,
@@ -234,12 +239,12 @@ export class ShabbatTimes extends HebCalChild {
     if (this.hebcal.events?.length) {
       return html`
         <h4>${i18n.zmanei} ${i18n[isShabbat || isErevShabbat ? 'shabbat' : 'chag']}</h4>
-        <dl id="events">${this.hebcal.events.map(event => html`
-          <dt>
+        <dl id="events" part="events">${this.hebcal.events.map(event => html`
+          <dt part="list term">
             ${event.getEmoji()}
             ${event.renderBrief(locale)}
           </dt>
-          <dd>
+          <dd part="list definition">
             <time datetime="${event.eventTime.toISOString()}">
               ${event.eventTimeStr}
             </time>

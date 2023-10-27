@@ -4,7 +4,6 @@ body {
   padding: 0;
   margin: 0;
   background: cornsilk;
-  font-family: Alef, sans-serif;
   font-family: Tinos, serif;
 }
 
@@ -46,6 +45,10 @@ heb-cal::part(locale-name) {
   align-items: center;
 }
 
+:is(shabbat-times, zmanim-times)::part(term) {
+  font-family: Alef, serif;
+}
+
 #main-header {
   justify-content: space-between;
 
@@ -63,5 +66,4 @@ main, #main-header {
 
 main {
   font-size: 200%;
-}
 }

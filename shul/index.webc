@@ -49,7 +49,7 @@
     <link rel="stylesheet" href="shul.css">
     <link rel="preconnect" href="https://fonts.googleapis.com" webc:keep>
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin webc:keep>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Rashi+Hebrew:wght@100;200;300;400;500;600;700;800;900&family=Tinos:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet" webc:keep>
+    <link href="https://fonts.googleapis.com/css2?family=Alef:wght@400;700&family=Noto+Rashi+Hebrew:wght@100;200;300;400;500;600;700;800;900&family=Tinos:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet" webc:keep>
 
     <link rel="stylesheet"
           webc:keep
