@@ -66,38 +66,41 @@
             data-goatcounter="https://bp-shul.goatcounter.com/count"
             src="https://gc.zgo.at/count.js"></script>
 
+  <template webc:raw webc:nokeep>
+
     <!--
       JSPM Generator Import Map
-      Edit URL: https://generator.jspm.io/#Y2VhYGBiDs0rySzJSU1hcMhITUpOzNFPzi9KdTDRM9EzZMjJLHEw1jPQMwAAegeetysA
+      Edit URL: https://generator.jspm.io/#Y2NhYGBkDM4ozWFwKAaS+qk5qbmpeSXFDgZ6BnomACKRKxwfAA
     -->
-     <script type="importmap" webc:keep>
+     <script type="importmap">
     {
       "imports": {
-        "@hebcal/core": "https://ga.jspm.io/npm:@hebcal/core@4.4.1/dist/index.mjs",
-        "lit": "https://ga.jspm.io/npm:lit@3.0.0/index.js"
+        "@shul/elements": "https://ga.jspm.io/npm:@shul/elements@0.0.5/elements.js"
       },
       "scopes": {
         "https://ga.jspm.io/": {
-          "@lit/reactive-element": "https://ga.jspm.io/npm:@lit/reactive-element@2.0.0/development/reactive-element.js",
-          "lit-element/lit-element.js": "https://ga.jspm.io/npm:lit-element@4.0.0/development/lit-element.js",
-          "lit-html": "https://ga.jspm.io/npm:lit-html@3.0.0/development/lit-html.js",
-          "lit-html/is-server.js": "https://ga.jspm.io/npm:lit-html@3.0.0/development/is-server.js"
+          "@hebcal/core": "https://ga.jspm.io/npm:@hebcal/core@4.4.1/dist/index.mjs",
+          "@lit/context": "https://ga.jspm.io/npm:@lit/context@1.0.0/index.js",
+          "@lit/reactive-element": "https://ga.jspm.io/npm:@lit/reactive-element@2.0.0/reactive-element.js",
+          "@lit/reactive-element/decorators/": "https://ga.jspm.io/npm:@lit/reactive-element@2.0.0/decorators/",
+          "lit": "https://ga.jspm.io/npm:lit@3.0.0/index.js",
+          "lit-element/lit-element.js": "https://ga.jspm.io/npm:lit-element@4.0.0/lit-element.js",
+          "lit-html": "https://ga.jspm.io/npm:lit-html@3.0.0/lit-html.js",
+          "lit-html/": "https://ga.jspm.io/npm:lit-html@3.0.0/",
+          "lit/": "https://ga.jspm.io/npm:lit@3.0.0/"
         }
       }
     }
     </script>
 
     <!-- ES Module Shims: Import maps polyfill for older browsers without import maps support (eg Safari 16.3) -->
-    <script async webc:keep
-            src="https://ga.jspm.io/npm:es-module-shims@1.8.0/dist/es-module-shims.js"
-            crossorigin="anonymous"></script>
+    <script async src="https://ga.jspm.io/npm:es-module-shims@1.8.0/dist/es-module-shims.js" crossorigin="anonymous"></script>
+
+  </template>
+
     <script webc:keep
             type="module"
             src="shul.js"></script>
-    <script webc:keep
-            type="module"
-            src="heb-cal.js"></script>
-
   </head>
   <body>
     <header id="victory">
@@ -130,13 +133,13 @@
       </button>
     </header>
     <main>
+
       <heb-cal city="Jerusalem"
                candles-minutes-before-sundown="40">
-        <shabbat-times></shabbat-times>
-        <zmanim-times>
-          <h2>זמנים</h2>
-        </zmanim-times>
+        <zmanei-shabbat></zmanei-shabbat>
+        <zmanei-yom></zmanei-yom>
       </heb-cal>
+
     </main>
   </body>
 </html>

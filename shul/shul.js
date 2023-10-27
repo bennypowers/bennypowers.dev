@@ -1,3 +1,5 @@
+import '@shul/elements';
+
 /** @type {NodeListOf<HTMLElement>} */
 const editable = document.querySelectorAll('[contenteditable][data-storage-key]')
 const fullscreen = document.getElementById('fullscreen')
