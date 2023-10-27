@@ -39,13 +39,13 @@ body {
 }
 
 #main-header,
-heb-cal::part(locale-name) {
+heb-cal::part(now) {
   display: flex;
   gap: 1em;
   align-items: center;
 }
 
-:is(shabbat-times, zmanim-times)::part(term) {
+:is(zmanei-shabbat, zmanei-yom)::part(term) {
   font-family: Alef, serif;
 }
 
