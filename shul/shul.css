@@ -4,6 +4,8 @@ body {
   padding: 0;
   margin: 0;
   background: cornsilk;
+  font-family: Alef, sans-serif;
+  font-family: Tinos, serif;
 }
 
 [contenteditable]:is(:empty,:hover):after {
@@ -37,17 +39,29 @@ body {
   }
 }
 
+#main-header,
+heb-cal::part(locale-name) {
+  display: flex;
+  gap: 1em;
+  align-items: center;
+}
+
 #main-header {
-  text-align: center;
+  justify-content: space-between;
 
   & button {
     background: none;
     border: none;
-    height: 1em;
+    height: 40px;
+    width: 40px;
   }
 }
 
-main {
+main, #main-header {
   padding-inline: 1em;
-  font-size: 2em;
+}
+
+main {
+  font-size: 200%;
+}
 }

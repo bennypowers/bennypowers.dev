@@ -47,6 +47,9 @@
     <noscript><style>:not(:defined) { display: initial; }</style></noscript>
 
     <link rel="stylesheet" href="shul.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com" webc:keep>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin webc:keep>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Rashi+Hebrew:wght@100;200;300;400;500;600;700;800;900&family=Tinos:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet" webc:keep>
 
     <link rel="stylesheet"
           webc:keep
@@ -93,7 +96,8 @@
             src="shul.js"></script>
     <script webc:keep
             type="module"
-            src="shabbat-times.js"></script>
+            src="heb-cal.js"></script>
+
   </head>
   <body>
     <header id="victory">
@@ -128,9 +132,10 @@
     <main>
       <heb-cal city="Jerusalem"
                candles-minutes-before-sundown="40">
-        <h2>זמנים</h2>
-        <zmanim-times></zmanim-times>
         <shabbat-times></shabbat-times>
+        <zmanim-times>
+          <h2>זמנים</h2>
+        </zmanim-times>
       </heb-cal>
     </main>
   </body>

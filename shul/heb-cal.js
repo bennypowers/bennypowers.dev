@@ -7,9 +7,20 @@ class HebCalChild extends LitElement {
       :host {
         display: block;
       }
+
       dl {
         display: grid;
         grid-template-columns: max-content auto;
+      }
+
+      dt {
+        font-family: 'Noto Rashi Hebrew', serif;
+        text-align: left;
+      }
+
+      dd {
+        font-family: sans-serif;
+        font-weight: bold;
       }
     `,
   ];
@@ -31,7 +42,12 @@ class HebCalChild extends LitElement {
 export class HebCal extends LitElement {
   static is = 'heb-cal';
 
-  static { customElements.define(this.is, this); }
+  static styles = [
+    css`
+      hgroup {
+      }
+    `,
+  ];
 
   static properties = {
     locale: { type: String },
@@ -84,6 +100,8 @@ export class HebCal extends LitElement {
     this.i18n['en-GB'] = this.i18n['en-US'];
   }
 
+  static { customElements.define(this.is, this); }
+
   /** @type {Zmanim} */
   #zmanim;
 
@@ -117,7 +135,17 @@ export class HebCal extends LitElement {
   }
 
   render() {
-    return html`<slot></slot>`
+    const locale = this.locale.substring(0, 2);
+    const timeZoneName = new Intl.DateTimeFormat(locale, { timeZoneName: 'long' })
+      .formatToParts(new Date())
+      .find(x => x.type === "timeZoneName")?.value??'';
+    return html`
+      <hgroup part="locale-name">
+        <h3>${this.hDate?.render(locale)}</h3>
+        <small>${timeZoneName}</small>
+      </hgroup>
+      <slot></slot>
+    `;
   }
 
   updateZmanim() {
@@ -168,15 +196,18 @@ export class ZmanimTimes extends HebCalChild {
   static { customElements.define(this.is, this); }
 
   render() {
-    const { i18n, zmanim, hDate } = this.hebcal;
-    const locale = this.hebcal.locale.substring(0, 1);
+    const { i18n, zmanim } = this.hebcal;
     return html`
-      <h3>${hDate?.render(locale)}</h3>
+      <slot></slot>
       <dl>${Object.entries(zmanim ?? {}).map(([name, date]) => html`
-        <dt>${name}</dt>
+        <dt>
+          ${name}
+          <small ?hidden="${name !== i18n.tzeit}">(${this.hebcal.tzeitAngle}°)</small>
+        </dt>
         <dd>
-          <time datetime="${date.toISOString()}">${date.toLocaleTimeString('he-IL', { timeStyle: 'full' })}</time>
-          ${name === i18n.tzeit ? `${this.hebcal.tzeitAngle}°` : '' }
+          <time datetime="${date.toISOString()}">
+            ${date.toLocaleTimeString('he-IL', { timeStyle: 'medium' })}
+          </time>
         </dd>`)}
       </dl>
     `;
@@ -186,6 +217,15 @@ export class ZmanimTimes extends HebCalChild {
 export class ShabbatTimes extends HebCalChild {
   static is = 'shabbat-times';
 
+  static styles = [
+    ...HebCalChild.styles,
+    css`
+    #events {
+        font-size: 200%;
+      }
+    `,
+  ]
+
   static { customElements.define(this.is, this); }
 
   render() {
@@ -194,11 +234,17 @@ export class ShabbatTimes extends HebCalChild {
     if (this.hebcal.events?.length) {
       return html`
         <h4>${i18n.zmanei} ${i18n[isShabbat || isErevShabbat ? 'shabbat' : 'chag']}</h4>
-        <ol id="events">${this.hebcal.events.map(event => html`
-          <li>
+        <dl id="events">${this.hebcal.events.map(event => html`
+          <dt>
             ${event.getEmoji()}
-            ${event.render(locale)}</li>`)}
-        </ol>
+            ${event.renderBrief(locale)}
+          </dt>
+          <dd>
+            <time datetime="${event.eventTime.toISOString()}">
+              ${event.eventTimeStr}
+            </time>
+          </dd>`)}
+        </dl>
       `;
     }
   }
