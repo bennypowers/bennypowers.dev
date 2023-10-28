@@ -33,6 +33,10 @@ const FedEmbedPlugin = require('./_plugins/fed-embed/fed-embed.cjs');
 const isWatch =
   process.argv.some(x => x === '--serve' || x === '--watch');
 
+const linkShul =
+  !!process.env.LINK_SHUL;
+
+
 /** @param{import('@11ty/eleventy/src/UserConfig.js')} eleventyConfig */
 module.exports = function(eleventyConfig) {
   eleventyConfig.addDataExtension('yaml', x => YAML.parse(x));
@@ -48,7 +52,14 @@ module.exports = function(eleventyConfig) {
   eleventyConfig.watchIgnores.add('assets/images/*');
   eleventyConfig.watchIgnores.add('decks/starting-functional-javascript/images/*');
 
-  !isWatch && eleventyConfig.addPlugin(EleventyPluginDirectoryOutput);
+  if (linkShul)
+    eleventyConfig.addPassthroughCopy({ 'node_modules/@shul/elements': '/assets/packages/@shul/elements' });
+
+  eleventyConfig.addGlobalData('isWatch', isWatch);
+  eleventyConfig.addGlobalData('linkShul', linkShul);
+
+  !isWatch &&
+  eleventyConfig.addPlugin(EleventyPluginDirectoryOutput);
 
   eleventyConfig.addPlugin(YAMLDataPlugin);
   eleventyConfig.addPlugin(MarkdownTweaksPlugin);
