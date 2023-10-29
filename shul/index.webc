@@ -106,19 +106,19 @@
   </head>
   <body>
     <header id="victory">
+      <fullscreen-toggle></fullscreen-toggle>
       <img alt="דגל ישראל" src="Israeli-flag.jpg">
       <strong>ביחד ננצח!</strong>
     </header>
-    <header id="main-header">
-      <h1>בית הכנסת שערי רחמים ושמחה</h1>
-      <fullscreen-toggle></fullscreen-toggle>
-    </header>
     <main>
-
       <heb-cal city="Jerusalem"
                latitude="31.80290"
                longitude="32.24075"
                candles-minutes-before-sundown="40">
+        <header id="main-header">
+          <h1>בית הכנסת שערי רחמים ושמחה</h1>
+        </header>
+
         <zmanei-tefillah>
           <strong slot="weekday">שחרית</strong>
           <time slot="weekday"

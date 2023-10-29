@@ -42,6 +42,16 @@ heb-cal {
   }
 }
 
+fullscreen-toggle {
+  float: inline-end;
+  z-index: 2;
+  position: absolute;
+  inset-block-start: 10px;
+  inset-inline-end: 10px;
+  width: 40px;
+  height: 40px;
+}
+
 #main-header {
   display: flex;
   gap: 1em;
@@ -54,10 +64,11 @@ heb-cal {
   }
 }
 
-main, #main-header {
+main {
   padding-inline: 1em;
+  font-size: 200%;
 }
 
-main {
-  font-size: 200%;
+zmanei-yom {
+  margin-block-start: 0.5em;
 }
