@@ -32,7 +32,7 @@
     "@parse5/tools": "^0.3.0",
     "@rhds/elements": "^1.2.0",
     "@rhds/tokens": "^1.1.2",
-    "@shul/elements": "^0.0.8",
+    "@shul/elements": "^0.0.12",
     "cheerio": "^1.0.0-rc.12",
     "dotenv": "^16.3.1",
     "eleventy-plugin-embed-everything": "^1.17.0",

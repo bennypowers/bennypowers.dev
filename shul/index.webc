@@ -2,47 +2,35 @@
 <html lang="he" dir="rtl">
   <head>
     <meta charset="utf-8">
-    <title>לוח בית הכנסת</title>
+    <title>בית הכנסת שערי רחמים ושמחה</title>
     <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
     <meta name="generator" content="Eleventy">
     <meta name="theme-color" content="#464a5b">
     <meta name="mobile-web-app-capable" content="yes">
-    <meta name="application-name" content="לוח בית הכנסת">
+    <meta name="application-name" content="בית הכנסת שערי רחמים ושמחה">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="apple-mobile-web-app-title" content="לוח בית הכנסת">
-    <meta name="msapplication-TileImage" content="/assets/images/manifest/icon-144x144.png">
-    <meta name="msapplication-TileColor" content="#464a5b">
+    <meta name="apple-mobile-web-app-title" content="בית הכנסת שערי רחמים ושמחה">
     <meta name="msapplication-tap-highlight" content="no">
     <meta name="author" content="Benny Powers">
     <meta name="date.created" content="10-2023">
     <meta name="HandheldFriendly" content="true">
-    <meta name="description" content="לוח בית הכנסת">
-
-    <meta property="og:title" content="לוח בית הכנסת">
-    <meta property="og:description" content="לוח בית הכנסת">
+    <meta name="description" content="בית הכנסת שערי רחמים ושמחה">
+    <meta property="og:title" content="בית הכנסת שערי רחמים ושמחה">
+    <meta property="og:description" content="בית הכנסת שערי רחמים ושמחה">
     <meta property="og:type" content="website">
-    <meta property="og:site_name" content="לוח בית הכנסת">
+    <meta property="og:site_name" content="בית הכנסת שערי רחמים ושמחה">
     <meta property="og:locale" content="he">
     <meta property="og:url" content="https://bennypowers.dev/shul/">
+    <!---
     <meta property="og:image" content="/assets/images/logo/bp-logo-dark@2x.png">
     <meta property="og:image:width" content="1024">
     <meta property="og:image:height" content="1024">
     <meta property="og:image:type" content="image/png">
-
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-
-    <link rel="apple-touch-icon"                 webc:keep :href="url('/assets/images/manifest/icon-48x48.png')">
-    <link rel="apple-touch-icon" sizes="72x72"   webc:keep :href="url('/assets/images/manifest/icon-72x72.png')">
-    <link rel="apple-touch-icon" sizes="96x96"   webc:keep :href="url('/assets/images/manifest/icon-96x96.png')">
-    <link rel="apple-touch-icon" sizes="144x144" webc:keep :href="url('/assets/images/manifest/icon-144x144.png')">
-    <link rel="apple-touch-icon" sizes="192x192" webc:keep :href="url('/assets/images/manifest/icon-192x192.png')">
+    <meta name="msapplication-TileImage" content="/assets/images/manifest/icon-144x144.png">
+    <meta name="msapplication-TileColor" content="#464a5b">
     <link rel="shortcut icon" webc:keep :href="include('icon.svg').then(x => `data:image/svg+xml,${encodeURIComponent(x)}`)">
-    <link rel="icon" webc:keep :href="url('/assets/images/favicon.ico?v=2')">
-    <link rel="manifest" webc:keep :href="url('/manifest.webmanifest')">
-
-    <link rel="webmention" href="https://webmention.io/bennypowers.dev/webmention">
-    <link rel="pingback" href="https://webmention.io/bennypowers.dev/xmlrpc">
+    --->
 
     <noscript><style>:not(:defined) { display: initial; }</style></noscript>
 
@@ -51,20 +39,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin webc:keep>
     <link href="https://fonts.googleapis.com/css2?family=Alef:wght@400;700&family=Noto+Rashi+Hebrew:wght@100;200;300;400;500;600;700;800;900&family=Tinos:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet" webc:keep>
 
-    <link rel="stylesheet"
-          webc:keep
-          :href="googleFonts(fonts)">
-
     <style @raw="getBundle('css')" webc:keep></style>
-    <style @raw="getBundle('css', 'desktop')"
-           media="(min-width: 1000px)"
-           data-bundle="desktop"
-           webc:keep></style>
-    <script @raw="getBundle('js')" webc:keep></script>
-
-    <script async defer webc:keep
-            data-goatcounter="https://bp-shul.goatcounter.com/count"
-            src="https://gc.zgo.at/count.js"></script>
 
     <template webc:nokeep webc:if="linkShul">
     <template webc:raw webc:nokeep>
@@ -100,7 +75,7 @@
      <script type="importmap">
     {
       "imports": {
-        "@shul/elements": "https://ga.jspm.io/npm:@shul/elements@0.0.9/elements.js"
+        "@shul/elements": "https://ga.jspm.io/npm:@shul/elements@0.0.11/elements.js"
       },
       "scopes": {
         "https://ga.jspm.io/": {
@@ -135,12 +110,14 @@
       <strong>ביחד ננצח!</strong>
     </header>
     <header id="main-header">
-      <h1>בית הכנסת <span data-storage-key="shul-name" contenteditable></span></h1>
+      <h1>בית הכנסת שערי רחמים ושמחה</h1>
       <fullscreen-toggle></fullscreen-toggle>
     </header>
     <main>
 
       <heb-cal city="Jerusalem"
+               latitude="31.80290"
+               longitude="32.24075"
                candles-minutes-before-sundown="40">
         <zmanei-shabbat></zmanei-shabbat>
         <zmanei-yom>
@@ -149,10 +126,63 @@
             ובגובה פני הים.
             במקרא של אי הסכמה בין
             הזמנים שמופיעים פה לבין
-            הזמנים המודפסים בלוח, יש
-            לסמוך על הזמנים המודפסים
+            הזמנים המודפסים בלוח,
+            <strong>יש לסמוך על הזמנים המודפסים</strong>
           </small>
         </zmanei-yom>
+        <zmanei-tefillah>
+          <strong slot="weekday">שחרית</strong>
+          <time slot="weekday"
+                datetime="06:30"
+                data-tefillah="שחרית">
+            06:30
+          </time>
+          <strong slot="weekday">מנחה מערים</strong>
+          <time slot="weekday"
+                data-offset="-15"       
+                data-offset-from="sunset"
+                data-tefillah="מנחה מערים">
+            15 דקות לפני השקיעה
+          </time>
+
+          <strong slot="shabbat">שחרית</strong>
+          <time slot="shabbat"
+                datetime="08:00"
+                data-tefillah="שחרית">
+            08:00
+          </time>
+          <strong slot="shabbat">מנחה מערים</strong>
+          <time slot="shabbat"
+                datetime="08:00"
+                data-tefillah="מנחה מערים">
+          </time>
+
+          <strong slot="yomtov">שחרית</strong>
+          <time slot="yomtov"
+                datetime="08:00"
+                data-tefillah="שחרית">
+            08:00
+          </time>
+          <strong slot="shabbat">מנחה מערים</strong>
+          <time slot="yomtov"
+                datetime="08:00"
+                data-tefillah="מנחה מערים">
+          </time>
+
+          <strong slot="yomtov">שחרית</strong>
+          <time slot="chodesh"
+                datetime="06:15"
+                data-tefillah="שחרית">
+            06:15
+          </time>
+
+          <strong slot="yomtov">שחרית</strong>
+          <time slot="cholhamoed"
+                datetime="07:00"
+                data-tefillah="שחרית">
+            07:00
+          </time>
+        </zmanei-tefillah>
         <daf-yomi></daf-yomi>
       </heb-cal>
 
