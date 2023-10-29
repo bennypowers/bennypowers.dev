@@ -7,6 +7,10 @@ body {
   font-family: Tinos, serif;
 }
 
+heb-cal {
+  font-family: Alef, sans-serif;
+}
+
 [contenteditable]:is(:empty,:hover):after {
   content: "✏️";
 }
@@ -38,18 +42,10 @@ body {
   }
 }
 
-#main-header,
-heb-cal::part(now) {
+#main-header {
   display: flex;
   gap: 1em;
   align-items: center;
-}
-
-:is(zmanei-shabbat, zmanei-yom)::part(term) {
-  font-family: Alef, serif;
-}
-
-#main-header {
   justify-content: space-between;
 
   & fullscreen-toggle {
