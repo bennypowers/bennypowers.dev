@@ -75,7 +75,7 @@
      <script type="importmap">
     {
       "imports": {
-        "@shul/elements": "https://ga.jspm.io/npm:@shul/elements@0.0.12/elements.js"
+        "@shul/elements": "https://ga.jspm.io/npm:@shul/elements@0.0.13/elements.js"
       },
       "scopes": {
         "https://ga.jspm.io/": {
@@ -139,7 +139,7 @@
           </time>
           <strong slot="weekday">מנחה מערים</strong>
           <time slot="weekday"
-                data-offset="-15"       
+                data-offset="-15"
                 data-offset-from="sunset"
                 data-tefillah="מנחה מערים">
             15 דקות לפני השקיעה
