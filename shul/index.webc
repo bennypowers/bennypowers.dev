@@ -75,7 +75,7 @@
      <script type="importmap">
     {
       "imports": {
-        "@shul/elements": "https://ga.jspm.io/npm:@shul/elements@0.0.13/elements.js"
+        "@shul/elements": "https://ga.jspm.io/npm:@shul/elements@0.0.14/elements.js"
       },
       "scopes": {
         "https://ga.jspm.io/": {
@@ -119,17 +119,6 @@
                latitude="31.80290"
                longitude="32.24075"
                candles-minutes-before-sundown="40">
-        <zmanei-shabbat></zmanei-shabbat>
-        <zmanei-yom>
-          <small slot="footer">
-            הזמנים חושבו לפי מיקום המדויק של בית הכנסת
-            ובגובה פני הים.
-            במקרא של אי הסכמה בין
-            הזמנים שמופיעים פה לבין
-            הזמנים המודפסים בלוח,
-            <strong>יש לסמוך על הזמנים המודפסים</strong>
-          </small>
-        </zmanei-yom>
         <zmanei-tefillah>
           <strong slot="weekday">שחרית</strong>
           <time slot="weekday"
@@ -137,11 +126,11 @@
                 data-tefillah="שחרית">
             06:30
           </time>
-          <strong slot="weekday">מנחה מערים</strong>
+          <strong slot="weekday">מנחה מעריב</strong>
           <time slot="weekday"
                 data-offset="-15"
                 data-offset-from="sunset"
-                data-tefillah="מנחה מערים">
+                data-tefillah="מנחה מעריב">
             15 דקות לפני השקיעה
           </time>
 
@@ -151,10 +140,10 @@
                 data-tefillah="שחרית">
             08:00
           </time>
-          <strong slot="shabbat">מנחה מערים</strong>
+          <strong slot="shabbat">מנחה מעריב</strong>
           <time slot="shabbat"
                 datetime="08:00"
-                data-tefillah="מנחה מערים">
+                data-tefillah="מנחה מעריב">
           </time>
 
           <strong slot="yomtov">שחרית</strong>
@@ -163,10 +152,10 @@
                 data-tefillah="שחרית">
             08:00
           </time>
-          <strong slot="shabbat">מנחה מערים</strong>
+          <strong slot="shabbat">מנחה מעריב</strong>
           <time slot="yomtov"
                 datetime="08:00"
-                data-tefillah="מנחה מערים">
+                data-tefillah="מנחה מעריב">
           </time>
 
           <strong slot="yomtov">שחרית</strong>
@@ -183,7 +172,19 @@
             07:00
           </time>
         </zmanei-tefillah>
+
         <daf-yomi></daf-yomi>
+        <zmanei-shabbat></zmanei-shabbat>
+        <zmanei-yom>
+          <small slot="footer">
+            הזמנים חושבו לפי מיקום המדויק של בית הכנסת
+            ובגובה פני הים.
+            במקרא של אי הסכמה בין
+            הזמנים שמופיעים פה לבין
+            הזמנים המודפסים בלוח,
+            <strong>יש לסמוך על הזמנים המודפסים</strong>
+          </small>
+        </zmanei-yom>
       </heb-cal>
 
     </main>
