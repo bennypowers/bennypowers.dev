@@ -75,7 +75,7 @@
      <script type="importmap">
     {
       "imports": {
-        "@shul/elements": "https://ga.jspm.io/npm:@shul/elements@0.0.11/elements.js"
+        "@shul/elements": "https://ga.jspm.io/npm:@shul/elements@0.0.12/elements.js"
       },
       "scopes": {
         "https://ga.jspm.io/": {
