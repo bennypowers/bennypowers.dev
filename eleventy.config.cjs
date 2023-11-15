@@ -48,7 +48,6 @@ module.exports = function(eleventyConfig) {
   eleventyConfig.watchIgnores.add('decks/starting-functional-javascript/images/*');
 
   eleventyConfig.addGlobalData('isWatch', isWatch);
-  eleventyConfig.addGlobalData('linkShul', linkShul);
 
   !isWatch &&
   eleventyConfig.addPlugin(EleventyPluginDirectoryOutput);
