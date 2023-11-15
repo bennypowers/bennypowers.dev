@@ -33,10 +33,6 @@ const FedEmbedPlugin = require('./_plugins/fed-embed/fed-embed.cjs');
 const isWatch =
   process.argv.some(x => x === '--serve' || x === '--watch');
 
-const linkShul =
-  !!process.env.LINK_SHUL;
-
-
 /** @param{import('@11ty/eleventy/src/UserConfig.js')} eleventyConfig */
 module.exports = function(eleventyConfig) {
   eleventyConfig.addDataExtension('yaml', x => YAML.parse(x));
@@ -45,15 +41,11 @@ module.exports = function(eleventyConfig) {
   eleventyConfig.addPassthroughCopy('assets/**/*.{svg,png,jpeg,jpg,gif,webp,webm,js,d.ts,ico,webmanifest,json}');
   eleventyConfig.addPassthroughCopy('decks/**/*.gif');
   eleventyConfig.addPassthroughCopy('decks/pf-collab/demo/react-dist/fonts');
-  eleventyConfig.addPassthroughCopy('shul/*');
   eleventyConfig.addGlobalData('isProductionBuild', process.env.NETLIFY && process.env.CONTEXT === 'production');
   eleventyConfig.addWatchTarget('decks/*/components/*.css');
   eleventyConfig.addWatchTarget('decks/*/index.webc');
   eleventyConfig.watchIgnores.add('assets/images/*');
   eleventyConfig.watchIgnores.add('decks/starting-functional-javascript/images/*');
-
-  if (linkShul)
-    eleventyConfig.addPassthroughCopy({ 'node_modules/@shul/elements': '/assets/packages/@shul/elements' });
 
   eleventyConfig.addGlobalData('isWatch', isWatch);
   eleventyConfig.addGlobalData('linkShul', linkShul);
