@@ -26,3 +26,9 @@
     [plugins.inputs]
     # Maximum number of feed entries to check for mentions (optional, default: 1)
     limit = 1
+[[plugins]]
+  package = "netlify-plugin-no-more-404"
+  [plugins.inputs]
+  on404 = "error"
+  cacheKey = "shul-github"
+  debugMode = false
