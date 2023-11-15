@@ -7,6 +7,9 @@
 [[redirects]]
   from = "/decks/pf-collab/demo/"
   to = "/decks/pf-collab/demo/pfe-dev/"
+[[redirects]]
+  from = "/shul/"
+  to = "https://bennypowers.github.io/shul-tools"
 
 [[edge_functions]]
   function = "webfinger"
