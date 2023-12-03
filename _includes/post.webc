@@ -40,5 +40,5 @@ bodyClasses: h-entry post sidebar
        href="https://brid.gy/publish/mastodon"></a>
   </article>
 
-  <web-mention-replies :@webmentions="webmentions"></web-mentions>
+  <web-mention-replies :@webmentions="webmentions"></web-mention-replies>
 </main>

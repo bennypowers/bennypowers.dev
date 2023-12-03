@@ -6,5 +6,8 @@
 
 <template webc:nokeep webc:if="webmentions?.replies?.length">
   <h2>Comments</h2>
+  <p><small>I left Mastodon because of the overwheling antisemitism. The comments system on this blog
+    was based on my now-defunct mastodon instance, so old comments on posts may disappear.</small></p>
+  <p><small>Send a webmention to any of my posts to comment, and hopefully it'll find its way through to tubes to this site.</small></p>
   <web-mention webc:for="mention of webmentions.replies.sort(byPublishedDate)"></web-mention>
 </template>
