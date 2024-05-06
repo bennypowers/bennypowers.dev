@@ -11,6 +11,10 @@ description: |
   It's not a magic bullet though, teams will still have to communicate with each
   other around release schedules. Read on to learn more about import maps and
   CDNs for large organizations
+tldr:
+  In large organizations, it takes many inputs across multiple teams to produce
+  a single web page. Import maps aid in reducing the potential friction between
+  teams by abstracting package names over resource URLs.
 coverImageAlt: an old-timey treasure map with a team surrounding it
 coverImage: /assets/images/import-map-teams.png
 ---
@@ -18,7 +22,6 @@ coverImage: /assets/images/import-map-teams.png
 ## The Setup
 
 In large software companies, it's common to find multiple teams working on one document (i.e. web page). Moreover, different teams might work on an own completely separate processes which all contribute to one output appearing in the end user's browser. It may not be possible or desirable for those separate teams to perfectly coordinate their efforts.
-
 
 <script type="module">
 
@@ -202,6 +205,8 @@ With that concept of the division of responsibilities in mind, teams shall:
 3. establish a release schedule for major version updates, with lead time for teams to adapt their code.
 
 It's important to recognize that **import maps don't have to be the same across an entire domain**. Each page can have it's own import map, so pages which don't dynamically load up content from the third sphere have a smaller surface area for disagreement between teams. Second-sphere teams that want to customize the import map on a given page can put in a request with admins, or admins might provide a per-page escape hatch (think CMS content knob) for app teams to override or customize the domain-wide import map. Tools like the `@jspm/generator` package help admins the manage dependencies within each page's import map.
+
+This means that third-sphere teams only have to go one organizational level up (to the page owners) in order to solve their dependency issue, rather than having to go two levels up to the domain admins.
 
 ## Potential Problems
 
