@@ -88,7 +88,7 @@
   <header>
     <img id="flag" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 2766.387 800'%3E%3Cpath fill='%23fff' d='M0 0h2766.387v800H0Z' style='stroke-width:1.58584'/%3E%3Cpath fill='%230038b8' d='M0 75h2766.387v125H0ZM0 600h2766.387v125H0Z' style='stroke-width:1.58584'/%3E%3Cpath fill='none' stroke='%230038b8' stroke-width='27.5' d='M1257.01 472.853h252.368l-126.185-218.558Zm126.183 72.852 126.185-218.558h-252.369z'/%3E%3C/svg%3E" alt="Israel flag">
     <h2 lang="he" title="Am Yisrael Chai - the People of Israel Live!"> 🇮🇱 עם ישראל חי 🇮🇱 </h2>
-    <details open>
+    <details>
       <summary>
         <strong>Donate to Support Israel Against Hamas</strong>
       </summary>
