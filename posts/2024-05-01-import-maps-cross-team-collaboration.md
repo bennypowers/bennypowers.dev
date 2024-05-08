@@ -19,100 +19,115 @@ coverImageAlt: an old-timey treasure map with a team surrounding it
 coverImage: /assets/images/import-map-teams.png
 ---
 
-## The Setup
-
-In large software companies, it's common to find multiple teams working on one document (i.e. web page). Moreover, different teams might work on an own completely separate processes which all contribute to one output appearing in the end user's browser. It may not be possible or desirable for those separate teams to perfectly coordinate their efforts.
-
 <script type="module">
-
 import mermaid from 'https://esm.sh/mermaid';
-const darkMode = !!window.matchMedia?.('(prefers-color-scheme: dark)')?.matches;
-mermaid.run({
-  querySelector: '.mermaid',
-  suppressErrors: true,
+const match = window.matchMedia?.('(prefers-color-scheme: dark)');
+const darkMode = !!match?.matches;
+mermaid.initialize({
   darkMode,
   theme: darkMode ? 'dark' : 'base',
 });
 </script>
 
-<figure>
-  <pre class="mermaid">
-  flowchart TD
-      A[CMS Admins];
-      D[Page Designers];
-      C[Content Authors];
-      L[Localizers];
-      M[Marketers];
-      F[Front Devs];
-      Ds[Design System Maintainers];
-      R[/Package Registry\];
-      H{Server Rendered Head};
-      B{Server Rendered Body};
-      P{Server Rendered Document};
-      MF{Microfrontend};
-      E{Edge CDN};
-      Docs((Design system docs));
-      SPA{Single Page App};
-      Cl(Customer);
-      Ds -.Version release.-> R
-      Ds -.Version release.-> Docs
-      Docs --> A
-      Docs --> D
-      Docs --> C
-      Docs --> L
-      Docs --> M
-      Docs --> F
-      R -.Package install.-> A
-      R -.Package install.-> MF
-      R -.Package install.-> SPA
-      C -.Package request...-> A
-      D -.Package request...-> A
-      subgraph content [Content org]
-          A --> |CMS Process| H
-          A --> |CMS Process| B
-          C --> |Content Process| B
-          D --> |Design Process| B
-          L --> |l10n| B
-          H --> P
-          B --> P
-      end
-      subgraph market [Marketing org]
-          M --> man(Analytics)
-          M --> mab(A/B)
-          M --> mpc(Personalized content)
-      end
-      subgraph product [Product org]
-          F --> MF
-          F --> SPA
-      end
-      subgraph TD last [Last Mile]
-          E -.www.-> Cl
-      end
-      P --> E
-      SPA --> E
-      man --> E
-      mab --> E
-      mpc --> E
-      MF --> |Integration| B
-  </pre>
-  <figcaption>Goodness gracious! Turns out making a single web page can be awfully complicated!</figcaption>
-</figure>
+## The Setup
 
-That's a fairly complicated setup, and I even simplified the diagram for this post!
-Summing it up, complexity arises here because we have:
+In large software companies, it's common to find multiple teams working on one document (i.e. web page). Moreover, different teams might work on an own completely separate processes which all contribute to one output appearing in the end user's browser. It may not be possible or desirable for those separate teams to perfectly coordinate their efforts at all times: the more approvals and sign-offs needed for each change, the fewer changes you'll be able to make.
+
+At first glance it may seem like a simple thing: adding a component to a web page, but in large organizations where many teams all contribute on their own schedules and with their own processes to the final output, it's anything but. Take a look at this hypothetical workflow, in which content, marketing, admin, and design teams all contribute their efforts to a single page:
+
+<figure>
+
+<pre class="mermaid">
+flowchart TD
+    A[CMS Admins];
+    D[Page Designers];
+    C[Content Authors];
+    L[Localizers];
+    M[Marketers];
+    F[Front Devs];
+    Ds[Design System Maintainers];
+
+    R[/Package Registry\];
+    H{Server Rendered Head};
+    B{Server Rendered Body};
+    P{Server Rendered Document};
+    MF{Microfrontend};
+    E{Edge CDN};
+
+    Docs((Design system docs));
+    SPA{Single Page App};
+    Cl(Customer);
+
+    Ds -.Version release.-> R
+    Ds -.Version release.-> Docs
+
+    Docs --> A
+    Docs --> D
+    Docs --> C
+    Docs --> L
+    Docs --> M
+    Docs --> F
+
+    R -.Package install.-> A
+    R -.Package install.-> MF
+    R -.Package install.-> SPA
+    C -.Package request...-> A
+    D -.Package request...-> A
+
+    subgraph content [Content org]
+        A --> |CMS Process| H
+        A --> |CMS Process| B
+        C --> |Content Process| B
+        D --> |Design Process| B
+        L --> |l10n| B
+        H --> P
+        B --> P
+    end
+
+    subgraph market [Marketing org]
+        M --> man(Analytics)
+        M --> mab(A/B)
+        M --> mpc(Personalized content)
+    end
+
+    subgraph product [Product org]
+        F --> MF
+        F --> SPA
+    end
+
+    subgraph TD last [Last Mile]
+        E -.www.-> Cl
+    end
+
+    P --> E
+    SPA --> E
+    man --> E
+    mab --> E
+    mpc --> E
+    MF --> |Integration| B
+</pre>
+<figcaption>
+Goodness gracious! Turns out making a single web page can be awfully complicated!
 
 > - Many teams => One document
 > - Many processes => One output
 
-When it comes to JavaScript resources, This can cause conflicts when loading the same or similar code on the page. In the best case, this merely causes duplication of code (i.e. js bloat), slowing down page load and interactivity, annoying users, discouraging conversions and sales, and lowering the bottom line.
+</figcaption>
+</figure>
 
-At worst, this setup can lead to run time conflicts and errors, in particular the  infamous "custom-element double registration" error, which will occur when two separate resources try to register the same custom element name. This is because _custom element tag names are globally registered_ and can only be registered once.
+### Barriers to Collaboration
 
-For example, a domain admin might create a minified bundle of version 1.0.0 of a design system, and load it on every page. Subsequently, a page content author might load up a CDN link to an individual design system element. Even if it's the same package version (1.0.0), if the individual element module tries to register a tag name already registered in the bundle, it will fail.
+When it comes to JavaScript resources, those multiple inputs may all try to load the same (or similar) code. In the best case you ship a bloated document, with unnecessary JavaScript slowing down page load and interactivity: your users are annoyed, your conversions and sales suffer, and ultimately it impacts the bottom line.
 
-If the page admin has perfect _a priori_ knowledge of which elements are loaded on which pages, or if they simply load all elements on all pages, and if all content authors employ strict discipling in refraining from loading JavaScript resources, we can be reasonably confident that we'll avoid these errors for server-rendered content.
+At worst though, this setup can lead to run time conflicts and errors, in particular the infamous "custom-element double registration" error, which occurs when trying to register the same custom element name twice. This is because _custom element tag names are globally and uniquely registered_.
 
-If the marketing department or a related product team wants to run some client-rendered JavaScript to pull in marketing materials, or run an SPA or microfrontend. If those teams are able to coordinate with the domain admin, they can agree to use the preloaded bundle (which will now by force have to load every element for every page, even if only one element is needed).
+For example, a domain admin might create a minified bundle of version 1.0.0 of a design system, and load it on every page. Subsequently, a page content author who (correctly) wishes to declare all his dependencies might load up a CDN link to an individual design system element. Even if it's the same package version (1.0.0), if the individual element module tries to register a tag name already registered in the bundle, it will fail, and the rest of that author's script will not run.
+
+If the page admin has perfect _a priori_ knowledge of which elements are loaded on which pages, or if they simply load all elements on all pages, and if all content authors employ strict discipline in refraining from loading JavaScript resources, we can be reasonably confident that we'll avoid these errors for server-rendered content.
+
+### Known Unknowns
+
+But then the marketing department or a related product team wants to run some client-rendered JavaScript to pull in marketing materials, or run an SPA or microfrontend. This code gets loaded dynamically after the CMS admins have already produced the final page output. If those teams are able to coordinate with the domain admin, they can agree to use the preloaded bundle (which will now by force have to load every element for every page, even if only one element is needed). They will not be able to declare their dependencies and will have to work closely with CMS admins to clarify the dependencies available to them at each release.
 
 But if those marketing or product teams need to ship their content or apps to multiple domains with separate admins and diverse processes (as is likely to be the case in very large organizations), it can very quickly become prohibitively complicated to coordinate between admins, authors, and teams for every release of every page on every domain.
 
@@ -182,7 +197,7 @@ import '/assets/packages/@patternfly/elements/pf-button/pf-button.js';
 
 ## A Cross-Team Plan for Import-Map Adoption
 
-Import maps can help large organizations' internal collaboration by aligning around **package names** rather than **resource addresses**. By adopting import maps, the 'surface area' for disagreement between teams can be reduced to "which version" of a package to load, rather than "which version, in what format, and at what address". A practical sketch of how this might look follows.
+Import maps increase internal collaboration by aligning teams around **package names** instead of **resource addresses**. By adopting import maps, the surface area for disagreement between teams can be reduced to "which version" of a package to load, rather than "which version, in what format, and at what address". A practical sketch of how this might look follows.
 
 ### Three Spheres
 
