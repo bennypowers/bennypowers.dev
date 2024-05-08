@@ -133,7 +133,7 @@ But if those marketing or product teams need to ship their content or apps to mu
 
 How can we enable multiple teams, at multiple levels in an organization, to work on the same document, and use the same web components - a la carte - without requiring them to load the entire bundle in advance?
 
-## Two Complimentary Solutions
+## Two Complementary Solutions
 
 Organizations can benefit from either or both of two web standards in this situation: [scoped custom element registries][scer] and [import maps][import-maps]. These two specs can be used independently or in concert to help with the many-to-one problems described above.
 
