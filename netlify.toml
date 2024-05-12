@@ -30,5 +30,5 @@
   package = "netlify-plugin-no-more-404"
   [plugins.inputs]
   on404 = "error"
-  cacheKey = "shul-github"
+  cacheKey = "new-key-may-2024"
   debugMode = false
