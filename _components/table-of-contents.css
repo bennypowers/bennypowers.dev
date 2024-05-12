@@ -18,8 +18,8 @@ table-of-contents {
 
 #mobile-nav-content {
   position: fixed;
-  inset: 40px 0 auto;
+  inset: 70px 0 auto;
   background: var(--background-color);
   padding: 40px;
-  border: 1px solid currentcolor;
+  border-block-end: 12px solid currentcolor;
 }

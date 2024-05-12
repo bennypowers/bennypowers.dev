@@ -15,6 +15,20 @@ main { grid-area: main; }
 
 .banner { grid-area: banner; }
 
-#main-header { grid-area: head; }
+#main-header {
+  grid-area: head;
+
+  &:after {
+    content: "";
+    position: absolute;
+    inset-block: 0;
+    width: 100vw;
+    display: block;
+    z-index: -1;
+    background: var(--background-color);
+  }
+}
 
 #main-footer { grid-area: foot; }
+
+#side-menu { grid-area: menu; }

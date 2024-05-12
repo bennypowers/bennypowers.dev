@@ -31,9 +31,9 @@ mermaid.initialize({
 
 ## The Setup
 
-In large software companies, it's common to find multiple teams working on one document (i.e. web page). Moreover, different teams might work on an own completely separate processes which all contribute to one output appearing in the end user's browser. It may not be possible or desirable for those separate teams to perfectly coordinate their efforts at all times: the more approvals and sign-offs needed for each change, the fewer changes you'll be able to make.
+In large software companies, it's common to find multiple teams working on one document (i.e. web page). Moreover, different teams might work on their own completely separate processes which all contribute to a single output appearing in the end user's browser. It may not be possible or desirable for those separate teams to perfectly coordinate their efforts at all times: the more approvals and sign-offs needed for each change, the fewer changes you'll be able to make.
 
-At first glance it may seem like a simple thing: adding a component to a web page, but in large organizations where many teams all contribute on their own schedules and with their own processes to the final output, it's anything but. Take a look at this hypothetical workflow, in which content, marketing, admin, and design teams all contribute their efforts to a single page:
+At first glance adding a component to a web page may seem like a simple thing, but in large organizations where many teams all contribute on their own schedules and with their own processes to the final output, it's anything but. Take a look at this hypothetical workflow, in which content, marketing, admin, and design teams all contribute their efforts to a single page:
 
 <figure>
 
