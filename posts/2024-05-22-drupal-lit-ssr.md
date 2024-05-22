@@ -703,6 +703,8 @@ At this point, all our software is ready to go, we just need to activate the Dru
 
 What have we learned? We can hook into drupal CMS's rendering pipeline at the last minute, processing a stream of HTML by rendering the shadow roots of web components, a job which would otherwise require client-side javascript. The resulting fully-rendered HTML works even without javascript and doesn't require any hacks like compiled CSS. All our CSS custom properties and [CSS shadow parts][parts] will still work as intended.
 
+You can see a fully-realized example [here](https://github.com/bennypowers/drupal-lit-ssr-experimental).
+
 Lit provides a "hydration" module which helps to bring the client-side javascript for our components online if and once it hits the page, but that's out of scope of this post.
 
 We've also seen how drupal's internals are not particularly ergonomic for this case, and that the Lit SSR library is yet immature. God willing, a further entry in this series will explore edge-side alternatives to this server-side technique, so stay tuned.
