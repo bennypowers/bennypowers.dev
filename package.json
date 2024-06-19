@@ -59,7 +59,7 @@
   },
   "devDependencies": {
     "mermaid": "^10.9.0",
-    "puppeteer": "^22.7.1",
+    "puppeteer": "^22.11.2",
     "unist-util-visit": "^5.0.0"
   }
 }
