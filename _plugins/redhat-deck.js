@@ -1,16 +1,21 @@
-const { readFile, writeFile, mkdir } = require('node:fs/promises');
-const { join, dirname } = require('node:path');
-const { postcss } = require('./postcss.cjs');
+import { readFile, writeFile, mkdir } from 'node:fs/promises';
+import { join, dirname } from 'node:path';
+import { postcss } from './postcss.js';
+import { glob } from 'glob';
+import { createRequire } from 'node:module';
 
-const glob = require('node:util').promisify(require('glob'));
+const require = createRequire(import.meta.url);
 
 const GLOBAL_CSS_PATH = join(
   require.resolve('@rhds/tokens'),
   '../../css/global.css'
 );
 
+const javascript = String.raw;
+const html = String.raw;
+
 async function cssModularize(contents, filename) {
-  return `// ${filename}
+  return javascript`// ${filename}
 const sheet = new CSSStyleSheet();
 await sheet.replace(\`${await postcss(contents)}\`);
 export default sheet;
@@ -18,7 +23,7 @@ export default sheet;
 }
 
 function htmlModularize(contents, filename) {
-  return `// ${filename}
+  return javascript`// ${filename}
 const template = document.createElement('template');
 template.innerHTML = \`${contents}\`;
 export default template;
@@ -26,7 +31,7 @@ export default template;
 }
 
 async function writeModules(transform, ext) {
-  const cwd = join(__dirname, 'redhat-deck', 'elements')
+  const cwd = join(dirname(import.meta.url), 'redhat-deck', 'elements')
   const OUTDIR = join(process.cwd(), '_site', 'assets', 'redhat-deck', 'elements');
   const FILES = await glob(`*.${ext}`, { cwd });
   for (const fileName of FILES) {
@@ -38,7 +43,7 @@ async function writeModules(transform, ext) {
 }
 
 async function writeEntryPoint() {
-  const cwd = join(__dirname, 'redhat-deck', 'elements')
+  const cwd = join(dirname(import.meta.url), 'redhat-deck', 'elements')
   const OUTDIR = join(process.cwd(), '_site', 'assets', 'redhat-deck');
   const FILES = await glob(`*.js`, { cwd });
   const OUTFILE = join(OUTDIR, 'redhat-theme.js');
@@ -48,7 +53,7 @@ async function writeEntryPoint() {
 }
 
 function quote(content, by, { slot = 'aside' } = {}) {
-  return `
+  return html`
 <figure slot="${slot}">
 ${content}${!by ? '' : `
 
@@ -57,15 +62,15 @@ ${content}${!by ? '' : `
 `;
 }
 function inputType(type) {
-  let content = `<input type="${type}">`;
+  let content = html`<input type="${type}">`;
   if (type === 'radio')
-    content = `<span style="display:flex">
+    content = html`<span style="display:flex">
 <input type="radio" name="group">
 <input type="radio" name="group">
 <input type="radio" name="group">
 </span>
 `;
-  return `
+  return html`
 <label>
 
 \`\`\`html
@@ -79,11 +84,8 @@ ${content}
 `;
 }
 
-/**
- * @param{import('@11ty/eleventy/src/UserConfig.js')} eleventyConfig
- * @param{*} options
- */
-module.exports = function(eleventyConfig, options) {
+/** @param {import('@11ty/eleventy').UserConfig} eleventyConfig */
+export function RedHatDeckPlugin(eleventyConfig) {
   eleventyConfig.addPassthroughCopy({
     [GLOBAL_CSS_PATH]: 'assets/@rhds',
     '_plugins/redhat-deck/*': 'assets/redhat-deck',

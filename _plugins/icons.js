@@ -1,8 +1,8 @@
-const cheerio = require('cheerio');
-const fs = require('node:fs/promises');
+import { load } from 'cheerio';
+import { readFile } from 'node:fs/promises';
 
-/** @param{import('@11ty/eleventy/src/UserConfig.js')} eleventyConfig */
-module.exports = function(eleventyConfig) {
+/** @param {import('@11ty/eleventy').UserConfig} eleventyConfig */
+export function IconsPlugin(eleventyConfig) {
   eleventyConfig.addExtension('svg', {
     compile: x => () => x,
     compileOptions: {
@@ -10,9 +10,12 @@ module.exports = function(eleventyConfig) {
         return () => false;
       }
     },
+    /**
+     * @param {string} inputPath
+     */
     async getData(inputPath) {
-      const content = await fs.readFile(inputPath, 'utf-8');
-      const $ = cheerio.load(content);
+      const content = await readFile(inputPath, 'utf-8');
+      const $ = load(content);
       const title = $('title').text();
       return { title };
     }
@@ -25,7 +28,7 @@ module.exports = function(eleventyConfig) {
       Object.entries(attrs)
         .map(([name, value]) => ` ${name}="${value}"`)
         .join('');
-    return `<svg ${attributes}><use href="#${name}-icon"></use></svg>`;
+    return /* html */`<svg ${attributes}><use href="#${name}-icon"></use></svg>`;
   });
 };
 

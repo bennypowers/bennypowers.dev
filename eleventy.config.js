@@ -1,41 +1,42 @@
-require('dotenv').config();
+import 'dotenv/config';
 
-const { EleventyRenderPlugin } = require('@11ty/eleventy');
+import { EleventyRenderPlugin } from '@11ty/eleventy';
 
-const DecksPlugin = require('eleventy-plugin-slide-decks');
-const EmbedPlugin = require('eleventy-plugin-embed-everything');
-const TableOfContentsPlugin = require('eleventy-plugin-nesting-toc');
-const TimeToReadPlugin = require('eleventy-plugin-time-to-read');
-const EleventyPluginDirectoryOutput = require('@11ty/eleventy-plugin-directory-output');
-const EleventyPluginSyntaxhighlight = require('@11ty/eleventy-plugin-syntaxhighlight');
-const EleventyPluginRSS = require('@11ty/eleventy-plugin-rss');
-const EleventyPluginWebC = require('@11ty/eleventy-plugin-webc');
+import DecksPlugin from 'eleventy-plugin-slide-decks';
+import EmbedPlugin from 'eleventy-plugin-embed-everything';
+import TableOfContentsPlugin from 'eleventy-plugin-nesting-toc';
+import TimeToReadPlugin from 'eleventy-plugin-time-to-read';
+import EleventyPluginDirectoryOutput from '@11ty/eleventy-plugin-directory-output';
+import EleventyPluginSyntaxhighlight from '@11ty/eleventy-plugin-syntaxhighlight';
+import EleventyPluginRSS from '@11ty/eleventy-plugin-rss';
+import EleventyPluginWebC from '@11ty/eleventy-plugin-webc';
 
-const YAMLDataPlugin = require('./_plugins/yaml-data.cjs');
-const MarkdownTweaksPlugin = require('./_plugins/markdown/tweaks.cjs');
-const EmojiWrapPlugin = require('./_plugins/emoji-wrap.cjs');
-const GlitchPlugin = require('./_plugins/glitch.cjs');
-const IconsPlugin = require('./_plugins/icons.cjs');
-const FiltersPlugin = require('./_plugins/filters.cjs');
-const FontsPlugin = require('./_plugins/fonts.cjs');
-const OpenGraphCardPlugin = require('./_plugins/opengraph-cards.cjs');
-const PostsPlugin = require('./_plugins/posts.cjs');
-const PostCSSPlugin = require('./_plugins/postcss.cjs');
-const RedHatDeckPlugin = require('./_plugins/redhat-deck.cjs');
-const RHDSPlugin = require('./_plugins/rhds.cjs');
-const DC23Plugin = require('./_plugins/devconf-brno-2023.cjs');
-const JamPackPlugin = require('./_plugins/jampack.cjs');
-const WebmentionsPlugin = require('./_plugins/webmentions/webmentions.cjs');
-const ImportMapPlugin = require('./_plugins/importMap.cjs');
-const WebCDSDWorkaroundPlugin = require('./_plugins/dsd/webc-dsd-slot-workaround.cjs');
-const FedEmbedPlugin = require('./_plugins/fed-embed/fed-embed.cjs');
+import { YAMLDataPlugin } from './_plugins/yaml-data.js';
+import { MarkdownTweaksPlugin } from './_plugins/markdown/tweaks.js';
+import { EmojiWrapPlugin } from './_plugins/emoji-wrap.js';
+import { GlitchPlugin } from './_plugins/glitch.js';
+import { IconsPlugin } from './_plugins/icons.js';
+import { FiltersPlugin } from './_plugins/filters.js';
+import { FontsPlugin } from './_plugins/fonts.js';
+import { OpenGraphCardPlugin } from './_plugins/opengraph-cards.js';
+import { PostsPlugin } from './_plugins/posts.js';
+import { PostCSSPlugin, postcss } from './_plugins/postcss.js';
+import { RedHatDeckPlugin } from './_plugins/redhat-deck.js';
+import { RHDSPlugin } from './_plugins/rhds.js';
+import { DC23Plugin } from './_plugins/devconf-brno-2023.js';
+import { JamPackPlugin } from './_plugins/jampack.js';
+import { WebmentionsPlugin } from './_plugins/webmentions/webmentions.js';
+import { ImportMapPlugin } from './_plugins/importMap.js';
+import { WebCDSDWorkaroundPlugin } from './_plugins/dsd/webc-dsd-slot-workaround.js';
+import { FedEmbedPlugin } from './_plugins/fed-embed/fed-embed.js';
+
+import Prism from 'prismjs/components/index.js';
 
 const isWatch =
   process.argv.some(x => x === '--serve' || x === '--watch');
 
-/** @param{import('@11ty/eleventy/src/UserConfig.js')} eleventyConfig */
-module.exports = function(eleventyConfig) {
-  eleventyConfig.addDataExtension('yaml', x => YAML.parse(x));
+/** @param {import('@11ty/eleventy').UserConfig} eleventyConfig */
+export default function(eleventyConfig) {
   eleventyConfig.setQuietMode(true);
   eleventyConfig.addPassthroughCopy('manifest.webmanifest');
   eleventyConfig.addPassthroughCopy('assets/**/*.{svg,png,jpeg,jpg,gif,webp,webm,js,d.ts,ico,webmanifest,json}');
@@ -51,6 +52,9 @@ module.exports = function(eleventyConfig) {
 
   !isWatch &&
   eleventyConfig.addPlugin(EleventyPluginDirectoryOutput);
+  eleventyConfig.addPlugin(EleventyRenderPlugin);
+
+  debugger;
 
   eleventyConfig.addPlugin(YAMLDataPlugin);
   eleventyConfig.addPlugin(MarkdownTweaksPlugin);
@@ -65,23 +69,22 @@ module.exports = function(eleventyConfig) {
   eleventyConfig.addPlugin(RHDSPlugin);
   eleventyConfig.addPlugin(DC23Plugin);
   eleventyConfig.addPlugin(RedHatDeckPlugin);
+  eleventyConfig.addPlugin(DecksPlugin, { assetsExtensions: ['jpg', 'png', 'webp', 'svg', 'js']});
+
   eleventyConfig.addPlugin(TableOfContentsPlugin);
   eleventyConfig.addPlugin(TimeToReadPlugin);
-  eleventyConfig.addPlugin(EleventyRenderPlugin);
   eleventyConfig.addPlugin(EleventyPluginRSS);
-
   eleventyConfig.addPlugin(EmbedPlugin, { lite: true });
   eleventyConfig.addPlugin(EmojiWrapPlugin, { exclude: /^_site\/.*-repro\.html$/ });
   eleventyConfig.addPlugin(JamPackPlugin, { exclude: 'decks/pf-collab/**/*', });
-  eleventyConfig.addPlugin(DecksPlugin, { assetsExtensions: ['jpg', 'png', 'webp', 'svg', 'js']});
   eleventyConfig.addPlugin(PostCSSPlugin, { include: /devconf-brno-2023\/components\/.*\.css/ });
 
   eleventyConfig.addPlugin(EleventyPluginSyntaxhighlight, {
     init() {
-      require('prismjs/components/index')(['html']);
-      require('prismjs/components/index')(['regex']);
-      require('prismjs/components/index')(['js-templates']);
-      require('prismjs/components/index')(['javascript']);
+      Prism(['html']);
+      Prism(['regex']);
+      Prism(['js-templates']);
+      Prism(['javascript']);
     },
   });
 
@@ -96,7 +99,7 @@ module.exports = function(eleventyConfig) {
       transforms: [
         async function(content) {
           if (this.type === 'css') {
-            return PostCSSPlugin.postcss(content);
+            return postcss(content);
           } else {
             return content;
           }

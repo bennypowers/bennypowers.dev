@@ -1,5 +1,5 @@
 module.exports = {
-  permalink({ pagination, tag }) {
+  permalink({ tag }) {
     return !tag ? '/tags/index.html' : `/tags/${this.slug(tag)}/index.html`;
   },
   eleventyComputed: {

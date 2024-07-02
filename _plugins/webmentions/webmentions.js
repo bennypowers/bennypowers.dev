@@ -1,7 +1,8 @@
 // @ts-check
-const EleventyFetch = require('@11ty/eleventy-fetch');
+import EleventyFetch from '@11ty/eleventy-fetch';
 
-/** @typedef {object} WebMentionAuthor
+/**
+ * @typedef {object} WebMentionAuthor
  * @property {string} url
  * @property {string} name
  * @property {string} photo
@@ -43,7 +44,7 @@ function collateWebmentions(pageUrl, mentions) {
 }
 
 /**
- * @param {import('@11ty/eleventy/src/UserConfig.js')} eleventyConfig
+ * @param {import('@11ty/eleventy').UserConfig} eleventyConfig
  * @param {string} domain
  */
 function getWebmentions(eleventyConfig, domain) {
@@ -63,8 +64,8 @@ function getWebmentions(eleventyConfig, domain) {
   }
 }
 
-/** @param {import('@11ty/eleventy/src/UserConfig.js')} eleventyConfig */
-module.exports = function(eleventyConfig, { domain, webmentionIoToken }) {
+/** @param {import('@11ty/eleventy').UserConfig} eleventyConfig */
+export function WebmentionsPlugin(eleventyConfig, { domain, webmentionIoToken }) {
   eleventyConfig.on('eleventy.before', async function() {
     const webmentionIoUrl = new URL('/api/mentions.jf2', 'https://webmention.io')
           webmentionIoUrl.searchParams.append('token', webmentionIoToken);

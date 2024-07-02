@@ -21,10 +21,7 @@ pagination:
 
 <main>
   <h1 @html="h1 ? h1 : title"></h1>
-  <paginated-list
-      :@posts="[...collections[tag]].reverse()"
-      :@pagination="pagination"
-      :@watch="watch">
+  <paginated-list :@posts="[...collections[tag]].reverse()" :@watch="watch">
   </paginated-list>
   <!---
   <paginator-nav :@pages="collections[tag]" :@pagination="pagination"></paginator-nav>

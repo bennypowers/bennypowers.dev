@@ -1,7 +1,7 @@
-/**
- * @param{import('@11ty/eleventy/src/UserConfig.js')} eleventyConfig
- */
-module.exports = function(eleventyConfig) {
+import html from 'dedent';
+
+/** @param{import('@11ty/eleventy').UserConfig} eleventyConfig */
+export function GlitchPlugin(eleventyConfig) {
   eleventyConfig.addShortcode('glitch', function(embedCode, ...options) {
     options = options.filter(Boolean);
     const embedUrl = new URL(`/embed/${embedCode}`, 'https://glitch.com');
@@ -20,14 +20,11 @@ module.exports = function(eleventyConfig) {
       embedUrl.searchParams.set('attributionHidden', 'true');
     const url = new URL('/embed', 'https://glitch.com/');
     url.hash = `!${embedUrl.pathname}${embedUrl.search}`;
-    return `
-
-<div class="glitch-embed-wrap" style="height: 450px; width: 100%;margin: 1em auto 1.3em">
-  <iframe sandbox="allow-same-origin allow-scripts allow-forms allow-top-navigation-by-user-activation"
-          src="${url.href}" alt="${embedCode} on glitch"
-          style="height: 100%; width: 100%; border: 0;margin:0;padding:0"></iframe>
-</div>
-
-`;
+    return html`
+      <div class="glitch-embed-wrap" style="height: 450px; width: 100%;margin: 1em auto 1.3em">
+        <iframe sandbox="allow-same-origin allow-scripts allow-forms allow-top-navigation-by-user-activation"
+                src="${url.href}" alt="${embedCode} on glitch"
+                style="height: 100%; width: 100%; border: 0;margin:0;padding:0"></iframe>
+      </div>`;
   })
 }

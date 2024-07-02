@@ -1,6 +1,9 @@
-const linkedom = require('linkedom');
-const EleventyFetch = require('@11ty/eleventy-fetch');
+import { parseHTML } from 'linkedom';
+import EleventyFetch from '@11ty/eleventy-fetch';
 
+/**
+ * @param {string} string
+ */
 function capitalize(string) {
   return string.charAt(0).toUpperCase() + string.slice(1);
 }
@@ -13,7 +16,7 @@ function capitalize(string) {
 async function getOpenGraphCardData(requestUrl) {
   try {
     const html = await EleventyFetch(requestUrl, { type: 'text', duration: '1w' });
-    const { document } = linkedom.parseHTML(html)
+    const { document } = parseHTML(html)
     return Array.from(document.querySelectorAll('meta[property^="og:"]')).reduce((acc, meta) => {
       const content = meta.getAttribute('content');
       const property = meta.getAttribute('property').replace('og:', '');
@@ -36,7 +39,7 @@ async function getOpenGraphCardData(requestUrl) {
  * @param {string} content
  */
 async function appendOpenGraphCard(content) {
-  const { document } = linkedom.parseHTML(content);
+  const { document } = parseHTML(content);
   const firstLink = document.querySelector('a[href]:not(.u-url)');
   if (!firstLink) return content;
   const href = firstLink.getAttribute('href');
@@ -54,8 +57,8 @@ async function appendOpenGraphCard(content) {
   }
 }
 
-/** @param{import('@11ty/eleventy/src/UserConfig.js')} eleventyConfig */
-module.exports = function(eleventyConfig) {
+/** @param {import('@11ty/eleventy').UserConfig} eleventyConfig */
+export function OpenGraphCardPlugin(eleventyConfig) {
   eleventyConfig.addFilter('getOpenGraphCardData', getOpenGraphCardData);
   eleventyConfig.addFilter('appendOpenGraphCard', appendOpenGraphCard);
 }
