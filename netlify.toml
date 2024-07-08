@@ -1,6 +1,12 @@
 [[redirects]]
   from = "/.well-known/host-meta"
-  to = "https://social.bennypowers.dev/.well-known/host-meta"
+  to = "https://fed.brid.gy/.well-known/host-meta:splat"
+  status = 302
+[[redirects]]
+  from = "/.well-known/webfinger*"
+  to = "https://fed.brid.gy/.well-known/webfinger"
+  status = 302
+
 [[redirects]]
   from = "/stripe-elements/"
   to = "https://stripe-elements.netlify.app"
@@ -12,10 +18,6 @@
   to = "https://bennypowers.github.io/shul-tools/:splat"
   status = 301
   force = true
-
-[[edge_functions]]
-  function = "webfinger"
-  path = "/.well-known/webfinger"
 
 [[plugins]]
   package = "netlify-plugin-cache"
