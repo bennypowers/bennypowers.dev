@@ -52,8 +52,8 @@
   --hue-start: 180;
   --hue-end: 240;
   --primary-hue: var(--hue-start);
-  --fixed-font: "Fira Code", "Operator Mono", "Noto Mono", monospace;
-  --heading-font: "Hepta Slab", serif;
+  --fixed-font: "Fira Code", "Operator Mono", "Noto Sans Mono", monospace;
+  --heading-font: "Rowdies", serif;
   --primary-font: "Overpass", sans-serif;
   --background-color: white;
   --text-color: black;
@@ -121,7 +121,8 @@ img {
 
 :is(a, h1, h2, h3, h4, h5, h6, .magic-color) {
   --magic-hue: calc(var(--primary-hue) + var(--hue-offset));
-  --magic-start: hsl(var(--magic-hue) var(--saturation-start) var(--lightness-start));
+  --magic-hsl: var(--magic-hue) var(--saturation-start) var(--lightness-start);
+  --magic-start: hsl(var(--magic-hsl));
   --magic-end: hsl(var(--magic-hue) var(--saturation-end) var(--lightness-end));
   --magic: linear-gradient(72deg, var(--magic-start), var(--magic-end));
 
@@ -163,36 +164,14 @@ h1 {
 a {
   text-decoration-line: underline;
   text-decoration-thickness: 1px;
-  text-decoration-color: var(--magic-start);
-  transition: text-decoration-thickness 0.3s ease-in-out;
+  text-decoration-color: hsl(var(--magic-hsl) / 0.3);
+  transition: text-decoration-thickness, text-decoration-color 0.3s ease-in-out;
 
   &:visited { --hue-offset: 50; }
 
   &:is(:hover, :focus) {
     text-decoration-thickness: 4px;
-  }
-}
-
-.socials {
-  display: none;
-  gap: 4px;
-  list-style-type: none;
-  margin: 0;
-  padding: 0;
-
-  #mobile-nav & {
-    display: flex;
-  }
-
-  & li,
-  & a {
-    color: currentcolor;
-  }
-
-  & svg {
-    fill: currentcolor;
-    width: 24px;
-    aspect-ratio: 1/1;
+    text-decoration-color: hsl(var(--magic-hsl) / 1);
   }
 }
 

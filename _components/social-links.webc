@@ -1,4 +1,34 @@
-<ul class="socials">
+<style>
+social-links {
+  display: contents;
+}
+
+#main-header-socials {
+  place-self: end;
+  display: none;
+  gap: 4px;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+
+  #mobile-nav & {
+    display: flex;
+  }
+
+  & li,
+  & a {
+    color: currentcolor;
+  }
+
+  & svg {
+    fill: currentcolor;
+    width: 24px;
+    aspect-ratio: 1/1;
+  }
+}
+
+</style>
+<ul id="main-header-socials">
   <li webc:for="link of $data.social">
     <a rel="me noreferrer nofollow" target="_blank" :href="link.href" :title="link.label">
       <sprite-icon :name="link.icon"></sprite-icon>

@@ -1,6 +1,6 @@
-- label: Mastodon
-  href: https://social.bennypowers.dev/@bp
-  icon: mastodon-mono
+- label: Fedi
+  href: https://social.bennypowers.com/@bp
+  icon: firefish-mono
 
 - label: GitLab
   href: https://gitlab.com/bennyp

@@ -1,5 +1,5 @@
 import { readFile } from 'node:fs/promises';
-import { join } from 'node:path';
+import { dirname, join } from 'node:path';
 
 /**
  * @param {string} content
@@ -108,7 +108,7 @@ export function FiltersPlugin(eleventyConfig) {
   eleventyConfig.addFilter('linkifyHashtags', linkifyHashtags);
   eleventyConfig.addJavaScriptFunction('groupby', groupby);
   eleventyConfig.addFilter('include', async function includeFilter(/** @type {string} */ path) {
-    const resolved = join(__dirname, '..', '_includes', path)
+    const resolved = join(dirname(new URL(import.meta.url).pathname), '..', '_includes', path)
     const content = await readFile(resolved, 'utf8');
     return content;
   });

@@ -1,6 +1,6 @@
 const POST_DATE_RE = /(?<prefix>^.*\/)(?<date>\d{4}-(?:[0]\d|1[0-2])-(?:[0-2]\d|3[01]))-(?<suffix>.+)/;
 
-module.exports = {
+export default {
   eleventyComputed: {
     async webmentions({ page, altUrls }) {
       if (page?.url) {

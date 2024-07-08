@@ -178,9 +178,9 @@
 <script type="module" webc:keep>
 if (!('shadowRootMode' in HTMLTemplateElement)) {
   const t = document.querySelector('am-yisrael-hai template')
-  t.parentNode
+  t?.parentNode
     .attachShadow({ mode: t.getAttribute('shadowrootmode') })
     .appendChild(t.content);
-  t.remove();
+  t?.remove();
 }
 </script>

@@ -5,6 +5,10 @@
   padding: 0.2em 0.4em;
 }
 
+pre:not([class^="language-"]) code {
+  display: block;
+}
+
 /*****************  + */
 
 pre[class*="language-"] {
@@ -29,103 +33,119 @@ pre[class*="language-"] {
   tab-size: 2;
 }
 
-.token.atrule:not(.key) {
-  color: var(--markdown-syntax-atrule-color, #d73a49);
+.token {
+  &.atrule:not(.key) {
+    color: var(--markdown-syntax-atrule-color, #d73a49);
+  }
+
+  &.key {
+    color: var(--markdown-syntax-property-color, var(--blue));
+  }
+
+  &.attr-name {
+    color: var(--markdown-syntax-attr-name-color, #d73a49);
+  }
+
+  &.boolean {
+    color: var(--markdown-syntax-boolean-color, #005cc5);
+  }
+
+  &.string {
+    color: var(--markdown-syntax-string-color, --markdown-syntax-color);
+  }
+
+  &.class-name {
+    color: var(--markdown-syntax-class-name-color, #6f42c1);
+  }
+
+  &.constant {
+    color: var(--markdown-syntax-constant-color, #005cc5);
+  }
+
+  &.entity {
+    color: var(--markdown-syntax-entity-color, #005cc5);
+  }
+
+  &.function {
+    color: var(--markdown-syntax-function-color, #6f42c1);
+  }
+
+  &.inserted {
+    color: var(--markdown-syntax-inserted-color, #005cc5);
+  }
+
+  &.keyword {
+    color: var(--markdown-syntax-keyword-color, #d73a49);
+  }
+
+  &.number {
+    color: var(--markdown-syntax-number-color, #005cc5);
+  }
+
+  &.operator {
+    color: var(--markdown-syntax-operator-color, #005cc5);
+  }
+
+  &.property {
+    color: var(--markdown-syntax-property-color, #005cc5);
+  }
+
+  &.punctuation {
+    color: var(--markdown-syntax-punctuation-color, #005cc5);
+  }
+
+  &.regex {
+    color: var(--markdown-syntax-regex-color, #032f62);
+  }
+
+  &.selector {
+    color: var(--markdown-syntax-selector-color, #22863a);
+  }
+
+  &.symbol {
+    color: var(--markdown-syntax-symbol-color, #005cc5);
+  }
+
+  &.tag {
+    color: var(--markdown-syntax-tag-color, #22863a);
+  }
+
+  &.url {
+    color: var(--markdown-syntax-url-color, #005cc5);
+
+    & .token.url,
+    & .token.content {
+      color: var(--markdown-syntax-tag-color, #22863a);
+    }
+  }
+
+  &.variable {
+    color: var(--markdown-syntax-variable-color, #005cc5);
+  }
+
+  &.comment {
+    color: var(--markdown-syntax-comment-color, --markdown-syntax-color);
+  }
+
+  &:is(.inserted,.deleted):not(.prefix) {
+    display: block;
+  }
+
+  &.deleted {
+    background-color: var(--markdown-syntax-diff-background-deleted, #ffaaaa33);
+  }
+
+  &.inserted {
+    background-color: var(--markdown-syntax-diff-background-inserted, #aaffaa33);
+  }
+
+  .language-autohotkey &.selector {
+    color: var(--markdown-syntax-hotkey-selector-color, #d73a49);
+  }
+
+  .language-autohotkey &.keyword {
+    color: var(--markdown-syntax-keyword-color, #22863a);
+  }
 }
 
-.token.key {
-  color: var(--markdown-syntax-property-color, var(--blue));
-}
 
-.token.attr-name {
-  color: var(--markdown-syntax-attr-name-color, #d73a49);
-}
-
-.token.boolean {
-  color: var(--markdown-syntax-boolean-color, #005cc5);
-}
-
-.token.string {
-  color: var(--markdown-syntax-string-color, --markdown-syntax-color);
-}
-
-.token.class-name {
-  color: var(--markdown-syntax-class-name-color, #6f42c1);
-}
-
-.token.constant {
-  color: var(--markdown-syntax-constant-color, #005cc5);
-}
-
-.token.entity {
-  color: var(--markdown-syntax-entity-color, #005cc5);
-}
-
-.token.function {
-  color: var(--markdown-syntax-function-color, #6f42c1);
-}
-
-.token.inserted {
-  color: var(--markdown-syntax-inserted-color, #005cc5);
-}
-
-.token.keyword {
-  color: var(--markdown-syntax-keyword-color, #d73a49);
-}
-
-.token.number {
-  color: var(--markdown-syntax-number-color, #005cc5);
-}
-
-.token.operator {
-  color: var(--markdown-syntax-operator-color, #005cc5);
-}
-
-.token.property {
-  color: var(--markdown-syntax-property-color, #005cc5);
-}
-
-.token.punctuation {
-  color: var(--markdown-syntax-punctuation-color, #005cc5);
-}
-
-.token.regex {
-  color: var(--markdown-syntax-regex-color, #032f62);
-}
-
-.token.selector {
-  color: var(--markdown-syntax-selector-color, #22863a);
-}
-
-.token.symbol {
-  color: var(--markdown-syntax-symbol-color, #005cc5);
-}
-
-.token.tag {
-  color: var(--markdown-syntax-tag-color, #22863a);
-}
-
-.token.url {
-  color: var(--markdown-syntax-url-color, #005cc5);
-}
-
-.token.url .token.url,
-.token.url .token.content {
-  color: var(--markdown-syntax-tag-color, #22863a);
-}
-
-.token.variable {
-  color: var(--markdown-syntax-variable-color, #005cc5);
-}
-
-.token.comment {
-  color: var(--markdown-syntax-comment-color, --markdown-syntax-color);
-}
-
-.language-autohotkey .token.selector {
-  color: var(--markdown-syntax-hotkey-selector-color, #d73a49);
-}
-
-.language-autohotkey .token.keyword {
-  color: var(--markdown-syntax-keyword-color, #22863a);
-}

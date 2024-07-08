@@ -1,5 +1,9 @@
-.socials {
+#main-header-socials {
   display: flex;
+}
+
+#side-menu {
+  padding-inline-start: 0;
 }
 
 #main-header {
@@ -27,7 +31,7 @@ main.home {
 }
 
 body.sidebar {
-  grid-template-rows: min-content auto min-content;
+  grid-template-rows: min-content min-content auto min-content;
   grid-template-columns: minmax(0, 1fr) 300px;
   grid-template-areas:
     "banner banner"

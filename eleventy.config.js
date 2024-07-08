@@ -1,15 +1,19 @@
+/** @import { UserConfig } from '@11ty/eleventy'; */
+
 import 'dotenv/config';
 
 import { EleventyRenderPlugin } from '@11ty/eleventy';
 
-import DecksPlugin from 'eleventy-plugin-slide-decks';
+import EleventyPluginDirectoryOutput from '@11ty/eleventy-plugin-directory-output';
+import EleventyPluginSyntaxhighlight from '@11ty/eleventy-plugin-syntaxhighlight';
+import EleventyPluginWebC from '@11ty/eleventy-plugin-webc';
+
 import EmbedPlugin from 'eleventy-plugin-embed-everything';
 import TableOfContentsPlugin from 'eleventy-plugin-nesting-toc';
 import TimeToReadPlugin from 'eleventy-plugin-time-to-read';
-import EleventyPluginDirectoryOutput from '@11ty/eleventy-plugin-directory-output';
-import EleventyPluginSyntaxhighlight from '@11ty/eleventy-plugin-syntaxhighlight';
-import EleventyPluginRSS from '@11ty/eleventy-plugin-rss';
-import EleventyPluginWebC from '@11ty/eleventy-plugin-webc';
+
+import { feedPlugin as EleventyRSSPlugin } from '@11ty/eleventy-plugin-rss';
+import { DecksPlugin } from 'eleventy-plugin-slide-decks';
 
 import { YAMLDataPlugin } from './_plugins/yaml-data.js';
 import { MarkdownTweaksPlugin } from './_plugins/markdown/tweaks.js';
@@ -35,7 +39,7 @@ import Prism from 'prismjs/components/index.js';
 const isWatch =
   process.argv.some(x => x === '--serve' || x === '--watch');
 
-/** @param {import('@11ty/eleventy').UserConfig} eleventyConfig */
+/** @param {UserConfig} eleventyConfig */
 export default function(eleventyConfig) {
   eleventyConfig.setQuietMode(true);
   eleventyConfig.addPassthroughCopy('manifest.webmanifest');
@@ -73,11 +77,29 @@ export default function(eleventyConfig) {
 
   eleventyConfig.addPlugin(TableOfContentsPlugin);
   eleventyConfig.addPlugin(TimeToReadPlugin);
-  eleventyConfig.addPlugin(EleventyPluginRSS);
   eleventyConfig.addPlugin(EmbedPlugin, { lite: true });
   eleventyConfig.addPlugin(EmojiWrapPlugin, { exclude: /^_site\/.*-repro\.html$/ });
   eleventyConfig.addPlugin(JamPackPlugin, { exclude: 'decks/pf-collab/**/*', });
   eleventyConfig.addPlugin(PostCSSPlugin, { include: /devconf-brno-2023\/components\/.*\.css/ });
+
+  eleventyConfig.addPlugin(EleventyRSSPlugin, {
+    type: 'rss',
+    outputPath: '/feed.xml',
+    collection: {
+      name: 'posts',
+      limit: 0,
+    },
+    metadata: {
+      title: "Benny Powers: Web Developer",
+      subtitle: 'Thoughts and impression about web development by Benny Powers from Jerusalem',
+      language: 'en',
+      url: "https://bennypowers.dev/",
+      author:{
+        name: 'Benny Powers',
+        email: 'web@bennypowers.com',
+      },
+    },
+  });
 
   eleventyConfig.addPlugin(EleventyPluginSyntaxhighlight, {
     init() {
@@ -97,6 +119,7 @@ export default function(eleventyConfig) {
     ],
     bundlePluginOptions: {
       transforms: [
+        /** @param {string} content */
         async function(content) {
           if (this.type === 'css') {
             return postcss(content);

@@ -1,7 +1,7 @@
 body.sidebar {
   display: grid;
   gap: 1em 1.6em;
-  grid-template-rows: min-content auto auto min-content;
+  grid-template-rows: min-content min-content auto auto min-content;
   grid-template-columns: minmax(0, auto);
   grid-template-areas:
     "banner"
