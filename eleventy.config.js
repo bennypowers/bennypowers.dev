@@ -58,7 +58,7 @@ export default function(eleventyConfig) {
   eleventyConfig.addPlugin(EleventyPluginDirectoryOutput);
   eleventyConfig.addPlugin(EleventyRenderPlugin);
 
-  debugger;
+  eleventyConfig.addPlugin(DecksPlugin, { assetsExtensions: ['jpg', 'png', 'webp', 'svg', 'js']});
 
   eleventyConfig.addPlugin(YAMLDataPlugin);
   eleventyConfig.addPlugin(MarkdownTweaksPlugin);
@@ -73,8 +73,6 @@ export default function(eleventyConfig) {
   eleventyConfig.addPlugin(RHDSPlugin);
   eleventyConfig.addPlugin(DC23Plugin);
   eleventyConfig.addPlugin(RedHatDeckPlugin);
-  eleventyConfig.addPlugin(DecksPlugin, { assetsExtensions: ['jpg', 'png', 'webp', 'svg', 'js']});
-
   eleventyConfig.addPlugin(TableOfContentsPlugin);
   eleventyConfig.addPlugin(TimeToReadPlugin);
   eleventyConfig.addPlugin(EmbedPlugin, { lite: true });
