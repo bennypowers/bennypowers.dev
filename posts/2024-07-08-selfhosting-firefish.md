@@ -105,6 +105,31 @@ podman exec -it firefish-db sh -c 'psql \
 
 That step should really be baked into the `pgroonga` image, if you ask me, but no matter. If you entered the `CREATE` command interactively, <kbd>ctrl</kbd>-<kbd>d</kbd> out of the sql prompt, then we need to add some config.
 
+#### Troubleshooting
+
+At a certain point I had an issue with the DB container's health check command. Running the health check command manually worked:
+
+```sh
+podman exec -it firefish-db sh -c 'pg_isready \
+--user="$POSTGRES_USER" \
+--dbname="$POSTGRES_DB"'
+```
+So I started the service then inspected the container to read the health check's output
+
+```sh
+❯ podman inspect firefish-db | jq .[].State.Health.Log
+[
+  {
+      "Start": "2024-07-08T00:40:20.74269814+03:00",
+      "End": "2024-07-08T00:40:20.842938674+03:00",
+      "ExitCode": 1,
+      "Output": "/bin/sh: syntax error: unterminated quoted string"
+  }
+]
+```
+
+Seems like I needed to adjust the syntax in the `HealthCmd` field.
+
 ### App config
 
 Create an env file and a firefish config yaml so we can configure our instance
