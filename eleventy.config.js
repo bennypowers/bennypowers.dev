@@ -13,7 +13,7 @@ import TableOfContentsPlugin from 'eleventy-plugin-nesting-toc';
 import TimeToReadPlugin from 'eleventy-plugin-time-to-read';
 
 import { feedPlugin as EleventyRSSPlugin } from '@11ty/eleventy-plugin-rss';
-import { DecksPlugin } from 'eleventy-plugin-slide-decks';
+import { slideDecksPlugin as DecksPlugin } from 'eleventy-plugin-slide-decks';
 
 import { YAMLDataPlugin } from './_plugins/yaml-data.js';
 import { MarkdownTweaksPlugin } from './_plugins/markdown/tweaks.js';
