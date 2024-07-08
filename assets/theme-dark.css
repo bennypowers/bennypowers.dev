@@ -46,6 +46,8 @@
   --markdown-syntax-tag-color: var(--cyan-400);
   --markdown-syntax-url-color: var(--light-blue-500);
   --markdown-syntax-variable-color: var(--deep-orange-200);
+  --markdown-syntax-diff-background-deleted: #880e4f33;
+  --markdown-syntax-diff-background-inserted: #00606433;
   --markdown-table-background-color: var(--grey-900);
   --markdown-table-border-color: var(--markdown-table-background-color);
   --markdown-table-row-odd-background-color: var(--blue-grey-900);

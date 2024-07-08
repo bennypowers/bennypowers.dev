@@ -1,6 +1,10 @@
 <style>
-  #main-header .socials {
-    place-self: end;
+  #main-header {
+    & nav {
+      display: flex;
+      gap: 1em;
+      text-transform: lowercase;
+    }
   }
 </style>
 

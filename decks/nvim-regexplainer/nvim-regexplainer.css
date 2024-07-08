@@ -3,7 +3,7 @@
   --deck-secondary-background: var(--mantle);
   --deck-primary-color: var(--text);
   --deck-secondary-color: var(--subtext1);
-  --fixed-font: "Fira Code", "Operator Mono", "Noto Mono", monospace;
+  --fixed-font: "Fira Code", "Operator Mono", "Noto Sans Mono", monospace;
   --markdown-syntax-color: var(--text);
   --markdown-syntax-comment-color: var(--surface2);
   --markdown-code-background-color: var(--base);

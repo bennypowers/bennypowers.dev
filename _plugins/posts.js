@@ -4,8 +4,8 @@ const byDate = (a, b) =>
   : getDate(a)   > getDate(b) ? 1
   : -1;
 
-/** @param{import('@11ty/eleventy/src/UserConfig.js')} eleventyConfig */
-module.exports = function(eleventyConfig) {
+/** @param {import('@11ty/eleventy').UserConfig} eleventyConfig */
+export function PostsPlugin(eleventyConfig) {
   eleventyConfig.addCollection('posts', collectionApi => collectionApi
     .getFilteredByGlob('./posts/**/*.md')
     .sort(byDate));

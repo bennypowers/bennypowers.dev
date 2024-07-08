@@ -1,16 +1,26 @@
 // @ts-check
-const path = require('node:path');
-const fs = require('node:fs');
-const EleventyNavigationPagination = require("@11ty/eleventy-navigation");
-const EleventySyntaxHighlightPlugin = require("@11ty/eleventy-plugin-syntaxhighlight");
-const { EleventyRenderPlugin } = require('@11ty/eleventy')
-const { copyFile, lstat, mkdir, readdir } = fs.promises;
+import { join } from 'node:path';
+import { createRequire } from 'node:module';
+import { copyFile, lstat, mkdir, readdir } from 'node:fs/promises';
 
+import { EleventyRenderPlugin } from '@11ty/eleventy';
+
+import EleventyNavigationPagination from "@11ty/eleventy-navigation";
+import EleventySyntaxHighlightPlugin from "@11ty/eleventy-plugin-syntaxhighlight";
+
+const require = createRequire(import.meta.url);
+
+const html = String.raw;
+
+/**
+ * @param {string} from
+ * @param {string} to
+ */
 async function copyRecursive(from, to) {
   await mkdir(to, { recursive: true });
   for (const element of await readdir(from)) {
-    const _from = path.join(from, element);
-    const _to = path.join(to, element);
+    const _from = join(from, element);
+    const _to = join(to, element);
     const stat = await lstat(_from);
     if (stat.isFile()) {
       await copyFile(_from, _to);
@@ -20,13 +30,14 @@ async function copyRecursive(from, to) {
   }
 }
 
-module.exports = function(eleventyConfig) {
+/** @param {import('@11ty/eleventy').UserConfig} eleventyConfig */
+export function RHDSPlugin(eleventyConfig) {
   let watchRanOnce = false
   eleventyConfig.on('eleventy.before', async ({ runMode }) => {
     if ((runMode === 'serve' || runMode === 'watch') && watchRanOnce) return;
     console.log('[rhds]: Copying RHDS elements assets...');
-    const from = path.join(require.resolve('@rhds/elements'), '..');
-    const to = path.join(process.cwd(), '_site', 'assets', '@rhds', 'elements');
+    const from = join(require.resolve('@rhds/elements'), '..');
+    const to = join(process.cwd(), '_site', 'assets', '@rhds', 'elements');
     await copyRecursive(from, to);
     console.log('[rhds]:   ...done');
     watchRanOnce = true;
@@ -55,7 +66,7 @@ module.exports = function(eleventyConfig) {
     state = 'info',
     title = 'Note:',
   } = {}) {
-    return /*html*/`
+    return html`
 
 <rh-alert state="${state}">
   <h3 slot="header">${title}</h3>
@@ -78,7 +89,7 @@ ${content}
       globalLinks = [],
       globalLinksSecondary = []
     } = this.ctx.footer;
-    return /*html*/`
+    return html`
 <rh-footer>
   <a slot="logo" href="/en">
     <img src="${eleventyConfig.javascriptFunctions.url(LOGO_URL)}" alt="Red Hat Israel logo" loading="lazy">

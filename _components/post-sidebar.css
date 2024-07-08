@@ -2,6 +2,7 @@
   grid-area: menu;
   position: relative;
   padding-block-start: 64px;
+  padding-inline: 1.6em;
 
   & > div {
     position: sticky;

@@ -1,5 +1,5 @@
-const { Processor } = require('postcss');
-const env = require('postcss-preset-env');
+import { Processor } from 'postcss';
+import env from 'postcss-preset-env';
 
 const processor = new Processor([
   env({
@@ -14,7 +14,7 @@ const processor = new Processor([
  * @param {string|Promise<string>} input
  * @param {string} from
  */
-async function postcss(input, from = this.page?.inputPath) {
+export async function postcss(input, from = this?.page?.inputPath) {
   try {
     const result = await processor.process(await input, { from });
     return result.css;
@@ -25,17 +25,18 @@ async function postcss(input, from = this.page?.inputPath) {
 }
 
 /**
- * @param{import('@11ty/eleventy/src/UserConfig.js')} eleventyConfig
- * @param{*} options
+ * @param {import('@11ty/eleventy').UserConfig} eleventyConfig
  */
-module.exports = function(eleventyConfig, options) {
+export function PostCSSPlugin(eleventyConfig) {
   eleventyConfig.addTemplateFormats('postcss');
   eleventyConfig.addExtension('postcss', {
+    /**
+       * @param {string} content
+       * @param {string} inputPath
+       */
     async compile(content, inputPath) {
       return () => postcss(content, inputPath);
     }
   });
   eleventyConfig.addFilter('postcss', postcss);
 }
-
-module.exports.postcss = postcss;

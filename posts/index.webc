@@ -15,12 +15,11 @@ pagination:
 
 <main>
   <h1 @text="h1 ? h1 : title"></h1>
-  <paginated-list
-      :@posts="pagination.items"
-      :@pagination="pagination"
-      :@watch="watch">
+  <paginated-list :@posts="pagination.items"
+                  :@watch="watch">
   </paginated-list>
-  <paginator-nav :@pages="pagination.pages" :@pagination="pagination"></paginator-nav>
+  <paginator-nav :@pages="pagination.pages"
+                 :@pagination="pagination"></paginator-nav>
 </main>
 
 <aside id="side-menu">

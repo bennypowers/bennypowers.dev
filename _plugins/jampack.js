@@ -1,8 +1,12 @@
-const { exec: _exec } = require('node:child_process');
-const { promisify } = require('node:util');
+import { exec as _exec } from 'node:child_process';
+import { promisify } from 'node:util';
 const exec = promisify(_exec);
 
-module.exports = function(eleventyConfig, options) {
+/**
+ * @param {import('@11ty/eleventy').UserConfig} eleventyConfig
+ * @param {{ exclude: string; }} options
+ */
+export function JamPackPlugin(eleventyConfig, options) {
   eleventyConfig.ignores.add('.jampack/**/*');
   eleventyConfig.on('eleventy.after', async function({ runMode }) {
     if (runMode === 'build' && process.env.NO_JAMPACK !== 'true') {

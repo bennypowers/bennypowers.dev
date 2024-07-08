@@ -1,4 +1,4 @@
-const EleventyFetch = require('@11ty/eleventy-fetch');
+import EleventyFetch from '@11ty/eleventy-fetch';
 
 class FedEmbed {
   constructor(props) {
@@ -35,7 +35,8 @@ class FedEmbed {
   }
 
   async renderPost() {
-    return this.getPost()?.content ?? '';
+    const post = await this.getPost();
+    return post?.content ?? '';
   }
 
   async fetch(sourceURL, opts) {
@@ -46,7 +47,8 @@ class FedEmbed {
   }
 }
 
-module.exports = function(eleventyConfig) {
+/** @param {import('@11ty/eleventy').UserConfig} eleventyConfig */
+export function FedEmbedPlugin(eleventyConfig) {
   eleventyConfig.addJavaScriptFunction('getFediPost', async post => {
     if (post) {
       const embed = new FedEmbed({ post });

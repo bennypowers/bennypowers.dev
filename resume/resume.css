@@ -1,7 +1,7 @@
 :root {
   --primary-font: "Libre Franklin", sans-serif;
-  --heading-font: "Hepta Slab", serif;
-  --fixed-font: "Anonymous Pro", "Noto Mono", monospace;
+  --heading-font: "Rowdies", serif;
+  --fixed-font: "Anonymous Pro", "Noto Sans Mono", monospace;
   --app-primary-color: #464a5b;
   --app-secondary-color: black;
   --social-icon-size: 28px;
@@ -85,12 +85,12 @@ main > *:not(footer) {
   background: none;
   border: none;
   color: inherit;
-}
 
-#print-button svg {
-  width: 24px;
-  height: 24px;
-  fill: currentcolor;
+  & svg {
+    width: 24px;
+    height: 24px;
+    fill: currentcolor;
+  }
 }
 
 :is(#experience, #open-source) article {
@@ -123,10 +123,10 @@ main > div > a {
   position: absolute;
   top: 0;
   right: 0;
-}
 
-.qualification-badge img {
-  max-width: 100px;
+  & img {
+    max-width: 100px;
+  }
 }
 
 .experience,
@@ -160,16 +160,16 @@ main > div > a {
   display: flex;
   flex-flow: row wrap;
   justify-content: space-between;
-}
 
-:is(.experience, .open-source) header h2 {
-  flex: 1 0 50%;
-  font-size: 1.5rem;
-  margin: 0;
-}
+  & h2 {
+    flex: 1 0 50%;
+    font-size: 1.5rem;
+    margin: 0;
+  }
 
-:is(.experience, .open-source) header address {
-  display: inline;
+  & address {
+    display: inline;
+  }
 }
 
 :is(.experience, .open-source) main section h2 {
@@ -181,11 +181,11 @@ main > div > a {
   display: inline;
   list-style-type: none;
   padding: 0;
-}
 
-:is(.experience, .open-source) ul li {
-  display: inline-block;
-  width: auto;
+  & li {
+    display: inline-block;
+    width: auto;
+  }
 }
 
 :is(.experience, .open-source):not(:last-of-type):after {
@@ -202,25 +202,25 @@ main > div > a {
   justify-content: space-between;
   color: #ffffff;
   background-color: var(--app-primary-color);
-}
 
-#nav span {
-  margin-left: var(--horizontal-margin);
-}
+  & span {
+    margin-left: var(--horizontal-margin);
+  }
 
-#nav img {
-  border: 1px solid var(--app-primary-color);
-  border-radius: 50%;
-  min-width: 100px;
-  max-width: 100px;
-  min-height: 100px;
-  max-height: 100px;
-  margin: 0 auto;
-}
+  & img {
+    border: 1px solid var(--app-primary-color);
+    border-radius: 50%;
+    min-width: 100px;
+    max-width: 100px;
+    min-height: 100px;
+    max-height: 100px;
+    margin: 0 auto;
+  }
 
-#nav a {
-  color: inherit;
-  text-decoration: none;
+  & a {
+    color: inherit;
+    text-decoration: none;
+  }
 }
 
 #social-links svg {
@@ -232,11 +232,11 @@ main > div > a {
   padding: 14px;
   display: flex;
   align-items: center;
-}
 
-#legal a {
-  color: inherit;
-  text-decoration: none;
+  & a {
+    color: inherit;
+    text-decoration: none;
+  }
 }
 
 #identity [itemprop="jobTitle"] {
@@ -257,39 +257,39 @@ main > div > a {
 #identity h1 {
   text-align: left;
   width: 100%;
-}
 
-#identity h1:after {
-  content: none;
-  display: none;
+  &:after {
+    content: none;
+    display: none;
+  }
 }
 
 #social {
   display: flex;
   flex-flow: row nowrap;
   gap: 8px;
-}
 
-#social svg {
-  width: 32px;
-  height: 32px;
-}
+  & svg {
+    width: 32px;
+    height: 32px;
+  }
 
-#social a {
-  color: inherit;
-  text-decoration: none;
+  & a {
+    color: inherit;
+    text-decoration: none;
+  }
 }
 
 .technologies {
   margin-top: auto;
-}
 
-.technologies h3 {
-  font-size: 80%;
-}
+  & h3 {
+    font-size: 80%;
+  }
 
-.technologies ul {
-  display: contents;
+  & ul {
+    display: contents;
+  }
 }
 
 .credential ul {
@@ -297,19 +297,19 @@ main > div > a {
   list-style-type: none;
   padding: 0;
   width: 100%;
-}
 
-.credential ul li {
-  margin: 0;
+  & li {
+    margin: 0;
+  }
 }
 
 #highlights {
   max-width: 600px;
-}
 
-#highlights ul {
-  columns: 2;
-  list-style-position: inside;
+  & ul {
+    columns: 2;
+    list-style-position: inside;
+  }
 }
 
 #summary p {
@@ -358,18 +358,18 @@ main > div > a {
   grid-gap: var(--grid-gap);
   grid-template-columns: repeat(auto-fit, minmax(var(--tool-size), max-content));
   grid-template-rows: repeat(auto-fit, minmax(var(--tool-size), max-content));
-}
 
-#tools ul li {
-  display: block;
-  text-align: center;
-  font-size: 12px;
-}
+  & li {
+    display: block;
+    text-align: center;
+    font-size: 12px;
 
-#tools ul li svg {
-  max-width: 100%;
-  max-height: 112px;
-  height: var(--tool-size);
+    & svg {
+      max-width: 100%;
+      max-height: 112px;
+      height: var(--tool-size);
+    }
+  }
 }
 
 #identity svg,
@@ -406,15 +406,15 @@ main > div > a {
   display: flex;
   flex-flow: wrap;
   grid-area: head;
-}
 
-@media (min-width: 595px) {
-  #identity {
+  @media (width >= 595px) {
     display: flex;
     flex-flow: column;
-    gap: var(--grid-gap);
+    gap: var(--grid-gap)
   }
+}
 
+@media (width >= 595px) {
   main {
     width: min-content;
     margin-inline-start: auto;
@@ -435,7 +435,7 @@ main > div > a {
   }
 }
 
-@media (min-width: 600px) {
+@media (width >= 600px) {
   :root {
     --tool-size: 64px;
   }
@@ -474,10 +474,10 @@ main > div > a {
   #summary {
     columns: 2;
     min-width: 700px;
-  }
 
-  #summary p {
-    break-inside: avoid;
+    & p {
+      break-inside: avoid;
+    }
   }
 
   #experience {

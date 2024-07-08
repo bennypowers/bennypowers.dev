@@ -5,6 +5,11 @@ bodyAttributes:
   itemscope: ''
   itemtype: https://schema.org/Person
 noHeader: true
+eleventyImport:
+  collections:
+    - resume-experience
+    - resume-education
+    - resume-open-source
 fonts:
   - Libre Franklin
   - Anonymous Pro
