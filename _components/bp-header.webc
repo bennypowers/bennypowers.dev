@@ -8,8 +8,8 @@
   }
 </style>
 
-<header id="main-header" webc:if="!$data.noHeader" webc:root="override">
-  <a :href="url('/')">
+<header id="main-header" class="vcard" webc:if="!$data.noHeader" webc:root="override">
+  <a :href="url('/')" class="url uid fn">
     <img alt="bp"
          width="40"
          height="40"
