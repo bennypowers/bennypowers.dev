@@ -38,6 +38,7 @@ bodyClasses: h-entry post sidebar
     <a id="tldr"
        webc:if="watch || isProductionBuild"
        href="https://brid.gy/publish/mastodon"></a>
+    <a class="u-bridgy-fed" href="https://fed.brid.gy/" hidden="from-humans"></a>
   </article>
 
   <web-mention-replies :@webmentions="webmentions"></web-mention-replies>
