@@ -15,13 +15,16 @@ const latestPublished = xs =>
 <main class="home h-card">
   <h1>Greetings</h1>
   <img id="hero"
+       class="u-photo"
        alt="Ness, from the 90s era SNES classic Earthbound"
        height="320"
        width="300"
-      :src="url('/assets/images/bicycle.gif')">
+       src="/assets/images/bicycle.gif">
   <p>I'm <span class="p-name">Benny Powers</span>,
-    a web developer from <span class="p-locality">Jerusalem</span>.
-    On weekdays, I make web components and related tools for <span class="p-org">Red Hat</span>.</p>
+     a <span class="p-job-title">web developer</span>
+     from <span class="p-locality">Jerusalem</span>.
+     On weekdays, I make web components and related tools
+     for <span class="p-org">Red Hat</span>.</p>
 
   <nav id="latest">
     <h2>Latest</h2>
