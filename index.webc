@@ -20,8 +20,9 @@ const latestPublished = xs =>
        height="320"
        width="300"
        src="/assets/images/bicycle.gif">
-  <p>I'm <span class="p-name">Benny Powers</span>,
-     a <span class="p-job-title">web developer</span>
+  <p>I'm <span class="p-name">
+       <span class="p-given-name">Benny</span> <span class="p-family-name">Powers</span>
+     </span>, a <span class="p-job-title">web developer</span>
      from <span class="p-locality">Jerusalem</span>.
      On weekdays, I make web components and related tools
      for <span class="p-org">Red Hat</span>.</p>
