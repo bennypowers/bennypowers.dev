@@ -13,7 +13,10 @@ const latestPublished = xs =>
 <bp-header></bp-header>
 
 <main class="home h-card">
-  <span hidden="from-humans" class="p-name">Benny Powers</span>
+  <div hidden="from-humans">
+    <span class="p-name">Benny Powers</span>
+    <social-links></social-links>
+  </div>
   <h1>Greetings</h1>
   <img id="hero"
        class="u-photo"
@@ -33,7 +36,8 @@ const latestPublished = xs =>
     Namely, <a href="/tags/web-components">web components <sprite-icon name="web-components"></sprite-icon></a>
     and <a href="/tags/design-systems">design systems</a>.
     GNU/Linux enthusiast.
-    <a href="https://fedoraproject.org">Fedora</a> and <a href="/tags/gentoo">Gentoo</a> user;
+    <a href="https://fedoraproject.org">Fedora <sprite-icon name="fedora"></sprite-icon></a>
+    and <a href="/tags/gentoo">Gentoo <sprite-icon name="gentoo"></sprite-icon></a> user;
     <a href="/tags/nvim">nvim</a> plugin author.
     Does <a href="/tags/typescript">Typescript</a>, mostly in <a href="/tags/lua">lua</a>.
 

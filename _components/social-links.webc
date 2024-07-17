@@ -30,7 +30,7 @@ social-links {
 </style>
 <ul id="main-header-socials">
   <li webc:for="link of $data.social">
-    <a rel="me noreferrer nofollow" target="_blank" class="url" :href="link.href" :title="link.label">
+    <a rel="me noreferrer nofollow" target="_blank" class="url u-url" :href="link.href" :title="link.label">
       <sprite-icon :name="link.icon"></sprite-icon>
     </a>
   </li>
