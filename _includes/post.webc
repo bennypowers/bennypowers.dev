@@ -7,21 +7,6 @@ bodyClasses: h-entry post sidebar
 
 <bp-header></bp-header>
 
-<post-sidebar
-    :@page="page"
-    :@next="getNextCollectionItem.call(this, $data.collections.posts)"
-    :@previous="getPreviousCollectionItem.call(this, $data.collections.posts)"
-    :@date-published="datePublished"
-    :@watch="watch"
-    :@date="page.date"
-    :@lang="lang ?? 'en'"
-    :@audience="audience"
-    :@tags="tags"
-    :@tldr="tldr"
-    :@published="published"
-    :@content="content">
-</post-sidebar>
-
 <main>
   <header>
     <h1 class="p-name" @html="title"></h1>
@@ -44,3 +29,19 @@ bodyClasses: h-entry post sidebar
 
   <web-mention-replies :@webmentions="webmentions"></web-mention-replies>
 </main>
+
+<post-sidebar
+    :@page="page"
+    :@next="getNextCollectionItem.call(this, $data.collections.posts)"
+    :@previous="getPreviousCollectionItem.call(this, $data.collections.posts)"
+    :@date-published="datePublished"
+    :@watch="watch"
+    :@date="page.date"
+    :@lang="lang ?? 'en'"
+    :@audience="audience"
+    :@tags="tags"
+    :@tldr="tldr"
+    :@published="published"
+    :@content="content">
+</post-sidebar>
+

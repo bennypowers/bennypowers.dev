@@ -1,27 +1,32 @@
 <link rel="stylesheet" href="web-mention.css">
 
-<article class="h-entry" webc:if="isWebmentionReply(mention)">
-  <header class="p-author h-card">
-    <web-mention-avatar :@author="mention.author"></web-mention-avatar>
-    <span class="byline">
-      <a target="_blank" rel="noopener" :href="mention.author.url">
-        <h3 class="p-name" @html="mention.author.name"></h3>
+<article class="h-cite u-comment" webc:if="isWebmentionReply(mention)">
+  <header>
+    <span class="byline u-author h-card">
+      <web-mention-avatar class="p-photo"
+                          :@author="mention.author"></web-mention-avatar>
+      <a target="_blank"
+         rel="noopener"
+         class="u-url"
+         :href="mention.author.url">
+        <h3 class="p-name"
+            @html="mention.author.name"></h3>
       </a> wrote on <date-time :datetime="mention['wm-received']"
                                           time-zone="UTC"
                                           date-style="long"></date-time>
-      <a class="u-in-reply-to"
-          target="_blank"
-          rel="noopener"
-          :href="mention.url">
-        <date-time :datetime="mention['wm-received']"
-                    hour="numeric"
-                    hour-cycle="h12"
-                    day-period="short"
-                    time-zone-name="shortGeneric"></date-time></a>
     </span>
+    <a class="u-uid"
+       target="_blank"
+       rel="noopener"
+       :href="mention.url">
+      <date-time :datetime="mention['wm-received']"
+                  hour="numeric"
+                  hour-cycle="h12"
+                  day-period="short"
+                  time-zone-name="shortGeneric"></date-time></a>
   </header>
   <blockquote :cite="mention.url"
-               class="comment p-name p-content"
+               class="comment p-content p-name"
               @html="appendOpenGraphCard(mention.content.html)"></blockquote>
 </article>
 
