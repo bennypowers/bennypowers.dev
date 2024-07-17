@@ -60,6 +60,28 @@ export default function(eleventyConfig) {
 
   eleventyConfig.addPlugin(DecksPlugin, { assetsExtensions: ['jpg', 'png', 'webp', 'svg', 'js']});
 
+  eleventyConfig.addPlugin(EleventyPluginWebC, {
+    components: [
+      '_components/**/*.webc',
+      '_plugins/*/components/*.webc',
+      'decks/**/components/**/*.webc',
+      'npm:@11ty/eleventy-plugin-syntaxhighlight/*.webc',
+    ],
+    bundlePluginOptions: {
+      bundles: ['svg'],
+      transforms: [
+        /** @param {string} content */
+        async function(content) {
+          if (this.type === 'css') {
+            return postcss(content);
+          } else {
+            return content;
+          }
+        }
+      ]
+    }
+  });
+
   eleventyConfig.addPlugin(YAMLDataPlugin);
   eleventyConfig.addPlugin(MarkdownTweaksPlugin);
   eleventyConfig.addPlugin(FedEmbedPlugin);
@@ -106,27 +128,6 @@ export default function(eleventyConfig) {
       Prism(['js-templates']);
       Prism(['javascript']);
     },
-  });
-
-  eleventyConfig.addPlugin(EleventyPluginWebC, {
-    components: [
-      '_components/**/*.webc',
-      '_plugins/*/components/*.webc',
-      'decks/**/components/**/*.webc',
-      'npm:@11ty/eleventy-plugin-syntaxhighlight/*.webc',
-    ],
-    bundlePluginOptions: {
-      transforms: [
-        /** @param {string} content */
-        async function(content) {
-          if (this.type === 'css') {
-            return postcss(content);
-          } else {
-            return content;
-          }
-        }
-      ]
-    }
   });
 
   eleventyConfig.addPlugin(WebmentionsPlugin, {

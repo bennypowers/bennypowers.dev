@@ -4,6 +4,9 @@
   </small>
 </footer>
 
-<svg id="icon-sprite-sheet" aria-hidden="true">
-  <defs @raw="getBundle('html', 'svg')"></defs>
+<svg id="icon-sprite-sheet"
+     width="0"
+     height="0"
+     aria-hidden="true">
+  <defs @raw="getBundle('svg')"></defs>
 </svg>

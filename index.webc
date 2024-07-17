@@ -13,6 +13,7 @@ const latestPublished = xs =>
 <bp-header></bp-header>
 
 <main class="home h-card">
+  <span hidden="from-humans" class="p-name">Benny Powers</span>
   <h1>Greetings</h1>
   <img id="hero"
        class="u-photo"
@@ -20,12 +21,29 @@ const latestPublished = xs =>
        height="320"
        width="300"
        src="/assets/images/bicycle.gif">
-  <p>I'm <span class="p-name">
-       <span class="p-given-name">Benny</span> <span class="p-family-name">Powers</span>
-     </span>, a <span class="p-job-title">web developer</span>
-     from <span class="p-locality">Jerusalem</span>.
-     On weekdays, I make web components and related tools
-     for <span class="p-org">Red Hat</span>.</p>
+  <p>
+    <span class="p-given-name">Benny</span> <span class="p-family-name">Powers</span>;
+    <span class="p-job-title">web developer</span> from <span class="p-locality">
+      <span hidden="from-humans">#</span>Jerusalem 🦁️,
+      <span hidden="from-humans">#</span>Israel 🇮🇱
+    </span>; gefilte ficcionado, semitic <a href="/tags/html">html</a>
+  </p>
+  <div class="p-note">
+    During the week, helps make free-software at <a class="p-org" href="/tags/redhat">Red Hat <sprite-icon name="redhat"></sprite-icon></a>.
+    Namely, <a href="/tags/web-components">web components <sprite-icon name="web-components"></sprite-icon></a>
+    and <a href="/tags/design-systems">design systems</a>.
+    GNU/Linux enthusiast.
+    <a href="https://fedoraproject.org">Fedora</a> and <a href="/tags/gentoo">Gentoo</a> user;
+    <a href="/tags/nvim">nvim</a> plugin author.
+    Does <a href="/tags/typescript">Typescript</a>, mostly in <a href="/tags/lua">lua</a>.
+
+    <p>This site represents no one but myself.</p>
+
+    <p hidden="from-humans">
+      #FreeSoftware #WebComponents #html #DesignSystems #RedHat #Fedora #Gentoo
+      #GNU #Linux #TypeScript #nvim #Mentor #lua #RaspberryPi #MicroBit </p>
+
+  </div>
 
   <nav id="latest">
     <h2>Latest</h2>

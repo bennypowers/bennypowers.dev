@@ -19,6 +19,7 @@ overrides:
 
 plugins:
   - stylelint-use-nesting
+  - '@stylelistic/stylelint-plugin'
 
 rules:
   alpha-value-notation: number # TODO: fix for `percentage` in tokens
@@ -30,10 +31,6 @@ rules:
     - true
     - ignoreShorthands:
         - /grid/
-  indentation: 2
-  max-line-length:
-    - 100
-    - ignorePattern: /--rh-font-family-/
   no-descending-specificity:
     - true
     - ignore:
@@ -55,5 +52,10 @@ rules:
         - heading
         - actions
   shorthand-property-no-redundant-values: true
-  string-quotes: double
+
+  '@stylistic/string-quotes': double
+  '@stylistic/indentation': 2
+  '@stylistic/max-line-length':
+    - 100
+    - ignorePattern: /--rh-font-family-/
 

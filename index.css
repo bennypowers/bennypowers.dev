@@ -21,22 +21,39 @@ main {
   image-rendering: pixelated;
 }
 
+.p-note {
+  & .sprite-icon {
+    width: .7em;
+    aspect-ratio: 1;
+  }
+}
+
 #latest {
-  display: flex;
-  gap: 0.25em;
-  flex-flow: row wrap;
-  justify-content: center;
-  margin-block-end: 1em;
+  --width: 192px;
+  --gap: 0.25em;
+
+  max-width: calc(var(--width) * 4 + var(--gap) * 3);
+  margin-inline: auto;
+  display: block;
 
   & h2 {
-    flex: 1 0 100%;
+    grid-column: -1/1;
     font-size: 60%;
     margin-block-end: 0;
   }
 
   & ol {
     list-style-type: none;
-    display: contents;
+    gap: var(--gap);
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(var(--width), 1fr));
+    grid-template-rows: auto auto;
+    grid-auto-flow: column;
+    place-items: center;
+    margin: 0;
+    padding: 0;
+    margin-block-end: 1em;
+
 
     & li {
       display: contents;

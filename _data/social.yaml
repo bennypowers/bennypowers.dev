@@ -1,7 +1,3 @@
-- label: Fedi
-  href: https://social.bennypowers.com/@bp
-  icon: firefish-mono
-
 - label: GitLab
   href: https://gitlab.com/bennyp
   icon: gitlab-mono
@@ -21,4 +17,8 @@
 - label: RSS
   href: /feed.xml
   icon: rss-mono
+
+- label: Fedi
+  href: https://social.bennypowers.com/@bp
+  icon: firefish-mono
 
