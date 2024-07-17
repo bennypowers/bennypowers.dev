@@ -25,7 +25,6 @@
     </dl>
 
     <dl id="post-summaries"
-        class="p-summary"
         webc:if="(watch || published) && (audience || tldr)">
       <template webc:nokeep webc:if="audience">
         <dt>👯 <i18n-text>Audience</i18n-text>:</dt>
@@ -35,7 +34,7 @@
         <dt>🙈 <abbr :title="translate(`Too long; didn't read`, lang)"><i18n-text>tl;dr</i18n-text></abbr>:</dt>
         <dd>
           <template webc:nokeep @raw="linkifyHashtags(tldr)"></template>
-          <span @html="tldr" class="p-bridgy-mastodon-content" style="display:none;"></span>
+          <span @html="tldr" class="p-bridgy-mastodon-content p-summary" style="display:none;"></span>
         </dd>
       </template>
     </dl>

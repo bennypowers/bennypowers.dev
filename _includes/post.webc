@@ -9,7 +9,11 @@ bodyClasses: h-entry post sidebar
 
 <main>
   <header>
-    <h1 class="p-name" @html="title"></h1>
+    <h1 class="p-name">
+      <a class="p-uid"
+         @html="title"
+         :href="`https://bennypowers.dev${$data.page.url}`"></a>
+    </h1>
     <img id="cover-image"
          class="u-photo"
          height="400"
