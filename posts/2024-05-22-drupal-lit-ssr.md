@@ -21,7 +21,7 @@ mermaid.initialize({
 });
 </script>
 
-A common complaint about web components from the right-wing of frontend developers is that they require JavaScript. This complaint is a perhaps a drop short-sighted, since this [wasn't always the case][polymer1], and hopefully in the [future][dce] will be irrelevant. Regardless of future advancements, though, web components can be used _today_ with JavaScript disabled, if developers expend a bit of effort on server rendering.
+A common complaint about web components from a certain slice of frontend developers is that they require JavaScript. This complaint is a perhaps a drop short-sighted, since this [wasn't always the case][polymer1], and hopefully in the [future][dce] will be irrelevant. Regardless of future advancements, though, web components can be used _today_ with JavaScript disabled, if developers expend a bit of effort on server rendering.
 
 Server rendering can mean different things in different scenarios, but in this post we're talking about the process of computing the [Shadow DOM][sd] of a web component on the web server, and printing it's internal HTML in the initial server response. This is possible because of a browser feature called [Declarative Shadow DOM][dsd].
 
@@ -708,6 +708,10 @@ You can see a fully-realized example [here](https://github.com/bennypowers/drupa
 Lit provides a "hydration" module which helps to bring the client-side javascript for our components online if and once it hits the page, but that's out of scope of this post.
 
 We've also seen how drupal's internals are not particularly ergonomic for this case, and that the Lit SSR library is yet immature. God willing, a further entry in this series will explore edge-side alternatives to this server-side technique, so stay tuned.
+
+## Addendum
+
+A previous version of this blog post contained forbidden words, which have been removed.
 
 [polymer1]: https://polymer-library.polymer-project.org/1.0/docs/devguide/feature-overview
 [dce]: https://github.com/WICG/webcomponents/blob/gh-pages/proposals/Declarative-Custom-Elements-Strawman.md
