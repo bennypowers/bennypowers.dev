@@ -31,11 +31,9 @@ eleventyImport:
 <script src="../../_plugins/dsd/dsd.js" webc:bucket="after"></script>
 
 <link rel="stylesheet" href="index.css">
+<link rel="stylesheet" href="../../assets/red-hat-font.css">
 <link rel="stylesheet" href="../../node_modules/@rhds/tokens/css/global.css">
-
-<link webc:keep href="https://fonts.googleapis.com/css2?family=Red+Hat+Mono:ital,wght@0,300..700;1,300..700&display=swap" rel="stylesheet">
-<link webc:keep rel="stylesheet" href="/assets/prism.css">
-<link webc:keep rel="stylesheet" href="/assets/red-hat-font.css">
+<link rel="stylesheet" href="../../assets/prism.css">
 
 <script type="module" webc:bundle="modules">
   const toRemove = new Set();
