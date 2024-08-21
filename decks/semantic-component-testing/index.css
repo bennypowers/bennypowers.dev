@@ -1,6 +1,7 @@
 :root {
   --fixed-font: var(--rh-font-family-code);
   --markdown-syntax-background-color: transparent;
+  font-family: var(--rh-font-family-body-text);
 }
 
 img {
