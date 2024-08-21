@@ -1,4 +1,4 @@
-# Semantic DOM Testing
+# Semantic Component Testing
 
 <ul class="icon-grid">
   <li><!--- keyboard --->
