@@ -14,3 +14,6 @@ reveal: img
             object-fit: fill;
             margin-inline: auto;">
 
+the curb cut here is that we can test for correctness **based on effects**, rather than
+by asserting on the **private DOM** structure
+{slot=notes}
