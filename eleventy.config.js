@@ -99,7 +99,9 @@ export default function(eleventyConfig) {
   eleventyConfig.addPlugin(TimeToReadPlugin);
   eleventyConfig.addPlugin(EmbedPlugin, { lite: true });
   eleventyConfig.addPlugin(EmojiWrapPlugin, { exclude: /^_site\/.*-repro\.html$/ });
-  eleventyConfig.addPlugin(JamPackPlugin, { exclude: 'decks/pf-collab/**/*', });
+  eleventyConfig.addPlugin(JamPackPlugin, {
+    exclude: 'decks/{pf-collab,semantic-component-testing}/**/*',
+  });
   eleventyConfig.addPlugin(PostCSSPlugin, { include: /devconf-brno-2023\/components\/.*\.css/ });
 
   eleventyConfig.addPlugin(EleventyRSSPlugin, {
