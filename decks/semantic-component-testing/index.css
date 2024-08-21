@@ -47,6 +47,8 @@ pre[reveal][past] {
 }
 
 slidem-deck {
+  font-family: var(--rh-font-family-body-text);
+
   & slidem-slide {
     &:not(:defined) {
       opacity: 0;
