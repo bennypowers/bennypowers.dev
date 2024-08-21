@@ -1,0 +1,103 @@
+---
+title: Semantic Component Testing
+description: An alternative to visual regression that puts Usability first
+coverImage: /decks/semantic-component-testing/images/cover.png
+date: 2024-08-22
+published: true
+venue:
+  name: Red Hat
+icons:
+  - rel: shortcut icon
+    sizes: any
+    href: /decks/semantic-component-testing/images/red-hat.svg
+tags:
+  - deck
+eleventyImport:
+  collections:
+    - semantic-component-testing
+    - icon
+---
+<slide-deck webc:nokeep
+            webc:import="npm:eleventy-plugin-slide-decks"
+            :draft="!$data.published"
+            :@title="title"
+            :@date="date"
+            @tag="semantic-component-testing">
+  <link slot="before" rel="shortcut icon" href="/decks/semantic-component-testing/images/red-hat.svg">
+  <link slot="before" rel="preconnect" href="https://fonts.googleapis.com">
+  <link slot="before" rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+</slide-deck>
+
+<script src="../../_plugins/dsd/dsd.js" webc:bucket="after"></script>
+
+<link rel="stylesheet" href="index.css">
+<link rel="stylesheet" href="../../node_modules/@rhds/tokens/css/global.css">
+
+<link webc:keep href="https://fonts.googleapis.com/css2?family=Red+Hat+Mono:ital,wght@0,300..700;1,300..700&display=swap" rel="stylesheet">
+<link webc:keep rel="stylesheet" href="/assets/prism.css">
+<link webc:keep rel="stylesheet" href="/assets/red-hat-font.css">
+
+<script type="module" webc:bundle="modules">
+  const toRemove = new Set();
+  const seenMarks = new WeakSet();
+  for (let highlighted of document.querySelectorAll('slidem-slide mark')) {
+    if (highlighted.isConnected && !seenMarks.has(highlighted)) {
+      const newMark = document.createElement('mark');
+      Array.from(highlighted.attributes).forEach(attr =>
+        newMark.setAttribute(attr.name, attr.value))
+      const first = highlighted;
+      while (highlighted?.localName === 'mark') {
+        seenMarks.add(highlighted);
+        newMark.innerHTML = newMark.innerHTML + '\n' + highlighted.innerHTML;
+        toRemove.add(highlighted);
+        highlighted = highlighted.nextElementSibling;
+      }
+      first.replaceWith(newMark);
+      const [head=''] = newMark.innerHTML.match(/^\s+/) ?? [];
+      const [tail=''] = newMark.innerHTML.match(/\s+$/) ?? [];
+      newMark.before(head.replace('\n', ''));
+      newMark.after(tail.replace('\n', ''));
+      newMark.innerHTML = newMark.innerHTML
+        .replace(head, '')
+        .replace(/\s+$/, '');
+      toRemove.forEach(el => el.remove());
+      toRemove.clear();
+      let node = newMark.nextSibling;
+      while (node instanceof Text) {
+        const text = node;
+        node = node.nextSibling;
+        text.remove();
+      }
+      newMark.after('\n');
+    }
+  }
+
+  for (let mark of document.querySelectorAll('slidem-slide mark[step]:empty')) {
+    mark.remove();
+  }
+
+  for (let slide of document.querySelectorAll('slidem-slide:has(mark[step])')) {
+    slide.defineSteps(slide.querySelectorAll('mark[step]'));
+  }
+
+  import '@rhds/elements/rh-avatar/rh-avatar.js';
+
+  // hack for block quote icon size
+  import { RhBlockquote } from '@rhds/elements/rh-blockquote/rh-blockquote.js';
+  const orig = RhBlockquote.prototype.updated;
+  RhBlockquote.prototype.updated = function(changed) {
+    orig?.call(this, changed);
+    const icon = this.shadowRoot.querySelector('svg');
+    icon.removeAttribute('height');
+    icon.removeAttribute('weight');
+    icon.style.width = '1.5em'; // let's say
+  };
+
+</script>
+
+<svg id="icon-sprite-sheet"
+     width="0"
+     height="0"
+     aria-hidden="true">
+  <defs @raw="getBundle('svg')"></defs>
+</svg>

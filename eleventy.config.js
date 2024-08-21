@@ -43,11 +43,11 @@ const isWatch =
 export default function(eleventyConfig) {
   eleventyConfig.setQuietMode(true);
   eleventyConfig.addPassthroughCopy('manifest.webmanifest');
-  eleventyConfig.addPassthroughCopy('assets/**/*.{svg,png,jpeg,jpg,gif,webp,webm,js,d.ts,ico,webmanifest,json}');
-  eleventyConfig.addPassthroughCopy('decks/**/*.gif');
+  eleventyConfig.addPassthroughCopy('assets/**/*.{svg,png,jpeg,jpg,gif,webp,webm,js,d.ts,ico,webmanifest,json,woff,woff2}');
+  eleventyConfig.addPassthroughCopy('decks/**/*.{gif,png,jpeg,jpg,svg}');
   eleventyConfig.addPassthroughCopy('decks/pf-collab/demo/react-dist/fonts');
   eleventyConfig.addGlobalData('isProductionBuild', process.env.NETLIFY && process.env.CONTEXT === 'production');
-  eleventyConfig.addWatchTarget('decks/*/components/*.css');
+  eleventyConfig.addWatchTarget('decks/**/*.css');
   eleventyConfig.addWatchTarget('decks/*/index.webc');
   eleventyConfig.watchIgnores.add('assets/images/*');
   eleventyConfig.watchIgnores.add('decks/starting-functional-javascript/images/*');
@@ -144,10 +144,8 @@ export default function(eleventyConfig) {
       '@patternfly/elements/pf-icon/pf-icon.js',
       '@patternfly/elements/pf-modal/pf-modal.js',
       '@patternfly/elements/pf-spinner/pf-spinner.js',
-      '@patternfly/elements/pf-spinner/BaseSpinner.js',
       '@patternfly/elements/pf-accordion/pf-accordion.js',
       '@patternfly/elements/pf-tooltip/pf-tooltip.js',
-      '@patternfly/elements/pf-tooltip/BaseTooltip.js',
       '@patternfly/pfe-core/controllers/logger.js',
       '@patternfly/pfe-core/controllers/style-controller.js',
       '@patternfly/pfe-core/controllers/slot-controller.js',
