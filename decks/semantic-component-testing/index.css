@@ -65,7 +65,7 @@ slidem-deck {
       & .progressive-reveal {
         position: relative;
 
-        & [reveal] {
+        &>img {
           position: absolute;
 
           &[past] {
@@ -164,6 +164,7 @@ slidem-deck {
     margin: 0;
     padding: 0;
     list-style-type: none;
+
     & li a {
       display: flex;
       align-items: center;
