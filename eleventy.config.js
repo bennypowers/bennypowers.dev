@@ -100,7 +100,7 @@ export default function(eleventyConfig) {
   eleventyConfig.addPlugin(EmbedPlugin, { lite: true });
   eleventyConfig.addPlugin(EmojiWrapPlugin, { exclude: /^_site\/.*-repro\.html$/ });
   eleventyConfig.addPlugin(JamPackPlugin, {
-    exclude: 'decks/{pf-collab,semantic-component-testing}/**/*',
+    exclude: 'decks/pf-collab/**/*  decks/semantic-component-testing/**/*',
   });
   eleventyConfig.addPlugin(PostCSSPlugin, { include: /devconf-brno-2023\/components\/.*\.css/ });
 
