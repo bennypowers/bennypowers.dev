@@ -17,5 +17,11 @@
         patternflyelements.com
       </a>
     </li>
+    <li>
+      <a href="http://modern-web.dev/">
+        <sprite-icon name="modern-web"></sprite-icon>
+        Modern Web
+      </a>
+    </li>
   </ul>
 </div>
