@@ -1,15 +1,17 @@
+import type { UserConfig } from '@11ty/eleventy';
+import type { CollectionApi } from './posts.ts';
+
 import { parse } from 'parse5'
 import { isElementNode, query, getTextContent } from '@parse5/tools'
 import { readFile } from 'node:fs/promises';
 
-/** @param {import('@11ty/eleventy').UserConfig} eleventyConfig */
-export function IconsPlugin(eleventyConfig, {
+export function IconsPlugin(eleventyConfig: UserConfig, {
   bundleName = 'svg',
   iconsDir = './icons/',
 } = {}) {
   eleventyConfig.addGlobalData('iconsPluginBucketName', bundleName);
   eleventyConfig.addExtension('svg', {
-    compile(content, inputPath) {
+    compile(content: string, inputPath: string) {
       if (inputPath.startsWith(iconsDir))
         return () => content
     },
@@ -19,12 +21,12 @@ export function IconsPlugin(eleventyConfig, {
     isIncrementalMatch() {
       return this.isFileRelevantToInputPath
     },
-    async getData(inputPath) {
+    async getData(inputPath: string) {
       if (inputPath.startsWith(iconsDir)) {
         const content = await readFile(inputPath, 'utf-8');
         const document = parse(content);
         const titleNode = query(document, node => isElementNode(node) && node.tagName === 'title')
-        let title
+        let title: string;
         if (titleNode)
           title = getTextContent(titleNode);
         return { title }
@@ -34,7 +36,7 @@ export function IconsPlugin(eleventyConfig, {
     }
   });
 
-  eleventyConfig.addCollection('icon', function(api) {
+  eleventyConfig.addCollection('icon', function(api: CollectionApi) {
     return api.getFilteredByGlob('icons/*.svg')
       .map(x => {
         x.templateContent = x.rawInput
@@ -42,7 +44,11 @@ export function IconsPlugin(eleventyConfig, {
       });
   })
 
-  eleventyConfig.addShortcode('icon', function icon(name, kwargs) {
+  interface IconKwargs {
+    [key: string]: string;
+  }
+
+  eleventyConfig.addShortcode('icon', function icon(name: string, kwargs: IconKwargs) {
     this.ctx.page.icons ||= new Set();
     this.ctx.page.icons.add(name);
     const { __keywords, ...attrs } = kwargs ?? {}

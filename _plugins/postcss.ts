@@ -1,20 +1,22 @@
+import type { UserConfig } from '@11ty/eleventy';
+
 import { Processor } from 'postcss';
+
 import env from 'postcss-preset-env';
 
 const processor = new Processor([
   env({
     stage: false,
     features: {
-      "nesting-rules": true,
+      'nesting-rules': true,
     }
   })
 ]);
 
-/**
- * @param {string|Promise<string>} input
- * @param {string} from
- */
-export async function postcss(input, from = this?.page?.inputPath) {
+export async function postcss(
+  input: string | Promise<string>,
+  from: string = this?.page?.inputPath,
+) {
   try {
     const result = await processor.process(await input, { from });
     return result.css;
@@ -24,17 +26,10 @@ export async function postcss(input, from = this?.page?.inputPath) {
   }
 }
 
-/**
- * @param {import('@11ty/eleventy').UserConfig} eleventyConfig
- */
-export function PostCSSPlugin(eleventyConfig) {
+export function PostCSSPlugin(eleventyConfig: UserConfig) {
   eleventyConfig.addTemplateFormats('postcss');
   eleventyConfig.addExtension('postcss', {
-    /**
-       * @param {string} content
-       * @param {string} inputPath
-       */
-    async compile(content, inputPath) {
+    async compile(content: string, inputPath: string) {
       return () => postcss(content, inputPath);
     }
   });

@@ -1,11 +1,13 @@
+import type { UserConfig } from '@11ty/eleventy';
+import type MarkdownIt from 'markdown-it';
+
 import attrs from 'markdown-it-attrs';
 import anchor from 'markdown-it-anchor';
 import deflist from 'markdown-it-deflist';
 import footnote from 'markdown-it-footnote';
 
-/** @param{import('@11ty/eleventy').UserConfig} eleventyConfig */
-export function MarkdownTweaksPlugin(eleventyConfig) {
-  eleventyConfig.amendLibrary('md', /** @param {import('markdown-it')} md*/md =>
+export function MarkdownTweaksPlugin(eleventyConfig: UserConfig) {
+  eleventyConfig.amendLibrary('md', (md: MarkdownIt)=>
     md.set({ breaks: false })
       .use(anchor, { permalink: anchor.permalink.headerLink(), })
       .use(deflist)

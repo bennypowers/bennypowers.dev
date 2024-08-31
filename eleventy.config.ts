@@ -1,46 +1,45 @@
-/** @import { UserConfig } from '@11ty/eleventy'; */
+import type { UserConfig } from '@11ty/eleventy';
 
-import 'dotenv/config';
+process.loadEnvFile();
 
 import { EleventyRenderPlugin } from '@11ty/eleventy';
 
 import EleventyPluginDirectoryOutput from '@11ty/eleventy-plugin-directory-output';
 import EleventyPluginSyntaxhighlight from '@11ty/eleventy-plugin-syntaxhighlight';
 import EleventyPluginWebC from '@11ty/eleventy-plugin-webc';
+import EleventyRSSPlugin from '@11ty/eleventy-plugin-rss';
 
 import EmbedPlugin from 'eleventy-plugin-embed-everything';
 import TableOfContentsPlugin from 'eleventy-plugin-nesting-toc';
 import TimeToReadPlugin from 'eleventy-plugin-time-to-read';
 
-import { feedPlugin as EleventyRSSPlugin } from '@11ty/eleventy-plugin-rss';
 import { slideDecksPlugin as DecksPlugin } from 'eleventy-plugin-slide-decks';
 
-import { YAMLDataPlugin } from './_plugins/yaml-data.js';
-import { MarkdownTweaksPlugin } from './_plugins/markdown/tweaks.js';
-import { EmojiWrapPlugin } from './_plugins/emoji-wrap.js';
-import { GlitchPlugin } from './_plugins/glitch.js';
-import { IconsPlugin } from './_plugins/icons.js';
-import { FiltersPlugin } from './_plugins/filters.js';
-import { FontsPlugin } from './_plugins/fonts.js';
-import { OpenGraphCardPlugin } from './_plugins/opengraph-cards.js';
-import { PostsPlugin } from './_plugins/posts.js';
-import { PostCSSPlugin, postcss } from './_plugins/postcss.js';
-import { RedHatDeckPlugin } from './_plugins/redhat-deck.js';
-import { RHDSPlugin } from './_plugins/rhds.js';
-import { DC23Plugin } from './_plugins/devconf-brno-2023.js';
-import { JamPackPlugin } from './_plugins/jampack.js';
-import { WebmentionsPlugin } from './_plugins/webmentions/webmentions.js';
-import { ImportMapPlugin } from './_plugins/importMap.js';
-import { WebCDSDWorkaroundPlugin } from './_plugins/dsd/webc-dsd-slot-workaround.js';
-import { FedEmbedPlugin } from './_plugins/fed-embed/fed-embed.js';
+import { WebmentionsPlugin } from '#plugins/webmentions/webmentions.ts';
+import { ImportMapPlugin } from '#plugins/importMap.ts';
+
+import { YAMLDataPlugin } from '#plugins/yaml-data.ts';
+import { MarkdownTweaksPlugin } from '#plugins/markdown/tweaks.ts';
+import { EmojiWrapPlugin } from '#plugins/emoji-wrap.ts';
+import { GlitchPlugin } from '#plugins/glitch.ts';
+import { IconsPlugin } from '#plugins/icons.ts';
+import { FiltersPlugin } from '#plugins/filters.ts';
+import { FontsPlugin } from '#plugins/fonts.ts';
+import { OpenGraphCardPlugin } from '#plugins/opengraph-cards.ts';
+import { PostsPlugin } from '#plugins/posts.ts';
+import { PostCSSPlugin, postcss } from '#plugins/postcss.ts';
+import { RedHatDeckPlugin } from '#plugins/redhat-deck.ts';
+import { RHDSPlugin } from '#plugins/rhds.ts';
+import { DC23Plugin } from '#plugins/devconf-brno-2023.ts';
+import { JamPackPlugin } from '#plugins/jampack.ts';
+import { WebCDSDWorkaroundPlugin } from '#plugins/dsd/webc-dsd-slot-workaround.ts';
+import { FedEmbedPlugin } from '#plugins/fed-embed/fed-embed.ts';
 
 import Prism from 'prismjs/components/index.js';
 
-const isWatch =
-  process.argv.some(x => x === '--serve' || x === '--watch');
+import isWatch from '#data/watch.ts';
 
-/** @param {UserConfig} eleventyConfig */
-export default function(eleventyConfig) {
+export default function(eleventyConfig: UserConfig) {
   eleventyConfig.setQuietMode(true);
   eleventyConfig.addPassthroughCopy('manifest.webmanifest');
   eleventyConfig.addPassthroughCopy('assets/**/*.{svg,png,jpeg,jpg,gif,webp,webm,js,d.ts,ico,webmanifest,json,woff,woff2}');
@@ -70,8 +69,7 @@ export default function(eleventyConfig) {
     bundlePluginOptions: {
       bundles: ['svg'],
       transforms: [
-        /** @param {string} content */
-        async function(content) {
+        async function(content: string) {
           if (this.type === 'css') {
             return postcss(content);
           } else {
@@ -99,12 +97,10 @@ export default function(eleventyConfig) {
   eleventyConfig.addPlugin(TimeToReadPlugin);
   eleventyConfig.addPlugin(EmbedPlugin, { lite: true });
   eleventyConfig.addPlugin(EmojiWrapPlugin, { exclude: /^_site\/.*-repro\.html$/ });
-  eleventyConfig.addPlugin(JamPackPlugin, {
-    exclude: 'decks/**/*',
-  });
+  eleventyConfig.addPlugin(JamPackPlugin, { exclude: 'decks/**/*' });
   eleventyConfig.addPlugin(PostCSSPlugin, { include: /devconf-brno-2023\/components\/.*\.css/ });
 
-  eleventyConfig.addPlugin(EleventyRSSPlugin, {
+  eleventyConfig.addPlugin(EleventyRSSPlugin.feedPlugin, {
     type: 'rss',
     outputPath: '/feed.xml',
     collection: {
@@ -148,26 +144,40 @@ export default function(eleventyConfig) {
       '@patternfly/elements/pf-spinner/pf-spinner.js',
       '@patternfly/elements/pf-accordion/pf-accordion.js',
       '@patternfly/elements/pf-tooltip/pf-tooltip.js',
+      '@patternfly/pfe-core',
       '@patternfly/pfe-core/controllers/logger.js',
       '@patternfly/pfe-core/controllers/style-controller.js',
       '@patternfly/pfe-core/controllers/slot-controller.js',
+      '@patternfly/pfe-core/controllers/internals-controller.js',
+      '@patternfly/pfe-core/controllers/at-focus-controller.js',
+      '@patternfly/pfe-core/controllers/roving-tabindex-controller.js',
+      '@patternfly/pfe-core/controllers/floating-dom-controller.js',
+      '@patternfly/pfe-core/controllers/overflow-controller.js',
+      '@patternfly/pfe-core/controllers/timestamp-controller.js',
+      '@patternfly/pfe-core/controllers/tabs-aria-controller.js',
+      '@patternfly/pfe-core/decorators.js',
+      '@patternfly/pfe-core/decorators/observes.js',
+      '@patternfly/pfe-core/functions/random.js',
+      '@patternfly/pfe-core/functions/context.js',
       '@rhds/tokens/media.js',
-      'lit@^2',
-      'lit@^2/async-directive.js',
-      'lit@^2/decorators.js',
-      'lit@^2/decorators/custom-element.js',
-      'lit@^2/decorators/property.js',
-      'lit@^2/decorators/query.js',
-      'lit@^2/decorators/query-all.js',
-      'lit@^2/decorators/state.js',
-      'lit@^2/directive-helpers.js',
-      'lit@^2/directive.js',
-      'lit@^2/directives/class-map.js',
-      'lit@^2/directives/if-defined.js',
-      'lit@^2/directives/style-map.js',
-      'lit@^2/experimental-hydrate-support.js',
-      'lit@^2/experimental-hydrate.js',
-      'lit@^2/static-html.js',
+      'lit',
+      'lit/async-directive.js',
+      'lit/decorators.js',
+      'lit/decorators/custom-element.js',
+      'lit/decorators/query-assigned-elements.js',
+      'lit/decorators/property.js',
+      'lit/decorators/query.js',
+      'lit/decorators/query-all.js',
+      'lit/decorators/state.js',
+      'lit/directive-helpers.js',
+      'lit/directive.js',
+      'lit/directives/repeat.js',
+      'lit/directives/unsafe-html.js',
+      'lit/directives/class-map.js',
+      'lit/directives/if-defined.js',
+      'lit/directives/style-map.js',
+      'lit/static-html.js',
+      '@lit/context',
     ],
     additionalImports(configData) {
       const pathPrefix = configData?.pathPrefix ?? process.env.ELEVENTY_PATH_PREFIX ?? '';
@@ -175,7 +185,7 @@ export default function(eleventyConfig) {
       return {
         slidem: `/assets/decks.min.js`,
         'slidem/slidem-slide.js': `/assets/decks.min.js`,
-        ['@rhds/elements']: `${rhdsPrefix}/rhds.min.js`,
+        ['@rhds/elements']: `${rhdsPrefix}/elements.js`,
         ['@rhds/elements/']: `${rhdsPrefix}/elements/`,
         ['@rhds/elements/lib/']: `${rhdsPrefix}/lib/`,
       };

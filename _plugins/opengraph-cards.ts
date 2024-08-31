@@ -1,23 +1,23 @@
+import type { UserConfig } from '@11ty/eleventy';
+
 import { parseHTML } from 'linkedom';
+
 import EleventyFetch from '@11ty/eleventy-fetch';
 
-/**
- * @param {string} string
- */
-function capitalize(string) {
+function capitalize(string: string) {
   return string.charAt(0).toUpperCase() + string.slice(1);
 }
 
-/** @typedef {{ ogImage?: Partial<Record<'url'|'width'|'height'|'type', string>> } & Record<`og${string}`, string>} OpenGraphCardData */
+interface OpenGraphCardData extends Record<`og${string}`, unknown> {
+  requestUrl: string;
+  ogImage?: Partial<Record<'url' | 'width' | 'height' | 'type', string>>;
+}
 
-/**
- * @param {string} requestUrl
- */
-async function getOpenGraphCardData(requestUrl) {
+async function getOpenGraphCardData(requestUrl: string) {
   try {
     const html = await EleventyFetch(requestUrl, { type: 'text', duration: '1w' });
     const { document } = parseHTML(html)
-    return Array.from(document.querySelectorAll('meta[property^="og:"]')).reduce((acc, meta) => {
+    return Array.from(document.querySelectorAll<HTMLMetaElement>('meta[property^="og:"]')).reduce((acc, meta) => {
       const content = meta.getAttribute('content');
       const property = meta.getAttribute('property').replace('og:', '');
       if (property.startsWith('image')) {
@@ -31,14 +31,13 @@ async function getOpenGraphCardData(requestUrl) {
         acc[`og${capitalize(property)}`] = content;
       }
       return acc;
-    }, /**@type{OpenGraphCardData}*/({ requestUrl }));
-  } catch (e) { console.log(e); }
+    }, { requestUrl } as OpenGraphCardData);
+  } catch (e) {
+    console.log(e);
+  }
 }
 
-/**
- * @param {string} content
- */
-async function appendOpenGraphCard(content) {
+async function appendOpenGraphCard(content: string) {
   const { document } = parseHTML(content);
   const firstLink = document.querySelector('a[href]:not(.u-url)');
   if (!firstLink) return content;
@@ -50,15 +49,14 @@ async function appendOpenGraphCard(content) {
     if (last !== firstLink) {
       last.remove();
     }
-    const card = `<opengraph-card href="${href}"></opengraph-card>`;
-    return /* html */`${document.toString()}${card}`;
+    const card = /*html*/`<opengraph-card href="${href}"></opengraph-card>`;
+    return `${document.toString()}${card}`;
   } else {
     return content;
   }
 }
 
-/** @param {import('@11ty/eleventy').UserConfig} eleventyConfig */
-export function OpenGraphCardPlugin(eleventyConfig) {
+export function OpenGraphCardPlugin(eleventyConfig: UserConfig) {
   eleventyConfig.addFilter('getOpenGraphCardData', getOpenGraphCardData);
   eleventyConfig.addFilter('appendOpenGraphCard', appendOpenGraphCard);
 }

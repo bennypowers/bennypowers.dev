@@ -1,5 +1,6 @@
-/** @param {string[]} fonts */
-function fontsFilter(fonts) {
+import type { UserConfig } from "@11ty/eleventy";
+
+function fontsFilter(fonts: string[]) {
   const url = new URL('css2', 'https://fonts.googleapis.com');
   for (const font of fonts)
         url.searchParams.append('family',font);
@@ -7,7 +8,6 @@ function fontsFilter(fonts) {
   return url.href;
 }
 
-/** @param{import('@11ty/eleventy').UserConfig} eleventyConfig */
-export function FontsPlugin(eleventyConfig) {
+export function FontsPlugin(eleventyConfig: UserConfig) {
   eleventyConfig.addFilter('googleFonts', fontsFilter);
 };

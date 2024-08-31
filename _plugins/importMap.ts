@@ -1,14 +1,14 @@
-// @ts-check
+import type { UserConfig } from '@11ty/eleventy';
+import type { IImportMap } from '@jspm/import-map';
+import type { Install } from "@jspm/generator";
+
 import { AssetCache } from "@11ty/eleventy-fetch";
+
 const cache = new AssetCache('import_map_results');
 
-let lastOptions;
+let lastOptions: string;
 
-/**
- * @param {ImportMapPluginConfig} options
- * @param {AssetCache} cache
- */
-async function fetchIt(options, cache) {
+async function fetchIt(options: ImportMapPluginConfig, cache: AssetCache) {
   console.log('[eleventy-plugin-jspm]: Generating import map...');
   const { Generator } = await import('@jspm/generator');
   const generator = new Generator({ env: ['production', 'browser', 'module'] });
@@ -19,22 +19,16 @@ async function fetchIt(options, cache) {
   return map;
 }
 
-/**
- * @typedef {object} ImportMapPluginConfig
- * @property {string | import("@jspm/generator").Install | (string | import("@jspm/generator").Install)[]} specs
- * @property {string} [cacheFor]
- * @property {(configData: ImportMapPluginConfig) => Promise<Record<string, string>>} [additionalImports]
- */
+interface ImportMapPluginConfig {
+  specs: string | Install | (string | Install)[];
+  cacheFor?: string;
+  additionalImports?: (configData: ImportMapPluginConfig) => Promise<Record<string, string>>;
+}
 
-/**
- * @param {import('@11ty/eleventy').UserConfig} eleventyConfig
- * @param {ImportMapPluginConfig} options
- */
-export function ImportMapPlugin(eleventyConfig, options) {
-  /** @param {ImportMapPluginConfig} configData */
-  async function importMap(configData) {
+export function ImportMapPlugin(eleventyConfig: UserConfig, options: ImportMapPluginConfig) {
+  async function importMap(configData: ImportMapPluginConfig) {
     const serializedOptions = JSON.stringify(options.specs);
-    let map;
+    let map: IImportMap;
     if (serializedOptions !== lastOptions) {
       lastOptions = serializedOptions;
       map = await fetchIt(options, cache);
@@ -43,9 +37,9 @@ export function ImportMapPlugin(eleventyConfig, options) {
         ? await fetchIt(options, cache)
         : await cache.getCachedValue();
     }
-    const json = { ...map };
+    const json = structuredClone(map);
     const additional = await options?.additionalImports?.call(this, configData) ?? {}
-    for (const [key, value] of Object.entries(additional))
+    for (const [key, value] of Object.entries<string>(additional))
       json.imports[key] = value;
     return json;
   }

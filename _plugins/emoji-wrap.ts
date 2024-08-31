@@ -1,3 +1,5 @@
+import type { UserConfig } from '@11ty/eleventy';
+
 import getRegex from 'emoji-regex';
 import names from 'emoji-short-name';
 import html from 'dedent';
@@ -10,14 +12,10 @@ const RE = getRegex();
  * Wrap emoji in a span with an image role and aria-label
  * Thanks to Kitty Giraudel
  * @see https://kittygiraudel.com/2021/01/02/accessible-emojis-with-11ty/
- * @param {import('@11ty/eleventy').UserConfig} eleventyConfig
  */
-export function EmojiWrapPlugin(eleventyConfig, { exclude }) {
+export function EmojiWrapPlugin(eleventyConfig: UserConfig, { exclude }) {
   eleventyConfig.addTransform('emojis',
-    /**
-     * @param {string} content
-     */
-    function (content) {
+    function (content: string) {
       if (!this.page.outputPath.endsWith?.('.html')
           || (exclude && this.page.outputPath.match?.(exclude))) {
         return content;

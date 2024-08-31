@@ -1,35 +1,42 @@
-// @ts-check
+import type { UserConfig } from '@11ty/eleventy';
+
 import EleventyFetch from '@11ty/eleventy-fetch';
 
-/**
- * @typedef {object} WebMentionAuthor
- * @property {string} url
- * @property {string} name
- * @property {string} photo
- */
+export interface WebMentionAuthor {
+  url: string;
+  name: string;
+  photo: string;
+}
 
-/**
- * @typedef {object} WebMention
- * @property {WebMentionAuthor} author
- * @property {string} published
- * @property {string} url
- * @property {{ html: string; text: string; }} content
- * @property {string} wm-received
- * @property {'like-of'|'repost-of'|'in-reply-to'} wm-property
- */
+export interface WebMention {
+  author: WebMentionAuthor;
+  published: string;
+  url: string;
+  content: {
+    html: string;
+    text: string;
+  };
+  'wm-received': string;
+  'like-of'?: string;
+  'repost-of'?: string;
+  'in-reply-to'?: string;
+}
 
-/** @typedef {object} WebMentionResponse
- * @property {WebMention[]} children
- */
+export interface WebMentionResponse {
+  children: WebMention[];
+}
 
-/** @type {Map<string, Record<'likes'|'replies'|'reposts', WebMention[]>>} */
-const COLLATED = new Map();
+const COLLATED: Map<
+  string,
+  Record<
+    | 'likes'
+    | 'replies'
+    | 'reposts',
+    WebMention[]>
+  >
+  = new Map();
 
-/**
- * @param {string} pageUrl
- * @param {WebMention[]} mentions
- */
-function collateWebmentions(pageUrl, mentions) {
+function collateWebmentions(pageUrl: string, mentions: WebMention[]) {
   if (!COLLATED.has(pageUrl)) {
     COLLATED.set(pageUrl, mentions.reduce((acc, mention) => {
       switch(mention['wm-property']) {
@@ -43,18 +50,9 @@ function collateWebmentions(pageUrl, mentions) {
   return COLLATED.get(pageUrl);
 }
 
-/**
- * @param {import('@11ty/eleventy').UserConfig} eleventyConfig
- * @param {string} domain
- */
-function getWebmentions(eleventyConfig, domain) {
-  /**
-   * @param {string}   pageUrl
-   * @param {string[]} altUrls
-   */
-  return async function getWebmentions(pageUrl, altUrls) {
-    /** @type {WebMentionResponse} */
-    const allWMs = eleventyConfig.globalData.allWebmentions;
+function getWebmentions(eleventyConfig: UserConfig, domain: string) {
+  return async function getWebmentions(pageUrl: string, altUrls: string[]) {
+    const allWMs: WebMentionResponse = eleventyConfig.globalData.allWebmentions;
     const pageUrlRE = new RegExp(`^https?:\/\/${domain}${pageUrl}?`);
     const pageMentions = allWMs.children.filter(wm => {
       const target = wm['wm-target'];
@@ -64,8 +62,7 @@ function getWebmentions(eleventyConfig, domain) {
   }
 }
 
-/** @param {import('@11ty/eleventy').UserConfig} eleventyConfig */
-export function WebmentionsPlugin(eleventyConfig, { domain, webmentionIoToken }) {
+export function WebmentionsPlugin(eleventyConfig: UserConfig, { domain, webmentionIoToken }) {
   eleventyConfig.on('eleventy.before', async function() {
     const webmentionIoUrl = new URL('/api/mentions.jf2', 'https://webmention.io')
           webmentionIoUrl.searchParams.append('token', webmentionIoToken);

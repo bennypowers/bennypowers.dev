@@ -1,8 +1,9 @@
+import type { UserConfig } from '@11ty/eleventy';
+
 import html from 'dedent';
 
-/** @param{import('@11ty/eleventy').UserConfig} eleventyConfig */
-export function GlitchPlugin(eleventyConfig) {
-  eleventyConfig.addShortcode('glitch', function(embedCode, ...options) {
+export function GlitchPlugin(eleventyConfig: UserConfig) {
+  eleventyConfig.addShortcode('glitch', function(embedCode: string, ...options: string[]) {
     options = options.filter(Boolean);
     const embedUrl = new URL(`/embed/${embedCode}`, 'https://glitch.com');
     const flags = new Set(options);

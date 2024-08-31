@@ -1,0 +1,11 @@
+{
+  "compilerOptions": {
+    "module": "NodeNext",
+    "resolveJsonModule": true,
+    "allowSyntheticDefaultImports": true,
+    "moduleResolution": "NodeNext",
+    "allowImportingTsExtensions": true,
+    "target": "ESNext",
+    "noEmit": true,
+  }
+}

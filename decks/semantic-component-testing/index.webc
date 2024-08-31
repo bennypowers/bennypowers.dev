@@ -28,7 +28,7 @@ eleventyImport:
   <link slot="before" rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 </slide-deck>
 
-<script src="../../_plugins/dsd/dsd.js" webc:bucket="after"></script>
+<script src="../../assets/dsd.js" webc:bucket="after"></script>
 
 <link rel="stylesheet" href="index.css">
 <link rel="stylesheet" href="../../assets/red-hat-font.css">

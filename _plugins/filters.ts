@@ -1,11 +1,8 @@
+import type { UserConfig } from '@11ty/eleventy';
 import { readFile } from 'node:fs/promises';
 import { dirname, join } from 'node:path';
 
-/**
- * @param {string} content
- * @return {string}
- */
-function abbrs(content) {
+function abbrs(content: string): string {
   let replaced = content;
   for (const { name, title } of this.ctx?.abbrs ?? []) {
     if (name && title)
@@ -26,10 +23,8 @@ function abbrs(content) {
 
 /**
  * @see https://mozilla.github.io/nunjucks/templating.html#groupby
- * @param {object[]} array
- * @param {string} prop
  */
-function groupby(array, prop) {
+function groupby(array: object[], prop: string) {
   const obj = {};
   for (const item of array) {
     obj[item[prop]] ??= [];
@@ -38,12 +33,7 @@ function groupby(array, prop) {
   return obj;
 }
 
-/**
- * @param {string | number | Date} a
- * @param {string | number | Date} b
- * @return {boolean}
- */
-function isSameDay(a, b) {
+function isSameDay(a: string | number | Date, b: string | number | Date): boolean {
   const A = new Date(a);
   const B = new Date(b);
   return (
@@ -53,21 +43,15 @@ function isSameDay(a, b) {
   );
 }
 
-/**
- * @param {{ [s: string]: any; } | ArrayLike<any>} obj
- * @param {string | string[]} props
- */
-const omit = (obj,props) =>
+const omit = (obj: { [s: string]: any; } | ArrayLike<any>,props: string | string[]) =>
   (Object.fromEntries(Object.entries(obj)
     .filter(([x]) =>
       !props.includes(x))))
 
-/**
- * @param {string|Date} d
- * @param {Intl.DateTimeFormatOptions & { lang: string }} opts
- * @return { string }
- */
-function formatDate(d, opts) {
+function formatDate(
+  d: string | Date,
+  opts: Intl.DateTimeFormatOptions & { lang: string; },
+): string {
   const { lang = 'en-US', ...init } = opts;
   if (d instanceof Date) {
     return new Intl.DateTimeFormat(lang, init).format(d);
@@ -81,25 +65,18 @@ function formatDate(d, opts) {
   }
 }
 
-/**
- * @param {string} content
- */
-function linkifyHashtags(content) {
+function linkifyHashtags(content: string) {
   return content.replace(/(\s*)#(\w+)(\s*)/g, function(_,pre, tag,post) {
     return /* html */`${pre}<a href="https://social.bennypowers.dev/tags/${tag.toLowerCase()}">#${tag}</a>${post}`;
   })
 }
 
-/**
- * @param {string | number} str
- */
-function translate(str, lang = this?.lang ?? this.$data?.lang ?? 'en') {
+function translate(str: string | number, lang = this?.lang ?? this.$data?.lang ?? 'en') {
   const i18n = this.i18n ?? this.$data?.i18n;
   return i18n?.[lang]?.[str] ?? str;
 }
 
-/** @param{import('@11ty/eleventy').UserConfig} eleventyConfig */
-export function FiltersPlugin(eleventyConfig) {
+export function FiltersPlugin(eleventyConfig: UserConfig) {
   eleventyConfig.addFilter('abbrs', abbrs);
   eleventyConfig.addFilter('omit', omit);
   eleventyConfig.addFilter('translate', translate);
@@ -107,7 +84,7 @@ export function FiltersPlugin(eleventyConfig) {
   eleventyConfig.addFilter('formatDate', formatDate);
   eleventyConfig.addFilter('linkifyHashtags', linkifyHashtags);
   eleventyConfig.addJavaScriptFunction('groupby', groupby);
-  eleventyConfig.addFilter('include', async function includeFilter(/** @type {string} */ path) {
+  eleventyConfig.addFilter('include', async function includeFilter(path: string) {
     const resolved = join(dirname(new URL(import.meta.url).pathname), '..', '_includes', path)
     const content = await readFile(resolved, 'utf8');
     return content;

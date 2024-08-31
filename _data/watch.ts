@@ -1,5 +1,2 @@
-const isWatching = () =>
+export default () =>
   process.argv.includes('--watch') || process.argv.includes('--serve')
-
-module.exports = isWatching;
-

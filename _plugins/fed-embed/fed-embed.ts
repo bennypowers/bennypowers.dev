@@ -1,7 +1,15 @@
+import type { UserConfig } from '@11ty/eleventy';
+
 import EleventyFetch from '@11ty/eleventy-fetch';
 
+interface FedEmbedOptions {
+  post: string;
+}
+
 class FedEmbed {
-  constructor(props) {
+  post: URL;
+
+  constructor(props: FedEmbedOptions) {
     const { post } = props;
     this.post = new URL(post);
   }
@@ -10,14 +18,14 @@ class FedEmbed {
     switch (true) {
       case (!!this.post): return this.renderPost();
       default:
-        console.error(`No valid URLs found on ${JSON.stringify(props)}`);
+        console.error(`No valid URLs found on ${JSON.stringify(this.post.href)}`);
         break;
     }
   }
 
   async getPost() {
     const { origin, pathname } = this.post;
-    let postURL;
+    let postURL: URL;
     try {
       postURL = new URL(`${origin}/api/v1/statuses/${pathname.split('/').at(-1)}`);
     } catch (error) {
@@ -39,7 +47,7 @@ class FedEmbed {
     return post?.content ?? '';
   }
 
-  async fetch(sourceURL, opts) {
+  async fetch(sourceURL: URL, opts?: { type: string; }) {
     const type = opts?.type ?? 'json';
     const href = typeof sourceURL === 'string' ? sourceURL : sourceURL.href;
     const res = await EleventyFetch(href, { duration: '4w', type });
@@ -47,9 +55,8 @@ class FedEmbed {
   }
 }
 
-/** @param {import('@11ty/eleventy').UserConfig} eleventyConfig */
-export function FedEmbedPlugin(eleventyConfig) {
-  eleventyConfig.addJavaScriptFunction('getFediPost', async post => {
+export function FedEmbedPlugin(eleventyConfig: UserConfig) {
+  eleventyConfig.addJavaScriptFunction('getFediPost', async (post: string) => {
     if (post) {
       const embed = new FedEmbed({ post });
       const res = await embed.getPost();
