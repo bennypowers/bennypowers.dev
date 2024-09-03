@@ -1,6 +1,6 @@
 import type { UserConfig } from '@11ty/eleventy';
 
-process.loadEnvFile();
+try { process.loadEnvFile(); } catch {}
 
 import { EleventyRenderPlugin } from '@11ty/eleventy';
 
