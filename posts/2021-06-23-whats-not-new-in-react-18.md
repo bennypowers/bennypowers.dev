@@ -1,6 +1,11 @@
 ---
 title: What's Not new in React 18
 published: true
+tldr: >-
+  The react team could have implemented HTML support in React 18, they could
+  have even let others do it for them, but they didn't. It's time to reconsider
+  a web framework which is at best negligent and at worst actively hostile to
+  web standards.
 tags:
   - javascript
   - react

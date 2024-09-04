@@ -2,6 +2,12 @@
 title: 8 Days of Web Components Tips
 published: true
 coverImage: https://dev-to-uploads.s3.amazonaws.com/uploads/articles/jbu8sm54svooogakrb4d.jpg
+tldr: >-
+  In honour of Hannukah this year, I undertook to write 8 web components tips,
+  one for each night of the festival. Tonight is the 8th and final night of the
+  festival. The mystics said that this night combines and contains aspects of
+  each of the seven previous nights, so I'd like to share a compilation of those
+  tips with the dev community.
 altUrls:
   - https://dev.to/bennypowers/8-days-of-web-components-tips-39o5
 tags:

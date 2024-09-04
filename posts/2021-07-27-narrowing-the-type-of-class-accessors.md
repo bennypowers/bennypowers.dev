@@ -1,14 +1,14 @@
 ---
 title: Narrowing the Type of Class Accessors
 published: true
+tldr: Try using decorators to narrow the type of JavaScript subclass accessors
 tags:
   - typescript
   - javascript
 ---
 
-Javascript [class
-accessors](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/get)
-let you define a function to get or set a particular value on an object.
+Javascript [class accessors][accessors] let you define a function to get or set
+a particular value on an object.
 
 Why would you want to do that? One popular reason is to run "side effects" in a
 setter. So for example say you want to make an HTTP request every time a user
@@ -60,13 +60,11 @@ options property to only accept PostInit objects". This _should_ work, but...
 > 'options' is defined as an accessor in class 'Fetcher', but is overridden
 > here in 'Poster' as an instance property.
 
-Oops! TypeScript complains. This [change was introduced in
-2020](https://github.com/microsoft/TypeScript/pull/37894) in order to make
-TypeScript behave more like plain JavaScript. Indeed, TC39 decreed that [class
-fields should have "define
-semantics"](https://github.com/tc39/proposal-class-fields#public-fields-created-with-objectdefineproperty)
-instead of "set semantics", which means that if we merely stripped these files
-of typescript syntax, our Poster class would break.
+Oops! TypeScript complains. This [change was introduced in 2020][tsdefine] in
+order to make TypeScript behave more like plain JavaScript. Indeed, TC39
+decreed that [class fields should have "define semantics"][define] instead of
+"set semantics", which means that if we merely stripped these files of
+typescript syntax, our Poster class would break.
 
 The debate over TC39's decision to use define semantics continues (even though
 the decision was made already), so we won't get deeper into it here, but when
@@ -135,3 +133,7 @@ They'd be right to do so. We could come up with other examples where the
 options object doesn't have runtime validation, or where that validation is
 done in other methods. In those cases, it would be right-handy to declare the
 narrower type on the subclass.
+
+[accessors]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/get
+[define]: https://github.com/tc39/proposal-class-fields#public-fields-created-with-objectdefineproperty
+[tsdefine]: https://github.com/microsoft/TypeScript/pull/37894
