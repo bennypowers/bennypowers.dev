@@ -63,3 +63,4 @@ const latestPublished = xs =>
   <p><small>Feeling homesick? Don't forget to call your mom...</small></p>
 </main>
 
+<a class="u-bridgy-fed" href="https://fed.brid.gy/" hidden="from-humans"></a>
