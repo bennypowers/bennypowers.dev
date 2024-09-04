@@ -108,10 +108,10 @@ export default function(eleventyConfig: UserConfig) {
       limit: 0,
     },
     metadata: {
-      title: "Benny Powers: Web Developer",
+      title: 'Benny Powers: Web Developer',
       subtitle: 'Thoughts and impression about web development by Benny Powers from Jerusalem',
       language: 'en',
-      url: "https://bennypowers.dev/",
+      base: 'https://bennypowers.dev/',
       author:{
         name: 'Benny Powers',
         email: 'web@bennypowers.com',
