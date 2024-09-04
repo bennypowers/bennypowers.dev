@@ -34,6 +34,7 @@ import { DC23Plugin } from '#plugins/devconf-brno-2023.ts';
 import { JamPackPlugin } from '#plugins/jampack.ts';
 import { WebCDSDWorkaroundPlugin } from '#plugins/dsd/webc-dsd-slot-workaround.ts';
 import { FedEmbedPlugin } from '#plugins/fed-embed/fed-embed.ts';
+import { RSSSummaryPlugin } from '#plugins/rss-summary.ts';
 
 import Prism from 'prismjs/components/index.js';
 
@@ -100,24 +101,8 @@ export default function(eleventyConfig: UserConfig) {
   eleventyConfig.addPlugin(JamPackPlugin, { exclude: 'decks/**/*' });
   eleventyConfig.addPlugin(PostCSSPlugin, { include: /devconf-brno-2023\/components\/.*\.css/ });
 
-  eleventyConfig.addPlugin(EleventyRSSPlugin.feedPlugin, {
-    type: 'rss',
-    outputPath: '/feed.xml',
-    collection: {
-      name: 'posts',
-      limit: 0,
-    },
-    metadata: {
-      title: 'Benny Powers: Web Developer',
-      subtitle: 'Thoughts and impression about web development by Benny Powers from Jerusalem',
-      language: 'en',
-      base: 'https://bennypowers.dev/',
-      author:{
-        name: 'Benny Powers',
-        email: 'web@bennypowers.com',
-      },
-    },
-  });
+  eleventyConfig.addPlugin(EleventyRSSPlugin);
+  eleventyConfig.addPlugin(RSSSummaryPlugin);
 
   eleventyConfig.addPlugin(EleventyPluginSyntaxhighlight, {
     init() {
