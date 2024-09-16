@@ -15,9 +15,20 @@ adjustments, and *Hey Presto!* before you know it, your problem is solved.
 
 You have implemented a solution: you hung the painting.
 
+Just then, your neighbour knocks on the door. Wouldn't you know it? he *also*
+has a problem. *His* painting has fallen, too. He *also* needs a solution. Being 
+the magnanimous, good-looking, and preturnaturally charming neighbour that you 
+are, you leap into motion, practically stuffing his arms with hammer and nails, 
+and you send him on his way, richly satisfied by your own generosity.
+
+An hour later, he knocks again. You see - your house is built of timber and
+drywall, while your neighbour's house is built of cinderblocks and plaster. Your
+neighbour now has two problems - his painting is still on the floor, *and* he 
+now has an unsightly hole in the wall.
+
 ## Tools and Solutions
 
-Now, that solution needed a bunch of tools to get 'er done:
+Now, your solution needed a bunch of tools to get 'er done:
 
 - the hammer
 - the nails
@@ -33,9 +44,15 @@ all have one thing in common:
 
 If you really needed to, you could probably hang that painting with an old shoe
 
-Consider, too, that your home is built from timber and drywall - does your
-solution work for your neighbour, who built with cinderblocks and plaster?
-Probably not.
+Consider, too, that your solution didn't work for your neighbour, who built with 
+cinderblocks and plaster, and actually made things worse for him. What went 
+wrong?
+was it the tools you gave him? Not necessarily. He might have used the hammer 
+you gave him to drive special cinderblock nails or those plastic-and-tack 
+plaster hooks.
+
+The problem wasn't the tools - *the problem was seeing the tools as the 
+solution*.
 
 ## Why Design Systems
 
