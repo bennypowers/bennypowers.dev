@@ -54,7 +54,7 @@ plaster hooks.
 The problem wasn't the tools - *the problem was seeing the tools as the 
 solution*.
 
-## Why Design Systems
+## Why Design Systems?
 
 If you've been following along, you're probably waiting for the punch line,
 so here it is:
@@ -70,9 +70,9 @@ and *your team*'s design problem.
 Companies adopt design systems because they want:
 
 - a "single source of truth"
-- consistent visual design across large teams
+- consistent visual style across large teams
 - consistent standards of accessibility
-- ux/ui recommendations by specialists
+- ux/ui recommendations lovingly crafted by specialists
 
 All of these are fancy ways of saying they want to establish and enforce
 rules and guidelines for producing user interfaces. Design systems help solve 
@@ -93,3 +93,14 @@ The specialist skills needed to produce a design system are not the same as
 those needed to ship products. Product teams often need to move quickly to ship
 new features, built on top of the previous framework, and they often don't have
 the luxury of The Big Rewrite™️.
+
+## Aiming for the End User?
+
+Even if your organization is made of money, it's still silly and wasteful to 
+reimplement your design system for every framework that comes along.
+
+Design systems that rest on platform features like custom elements, shadow DOM,
+import maps, and plain-old CSS can adapt to multiple projects and frameworks.
+It remains true that legacy frameworks have varying degrees of capability when
+it comes to integrating with platform features newer than 2019, but it's not
+impossible by any stretch of the imagination.
