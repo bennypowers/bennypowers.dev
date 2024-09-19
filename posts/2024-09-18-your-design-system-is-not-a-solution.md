@@ -2,8 +2,9 @@
 title: Your Design System is Not a Solution
 published: true
 tags:
-  - eleventy
-  - typescript
+  - design systems
+  - web components
+audience: Team leaders, design system engineers, product managers.
 tldr: >
 coverImageAlt: >-
 coverImage: null
@@ -54,6 +55,12 @@ plaster hooks.
 The problem wasn't the tools - *the problem was seeing the tools as the 
 solution*.
 
+Jackhammers require care in use. Thumbtacks are cheap, plentiful, and not 
+particularly dangerous both are needed on a construction site - one to break 
+large blocks of concrete and rock, one to hang plans and blueprints. Both tools 
+are important - crucial even - in their own ways, but they have widely different 
+requirements on them
+
 ## Why Design Systems?
 
 If you've been following along, you're probably waiting for the punch line,
@@ -87,17 +94,34 @@ industry is by it's nature prone to widely varied opinions and approaches, often
 incompatible one with the other, and establishing a baseline is hard enough 
 without shipping bespoke implementations for each team that comes along.
 
+:up: ELABORATE HERE
+
 > If you don't own the problem, you can't own the solution
+
+:up: ELABORATE HERE
 
 The specialist skills needed to produce a design system are not the same as 
 those needed to ship products. Product teams often need to move quickly to ship
 new features, built on top of the previous framework, and they often don't have
-the luxury of The Big Rewrite™️.
+the luxury of The Big Rewrite™.
 
 ## Aiming for the End User?
 
 Even if your organization is made of money, it's still silly and wasteful to 
 reimplement your design system for every framework that comes along.
+
+## Solving Integration Problems
+
+- design systems can solve integrations problems
+- but they can't own them - everyone involved has to clearly understand the 
+difference between DS problems, framework problems, and business problems
+- downstream teams have to be willing to work with ds people to solve problems 
+on downstream turf <- FIND BETTER WORDS FOR THIS
+
+Example:
+- mktg needs to inject content, client side
+- this content needs to use design system assets
+- this content has to be federated to 
 
 Design systems that rest on platform features like custom elements, shadow DOM,
 import maps, and plain-old CSS can adapt to multiple projects and frameworks.
