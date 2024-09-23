@@ -1,9 +1,15 @@
+:root {
+  font-size: 18px;
+}
+
 #main-header-socials {
   display: flex;
 }
 
 #side-menu {
   padding-inline-start: 0;
+  padding-inline-end: 3em;
+  max-width: 410px;
 }
 
 #main-header {
@@ -11,6 +17,8 @@
   grid-template-columns: repeat(3, 1fr);
   justify-items: center;
   font-size: 150%;
+  justify-self: center;
+  grid-column: 1/-1;
 
   & nav {
     display: flex;
@@ -25,6 +33,11 @@
   display: none;
 }
 
+body > main {
+  justify-self: end;
+  margin-inline: unset;
+}
+
 main.home {
   text-align: center;
   font-size: 220%;
@@ -32,7 +45,7 @@ main.home {
 
 body.sidebar {
   grid-template-rows: min-content min-content auto min-content;
-  grid-template-columns: minmax(0, 1fr) 300px;
+  grid-template-columns: minmax(0, 2fr) minmax(410px, 1fr);
   grid-template-areas:
     "banner banner"
     "head head"
@@ -43,4 +56,10 @@ body.sidebar {
 #hero {
   width: 50%;
   height: auto;
+}
+
+blockquote {
+  width: max-content;
+  max-width: 613px;
+  margin-inline: auto;
 }
