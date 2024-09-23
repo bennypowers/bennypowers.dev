@@ -167,6 +167,11 @@ fundamentals of fruitful large-scale software collaboration.
 
 > Be conservative in what you do, be liberal in what you accept from others.
 
+-----
+
+Many thanks to my design-systems colleagues Steven Spriggs, Brian Ferry, and 
+Greg Gibson for their helpful notes on earlier drafts of this post.
+
 [platforms]: https://infrequently.org/2020/06/platform-adjacency-theory/
 [frameworks]: https://infrequently.org/series/reckoning/
 [postel]: https://en.wikipedia.org/wiki/Robustness_principle
