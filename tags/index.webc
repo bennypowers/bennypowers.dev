@@ -24,11 +24,15 @@ title: Tags
       "main menu"
       "foot foot";
   }
+
+  main.tags {
+    margin-inline: auto;
+  }
 </style>
 
 <bp-header></bp-header>
 
-<main>
+<main class="tags">
   <h1>All Tags</h1>
   <tag-list open></tag-list>
 </main>

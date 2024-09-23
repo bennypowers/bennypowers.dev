@@ -53,8 +53,8 @@
   --hue-end: 240;
   --primary-hue: var(--hue-start);
   --fixed-font: "Fira Code", "Operator Mono", "Noto Sans Mono", monospace;
-  --heading-font: "Rowdies", serif;
-  --primary-font: "Overpass", sans-serif;
+  --heading-font: Aleo, serif;
+  --primary-font: Inter, sans-serif;
   --background-color: white;
   --text-color: black;
 
@@ -66,6 +66,12 @@
     --saturation-start: 100%;
     --saturation-end: 85%;
   }
+
+  --magic-hue: calc(var(--primary-hue) + var(--hue-offset));
+  --magic-hsl: var(--magic-hue) var(--saturation-start) var(--lightness-start);
+  --magic-start: hsl(var(--magic-hsl));
+  --magic-end: hsl(var(--magic-hue) var(--saturation-end) var(--lightness-end));
+  --magic: linear-gradient(72deg, var(--magic-start), var(--magic-end));
 }
 
 html {
@@ -93,7 +99,7 @@ body {
 #main-header,
 body > main,
 #footer {
-  max-width: 1200px;
+  max-width: 1000px;
   width: calc(100% - 2 * 1.6em);
   margin-inline: auto;
   padding: 1em 1.6em;
@@ -115,17 +121,12 @@ img {
   top: 0;
   background: var(--background-color);
   z-index: 2;
+  height: 40px;
 
   & img { height: 40px; }
 }
 
-:is(a, h1, h2, h3, h4, h5, h6, .magic-color) {
-  --magic-hue: calc(var(--primary-hue) + var(--hue-offset));
-  --magic-hsl: var(--magic-hue) var(--saturation-start) var(--lightness-start);
-  --magic-start: hsl(var(--magic-hsl));
-  --magic-end: hsl(var(--magic-hue) var(--saturation-end) var(--lightness-end));
-  --magic: linear-gradient(72deg, var(--magic-start), var(--magic-end));
-
+:is(a, h1, h2, h3, h4, h5, h6, .magic-color, blockquote::before) {
   background: var(--magic);
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -219,4 +220,24 @@ code-tabs:focus-within {
   position: absolute;
   white-space: nowrap;
   width: 1px;
+}
+
+blockquote {
+  position: relative;
+  margin-inline: 1.2em;
+  margin-block: 1.6em;
+  font-size: 110%;
+  font-weight: 600;
+  &::before {
+    content: '“';
+    background: var(--magic);
+    font-family: var(--heading-font);
+    font-size: 300%;
+    opacity: .75;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    position: absolute;
+    inset-block-start: -.25em;
+    inset-inline-start: -.3em;
+  }
 }

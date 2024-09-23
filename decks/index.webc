@@ -19,7 +19,8 @@ const isPublished = x => x.data.watch || x.data.published !== false;
 <link rel="stylesheet" href="../sidebar.css">
 
 <style>
-  main {
+  main.decks {
+    margin-inline: auto;
     & nav {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(250px, auto));
@@ -72,7 +73,7 @@ const isPublished = x => x.data.watch || x.data.published !== false;
   }
 </style>
 
-<main>
+<main class="decks">
   <h1 @text="h1 ? h1 : title"></h1>
   <nav>
     <ol>
