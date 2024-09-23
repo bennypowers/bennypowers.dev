@@ -25,9 +25,9 @@ the magnanimous, good-looking, and preturnaturally charming neighbour that you
 are, you leap into motion, practically stuffing his arms with hammer and nails, 
 and you send him on his way, richly satisfied by your own generosity.
 
-An hour later, he knocks again. You see - your house is built of timber and
+An hour later, he knocks again. You see — your house is built of timber and
 drywall, while your neighbour's house is built of cinderblocks and plaster. Your
-neighbour now has two problems - his painting is still on the floor, *and* he 
+neighbour now has two problems — his painting is still on the floor, *and* he 
 now has an unsightly hole in the wall.
 
 ## Tools, or Solutions
@@ -50,29 +50,29 @@ If you really needed to, you could probably hang that painting with an old shoe
 
 Consider, too, that your solution didn't work for your neighbour, who built with 
 cinderblocks and plaster, and actually made things worse for him. What went 
-wrong? was it the tools you gave him? Not necessarily. He might have used the 
+wrong? Was it the tools you gave him? Not necessarily. He might have used the 
 hammer you gave him to drive special cinderblock nails or those plastic-and-tack 
 plaster hooks.
 
-The problem wasn't the tools - *the problem was seeing the tools as the 
+The problem wasn't the tools — *the problem was seeing the tools as the 
 solution*.
 
 Jackhammers require care in use. Thumbtacks are cheap, plentiful, and not 
-particularly dangerous. Both are needed on a construction site - one to break 
+particularly dangerous. Both are needed on a construction site — one to break 
 large blocks of concrete and rock, one to hang plans and blueprints. Both tools 
-are important - crucial even - in their own ways, but they have widely different 
+are important — crucial even - in their own ways, but they have widely different 
 costs, lifespans, and restrictions on their use.
 
 ## *Cui Bono*?
 
-If you've been following along, you're probably waiting for the punch line,
+If you've been following along, you're probably waiting for the punchline,
 so here it is:
 
 > Your design system is not a solution, it's a *toolkit*
 
 So why do companies adopt design systems? Are they just spinning their wheels?
-Well, my desire to continue receiving a steady paycheque requires me to say "no, 
-they aren't, design systems really do solve problems for companies!" But there's
+Well, my desire to continue receiving a steady paycheque requires me to say, "No, 
+they aren't! Design systems really do solve problems for companies!" But there's
 an important difference between the kind of problem which design systems solve
 and *your team*'s design problem.
 
@@ -81,19 +81,19 @@ Companies adopt design systems because they want:
 - a "single source of truth"
 - consistent visual style across large teams
 - consistent standards of accessibility
-- ux/ui recommendations lovingly crafted by specialists
+- UX/UI recommendations lovingly crafted by specialists
 
 All of these are fancy ways of saying they want to establish and enforce
 rules and guidelines for producing user interfaces. Design systems help solve 
-that problem by centralizing the know how for building the components of those 
+that problem by centralizing the know-how for building the components of those 
 interfaces in a way which can be easily ported to different teams'
 workflows.
 
 ## Mowing the Neighbour's Lawn
 
 Design systems can't and shouldn't try to solve every problem for every team. 
-This industry is by it's nature prone to widely varied opinions and approaches, 
-often incompatible one with the other, and establishing a baseline is hard 
+This industry is by its nature prone to widely varied opinions and approaches, 
+one often incompatible with the other, and establishing a baseline is hard 
 enough without shipping bespoke implementations for each team that comes along.
 The reasons for this become immediately clear once you shift perspective from 
 that of the product maintainer to that of the design system maintainer.
@@ -104,8 +104,8 @@ new features, built on top of the previous framework, and they often don't have
 the luxury of The Big Rewrite™.
 
 From the design system maintainer's point of view, the customer is actually the
-product owner / developer. That's not to excuse design systems from concerning 
-themselves with end users - quite the opposite. But rather, as tool-makers, 
+product owner/developer. That's not to excuse design systems from concerning 
+themselves with end users — quite the opposite. But rather, as toolmakers, 
 their primary responsibility is to produce quality tools for their fellow 
 craftsmen.
 
@@ -119,14 +119,14 @@ would do well to focus their effort on [platforms][platforms] rather than
 
 ## Tech Debt up to Here
 
-So your design system is now free to build on top of platform primitives, and
+So, your design system is now free to build on top of platform primitives, and
 there are greenfield projects and high-velocity teams reaping the benefits of 
-platform-oriented development. *Lechaim* - 🥃 Fancy bourbon all around! But that 
+platform-oriented development. *Lechaim* — 🥃 Fancy bourbon all around! But that 
 still doesn't solve the problem of legacy framework integration. Who's left 
 holding the bag?
 
 Some organizations solve this by reimplementing their design system for every 
-framework that comes along. To my taste, this practice is error prone; remember 
+framework that comes along. To my taste, this practice is error-prone; remember 
 our initial goals from above. Web development is complex enough when targeting 
 the browser: duplicating that effort across multiple frameworks scales that 
 complexity geometrically. It also requires more resources, effort, attention, 
@@ -137,7 +137,7 @@ can lead to an awkward situation where greenfield users might mistakenly adopt
 the workarounds and second-bests in place of the happy path. There are costs to 
 increasing API surface, and teams responsible for shipping tools to diverse
 projects shouldn't be burdened with the maintenance of those workarounds, when
-they have other customers who don't need - and shouldn't try - to adopt them.
+they have other customers who don't need — and shouldn't try - to adopt them.
 
 Design systems that rest on platform features like custom elements, shadow DOM,
 import maps, and plain-old CSS can adapt to multiple projects and frameworks.
@@ -152,9 +152,9 @@ legacy framework integration problems, design system teams should be empowered
 to *consult* with and *advise* those teams to solve the problems on their own
 terms.
 
-Design system teams can solve integrations problems, but they can't own them.
+Design system teams can solve integration problems, but they can't own them.
 It's crucial for teams to communicate clearly and openly, and to understand the
-business needs which design systems solve. When approaching a difficult
+business needs that design systems solve. When approaching a difficult
 integration, everyone at the table needs to understand the boundaries and
 junctions between business needs, framework limitations, and design system
 priorities. Downstream teams have to be willing to work with design systems
@@ -162,7 +162,7 @@ people to integrate solutions which serve the broader business, and design
 systems people have to be willing and able to cross the aisle to work with
 downstream on their turf.
 
-Clear boundaries, and the application of [Postel's law][postel] are the
+Clear boundaries and the application of [Postel's law][postel] are the
 fundamentals of fruitful large-scale software collaboration.
 
 > Be conservative in what you do, be liberal in what you accept from others.
