@@ -58,10 +58,10 @@ The problem wasn't the tools - *the problem was seeing the tools as the
 solution*.
 
 Jackhammers require care in use. Thumbtacks are cheap, plentiful, and not 
-particularly dangerous both are needed on a construction site - one to break 
+particularly dangerous. Both are needed on a construction site - one to break 
 large blocks of concrete and rock, one to hang plans and blueprints. Both tools 
 are important - crucial even - in their own ways, but they have widely different 
-requirements on them
+costs, lifespans, and restrictions on their use.
 
 ## *Cui Bono*?
 
@@ -162,5 +162,11 @@ people to integrate solutions which serve the broader business, and design
 systems people have to be willing and able to cross the aisle to work with
 downstream on their turf.
 
+Clear boundaries, and the application of [Postel's law][postel] are the
+fundamentals of fruitful large-scale software collaboration.
+
+> Be conservative in what you do, be liberal in what you accept from others.
+
 [platforms]: https://infrequently.org/2020/06/platform-adjacency-theory/
 [frameworks]: https://infrequently.org/series/reckoning/
+[postel]: https://en.wikipedia.org/wiki/Robustness_principle
