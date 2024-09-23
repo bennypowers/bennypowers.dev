@@ -8,7 +8,7 @@ h1 {
   }
 }
 
-main {
+main.home.h-card {
   --thumbnail-height: 125px;
 
   text-align: center;
