@@ -60,7 +60,7 @@ solution*.
 Jackhammers require care in use. Thumbtacks are cheap, plentiful, and not 
 particularly dangerous. Both are needed on a construction site — one to break 
 large blocks of concrete and rock, one to hang plans and blueprints. Both tools 
-are important — crucial even - in their own ways, but they have widely different 
+are important — crucial even — in their own ways, but they have widely different 
 costs, lifespans, and restrictions on their use.
 
 ## *Cui Bono*?
@@ -137,7 +137,7 @@ can lead to an awkward situation where greenfield users might mistakenly adopt
 the workarounds and second-bests in place of the happy path. There are costs to 
 increasing API surface, and teams responsible for shipping tools to diverse
 projects shouldn't be burdened with the maintenance of those workarounds, when
-they have other customers who don't need — and shouldn't try - to adopt them.
+they have other customers who don't need — and shouldn't try — to adopt them.
 
 Design systems that rest on platform features like custom elements, shadow DOM,
 import maps, and plain-old CSS can adapt to multiple projects and frameworks.
