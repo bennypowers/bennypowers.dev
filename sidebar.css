@@ -22,7 +22,6 @@ main { grid-area: main; }
     content: "";
     position: absolute;
     inset-block: 0;
-    width: 100vw;
     display: block;
     z-index: -1;
     background: var(--background-color);

@@ -91,13 +91,18 @@
     max-width: 100%;
     height: 100px;
   }
+
+  span[lang="en"] {
+    font-size: 80%;
+  }
+
   </style>
   <header>
     <details>
       <summary>
         <span lang="he" title="Am Yisrael Chai - the People of Israel Live!">עם ישראל חי</span>
         <span>🇮🇱</span>
-        <span>Stand with Israel</span>
+        <span lang="en">Stand with Israel</span>
       </summary>
       <svg id="flag"
            xmlns="http://www.w3.org/2000/svg"
