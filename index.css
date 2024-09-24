@@ -47,7 +47,7 @@ main.home.h-card {
     gap: var(--gap);
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(var(--width), 1fr));
-    grid-template-rows: auto auto;
+    grid-auto-rows: auto auto;
     grid-auto-flow: column;
     place-items: center;
     margin: 0;
