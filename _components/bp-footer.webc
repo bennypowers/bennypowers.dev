@@ -1,7 +1,9 @@
 <footer id="footer" class="screen-only">
   <small id="legal">
     © <template webc:nokeep @text="formatDate(datePublished || $data.page.date, { year: 'numeric' })"></template> Benny Powers.
+    Content on this site represents no one but myself.
   </small>
+
 </footer>
 
 <svg id="icon-sprite-sheet"

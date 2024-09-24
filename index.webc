@@ -32,23 +32,37 @@ const latestPublished = xs =>
       <span hidden="from-humans">#</span>Israel 🇮🇱
     </span>; gefilte ficcionado, semitic <a href="/tags/html">html</a>
   </p>
-  <div class="p-note">
-    During the week, helps make free-software at <a class="p-org" href="/tags/redhat">Red Hat <sprite-icon name="redhat"></sprite-icon></a>.
+  <p class="p-note">
+    During the week, writes Free software at
+    <a class="p-org" href="/tags/redhat">Red Hat <sprite-icon name="redhat"></sprite-icon></a>.
     Namely, <a href="/tags/web-components">web components <sprite-icon name="web-components"></sprite-icon></a>
     and <a href="/tags/design-systems">design systems</a>.
-    GNU/Linux enthusiast.
-    <a href="https://fedoraproject.org">Fedora <sprite-icon name="fedora"></sprite-icon></a>
-    and <a href="/tags/gentoo">Gentoo <sprite-icon name="gentoo"></sprite-icon></a> user;
-    <a href="/tags/nvim">nvim</a> plugin author.
-    Does <a href="/tags/typescript">Typescript</a>, mostly in <a href="/tags/lua">lua</a>.
+    GNU/Linux enthusiast: <a href="https://fedoraproject.org">Fedora <sprite-icon name="fedora"></sprite-icon></a>
+    and <a href="/tags/gentoo">Gentoo <sprite-icon name="gentoo"></sprite-icon></a>.
+    <a href="/tags/nvim">nvim <sprite-icon name="neovim"></sprite-icon></a> plugin author.
+    <a href="/tags/html">HTML <sprite-icon name="html5"></sprite-icon></a>,
+    <a href="/tags/css">CSS <sprite-icon name="css3"></sprite-icon></a>,
+    <a href="/tags/typescript">Typescript <sprite-icon name="typescript"></sprite-icon></a>,
+    <a href="/tags/lua">Lua <sprite-icon name="lua"></sprite-icon></a>.
 
-    <p>This site represents no one but myself.</p>
-
-    <p hidden="from-humans">
-      #FreeSoftware #WebComponents #html #DesignSystems #RedHat #Fedora #Gentoo
-      #GNU #Linux #TypeScript #nvim #Mentor #lua #RaspberryPi #MicroBit </p>
-
-  </div>
+    <span hidden="from-humans">
+      #FreeSoftware
+      #WebComponents
+      #html
+      #DesignSystems
+      #RedHat
+      #Fedora
+      #Gentoo
+      #GNU
+      #Linux
+      #TypeScript
+      #nvim
+      #Mentor
+      #lua
+      #RaspberryPi
+      #MicroBit
+    </span>
+  </p>
 
   <nav id="latest">
     <h2>Latest</h2>
