@@ -56,18 +56,18 @@ Here’s an example of the DTCG format:
 ```
 
 The `design-tokens-language-server` takes your project's design tokens in this format
-and uses them to provide real-time feedback and advanced editing capabilities in your code editor. Just like the DTCG format is interoperable across different platforms, the language server is designed to work with any code editor that supports the Language Server Protocol (LSP).
+and uses them to provide real-time feedback and advanced editing capabilities in your code editor. Just like the DTCG format is interoperable across different platforms, the language server is designed to work with any code editor that supports the [Language Server Protocol (LSP)][lsp].
 
 ## What Is a Language Server?
 
 Before building the `design-tokens-language-server`, I wrote a handful of tools to help in my day-to-day work with design tokens in CSS files:
 - Stylelint plugins to catch and fix issues with the tokens in my stylesheets.
-- Snippets for neovim and vscode to make it easier to quickly add tokens to files
-- Custom neovim scripts to do things like toggle fallback values and refactor tokens across files.
+- Snippets for Neovim and VSCode to make it easier to quickly add tokens to files
+- Custom Neovim scripts to do things like toggle fallback values and refactor tokens across files.
 
 These tools were great for me, but they weren't all editor-agnostic. I wanted to create something that could be used by anyone, regardless of their editor of choice, and share my know-how with my colleagues. Just like how web components allow you to create reusable UI components that can be used in any web application, and design tokens provide a consistent way to define design decisions across platforms, I wanted to create a tool that could be used by anyone, regardless of their editor of choice. Language servers are the perfect solution for this.
 
-A language server is a tool that provides language-specific features like auto-completion, linting, and refactoring to any code editor. It communicates with editors via the [Language Server Protocol (LSP)][lsp], meaning it can work seamlessly across popular IDEs like VSCode, WebStorm, Sublime Text, and even terminal-based editors like NeoVim.
+A language server is a tool that provides language-specific features like auto-completion, linting, and refactoring to any code editor. It communicates with editors via the [Language Server Protocol (LSP)][lsp], meaning it can work seamlessly across popular IDEs like VSCode, WebStorm, Sublime Text, and even terminal-based editors like Neovim.
 
 ## Why You Need the Design Tokens Language Server
 
