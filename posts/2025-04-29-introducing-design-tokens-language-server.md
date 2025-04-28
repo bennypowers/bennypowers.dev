@@ -31,9 +31,9 @@ By using design tokens, you can ensure that your product maintains consistent st
 
 ## The Design Tokens Community Group Format
 
-There are a variety of design token formats out there, but the most widely adopted one is the [Design Tokens Community Group (DTCG) format](https://design-tokens.github.io/community-group/). This format was created to provide a single, interoperable standard for design tokens that can be used across different platforms and tools. The format defines how design tokens should be structured and how they can be extended to support various use cases.
+There are a variety of design token formats out there, but the most widely adopted one is the [Design Tokens Community Group (DTCG) format][dtcg]. This format was created to provide a single, interoperable standard for design tokens that can be used across different platforms and tools. The format defines how design tokens should be structured and how they can be extended to support various use cases.
 
-This shared format has become the backbone for many tools in the design systems ecosystem, like [style-dictionary](https://styledictionary.com), [figma](https://figma.com), and [penpot](https://penpot.app). By adhering to the standard, the `design-tokens-language-server` ensures compatibility with a wide range of tools while providing advanced editing capabilities for developers.
+This shared format has become the backbone for many tools in the design systems ecosystem, like [style-dictionary][styledictionary], [figma][figma], and [penpot][penpot]. By adhering to the standard, the `design-tokens-language-server` ensures compatibility with a wide range of tools while providing advanced editing capabilities for developers.
 
 Here’s an example of the DTCG format:
 
@@ -67,7 +67,7 @@ Before building the `design-tokens-language-server`, I wrote a handful of tools 
 
 These tools were great for me, but they weren't all editor-agnostic. I wanted to create something that could be used by anyone, regardless of their editor of choice, and share my know-how with my colleagues. Just like how web components allow you to create reusable UI components that can be used in any web application, and design tokens provide a consistent way to define design decisions across platforms, I wanted to create a tool that could be used by anyone, regardless of their editor of choice. Language servers are the perfect solution for this.
 
-A language server is a tool that provides language-specific features like auto-completion, linting, and refactoring to any code editor. It communicates with editors via the [Language Server Protocol (LSP)](https://microsoft.github.io/language-server-protocol/), meaning it can work seamlessly across popular IDEs like VSCode, WebStorm, Sublime Text, and even terminal-based editors like NeoVim.
+A language server is a tool that provides language-specific features like auto-completion, linting, and refactoring to any code editor. It communicates with editors via the [Language Server Protocol (LSP)][lsp], meaning it can work seamlessly across popular IDEs like VSCode, WebStorm, Sublime Text, and even terminal-based editors like NeoVim.
 
 ## Why You Need the Design Tokens Language Server
 
@@ -86,12 +86,22 @@ Ready to get started? Star the [GitHub repository][design-tokens-language-server
 
 Install the plugin for your editor of choice and start using design tokens like a pro. The `design-tokens-language-server` is designed to be easy to set up and use, so you can focus on what really matters: building great products.
 
-- [Download the binary for your platform](https://github.com/bennypowers/design-tokens-language-server/releases/latest)
-- [Configure neovim](https://github.com/bennypowers/design-tokens-language-server/#neovim)
-- [Install the VSCode extension](https://marketplace.visualstudio.com/items?itemName=pwrs.design-tokens-language-server-vscode)
+- [Download the binary for your platform][binary]
+- [Configure Neovim][neovim]
+- [Install the Zed extension][zed]
+- [Install the VSCode extension][vscode]
 
 Let’s make design tokens easier to use for everyone.
 
 [design-tokens-language-server]: https://github.com/bennypowers/design-tokens-language-server/
+[dtcg]: https://design-tokens.github.io/community-group/
+[styledictionary]: https://styledictionary.com
+[figma]: https://figma.com
+[penpot]: https://penpot.app
+[lsp]: https://microsoft.github.io/language-server-protocol/
 [issues]: https://github.com/bennypowers/design-tokens-language-server/issues/
 [discussions]: https://github.com/bennypowers/design-tokens-language-server/discussions/
+[binary]: https://github.com/bennypowers/design-tokens-language-server/releases/latest
+[neovim]: https://github.com/bennypowers/design-tokens-language-server/#neovim
+[zed]: https://zed.dev/extensions?query=design-tokens
+[vscode]: https://marketplace.visualstudio.com/items?itemName=pwrs.design-tokens-language-server-vscode
