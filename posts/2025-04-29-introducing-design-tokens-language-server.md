@@ -10,6 +10,10 @@ tldr: >-
   Design tokens are the single source of truth for UI styling. The
   `design-tokens-language-server` makes working with design tokens a seamless
   experience in your everyday development workflow.
+coverImage: /assets/images/dtls-butler.png
+coverImageAlt: >-
+  A smiling butler holding a tray with multicoloured origami snacks, symbolizing the
+  `design-tokens-language-server` as a helpful assistant for developers.
 ---
 
 Today, I’m excited to introduce [`design-tokens-language-server`][design-tokens-language-server]: a language server and suite of editor plugins that will make your everyday work with design tokens a more pleasant experience.
