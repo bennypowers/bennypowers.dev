@@ -27,7 +27,9 @@ All I had to do was fork their GitHub template, mark the wayblue/hyprland image 
 
 Now, in practise, it took the better part of a day and 30 commits until the automated build finally ran to completion, on account of some minor dependency hell, but I figure that's just the cover charge for a hyprland install.
 
-In the end, it took about [a hundred lines of yaml](https://github.com/bennypowers/hyprland-atomic/blob/b922bc1505e19bba850b96271e4b836405803f11/recipes/recipe.yml) to configure a basic, up-to-date atomic hyprland OS image. After booting up and poking around for an hour or two though, I went back to stock GNOME, for the following reasons:
+In the end, it took about [a hundred lines of yaml](https://github.com/bennypowers/hyprland-atomic/blob/b922bc1505e19bba850b96271e4b836405803f11/recipes/recipe.yml) to configure a basic, up-to-date atomic hyprland OS image. If you want to try it out, follow the [rebase instructions in the README](https://github.com/bennypowers/hyprland-atomic?tab=readme-ov-file#installation). 
+
+After booting up and poking around for an hour or two though, I went back to stock GNOME, for the following reasons:
 
 1. I like GNOME (actually)
 1. The freedesktop stuff necessary to make deskflow/input-leap/barrier/synergy work [isn't ready yet](https://github.com/hyprwm/xdg-desktop-portal-hyprland/pull/268)
