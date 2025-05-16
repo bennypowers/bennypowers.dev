@@ -3,6 +3,8 @@ title: Writing your own OS in 100 lines of YAML
 published: true
 tags:
   - linux
+  - fedora
+  - hyprland
 audience: os weebs
 tldr: >-
   The BlueBuild project is an easy and fun way to customize your own operating
