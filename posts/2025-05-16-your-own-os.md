@@ -13,18 +13,14 @@ coverImageAlt: >-
   in the background, the human owner gives chase.
 ---
 
-There's a new Hyprland release that I wanted to check out. It's supposed to
-have perf gains, and I like the idea of tiling WMs in general. Sadly, I couldn't
-(yet) get it to compile on my gentoo (actually) raspberry pi 5s, so I thought
-"why not install it on my fedora main?" Only problem is that my fedora main is
-running Silverblue, and the OS filesystem is read-only, so I'll need a pre-made
-operating system image configured to run Hyprland.
+There's a new [Hyprland release](https://hyprland.org/news/update49/) that I wanted to check out. It's supposed to have perf gains, and I like the idea of tiling WMs in general. Sadly, I couldn't (yet) get it to compile on my gentoo (actually) raspberry pi 5s, so I thought "why not install it on my fedora main?" Only problem is that my fedora main is running Silverblue, and the OS filesystem is read-only, so I'll need a pre-made operating system image configured to run Hyprland.
 
 As it turns out, such an image already exists, and it's maintained by the [wayblue](https://github.com/wayblueorg/wayblue) project. Their Hyprland config comes bundled with a small handful of popular programs like `swaybg`, etc. But the whole fun of Hyprland is in choosing your own components and building your own config. Plus which, the new version of Hyprland hasn't quite landed in wayblue yet, so I'll have to roll my own.
 
 Luckily, the [Blue Build](https://blue-build.org/) project, on which wayblue is built, makes it super-easy to do that!
 
-All I had to do was fork their GitHub template, mark the wayblue/hyprland image as the base, and configure my customizations. Namely, 
+All I had to do was fork their GitHub template, mark the wayblue/hyprland image as the base, and configure my customizations. Namely,
+
 1. Uninstall the pre-packaged versions of hyprland and some dependencies
 1. Configure [solopasha's Hyprland COPR repo](https://copr.fedorainfracloud.org/coprs/solopasha/hyprland/)
 1. Install my customizations
