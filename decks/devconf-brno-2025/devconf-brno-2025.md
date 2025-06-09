@@ -30,7 +30,7 @@ eleventyImport:
     - icon
 ---
 
-# Exploring new and upcoming Web Components features {data-slide data-slide-tag-name=dc25-slide-title slot=heading}
+# Exploring new and upcoming Web Components features {data-slide-tag-name=dc25-slide-title slot=heading}
 
 <!-- A Performant Design System {slot=subheading} -->
 
@@ -44,35 +44,87 @@ Benny Powers
 
 </div>
 
-## ElementInternals {data-slide slot="title" data-slide-tag-name=dc25-slide}
-- Accessibility features (aria) defaults
-  - most features already available across browsers
-  - some features like ariaLabelledByElements not yet x-browser
-  - aXe core may fail your pages even if they pass manual audits
+## ElementInternals {data-slide-tag-name=dc25-slide-bold data-slide-class=secondary}
 
-## Reference Target {data-slide slot="title" data-slide-tag-name=dc25-slide}
-- [Reference Target for cross root aria](https://github.com/web-platform-tests/interop/issues/792)
-- IDs are scoped to shadow roots
-- aria features which work by id reference can't work across shadow boundaries
-- activedescendant, controls, labelledby
+### What is `ElementInternals`? {data-slide-tag-name=dc25-slide slot=title}
+- ElementInternals is a powerful web API allowing custom elements to participate more fully in browser features, especially accessibility.
+- Provides access to internals such as form association, ARIA attributes, and validation.
+- Enables custom elements to behave like native elements in terms of accessibility and forms.
 
-## Declarative Custom Elements {data-slide slot="title" data-slide-tag-name=dc25-slide}
-- long way off
-- Declarative custom elements
-- [CSS module scripts](https://github.com/web-platform-tests/interop/issues/703)
-- HTML modules
-- DOM Parts / templating
+### Accessibility Features and Cross-Browser Support {data-slide-tag-name=dc25-slide slot=title}
+- Most ARIA-related features are now supported in all major browsers via ElementInternals.
+- However, some APIs (e.g., `ariaLabelledByElements`) are not yet fully cross-browser.
+- Accessibility testing tools like axe-core may not always accurately flag issues due to these gaps, so manual testing is still recommended.
 
-## host has {data-slide data-slide-tag-name=dc25-slide}
--:[host:has()](https://github.com/web-platform-tests/interop/issues/791)
-- style the host element depending on it's shadow content
-- eg shadow classes
-- not the same as :has-slotted()
+### Practical Impact on Development {data-slide-tag-name=dc25-slide slot=title}
+- Using ElementInternals improves accessibility defaults for custom elements, reducing manual ARIA management.
+- Allows for more robust, accessible design systems built with Web Components.
+- Example: Associating a custom input with `<label>` and forms, or managing ARIA attributes automatically.
 
-## Scoped Custom Element Registries {data-slide data-slide-tag-name=dc25-slide}
-- good for micro frontend
-- let teams collaborate more easily in the same page
-- avoid double registration errors
+---
+
+## Reference Target {data-slide-tag-name=dc25-slide-bold data-slide-class=secondary}
+
+### The Challenge of Shadow DOM & ARIA References {data-slide-tag-name=dc25-slide slot=title}
+- Shadow DOM encapsulation scopes element IDs, so references like `aria-labelledby` can break across shadow boundaries.
+- Many ARIA attributes (`aria-activedescendant`, `aria-controls`, `aria-labelledby`) depend on referencing elements by ID.
+
+### Reference Target Proposal {data-slide-tag-name=dc25-slide slot=title}
+- Reference Target is a proposed solution to allow ARIA references to work across shadow DOM boundaries.
+- Would enable more accessible, composable components by allowing safe cross-root references.
+- [See WPT Interop Issue #792](https://github.com/web-platform-tests/interop/issues/792)
+
+### Current Workarounds & Future Impact {data-slide-tag-name=dc25-slide slot=title}
+- Workarounds include flattening the DOM or duplicating elements for accessibility, but these are complex and brittle.
+- Reference Target aims to simplify authoring and improve accessibility without sacrificing encapsulation.
+
+---
+
+## Declarative Custom Elements {data-slide-tag-name=dc25-slide-bold data-slide-class=secondary}
+
+### What Are Declarative Custom Elements? {data-slide-tag-name=dc25-slide slot=title}
+- Declarative custom elements allow you to define and instantiate custom elements purely in HTML, without imperative JavaScript.
+- Enables features like HTML modules, CSS module scripts, and template-based DOM parts.
+
+### The Road Ahead {data-slide-tag-name=dc25-slide slot=title}
+- These features are still experimental and not available in most browsers.
+- Declarative custom elements will make it easier to share, reuse, and compose web components natively.
+
+### Related Technologies {data-slide-tag-name=dc25-slide slot=title}
+- CSS module scripts: Import and use CSS directly in JS modules.
+- HTML modules: Import HTML like JS or CSS modules, improving code organization.
+- DOM Parts/Templating: Fine-grained templating APIs that boost performance and maintainability.
+- [See WPT Interop Issue #703](https://github.com/web-platform-tests/interop/issues/703)
+
+---
+
+## `:host(:has())` {data-slide-tag-name=dc25-slide-bold data-slide-class=secondary}
+
+### :host(:has()) Selector {data-slide-tag-name=dc25-slide slot=title}
+- The `:host(:has(...))` selector enables styling the host element based on its shadow content.
+- Allows for dynamic styling based on the presence or state of children inside shadow DOM.
+
+### Use Cases & Differences {data-slide-tag-name=dc25-slide slot=title}
+- Example: Apply a border to a custom element only when a certain class is present within its shadow DOM.
+- Not the same as `:has-slotted()`, which targets slotted, light DOM children.
+- Brings new power to styling encapsulated components.
+- [See WPT Interop Issue #791](https://github.com/web-platform-tests/interop/issues/791)
+
+---
+
+## Scoped Custom Element Registries {data-slide-tag-name=dc25-slide-bold data-slide-class=secondary}
+
+### Why Scoped Registries? {data-slide-tag-name=dc25-slide slot=title}
+- Scoped Custom Element Registries allow custom elements to be registered per shadow root, not globally.
+- Solves the problem of name collisions and double registration when combining components from multiple sources.
+
+### Micro Frontends & Collaboration {data-slide-tag-name=dc25-slide slot=title}
+- Ideal for micro-frontend architectures where multiple teams deliver components to the same page.
+- Each team can use their own version of a component without conflicts.
+
+### Developer Experience {data-slide-tag-name=dc25-slide slot=title}
+- Encourages collaboration and reuse without worrying about global registry pollution.
+- Simplifies large-scale adoption of web components in enterprise applications.
 
 <link data-helmet rel="shortcut icon" href="/decks/devconf-brno-2025/devconf-logo.png">
 <link data-helmet rel="preconnect" href="https://fonts.googleapis.com">

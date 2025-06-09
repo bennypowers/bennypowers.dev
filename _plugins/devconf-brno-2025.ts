@@ -20,6 +20,13 @@ export function DC25Plugin(eleventyConfig: UserConfig) {
       return content;
     } else {
       const { document } = parseHTML(content);
+      const headings = Array.from({length:6}, (_, i) => `h${i+1}`).join(',');
+        document
+        .querySelectorAll(`:is(${headings}) > a`)
+        .forEach(link => {
+          const h = link.closest(headings);
+          h.innerHTML = link.innerHTML.replace(/#+\s+/, '');
+        })
       templates.forEach(({ content, name }) =>
         document.querySelectorAll(name)
           .forEach(el => el.innerHTML = `${content}${el.innerHTML}`));
