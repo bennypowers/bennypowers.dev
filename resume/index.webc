@@ -156,7 +156,7 @@ const getResumeData = tag =>
           <ul>
             <li webc:for="technology of role.technologies"
                 itemprop="itemListElement"
-                :title="icons[technology].title">
+                :title="icons[technology]?.title">
               <sprite-icon :name="technology" aria-hidden="true"></sprite-icon>
             </li>
           </ul>

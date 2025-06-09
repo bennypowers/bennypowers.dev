@@ -1,0 +1,13 @@
+<template shadowroot="open" shadowrootmode="open">
+  <link rel="stylesheet" href="components/shared.css">
+  <link rel="stylesheet" href="components/dc25-slide-divider.css">
+  <link rel="stylesheet" href="components/dc25-slide-quote.css">
+  <div id="brno-container">
+    <figure>
+      <blockquote><slot></slot></blockquote>
+      <figcaption><slot name="author"></slot></figcaption>
+    </figure>
+  </div>
+  <slot></slot>
+  <slot hidden name="notes"></slot>
+</template>

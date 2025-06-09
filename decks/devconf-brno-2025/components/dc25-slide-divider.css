@@ -1,0 +1,36 @@
+#brno-container {
+  color: white;
+  display: grid;
+  padding-block: 10vh;
+  padding-inline: 5vw;
+  grid-template-rows: 1fr 1fr ;
+  grid-template-columns: repeat(6, 1fr);
+  aspect-ratio: var(--deck-aspect);
+}
+
+#titles {
+  text-align: right;
+  align-self: center;
+  grid-row: 1/-1;
+  grid-column: 1/-1;
+}
+
+#brno-container ::slotted(h1, h2, h3, h4, h5, h6) {
+  color: inherit;
+}
+
+#brno-container ::slotted(h1, h2) {
+  margin-block-start: 0;
+  margin-block-end: .35em;
+  font-size: 5em;
+}
+
+@media (width <= 500px) {
+  #brno-container :is(h1, h2) {
+    font-size: 2em;
+  }
+}
+
+::slotted(p) {
+  margin: 0;
+}

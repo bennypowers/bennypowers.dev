@@ -10,6 +10,7 @@ import EleventyPluginWebC from '@11ty/eleventy-plugin-webc';
 import EleventyRSSPlugin from '@11ty/eleventy-plugin-rss';
 
 import EmbedPlugin from 'eleventy-plugin-embed-everything';
+import HelmetPlugin from 'eleventy-plugin-helmet';
 import TableOfContentsPlugin from 'eleventy-plugin-nesting-toc';
 import TimeToReadPlugin from 'eleventy-plugin-time-to-read';
 
@@ -31,6 +32,7 @@ import { PostCSSPlugin, postcss } from '#plugins/postcss.ts';
 import { RedHatDeckPlugin } from '#plugins/redhat-deck.ts';
 import { RHDSPlugin } from '#plugins/rhds.ts';
 import { DC23Plugin } from '#plugins/devconf-brno-2023.ts';
+import { DC25Plugin } from '#plugins/devconf-brno-2025.ts';
 import { JamPackPlugin } from '#plugins/jampack.ts';
 import { WebCDSDWorkaroundPlugin } from '#plugins/dsd/webc-dsd-slot-workaround.ts';
 import { FedEmbedPlugin } from '#plugins/fed-embed/fed-embed.ts';
@@ -93,6 +95,7 @@ export default function(eleventyConfig: UserConfig) {
   eleventyConfig.addPlugin(PostsPlugin);
   eleventyConfig.addPlugin(RHDSPlugin);
   eleventyConfig.addPlugin(DC23Plugin);
+  eleventyConfig.addPlugin(DC25Plugin);
   eleventyConfig.addPlugin(RedHatDeckPlugin);
   eleventyConfig.addPlugin(TableOfContentsPlugin);
   eleventyConfig.addPlugin(TimeToReadPlugin);
@@ -118,6 +121,8 @@ export default function(eleventyConfig: UserConfig) {
     webmentionIoToken: process.env.WEBMENTION_IO_TOKEN,
     devToToken: process.env.DEV_TO_TOKEN,
   });
+
+  eleventyConfig.addPlugin(HelmetPlugin);
 
   eleventyConfig.addPlugin(ImportMapPlugin, {
     specs: [
