@@ -38,23 +38,24 @@ Benny Powers
 : Principal UX Engineer
 {slot=speaker}
 
-<div slot="notes">
-
-
-
-</div>
-
 ## ElementInternals {data-slide-tag-name=dc25-slide-bold data-slide-class=secondary}
 
 ### What is `ElementInternals`? {data-slide-tag-name=dc25-slide slot=title}
-- ElementInternals is a powerful web API allowing custom elements to participate more fully in browser features, especially accessibility.
-- Provides access to internals such as form association, ARIA attributes, and validation.
-- Enables custom elements to behave like native elements in terms of accessibility and forms.
+- ElementInternals is a powerful web API allowing custom elements to participate 
+more fully in browser features, especially accessibility.
+- Contains internal element features like default ARIA states and roles, custom 
+states, and custom validation
+- Enables custom elements to behave like native elements in terms of 
+accessibility and forms.
+
+ARIA stands for **A**ccessible **R**ich **I**nternet **A**pplications
+{slot=notes}
 
 ### Accessibility Features and Cross-Browser Support {data-slide-tag-name=dc25-slide slot=title}
 - Most ARIA-related features are now supported in all major browsers via ElementInternals.
 - However, some APIs (e.g., `ariaLabelledByElements`) are not yet fully cross-browser.
-- Accessibility testing tools like axe-core may not always accurately flag issues due to these gaps, so manual testing is still recommended.
+- Accessibility testing tools like axe-core may not always accurately flag issues due to these gaps,
+so manual testing is still recommended.
 
 ### Practical Impact on Development {data-slide-tag-name=dc25-slide slot=title}
 - Using ElementInternals improves accessibility defaults for custom elements, reducing manual ARIA management.
@@ -69,10 +70,25 @@ Benny Powers
 - Shadow DOM encapsulation scopes element IDs, so references like `aria-labelledby` can break across shadow boundaries.
 - Many ARIA attributes (`aria-activedescendant`, `aria-controls`, `aria-labelledby`) depend on referencing elements by ID.
 
+Shadow DOM is the private, encapsulated portion of a web component, containing it's own HTML
+{slot=notes}
+
 ### Reference Target Proposal {data-slide-tag-name=dc25-slide slot=title}
 - Reference Target is a proposed solution to allow ARIA references to work across shadow DOM boundaries.
 - Would enable more accessible, composable components by allowing safe cross-root references.
-- [See WPT Interop Issue #792](https://github.com/web-platform-tests/interop/issues/792)
+{slot=notes}
+
+```html
+<label for="fancy-input">Fancy input</label>
+<fancy-input id="fancy-input">
+  <template shadowrootmode="closed"
+            shadowrootreferencetarget="real-input">
+    <input id="real-input">
+  </template>
+</fancy-input>
+```
+
+- [WICG Proposal: Reference Target](https://github.com/WICG/webcomponents/blob/gh-pages/proposals/reference-target-explainer.md)
 
 ### Current Workarounds & Future Impact {data-slide-tag-name=dc25-slide slot=title}
 - Workarounds include flattening the DOM or duplicating elements for accessibility, but these are complex and brittle.

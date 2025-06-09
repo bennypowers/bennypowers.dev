@@ -61,3 +61,50 @@ slidem-deck {
   padding: 1em;
   border-radius: var(--pf-global--borderradius--sm, 3px);
 }
+/*********************************************************
+ * Prism
+ */
+pre[class*="language-"] {
+  color: var(--deck-primary-text);
+  text-shadow: none;
+  font-family: Consolas, Monaco, "Andale Mono", "Ubuntu Mono", monospace;
+  direction: ltr;
+  text-align: left;
+  white-space: pre;
+  word-spacing: normal;
+  word-break: normal;
+  line-height: 1.5;
+  tab-size: 2;
+  hyphens: none;
+}
+
+@media (width <= 500px) {
+  pre[class*="language-"] {
+    overflow-x: scroll;
+  }
+}
+
+pre[class*="language-"]::selection,
+code::selection {
+  text-shadow: none;
+  background: var(--dc25-cyan);
+}
+
+pre .token.punctuation { color: var(--dc25-cyan); }
+pre .token.attr-name { color: var(--dc25-orange); }
+pre .token.attr-value { color: var(--dc25-magenta); }
+pre .token.tag { color: var(--dc25-lilac); }
+pre .token.function { color: var(--dc25-lilac); }
+pre .token.keyword { color: var(--dc25-cyan); }
+pre .token.class-name { color: var(--dc25-orange); }
+
+pre .token.string {
+  color: var(--dc25-green);
+  filter: brightness(200%) saturate(90%) contrast(30%);
+}
+
+pre .token.at.operator {
+  color: var(--dc25-lilac);
+  filter: brightness(.6);
+}
+
