@@ -30,9 +30,9 @@ eleventyImport:
     - icon
 ---
 
-# Exploring new and upcoming Web Components features {data-slide-tag-name=dc25-slide-title slot=heading}
+# `DOMStandards.process()` {data-slide-tag-name=dc25-slide-title slot=heading}
 
-<!-- A Performant Design System {slot=subheading} -->
+## Exploring new and upcoming<br>Web Components features {slot=subheading}
 
 Benny Powers
 : Principal UX Engineer

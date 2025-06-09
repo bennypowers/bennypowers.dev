@@ -5,15 +5,21 @@
   font-size: .8em;
 }
 
-#logo {
-  grid-column: 1/4;
-  width: 100%;
-  height: auto;
+#brno-container {
+  color: #fff;
+  aspect-ratio: var(--deck-aspect);
+  grid-template-rows: 1fr 1fr;
+  grid-template-columns: repeat(6,1fr);
+  padding-block: 10vh;
+  padding-inline: 5vw;
+  display: grid;
 }
 
-#subheading {
-  font-family: Montserrat, sans-serif;
-  font-size: 2em;
+#logo {
+  grid-column: 1/4;
+  grid-row: 1/2;
+  width: 100%;
+  height: auto;
 }
 
 #speaker {
@@ -26,29 +32,33 @@
 
 }
 
-#speaker dl,
-#speaker ::slotted(dl) {
-  display: contents;
+#speaker::slotted(dl) {
+  display: contents !important;
 }
 
-#brno-container :is(h1, h2, h3, h4, h5, h6) {
-  color: inherit;
+#subheading::slotted(*),
+#speaker::slotted(*),
+#heading::slotted(*) {
+  color: inherit !important;
 }
 
-#brno-container :is(h1, h2) {
-  margin-block-start: 0;
-  margin-block-end: .35em;
-  font-size: 5em;
+#subheading::slotted(*) {
+  font-family: Montserrat, sans-serif !important;
+  font-size: 2em !important;
 }
 
-@media (width <= 500px) {
-  #brno-container :is(h1, h2) {
-    font-size: 2em;
+#heading::slotted(:is(h1, h2)) {
+  margin-block-start: 0 !important;
+  margin-block-end: .35em !important;
+  font-size: 5em !important;
+  @media (width <= 500px) {
+    font-size: 2em !important;
   }
 }
 
-p {
-  margin: 0;
+
+::slotted(p) {
+  margin: 0 !important;
 }
 
 #titles.title {
