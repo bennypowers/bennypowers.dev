@@ -88,7 +88,11 @@ Shadow DOM is the private, encapsulated portion of a web component, containing i
 </fancy-input>
 ```
 
+Snippet by Westbrook Johnson
+{slot=notes}
+
 - [WICG Proposal: Reference Target](https://github.com/WICG/webcomponents/blob/gh-pages/proposals/reference-target-explainer.md)
+- [WebEngines Hackfest 2025](https://alice.pages.igalia.com/2025-hackfest-reference-target/#/2)
 
 ### Current Workarounds & Future Impact {data-slide-tag-name=dc25-slide slot=title}
 - Workarounds include flattening the DOM or duplicating elements for accessibility, but these are complex and brittle.
