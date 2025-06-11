@@ -1,0 +1,15 @@
+<template shadowroot="open" shadowrootmode="open">
+  <link rel="stylesheet" href="components/shared.css">
+  <link rel="stylesheet" href="components/dc25-slide.css">
+  <div id="brno-container" part="brno-container">
+    <slot id="title" name="title"></slot>
+    <div id="contents" part="contents">
+      <slot></slot>
+      <slot name="feature"></slot>
+    </div>
+    <footer id="stripe">
+      <img alt="devconf.cz" src="devconf-logo.png">
+    </footer>
+  </div>
+  <slot hidden name="notes"></slot>
+</template>

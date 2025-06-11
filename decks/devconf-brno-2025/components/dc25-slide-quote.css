@@ -1,0 +1,66 @@
+#brno-container {
+  color: white;
+  display: grid;
+  padding-block: 10vh;
+  padding-inline: 5vw;
+  grid-template-rows: 1fr 1fr ;
+  grid-template-columns: repeat(6, 1fr);
+  aspect-ratio: var(--deck-aspect);
+}
+
+#brno-container :is(h1, h2, h3, h4, h5, h6) {
+  color: inherit;
+}
+
+#brno-container :is(h1, h2) {
+  margin-block-start: 0;
+  margin-block-end: .35em;
+  font-size: 5em;
+}
+
+@media (width <= 500px) {
+  #brno-container :is(h1, h2) {
+    font-size: 2em;
+  }
+}
+
+p {
+  margin: 0;
+}
+
+figure {
+  margin: 0;
+  width: 100%;
+  grid-column: 1/-1;
+  grid-row: 1/-1;
+  align-self: center;
+  display: grid;
+  grid-template-columns: 5fr 1fr;
+  column-gap: 1em;
+  font-size: 2em;
+  align-items: center;
+}
+
+blockquote {
+  margin: 0;
+  font-family: Montserrat, sans-serif;
+  font-weight: 600;
+  text-align: right;
+  border-inline-end: 2px solid white;
+  padding-inline-end: 2em;
+}
+
+blockquote :first-child:before {
+  content: "“";
+  display: inline-block;
+}
+
+blockquote :first-child:after {
+  content: "”";
+  display: inline-block;
+}
+
+figcaption {
+  font-family: Montserrat, sans-serif;
+  font-size: 0.75em;
+}

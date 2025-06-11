@@ -1,0 +1,15 @@
+<template shadowroot="open" shadowrootmode="open">
+  <link rel="stylesheet" href="components/shared.css">
+  <link rel="stylesheet" href="components/dc25-slide-divider.css">
+  <link rel="stylesheet" href="components/dc25-slide-title.css">
+  <div id="brno-container">
+    <img id="logo" alt="DEVCONF 2025" src="/decks/devconf-brno-2023/devconf-textmark.png">
+    <section id="titles" class="title">
+      <slot id="heading" name="heading"></slot>
+      <slot id="subheading" name="subheading"></slot>
+      <slot id="speaker" name="speaker"></slot>
+    </section>
+  </div>
+  <slot></slot>
+  <slot hidden name="notes"></slot>
+</template>
