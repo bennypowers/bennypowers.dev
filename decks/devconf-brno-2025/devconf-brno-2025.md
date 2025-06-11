@@ -48,6 +48,8 @@ states, and custom validation
 - Enables custom elements to behave like native elements in terms of 
 accessibility and forms.
 
+![ElementInternals baseline 2023: fully supported](baseline.elementinternals.png)
+
 ARIA stands for **A**ccessible **R**ich **I**nternet **A**pplications
 {slot=notes}
 
@@ -118,17 +120,33 @@ Snippet by Westbrook Johnson
 
 ---
 
-## `:host(:has())` {data-slide-tag-name=dc25-slide-bold data-slide-class=secondary}
+## `:host(:has())` and<br>`:host:has()` {data-slide-tag-name=dc25-slide-bold data-slide-class=secondary}
 
-### :host(:has()) Selector {data-slide-tag-name=dc25-slide slot=title}
+### :host(:has()) {data-slide-tag-name=dc25-slide slot=title}
 - The `:host(:has(...))` selector enables styling the host element based on its shadow content.
 - Allows for dynamic styling based on the presence or state of children inside shadow DOM.
+
+### :host:has() {data-slide-tag-name=dc25-slide slot=title}
+- The `:host:has(...)` selector enables styling the host element based on its 
+light content.
+- Allows for dynamic styling based on the presence or state of children **outside** shadow DOM.
 
 ### Use Cases & Differences {data-slide-tag-name=dc25-slide slot=title}
 - Example: Apply a border to a custom element only when a certain class is present within its shadow DOM.
 - Not the same as `:has-slotted()`, which targets slotted, light DOM children.
 - Brings new power to styling encapsulated components.
 - [See WPT Interop Issue #791](https://github.com/web-platform-tests/interop/issues/791)
+
+---
+
+
+## Inner example {data-slide-tag-name=dc25-slide-image}
+<img slot="image" alt="host has inner" src="hosthasinner.png">
+
+---
+
+## Outer example {data-slide-tag-name=dc25-slide-image}
+<img slot="image" alt="host has outer" src="hosthasouter.png">
 
 ---
 
@@ -146,21 +164,34 @@ Snippet by Westbrook Johnson
 - Encourages collaboration and reuse without worrying about global registry pollution.
 - Simplifies large-scale adoption of web components in enterprise applications.
 
+## Thanks {data-slide-tag-name=dc25-slide}
+
+- Westbrook Johnson
+- Web Components Community Group
+
+<rh-avatar
+    name="Benny Powers"
+    subtitle="Principal UX Engineer, Digital Experience, Red Hat"
+    src="/decks/11ty-meetup-2023-09-20/avatar.jpg"></rh-avatar>
+
 <link data-helmet rel="shortcut icon" href="/decks/devconf-brno-2025/devconf-logo.png">
 <link data-helmet rel="preconnect" href="https://fonts.googleapis.com">
 <link data-helmet rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link data-helmet rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap">
+<link data-helmet rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inconsolata:wght@200..900&Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap">
 <link data-helmet rel="stylesheet" href="devconf-brno-2025.css">
 <script data-helmet type="module">
   import "/assets/dsd.js";
-  import "./components/dc25-slide.js"
   import "./components/dc25-slide-bold.js"
   import "./components/dc25-slide-divider.js"
+  import "./components/dc25-slide-image.js"
   import "./components/dc25-slide-title.js"
+  import "./components/dc25-slide.js"
+  import '@rhds/elements/rh-avatar/rh-avatar.js';
   await customElements.whenDefined('dc25-slide');
   await customElements.whenDefined('dc25-slide-bold');
-  await customElements.whenDefined('dc25-slide-title');
   await customElements.whenDefined('dc25-slide-divider');
+  await customElements.whenDefined('dc25-slide-image');
+  await customElements.whenDefined('dc25-slide-title');
   await new Promise(r => setTimeout(r, 500));
   for (const slide of document.querySelectorAll('#deck > *'))
     slide.afterStamp?.();

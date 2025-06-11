@@ -5,8 +5,10 @@ import { glob, readFile } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
 
 const globPath = fileURLToPath(new URL('../decks/devconf-brno-2025/components/*.html', import.meta.url));
+
 const paths =
     await Array.fromAsync(glob(globPath))
+
 const templates = await Promise.all(paths.map(async path => ({
   path,
   content: await readFile(path, 'utf8'),

@@ -13,6 +13,7 @@
 :host(.secondary) { --bg: var(--deck-secondary-color); }
 :host(.tertiary) { --bg: var(--deck-tertiary-color); }
 
+#image ::slotted(img),
 img {
   display: block;
   width: 4em;
@@ -24,17 +25,13 @@ img {
 
 #title {
   align-self: center;
-
-}
-
-#title * {
-  color: inherit !important;
-  font-size: 1.75em;
-}
-
-@media (width <= 500px) {
-  #title * {
-    font-size: 1.3em;
+  * {
+    color: inherit !important;
+    font-size: 1.75em;
+    @media (width <= 500px) {
+      font-size: 1.3em;
+    }
   }
 }
+
 

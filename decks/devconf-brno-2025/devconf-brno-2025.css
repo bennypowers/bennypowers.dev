@@ -11,7 +11,7 @@
   --deck-tertiary-color: var(--dc25-magenta);
   --deck-primary-text: var(--dc25-grey);
   --deck-aspect: 287/161;
-  --fixed-font: var(--rh-font-family-code);
+  --fixed-font: Inconsolata, monospace;
   --spacer-block: 4.8vw;
   --spacer-inline: calc(var(--spacer-block) * var(--deck-aspect));
 
@@ -61,13 +61,17 @@ slidem-deck {
   padding: 1em;
   border-radius: var(--pf-global--borderradius--sm, 3px);
 }
+
+:is(h1,h2) code {
+  font-weight: 350;
+}
+
 /*********************************************************
  * Prism
  */
 pre[class*="language-"] {
   color: var(--deck-primary-text);
   text-shadow: none;
-  font-family: Consolas, Monaco, "Andale Mono", "Ubuntu Mono", monospace;
   direction: ltr;
   text-align: left;
   white-space: pre;
@@ -76,6 +80,10 @@ pre[class*="language-"] {
   line-height: 1.5;
   tab-size: 2;
   hyphens: none;
+}
+
+pre[class*="language-"], code {
+  font-family: var(--fixed-font, Consolas, Monaco, "Andale Mono", "Ubuntu Mono", monospace);
 }
 
 @media (width <= 500px) {
@@ -108,3 +116,12 @@ pre .token.at.operator {
   filter: brightness(.6);
 }
 
+rh-avatar {
+  scale: 2;
+  transform-origin: top left;
+  margin-block-start: auto;
+}
+
+p:has(rh-avatar) {
+  display: contents;
+}
