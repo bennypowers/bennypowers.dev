@@ -178,6 +178,7 @@ light content.
 <link data-helmet rel="preconnect" href="https://fonts.googleapis.com">
 <link data-helmet rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link data-helmet rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inconsolata:wght@200..900&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap">
+<link data-helmet rel="stylesheet" href="devconf-brno-2025.css">
 <script data-helmet type="module">
   import "/assets/dsd.js";
   import "./components/dc25-slide-bold.js"
