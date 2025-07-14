@@ -16,8 +16,13 @@
 [[redirects]]
   from = "/shul/*"
   to = "https://bennypowers.github.io/shul-tools/:splat"
-  status = 301
+  status = 200
   force = true
+[[redirects]]
+  from = "/cem/*"
+  to = "https://bennypowers.github.io/cem/:splat"
+  status = 200
+
 
 [[plugins]]
   package = "netlify-plugin-cache"
@@ -28,9 +33,3 @@
     [plugins.inputs]
     # Maximum number of feed entries to check for mentions (optional, default: 1)
     limit = 1
-# [[plugins]]
-#   package = "netlify-plugin-no-more-404"
-#   [plugins.inputs]
-#   on404 = "error"
-#   cacheKey = "new-key-may-2024"
-#   debugMode = false
