@@ -22,6 +22,7 @@
   from = "/cem/*"
   to = "https://bennypowers.github.io/cem/:splat"
   status = 200
+  force = true
 
 
 [[plugins]]
