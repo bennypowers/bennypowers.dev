@@ -43,7 +43,8 @@ const latestPublished = xs =>
     <a href="/tags/html">HTML <sprite-icon name="html5"></sprite-icon></a>,
     <a href="/tags/css">CSS <sprite-icon name="css3"></sprite-icon></a>,
     <a href="/tags/typescript">Typescript <sprite-icon name="typescript"></sprite-icon></a>,
-    <a href="/tags/lua">Lua <sprite-icon name="lua"></sprite-icon></a>.
+    <a href="/tags/lua">Lua <sprite-icon name="lua"></sprite-icon></a>,
+    <a href="/tags/golang">Go <sprite-icon name="golang"></sprite-icon></a>.
 
     <span hidden="from-humans">
       #FreeSoftware
@@ -56,6 +57,7 @@ const latestPublished = xs =>
       #GNU
       #Linux
       #TypeScript
+      #GoLang
       #nvim
       #Mentor
       #lua
