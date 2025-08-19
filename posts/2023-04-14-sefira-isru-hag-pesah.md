@@ -11,6 +11,13 @@ datePublished: 2023-04-14T17:30:00.000+03:00
 tags:
   - torah
 ---
+
+<style webc:keep webc:raw data-helmet>
+main {
+  --opengraph-card-width: 500px;
+}
+</style>
+
 בפירושו על תהילים הרש"ר הירש מסביר המשמעות של הביטוי "איסרו חג", שהמקריב קורבן 
 צריך לקשור אותו סביב בחבלים עד שהוא מגיע לקצה שמזבח, כלומר שעל המקריב להכין את 
 עצמו טוב טוב ולא להביא את קרבנו - שבדרך הרש"ר הירש היא הדעת הפנימית העמוק ביותר 
@@ -29,8 +36,7 @@ tags:
 אחרי 7 ימים של חג הסוכות, נגיע בע"ה בבריאות לשמיני עצרת, שהיא האיסרו חג של סוכות 
 סוכות מתחילה בז' ימים שדי משוייכים לגויים:
 
-<opengraph-card style="--opengraph-card-width: 500px" webc:keep 
-href="https://www.sefaria.org.il/Zechariah.14.16?lang=he&with=all&lang2=he"></opengraph-card>
+<opengraph-card href="https://www.sefaria.org.il/Zechariah.14.16?lang=he&with=all&lang2=he"></opengraph-card>
 
 "מצווה אחת קלה וסוכה שמע"
 
