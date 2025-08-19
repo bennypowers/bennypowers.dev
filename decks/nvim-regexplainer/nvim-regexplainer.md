@@ -28,6 +28,6 @@ tags:
 <svg id="icons">
   <defs>{% for icon in collections.icon %}
     <g id="{{ icon.fileSlug }}-icon" aria-label="{{ icon.data.title }}">{{ 
-    icon.templateContent | safe }}</g>{% endfor %}
+    icon.content | safe }}</g>{% endfor %}
   </defs>
 </svg>
