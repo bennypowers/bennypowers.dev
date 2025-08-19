@@ -16,8 +16,8 @@ fonts:
 ---
 
 <script webc:setup>
-const icons = Object.fromEntries(this.collections.icon.map(({ fileSlug, data }) =>
-  [fileSlug, data.title]));
+const icons = Object.fromEntries(this.collections.icon.map(({ fileSlug }) =>
+  [fileSlug, fileSlug]));
 const getResumeData = tag =>
   Array.from(this.collections[`resume-${tag}`], x => ({
     ...this.omit(x.data, ['tags', 'template', ...Object.keys(this)]),

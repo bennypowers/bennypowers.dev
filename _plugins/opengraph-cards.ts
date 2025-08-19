@@ -16,6 +16,10 @@ interface OpenGraphCardData extends Record<`og${string}`, unknown> {
 async function getOpenGraphCardData(requestUrl: string) {
   try {
     const html = await EleventyFetch(requestUrl, { type: 'text', duration: '1w' });
+    if (typeof html !== 'string') {
+      console.warn(`OpenGraph fetch failed for ${requestUrl}: received ${typeof html}`);
+      return;
+    }
     const { document } = parseHTML(html)
     return Array.from(document.querySelectorAll<HTMLMetaElement>('meta[property^="og:"]')).reduce((acc, meta) => {
       const content = meta.getAttribute('content');

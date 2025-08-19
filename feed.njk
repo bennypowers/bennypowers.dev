@@ -22,13 +22,15 @@ metadata:
     <name>{{ metadata.author.name }}</name>
   </author>
   {%- for post in collections.posts | reverse %}
+  {%- if post.data.published %}
   {%- set absolutePostUrl %}{{ post.url | htmlBaseUrl(metadata.base) }}{% endset %}
   <entry>
     <title>{{ post.data.title }}</title>
     <link href="{{ absolutePostUrl }}" />
     <updated>{{ post.date | dateToRfc3339 }}</updated>
     <id>{{ absolutePostUrl }}</id>
-    <content type="html">{{ post.content | renderTransforms(post.data.page, metadata.base) | rssSummary(post) }}</content>
+    <content type="html">{{ post.data.tldr or post.data.description or 'Read more...' }}</content>
   </entry>
+  {%- endif %}
   {%- endfor %}
 </feed>
