@@ -4,6 +4,8 @@ import type { CollectionApi } from './posts.ts';
 import { parse } from 'parse5'
 import { isElementNode, query, getTextContent } from '@parse5/tools'
 import { readFile } from 'node:fs/promises';
+import { readdirSync, readFileSync } from 'node:fs';
+import { join } from 'node:path';
 
 export function IconsPlugin(eleventyConfig: UserConfig, {
   bundleName = 'svg',
@@ -37,11 +39,28 @@ export function IconsPlugin(eleventyConfig: UserConfig, {
   });
 
   eleventyConfig.addCollection('icon', function(api: CollectionApi) {
-    return api.getFilteredByGlob('icons/*.svg')
-      .map(x => {
-        x.templateContent = x.rawInput
-        return x;
+    try {
+      const iconsPath = join(process.cwd(), 'icons');
+      const files = readdirSync(iconsPath).filter(f => f.endsWith('.svg'));
+      
+      const icons = files.map(filename => {
+        const fileSlug = filename.replace('.svg', '');
+        const content = readFileSync(join(iconsPath, filename), 'utf8');
+        // Extract inner content from SVG (remove <svg> wrapper)
+        const svgContent = content.replace(/<svg[^>]*>/g, '').replace(/<\/svg>/g, '').trim();
+        
+        return {
+          fileSlug,
+          content: svgContent,
+          rawInput: content
+        };
       });
+      
+      return icons;
+    } catch (error) {
+      console.error('Error reading icons:', error);
+      return [];
+    }
   })
 
   interface IconKwargs {

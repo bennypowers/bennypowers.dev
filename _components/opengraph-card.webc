@@ -33,8 +33,8 @@ opengraph-card {
 </style>
 <script webc:type="js">
   getOpenGraphCardData(webc.attributes.href)
-    .then(card => /*html*/`
-    <article class="${card.ogType}">${!card.ogImage ? '' : `
+    .then(card => card ? /*html*/`
+    <article class="${card.ogType || ''}">${!card.ogImage ? '' : `
       <a href="${card.ogUrl}" target="_blank" rel="nofollow noreferrer">
         <img alt="${card.ogImage.alt ?? ''}" src="${card.ogImage.secureUrl ?? card.ogImage.url}">`}
       </a>
@@ -46,5 +46,5 @@ opengraph-card {
           <a href="${card.ogUrl}" target="_blank" rel="nofollow noreferrer">${card.ogDescription}</a>
         </p>`}
       </header>
-    </article>`);
+    </article>` : '');
 </script>

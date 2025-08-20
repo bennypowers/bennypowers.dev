@@ -16,12 +16,12 @@ fonts:
 ---
 
 <script webc:setup>
-const icons = Object.fromEntries(this.collections.icon.map(({ fileSlug, data }) =>
-  [fileSlug, data.title]));
+const icons = Object.fromEntries(this.collections.icon.map(({ fileSlug }) =>
+  [fileSlug, fileSlug]));
 const getResumeData = tag =>
   Array.from(this.collections[`resume-${tag}`], x => ({
     ...this.omit(x.data, ['tags', 'template', ...Object.keys(this)]),
-    templateContent: x.templateContent,
+    content: x.content,
   }))
   .sort((a, b) => new Date(b.startDate).getTime() - new Date(a.startDate).getTime());
 </script>
@@ -148,7 +148,7 @@ const getResumeData = tag =>
         </span>
       </header>
       <div>
-        <section itemprop="description" @html="role.templateContent"></section>
+        <section itemprop="description" @html="role.content"></section>
         <section itemscope
                  itemtype="https://schema.org/ItemList"
                  class="technologies">
@@ -173,7 +173,7 @@ const getResumeData = tag =>
              itemtype="http://schema.org/educationalCredentialAwarded">
       <!-- <template webc:nokeep @text="item.shortDescription"></template> -->
       <h3 itemscope itemtype="https://schema.org/Course" @text="item.title"></h3>
-      <template webc:nokeep @html="item.templateContent"></template>
+      <template webc:nokeep @html="item.content"></template>
       <ul>
         <li webc:for="credential of item.credentials">
           <span itemscope
@@ -209,7 +209,7 @@ const getResumeData = tag =>
           <time :datetime="contribution.date" @text="contribution.date"></time>
         </span>
       </header>
-     <section itemprop="description" @html="contribution.templateContent"></section>
+     <section itemprop="description" @html="contribution.content"></section>
     </article>
     <a href="https://github.com/bennypowers" target="_blank" rel="nofollow noreferrer noopener">And more</a>
   </section>

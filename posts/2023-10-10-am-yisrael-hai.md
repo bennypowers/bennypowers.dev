@@ -12,7 +12,7 @@ tags:
   - israel
 coverImageAlt: Israel Flag
 coverImage: /assets/images/israel-flag.svg
-templateEngineOverride: webc,md
+templateEngineOverride: md
 ---
 
 Donate generously to support Israel's war of survival against Hamas.
@@ -20,7 +20,7 @@ Donate generously to support Israel's war of survival against Hamas.
 Use this HTML web component to direct your website's visitors to make donations.
 
 ```html
-<am-yisrael-hai webc:raw>
+<am-yisrael-hai>
   <template shadowrootmode="open">
     <style>
     :host {

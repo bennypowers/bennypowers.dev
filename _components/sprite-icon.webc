@@ -4,7 +4,7 @@
           :@icon="$data.collections.icon.find(x => x.fileSlug === name)">
   {%- if icon -%}
     {%- svg -%}
-      <g id="{{ name }}-icon">{{ icon.content | safe }}</g>
+      <g id="{{ name }}-icon">{{ icon.rawInput | safe }}</g>
     {%- endsvg -%}
   {%- endif -%}
 </template>

@@ -99,13 +99,17 @@ body {
 #main-header,
 body > main,
 #footer {
-  max-width: 1000px;
-  width: calc(100% - 2 * 1.6em);
   margin-inline: auto;
   padding: 1em 1.6em;
 }
 
-img {
+body > main,
+#footer {
+  max-width: 1000px;
+  width: calc(100% - 2 * 1.6em);
+}
+
+img, video {
   max-width: 100%;
 
   &:not([height]) {
@@ -114,6 +118,8 @@ img {
 }
 
 #main-header {
+  width: 100vw;
+  padding-inline: 1.6em;
   display: flex;
   align-items: center;
   justify-content: space-between;
