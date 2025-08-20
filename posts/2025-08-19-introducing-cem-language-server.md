@@ -155,7 +155,7 @@ Huge thanks again to [Matsuuu][matsuuu] for blazing the trail and being an amazi
 May your custom elements be discoverable, your attributes be well-documented, and your slots be perfectly named. 🚀
 
 [cem]: https://github.com/bennypowers/cem
-[cem-docs]: https://github.com/bennypowers/cem#readme
+[cem-docs]: https://bennypowers.dev/cem/docs/lsp/
 [matsuuu]: https://github.com/Matsuuu
 [cels]: https://github.com/Matsuuu/custom-elements-language-server
 [cem-format]: https://custom-elements-manifest.open-wc.org/
