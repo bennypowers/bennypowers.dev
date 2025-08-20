@@ -109,7 +109,7 @@ body > main,
   width: calc(100% - 2 * 1.6em);
 }
 
-img {
+img, video {
   max-width: 100%;
 
   &:not([height]) {

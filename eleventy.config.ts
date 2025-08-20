@@ -45,7 +45,7 @@ import isWatch from '#data/watch.ts';
 export default function(eleventyConfig: UserConfig) {
   eleventyConfig.setQuietMode(true);
   eleventyConfig.addPassthroughCopy('manifest.webmanifest');
-  eleventyConfig.addPassthroughCopy('assets/**/*.{svg,png,jpeg,jpg,gif,webp,webm,js,d.ts,ico,webmanifest,json,woff,woff2}');
+  eleventyConfig.addPassthroughCopy('assets/**/*.{svg,png,jpeg,jpg,gif,webp,webm,mp4,js,d.ts,ico,webmanifest,json,woff,woff2}');
   eleventyConfig.addPassthroughCopy('decks/**/*.{gif,png,jpeg,jpg,svg}');
   eleventyConfig.addPassthroughCopy('decks/pf-collab/demo/react-dist/fonts');
   eleventyConfig.addGlobalData('isProductionBuild', process.env.NETLIFY && process.env.CONTEXT === 'production');

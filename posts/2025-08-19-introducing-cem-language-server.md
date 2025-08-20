@@ -28,6 +28,10 @@ Picture this: you're jamming away on your custom elements project, and your edit
 
 *Not anymore, homestyle!*
 
+<video autoplay muted loop playsinline>
+  <source src="/assets/videos/cem-lsp-intro-demo.mp4" type="video/mp4">
+</video>
+
 Today I'm absolutely thrilled to introduce the **CEM Language Server** — a brand new LSP implementation built from scratch in Go that actually understands your custom elements and makes working with them a joy.
 
 ## Standing on the Shoulders of Giants
