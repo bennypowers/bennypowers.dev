@@ -24,7 +24,18 @@ coverImageAlt: >
   energy flows between them, suggesting collaborative interaction.
 ---
 
-Picture this: you're jamming away on your custom elements project, and your editor is... well, basically colorblind. No completions for your element names, no hover hints for attributes, no go-to-definition for your components. You're flying blind in a world of `<my-fancy-element>` tags that might as well be hieroglyphs to your IDE.
+## 🚀 Quick Start
+
+1. **Install**: `npm install -g @custom-elements-manifest/cem` or download the [binary release][cem]
+2. **Editor Setup**: Install LSP client for [VS Code][vscode-ext], [Zed][zed-ext], [Neovim][nvim-setup], or [Emacs][emacs-setup]
+3. **Configure**: Point to your `custom-elements.json` manifest files
+4. **Enjoy**: Auto-complete, hover docs, and go-to-definition for your custom elements
+
+📖 [Full documentation][cem-docs]  | 💬 [Get help][discussions]
+
+---
+
+Picture this: you're jamming away on your web development project, using your favourite web components to save time and build better, and your editor is... well, less than helpful. No completions for your element names, no hover hints for attributes, no go-to-definition for your components. You're flying blind in a world of `<my-fancy-element>` tags that might as well be hieroglyphs to your IDE.
 
 *Not anymore, homestyle!*
 
@@ -115,9 +126,9 @@ When your editor understands your components as well as it understands JavaScrip
 
 Ready to supercharge your custom elements workflow? 
 
-**Installation**: Grab the latest release from [the GitHub repo][cem] — it's a single binary with no dependencies
+**Installation**: Grab the latest release from [the GitHub repo][cem] — it's a single binary with no dependencies, or [install][install] via npm or `go install`
 
-**Editor Setup**: Install the appropriate LSP client plugin for your editor — we're launching with VS Code and Zed extensions!
+**Editor Setup**: [Install and configure][lsp-setup] the appropriate LSP client plugin for your editor — we're launching with VS Code and Zed extensions, and support for Neovim and emacs!
 
 **Configuration**: Point it at your Custom Element Manifest files and you're off to the races
 
@@ -127,7 +138,7 @@ Ready to supercharge your custom elements workflow?
 
 This is just the beginning. On the roadmap:
 
-- **More editor support** (Vim/Neovim, Emacs, Sublime Text, and others)
+- **More editor support** (Sublime Text, etc.)
 - **Workspace symbol search** (find any custom element across your entire project)
 - **Code actions and refactoring** (rename a component and update all its usages)
 - **Better Lit integration** (understanding template expressions and reactive properties)
@@ -150,3 +161,10 @@ May your custom elements be discoverable, your attributes be well-documented, an
 [cem-format]: https://custom-elements-manifest.open-wc.org/
 [lsp]: https://microsoft.github.io/language-server-protocol/
 [tree-sitter]: https://tree-sitter.github.io/tree-sitter/
+[install]: https://bennypowers.dev/cem/docs/installation/
+[lsp-setup]: https://bennypowers.dev/cem/docs/lsp/#ide-setup
+[vscode-ext]: https://marketplace.visualstudio.com/items?itemName=bennypowers.cem-language-server
+[zed-ext]: https://github.com/zed-industries/zed/tree/main/extensions/cem
+[nvim-setup]: https://bennypowers.dev/cem/docs/lsp/#neovim
+[emacs-setup]: https://bennypowers.dev/cem/docs/lsp/#emacs
+[discussions]: https://github.com/bennypowers/cem/discussions
