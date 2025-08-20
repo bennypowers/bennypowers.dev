@@ -26,7 +26,7 @@ coverImageAlt: >
 
 ## 🚀 Quick Start
 
-1. **Install**: `npm install -g @custom-elements-manifest/cem` or download the [binary release][cem]
+1. **Install**: `go install bennypowers.dev/cem`, use [npm][install], or download the [binary release][cem]
 2. **Editor Setup**: Install LSP client for [VS Code][vscode-ext], [Zed][zed-ext], [Neovim][nvim-setup], or [Emacs][emacs-setup]
 3. **Configure**: Point to your `custom-elements.json` manifest files
 4. **Enjoy**: Auto-complete, hover docs, and go-to-definition for your custom elements
