@@ -164,7 +164,7 @@ May your custom elements be discoverable, your attributes be well-documented, an
 [tree-sitter]: https://tree-sitter.github.io/tree-sitter/
 [install]: https://bennypowers.dev/cem/docs/installation/
 [lsp-setup]: https://bennypowers.dev/cem/docs/lsp/#ide-setup
-[vscode-ext]: https://marketplace.visualstudio.com/items?itemName=bennypowers.cem-language-server
+[vscode-ext]: https://marketplace.visualstudio.com/items?itemName=pwrs.cem-language-server-vscode
 [zed-ext]: https://github.com/zed-industries/zed/tree/main/extensions/cem
 [nvim-setup]: https://bennypowers.dev/cem/docs/lsp/#neovim
 [emacs-setup]: https://bennypowers.dev/cem/docs/lsp/#emacs
