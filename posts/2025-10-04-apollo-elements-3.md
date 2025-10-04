@@ -11,9 +11,8 @@ tags:
 audience: Web developers, GraphQL users, web component enthusiasts
 tldr: >-
   After 3+ years, Apollo Elements v3.0.0 is here with Apollo Client 4 support, Node.js 24, and a cleaner API. Build GraphQL-powered web components that work in any framework—or no framework at all.
-coverImage: /assets/images/apollo-elements-3.jpg
-coverImageAlt: >
-  Abstract composition showing interconnected nodes and graph structures merging with geometric web component shapes, representing the fusion of GraphQL and web standards
+coverImage: /assets/images/apollo-elements-3.png
+coverImageAlt: Apollo Elements logo featuring a rocket and moon representing GraphQL-powered web components
 ---
 
 🚀 I'm excited to announce **Apollo Elements v3.0.0**—the first major release in over three years!
