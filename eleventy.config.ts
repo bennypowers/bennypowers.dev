@@ -37,6 +37,7 @@ import { JamPackPlugin } from '#plugins/jampack.ts';
 import { WebCDSDWorkaroundPlugin } from '#plugins/dsd/webc-dsd-slot-workaround.ts';
 import { FedEmbedPlugin } from '#plugins/fed-embed/fed-embed.ts';
 import { RSSSummaryPlugin } from '#plugins/rss-summary.ts';
+import { DTLSPlugin } from '#plugins/dtls.ts';
 
 import Prism from 'prismjs/components/index.js';
 
@@ -86,6 +87,7 @@ export default function(eleventyConfig: UserConfig) {
   eleventyConfig.addPlugin(YAMLDataPlugin);
   eleventyConfig.addPlugin(MarkdownTweaksPlugin);
   eleventyConfig.addPlugin(FedEmbedPlugin);
+  eleventyConfig.addPlugin(DTLSPlugin);
   eleventyConfig.addPlugin(WebCDSDWorkaroundPlugin);
   eleventyConfig.addPlugin(OpenGraphCardPlugin);
   eleventyConfig.addPlugin(FiltersPlugin);
