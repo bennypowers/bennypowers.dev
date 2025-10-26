@@ -111,7 +111,7 @@ class UserProfile extends LitElement {
 
 For those who prefer a fully declarative approach, the HTML components let you write GraphQL in pure markup:
 
-```html
+```html {% raw %}
 <apollo-client uri="https://api.example.com/graphql">
   <apollo-query>
     <script type="application/graphql">
@@ -172,7 +172,7 @@ For those who prefer a fully declarative approach, the HTML components let you w
       </form>
     </template>
   </apollo-mutation>
-</apollo-client>
+</apollo-client> {% endraw %}
 ```
 
 ## 🎯 Why Web Components + GraphQL?
