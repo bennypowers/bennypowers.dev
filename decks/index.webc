@@ -39,6 +39,7 @@ const isPublished = x => x.data.watch || x.data.published !== false;
           overflow: hidden;
           display: block;
           aspect-ratio: 5/3;
+          height: auto;
         }
       }
     }
