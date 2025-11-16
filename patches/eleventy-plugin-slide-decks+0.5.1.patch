@@ -1,0 +1,19 @@
+diff --git a/node_modules/eleventy-plugin-slide-decks/decks.js b/node_modules/eleventy-plugin-slide-decks/decks.js
+index 71abaae..9fc3412 100644
+--- a/node_modules/eleventy-plugin-slide-decks/decks.js
++++ b/node_modules/eleventy-plugin-slide-decks/decks.js
+@@ -153,9 +153,12 @@ export async function slideDecksPlugin(eleventyConfig, options = {}) {
+           if (current) {
+             slides.push(current);
+           }
+-          const title = line.replace(/\{[^}]+\}/, '').trim();
++          // Extract heading level and title text
++          const headingMatch = line.match(/^(#+)\s+(.+)/);
++          const headingLevel = headingMatch?.[1] || '#';
++          const titleText = headingMatch?.[2]?.replace(/\{[^}]+\}/, '').trim() || '';
+           const attrStr = stringifyAttrMap(tagAttrs)
+-          current = { tagName, attrs: slideAttrs, content: `# ${title}${attrStr ? ` {${attrStr}}` : ''}\n`, };
++          current = { tagName, attrs: slideAttrs, content: `${headingLevel} ${titleText}${attrStr ? ` {${attrStr}}` : ''}\n`, };
+         } else if (current) {
+           current.content += line + "\n";
+         } else {

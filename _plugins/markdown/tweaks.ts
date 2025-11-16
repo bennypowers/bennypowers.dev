@@ -12,6 +12,6 @@ export function MarkdownTweaksPlugin(eleventyConfig: UserConfig) {
       .use(anchor, { permalink: anchor.permalink.headerLink(), })
       .use(deflist)
       .use(footnote)
-      .use(attrs, { allowedAttributes: [ 'id', 'slot', 'hidden', 'style',
+      .use(attrs, { allowedAttributes: [ 'id', 'class', 'slot', 'hidden', 'style',
                                          'reveal', 'current', /^data-.*$/ ] }));
 }
