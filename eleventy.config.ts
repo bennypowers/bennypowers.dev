@@ -47,10 +47,12 @@ export default function(eleventyConfig: UserConfig) {
   eleventyConfig.setQuietMode(true);
   eleventyConfig.addPassthroughCopy('manifest.webmanifest');
   eleventyConfig.addPassthroughCopy('assets/**/*.{svg,png,jpeg,jpg,gif,webp,webm,mp4,js,d.ts,ico,webmanifest,json,woff,woff2}');
+  eleventyConfig.addPassthroughCopy({ 'icons': 'assets/icons' });
   eleventyConfig.addPassthroughCopy('decks/**/*.{gif,png,jpeg,jpg,svg}');
   eleventyConfig.addPassthroughCopy('decks/pf-collab/demo/react-dist/fonts');
   eleventyConfig.addGlobalData('isProductionBuild', process.env.NETLIFY && process.env.CONTEXT === 'production');
   eleventyConfig.addWatchTarget('decks/**/*.css');
+  eleventyConfig.addWatchTarget('decks/*/*.md');
   eleventyConfig.addWatchTarget('decks/*/index.webc');
   eleventyConfig.watchIgnores.add('assets/images/*');
   eleventyConfig.watchIgnores.add('decks/starting-functional-javascript/images/*');
@@ -177,6 +179,7 @@ export default function(eleventyConfig: UserConfig) {
       return {
         slidem: `/assets/decks.min.js`,
         'slidem/slidem-slide.js': `/assets/decks.min.js`,
+        ['@rhds/icons/']: `/assets/@rhds/icons/`,
         ['@rhds/elements']: `${rhdsPrefix}/elements.js`,
         ['@rhds/elements/']: `${rhdsPrefix}/elements/`,
         ['@rhds/elements/lib/']: `${rhdsPrefix}/lib/`,

@@ -13,9 +13,11 @@ export function RHDSPlugin(eleventyConfig: UserConfig) {
   eleventyConfig.on('eleventy.before', async ({ runMode }) => {
     if ((runMode === 'serve' || runMode === 'watch') && watchRanOnce) return;
     console.log('[rhds]: Copying RHDS elements assets...');
-    const from = join(import.meta.resolve('@rhds/elements'), '..').replace('file:', '');
-    const to = join(process.cwd(), '_site', 'assets', '@rhds', 'elements');
-    await cp(from, to, { recursive: true })
+    for (const pkg of ['icons', 'elements']) {
+      const from = join(import.meta.resolve(`@rhds/${pkg}`), '..').replace('file:', '');
+      const to = join(process.cwd(), '_site', 'assets', '@rhds', pkg);
+      await cp(from, to, { recursive: true })
+    }
     console.log('[rhds]:   ...done');
     watchRanOnce = true;
   });
