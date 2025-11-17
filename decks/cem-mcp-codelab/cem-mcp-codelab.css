@@ -175,6 +175,7 @@ p.center {
     margin-inline: auto;
     display: block;
     width: 55rem;
+    height: auto;
     max-width: 80vw;
   }
 }
