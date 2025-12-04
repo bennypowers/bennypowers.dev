@@ -33,7 +33,7 @@ development server for your web components. You write short HTML partials which
 show off your components, and `cem serve` wraps them up into a live-reloading 
 dev server with auto-generated knobs.
 
-The server's UI and workflow are based on you [Custom Elements 
+The server's UI and workflow are based on your [Custom Elements 
 Manifest][customelementsmanifest]. It uses the same code as in the [`cem 
 generate`][cemgenerate] command to discover HTML demos according to your configuration, then it 
 generates demo pages complete with **interactive knobs**, based on your manifest metadata.
