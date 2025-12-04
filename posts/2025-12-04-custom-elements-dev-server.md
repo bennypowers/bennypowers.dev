@@ -205,7 +205,7 @@ Custom Elements Manifest, you're golden.
 ## Links
 
 - [GitHub][github]
-- [Serve Documentation](https://bennypowers.dev/cem/serve/)
+- [Serve Documentation][servedocumentation]
 
 ---
 
@@ -218,3 +218,4 @@ Custom Elements Manifest, you're golden.
 [cemmcp]: https://bennypowers.dev/cem/docs/mcp/
 [customelementsmanifest]: https://custom-elements-manifest.open-wc.org/
 [github]: https://github.com/bennypowers/cem
+[servedocumentation]: https://bennypowers.dev/cem/docs/serve/
