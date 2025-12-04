@@ -101,15 +101,18 @@ to a page. `cem serve` will wrap them up in a helpful UI, so don't worry about `
 
 Here's an example demo:
 ```html
-<my-button variant="primary" label="Click me"></my-button>
+<my-button variant="primary"
+           label="Click me"></my-button>
+
 <script type="module">
   import '@my-elements/my-button.js';
 </script>
 ```
 
-You can also include inline style tags or link to stylesheets if you need to. 
-The idea is to demonstrate a complete unit, in terms of simple HTML, CSS, and if 
-necessary, JavaScript.
+The demo includes everything a user would need to drop the element on a page 
+(assuming an import map is set up) You can also include inline style tags or
+link to stylesheets if you need to. The idea is to demonstrate a complete unit, 
+in terms of simple HTML, CSS, and if necessary, JavaScript.
 
 ### Running the Dev Server
 
