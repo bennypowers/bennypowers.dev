@@ -118,7 +118,7 @@ img, video {
 }
 
 #main-header {
-  width: 100vw;
+  width: calc(100vw - 2 * 1.6em);
   padding-inline: 1.6em;
   display: flex;
   align-items: center;
