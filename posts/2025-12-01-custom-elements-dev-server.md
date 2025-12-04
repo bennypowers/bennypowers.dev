@@ -163,9 +163,8 @@ Let's look at `cem serve` alongside other popular development tools:
 | **Interactive Knobs**   | ✅ Auto-generated     | ✅ Manual setup   | ❌ None            | ❌ None            |
 | **Demo Discovery**      | ✅ Manifest-driven    | ✅ Story files    | ❌ Manual          | ❌ Manual          |
 | **TypeScript**          | ✅ On-the-fly         | ⚠️ Requires build | ✅ On-the-fly      | ⚠️ Plugin needed   |
-| **Reload Strategy**     | Smart (dep-aware)     | HMR/Full page     | HMR                | Full page          |
-| **Configuration**       | Zero (manifest)       | Medium            | Low                | Low                |
-| **Framework Focus**     | Web Components        | React/Vue/etc     | Framework-agnostic | Framework-agnostic |
+| **Reload Strategy**     | Full page             | HMR/Full page     | HMR                | Full page          |
+| **Configuration**       | Low (manifest)        | Medium            | Low                | Low                |
 
 ### When to Use Each
 
@@ -192,7 +191,7 @@ go install bennypowers.dev/cem
 cem serve
 ```
 
-Works best with LitElement or vanilla custom elements. If you've already got a
+Works best with `LitElement` or vanilla custom elements. If you've already got a
 Custom Elements Manifest, you're golden.
 
 ## Links
