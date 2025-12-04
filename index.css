@@ -14,7 +14,7 @@ main.home.h-card {
   text-align: center;
   font-size: 180%;
   max-width: min(800px, calc(100vw - 2 * 1.6em));
-  margin-inline: 0;
+  margin-inline: auto;
 }
 
 #hero {
