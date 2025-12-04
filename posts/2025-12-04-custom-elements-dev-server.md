@@ -61,7 +61,10 @@ import { customElement, property } from 'lit/decorators.js';
 
 import styles from './my-button.css' with { type: 'css' };
 
-/** A button for performing actions */
+/**
+ * A button for performing actions
+ * @demo demo/my-button.html
+ */
 @customElement('my-button')
 export class MyButton extends LitElement {
   static styles = [styles];
