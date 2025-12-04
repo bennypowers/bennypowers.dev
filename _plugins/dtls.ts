@@ -20,12 +20,10 @@ export function DTLSPlugin(eleventyConfig: UserConfig) {
   // Uses eleventy-fetch for caching
   eleventyConfig.addGlobalData('dtlsReadme', async () => {
     try {
-      console.log('[DTLS Plugin] Fetching README from GitHub...');
       const readme = await EleventyFetch(GITHUB_README_URL, {
         duration: '1d', // Cache for 1 day
         type: 'text',
       });
-      console.log('[DTLS Plugin] Successfully fetched README, converting to HTML...');
 
       // Ensure readme is a string
       let readmeStr = String(readme);
@@ -40,7 +38,6 @@ export function DTLSPlugin(eleventyConfig: UserConfig) {
       // Convert markdown to HTML
       const html = md.render(readmeStr);
 
-      console.log('[DTLS Plugin] README converted to HTML successfully');
       return html;
     } catch (error) {
       console.error('[DTLS Plugin] Failed to fetch README from GitHub:', error);

@@ -1,6 +1,9 @@
 module.exports = {
   permalink({ tag }) {
-    return !tag ? '/tags/index.html' : `/tags/${this.slug(tag)}/index.html`;
+    if (!tag) return false;
+    // Use encodeURIComponent to preserve distinction between "web components" and "web-components"
+    const encoded = encodeURIComponent(tag);
+    return `/tags/${encoded}/index.html`;
   },
   eleventyComputed: {
     title: x => x.tag,

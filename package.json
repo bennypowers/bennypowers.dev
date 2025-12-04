@@ -6,8 +6,8 @@
   "main": "index.html",
   "type": "module",
   "scripts": {
-    "build": "NODE_OPTIONS='--experimental-strip-types' eleventy --config=eleventy.config.ts --incremental",
-    "start": "NODE_OPTIONS='--experimental-strip-types' eleventy --config=eleventy.config.ts --serve --incremental",
+    "build": "eleventy --config=eleventy.config.ts --incremental",
+    "start": "eleventy --config=eleventy.config.ts --serve",
     "postinstall": "patch-package && node --experimental-strip-types scripts/build-types.ts"
   },
   "imports": {
