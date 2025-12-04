@@ -24,6 +24,8 @@ elements in a browser.
 
 That's why I built **cem serve**: an opinionated development server designed specifically for web components and HTML.
 
+![Screenshot of cem dev server with an rh-avatar demo and knobs visible][screenshot]
+
 ## What is cem serve?
 
 Think **Storybook for HTML**. It's a *custom-elements manifest-driven* 
@@ -208,6 +210,7 @@ Custom Elements Manifest, you're golden.
 
 *Have questions or feedback? [open an issue](https://github.com/bennypowers/cem/issues).*
 
+[screenshot]: /assets/images/cem-serve.png
 [cemgenerate]: https://bennypowers.dev/cem/docs/commands/generate/
 [cemmcp]: https://bennypowers.dev/cem/docs/mcp/
 [customelementsmanifest]: https://custom-elements-manifest.open-wc.org/
