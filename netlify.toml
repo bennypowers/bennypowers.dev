@@ -18,6 +18,20 @@
   to = "https://bennypowers.github.io/shul-tools/:splat"
   status = 200
   force = true
+# Serve minimal XHTML for Go module discovery
+[[redirects]]
+  from = "/cem"
+  to = "https://bennypowers.github.io/cem/go-get.html"
+  status = 200
+  force = true
+  query = {go-get = "1"}
+[[redirects]]
+  from = "/cem/*"
+  to = "https://bennypowers.github.io/cem/go-get.html"
+  status = 200
+  force = true
+  query = {go-get = "1"}
+# Proxy all other /cem requests to GitHub Pages
 [[redirects]]
   from = "/cem/*"
   to = "https://bennypowers.github.io/cem/:splat"
