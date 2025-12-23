@@ -38,6 +38,7 @@ import { WebCDSDWorkaroundPlugin } from '#plugins/dsd/webc-dsd-slot-workaround.t
 import { FedEmbedPlugin } from '#plugins/fed-embed/fed-embed.ts';
 import { RSSSummaryPlugin } from '#plugins/rss-summary.ts';
 import { DTLSPlugin } from '#plugins/dtls.ts';
+import { GoVanityImportsPlugin } from '#plugins/go-vanity-imports.ts';
 
 import Prism from 'prismjs/components/index.js';
 
@@ -90,6 +91,7 @@ export default function(eleventyConfig: UserConfig) {
   eleventyConfig.addPlugin(MarkdownTweaksPlugin);
   eleventyConfig.addPlugin(FedEmbedPlugin);
   eleventyConfig.addPlugin(DTLSPlugin);
+  eleventyConfig.addPlugin(GoVanityImportsPlugin);
   eleventyConfig.addPlugin(WebCDSDWorkaroundPlugin);
   eleventyConfig.addPlugin(OpenGraphCardPlugin);
   eleventyConfig.addPlugin(FiltersPlugin);
@@ -105,7 +107,7 @@ export default function(eleventyConfig: UserConfig) {
   eleventyConfig.addPlugin(TimeToReadPlugin);
   eleventyConfig.addPlugin(EmbedPlugin, { lite: true });
   eleventyConfig.addPlugin(EmojiWrapPlugin, { exclude: /^_site\/.*-repro\.html$/ });
-  eleventyConfig.addPlugin(JamPackPlugin, { exclude: 'decks/**/*' });
+  eleventyConfig.addPlugin(JamPackPlugin, { exclude: ['decks/**/*', '**/go-import.html'] });
   eleventyConfig.addPlugin(PostCSSPlugin, { include: /devconf-brno-2023\/components\/.*\.css/ });
 
   eleventyConfig.addPlugin(EleventyRSSPlugin);

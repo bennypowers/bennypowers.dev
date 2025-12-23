@@ -18,16 +18,29 @@
   to = "https://bennypowers.github.io/shul-tools/:splat"
   status = 200
   force = true
-# Serve minimal XHTML for Go module discovery
+# Serve minimal XHTML for Go module discovery - dtls
+[[redirects]]
+  from = "/dtls"
+  to = "/dtls/go-import.html"
+  status = 200
+  force = true
+  query = {go-get = "1"}
+[[redirects]]
+  from = "/dtls/*"
+  to = "/dtls/go-import.html"
+  status = 200
+  force = true
+  query = {go-get = "1"}
+# Serve minimal XHTML for Go module discovery - cem
 [[redirects]]
   from = "/cem"
-  to = "https://bennypowers.github.io/cem/go-get.html"
+  to = "/cem/go-import.html"
   status = 200
   force = true
   query = {go-get = "1"}
 [[redirects]]
   from = "/cem/*"
-  to = "https://bennypowers.github.io/cem/go-get.html"
+  to = "/cem/go-import.html"
   status = 200
   force = true
   query = {go-get = "1"}
