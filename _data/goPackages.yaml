@@ -2,18 +2,26 @@
 # Used by go-imports.njk template to automatically generate go-import pages
 
 - name: cem
-  importPath: "bennypowers.dev/cem"
-  vcs: "git"
-  repoUrl: "https://github.com/bennypowers/cem"
+  importPath: bennypowers.dev/cem
+  vcs: git
+  repoUrl: https://github.com/bennypowers/cem
   goSource:
-    home: "https://bennypowers.dev/cem/"
-    directory: "https://github.com/bennypowers/cem/tree/main{/dir}"
-    file: "https://github.com/bennypowers/cem/blob/main{/dir}/{file}#L{line}"
+    home: https://bennypowers.dev/cem/
+    directory: https://github.com/bennypowers/cem/tree/main{/dir}
+    file: https://github.com/bennypowers/cem/blob/main{/dir}/{file}#L{line}
 - name: dtls
-  importPath: "bennypowers.dev/dtls"
-  vcs: "git"
-  repoUrl: "https://github.com/bennypowers/design-tokens-language-server"
+  importPath: bennypowers.dev/dtls
+  vcs: git
+  repoUrl: https://github.com/bennypowers/design-tokens-language-server
   goSource:
-    home: "https://github.com/bennypowers/design-tokens-language-server"
-    directory: "https://github.com/bennypowers/design-tokens-language-server/tree/main{/dir}"
-    file: "https://github.com/bennypowers/design-tokens-language-server/blob/main{/dir}/{file}#L{line}"
+    home: https://github.com/bennypowers/design-tokens-language-server
+    directory: https://github.com/bennypowers/design-tokens-language-server/tree/main{/dir}
+    file: https://github.com/bennypowers/design-tokens-language-server/blob/main{/dir}/{file}#L{line}
+- name: mappa
+  importPath: bennypowers.dev/mappa
+  vcs: git
+  repoUrl: https://github.com/bennypowers/mappa
+  goSource:
+    home: https://github.com/bennypowers/mappa
+    directory: https://github.com/bennypowers/mappa/tree/main{/dir}
+    file: https://github.com/bennypowers/mappa/blob/main{/dir}/{file}#L{line}
