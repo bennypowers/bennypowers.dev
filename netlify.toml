@@ -50,6 +50,18 @@
   to = "https://bennypowers.github.io/cem/:splat"
   status = 200
   force = true
+[[redirects]]
+  from = "/mappa"
+  to = "/mappa/go-import.html"
+  status = 200
+  force = true
+  query = {go-get = "1"}
+[[redirects]]
+  from = "/mappa/*"
+  to = "/mappa/go-import.html"
+  status = 200
+  force = true
+  query = {go-get = "1"}
 
 
 [[plugins]]
