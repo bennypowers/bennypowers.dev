@@ -34,11 +34,11 @@ img {
   transform-origin: top left;
   rotate: 90deg;
   translate: 4.5vw var(--rh-space-4xl);
-}
 
-#heading ::slotted(*) {
-  margin: 0;
-  padding: 0;
+  & ::slotted(*) {
+    margin: 0;
+    padding: 0;
+  }
 }
 
 h2 { font-size: 54pt; }
@@ -58,11 +58,11 @@ li {
   align-items: center;
   gap: var(--rh-space-2xl);
   font-size: 60%;
-}
 
-li a {
-  color: inherit;
-  text-decoration: none;
+  & a {
+    color: inherit;
+    text-decoration: none;
+  }
 }
 
 #content svg {

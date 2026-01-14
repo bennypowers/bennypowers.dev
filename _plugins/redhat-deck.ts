@@ -4,7 +4,7 @@ import { readFile, writeFile, mkdir, glob } from 'node:fs/promises';
 import { join, dirname } from 'node:path';
 import { createRequire } from 'node:module';
 
-import { postcss } from './postcss.ts';
+import { css } from './lightningcss.ts';
 
 const require = createRequire(import.meta.url);
 
@@ -19,7 +19,7 @@ const html = String.raw;
 async function cssModularize(contents: string, filename: string) {
   return /* js */`// ${filename}
 const sheet = new CSSStyleSheet();
-await sheet.replace(\`${await postcss(contents)}\`);
+await sheet.replace(\`${await css(contents)}\`);
 export default sheet;
 `;
 }

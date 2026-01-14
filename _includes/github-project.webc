@@ -1,17 +1,14 @@
----
-permalink: /dtls/index.html
----
 <!doctype html>
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>Design Tokens Language Server (DTLS)</title>
+    <title @text="title"></title>
     <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
-    <meta name="description" content="Editor tools for working with DTCG formatted design tokens">
+    <meta name="description" :content="description">
 
     <!-- Go module resolution meta tags -->
-    <meta name="go-import" content="bennypowers.dev/dtls git https://github.com/bennypowers/design-tokens-language-server">
-    <meta name="go-source" content="bennypowers.dev/dtls https://github.com/bennypowers/design-tokens-language-server https://github.com/bennypowers/design-tokens-language-server/tree/main{/dir} https://github.com/bennypowers/design-tokens-language-server/blob/main{/dir}/{file}#L{line}">
+    <meta name="go-import" :content="`bennypowers.dev/${pageId} git https://github.com/${repo}`">
+    <meta name="go-source" :content="`bennypowers.dev/${pageId} https://github.com/${repo} https://github.com/${repo}/tree/main{/dir} https://github.com/${repo}/blob/main{/dir}/{file}#L{line}`">
 
     <link rel="stylesheet" href="/assets/theme-light.css" media="(prefers-color-scheme: light)" webc:keep>
     <link rel="stylesheet" href="/assets/theme-dark.css" media="(prefers-color-scheme: dark)" webc:keep>
@@ -24,71 +21,70 @@ permalink: /dtls/index.html
         color: light-dark(black, white);
       }
 
-      #dtls-page {
+      .github-project-page {
         max-width: 900px;
         margin: 0 auto;
         padding: 2rem;
       }
 
-      #dtls-page nav {
+      .github-project-page nav {
         margin-bottom: 2rem;
         padding-bottom: 1rem;
         border-bottom: 1px solid light-dark(#ccc, #444);
       }
 
-      #dtls-page nav a {
+      .github-project-page nav a {
         font-size: 1.2rem;
         text-decoration: none;
         color: light-dark(#0366d6, #58a6ff);
       }
 
-      #dtls-page nav a:hover {
+      .github-project-page nav a:hover {
         text-decoration: underline;
       }
 
-      #dtls-page article {
+      .github-project-page article {
         line-height: 1.6;
       }
 
-      #dtls-page article img {
+      .github-project-page article img {
         max-width: 100%;
         height: auto;
       }
 
-      #dtls-page article code {
+      .github-project-page article code {
         background: light-dark(#f6f8fa, #161b22);
         padding: 0.2em 0.4em;
         border-radius: 3px;
         font-size: 85%;
       }
 
-      #dtls-page article pre {
-        background: light-dark(#f6f8fa, #161b22);
-        padding: 1rem;
+      .github-project-page article pre {
+        background: light-dark(#f6f8fa, #161b22); padding: 1rem;
         border-radius: 6px;
         overflow-x: auto;
       }
 
-      #dtls-page article pre code {
+      .github-project-page article pre code {
         background: none;
         padding: 0;
       }
 
-      #dtls-page h1, #dtls-page h2, #dtls-page h3 {
+      .github-project-page h1, .github-project-page h2, .github-project-page h3 {
         margin-top: 1.5em;
         margin-bottom: 0.5em;
       }
 
-      #dtls-page p {
+      .github-project-page p {
         margin-bottom: 1em;
       }
 
-      #dtls-page ul, #dtls-page ol {
+      .github-project-page ul, .github-project-page ol {
         margin-bottom: 1em;
         padding-left: 2em;
       }
 
-      #dtls-page blockquote {
+      .github-project-page blockquote {
         border-left: 4px solid light-dark(#ddd, #444);
         padding-left: 1em;
         margin-left: 0;
@@ -104,14 +100,14 @@ permalink: /dtls/index.html
     <script @raw="getBundle('js')" webc:keep></script>
   </head>
   <body>
-    <main id="dtls-page">
+    <main class="github-project-page">
       <nav>
-        <a href="https://github.com/bennypowers/design-tokens-language-server">
-          📦 View on GitHub →
+        <a :href="`https://github.com/${repo}`">
+          View on GitHub
         </a>
       </nav>
 
-      <article @raw="dtlsReadme"></article>
+      <article @raw="readme"></article>
     </main>
   </body>
 </html>

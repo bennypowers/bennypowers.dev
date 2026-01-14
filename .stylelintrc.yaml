@@ -10,36 +10,79 @@ overrides:
   - files:
     - decks/*/components/*.css
     rules:
-      csstools/use-nesting: never
+      csstools/use-nesting: ignore
   - files:
     - assets/*.css
+    - assets/red-hat-font.css
     - _plugins/redhat-deck/redhat-theme.css
+    - resume/*.css
     rules:
       csstools/use-nesting: ignore
+      at-rule-descriptor-no-unknown: null
+  - files:
+    - decks/pf-collab/demo/react-dist/*.css
+    rules:
+      csstools/use-nesting: ignore
+      at-rule-descriptor-no-unknown: null
+      '@stylistic/max-line-length': null
 
 plugins:
   - stylelint-use-nesting
-  - '@stylelistic/stylelint-plugin'
+  - '@stylistic/stylelint-plugin'
 
 rules:
   alpha-value-notation: number # TODO: fix for `percentage` in tokens
-  color-function-notation: legacy # TODO: fix for `modern` in tokens
-  color-hex-length: long
+  at-rule-descriptor-no-unknown:
+    - true
+    - ignoreDescriptors:
+        - text-rendering
+  at-rule-empty-line-before: null
+  color-function-alias-notation: null # Allow rgba, hsla etc
+  color-function-notation: null # Allow both modern and legacy notation
+  color-hex-length: null # Allow both short and long hex
   csstools/use-nesting: always
+  custom-property-empty-line-before: null # Don't require empty lines before custom properties
   custom-property-pattern: _?[a-z]+[a-z0-9-]*
+  declaration-empty-line-before: null # Don't require empty lines before declarations
+  declaration-property-value-no-unknown: null # Allow non-standard values like margin: none
+  declaration-block-no-duplicate-custom-properties: null # Allow overrides for different contexts
+  declaration-property-value-keyword-no-deprecated: null # Allow break-word for backwards compat
+  declaration-block-single-line-max-declarations: null # Allow multiple declarations on single line
+  function-url-quotes: null # Don't require quotes in url()
+  keyframe-selector-notation: null # Allow 'to' keyword
+  no-duplicate-selectors: null # Intentional duplicates in some cases
+  property-no-deprecated: null # Allow clip for legacy support
+  property-no-vendor-prefix: null # Allow -webkit-background-clip etc
+  rule-empty-line-before: null # Don't enforce empty lines
+  value-keyword-case:
+    - lower
+    - ignoreFunctions:
+        - /^--/
+      ignoreKeywords:
+        - Aleo
+        - Inconsolata
+        - Inter
+        - Fira Code
+        - Operator Mono
+        - Noto Sans Mono
+        - Ubuntu Mono
+        - optimizeLegibility
   declaration-block-no-redundant-longhand-properties:
     - true
     - ignoreShorthands:
         - /grid/
-  no-descending-specificity:
-    - true
-    - ignore:
-      - selectors-within-list
+        - /inset/
+        - /margin/
+        - /padding/
+        - /place/
+  font-family-no-missing-generic-family-keyword: null # Allow custom font stacks
+  keyframes-name-pattern: null # Allow PatternFly animation names
+  no-descending-specificity: null # False positives with CSS nesting
   number-max-precision: 6
   selector-class-pattern: null
-  selector-combinator-space-after: always
-  selector-combinator-space-before: always
-  selector-pseudo-element-colon-notation: single
+  '@stylistic/selector-combinator-space-after': always
+  '@stylistic/selector-combinator-space-before': always
+  selector-pseudo-element-colon-notation: null # Allow both single and double colons
   selector-pseudo-element-no-unknown:
     - true
     - ignorePseudoElements:
@@ -51,7 +94,8 @@ rules:
       ignoreTypes:
         - heading
         - actions
-  shorthand-property-no-redundant-values: true
+  selector-attribute-quotes: null # Don't require quotes in attribute selectors
+  shorthand-property-no-redundant-values: null # Allow redundant values for clarity
 
   '@stylistic/string-quotes': double
   '@stylistic/indentation': 2

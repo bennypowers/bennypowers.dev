@@ -1,0 +1,8 @@
+---
+layout: github-project.webc
+permalink: /mappa/index.html
+pageId: mappa
+repo: bennypowers/mappa
+title: Mappa
+description: Generic ordered-map implementation for Go
+---

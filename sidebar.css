@@ -4,7 +4,7 @@ body.sidebar {
   grid-template-rows: min-content min-content auto auto min-content;
   grid-template-columns: minmax(0, auto);
   grid-template-areas:
-    "banner"
+    /* "banner" */
     "head"
     "main"
     "menu"
@@ -13,7 +13,7 @@ body.sidebar {
 
 main { grid-area: main; }
 
-.banner { grid-area: banner; }
+/* .banner { grid-area: banner; } */
 
 #main-header {
   grid-area: head;

@@ -9,13 +9,15 @@ const cache = new AssetCache('import_map_results');
 let lastOptions: string;
 
 async function fetchIt(options: ImportMapPluginConfig, cache: AssetCache) {
+  const start = performance.now();
   console.log('[eleventy-plugin-jspm]: Generating import map...');
   const { Generator } = await import('@jspm/generator');
   const generator = new Generator({ env: ['production', 'browser', 'module'] });
   await generator.install(options.specs);
   const map = generator.getMap();
   await cache.save(map, 'json');
-  console.log('[eleventy-plugin-jspm]:  ...Done!');
+  const elapsed = (performance.now() - start).toFixed(0);
+  console.log(`[eleventy-plugin-jspm]:  ...Done in ${elapsed}ms`);
   return map;
 }
 
