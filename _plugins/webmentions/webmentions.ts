@@ -64,6 +64,8 @@ function getWebmentions(eleventyConfig: UserConfig, domain: string) {
 
 export function WebmentionsPlugin(eleventyConfig: UserConfig, { domain, webmentionIoToken }) {
   eleventyConfig.on('eleventy.before', async function() {
+    const start = performance.now();
+    console.log('[webmentions]: Fetching webmentions...');
     const webmentionIoUrl = new URL('/api/mentions.jf2', 'https://webmention.io')
           webmentionIoUrl.searchParams.append('token', webmentionIoToken);
           webmentionIoUrl.searchParams.append('domain', domain);
@@ -72,6 +74,8 @@ export function WebmentionsPlugin(eleventyConfig: UserConfig, { domain, webmenti
       type: 'json',
       verbose: true,
     });
+    const elapsed = (performance.now() - start).toFixed(0);
+    console.log(`[webmentions]: Fetched ${mentions?.children?.length ?? 0} mentions in ${elapsed}ms`);
     eleventyConfig.addGlobalData('allWebmentions', mentions);
   });
   eleventyConfig.addFilter('isWebmentionLike', mention => mention?.['wm-property'] === 'like-of');

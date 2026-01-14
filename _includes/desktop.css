@@ -47,7 +47,7 @@ body.sidebar {
   grid-template-rows: min-content min-content auto min-content;
   grid-template-columns: minmax(0, 2fr) minmax(410px, 1fr);
   grid-template-areas:
-    "banner banner"
+    /* "banner banner" */
     "head head"
     "main menu"
     "foot foot";

@@ -1,0 +1,8 @@
+---
+layout: github-project.webc
+permalink: /regexplainer/index.html
+pageId: regexplainer
+repo: bennypowers/nvim-regexplainer
+title: Regexplainer
+description: Neovim plugin for explaining regular expressions
+---

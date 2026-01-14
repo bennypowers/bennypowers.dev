@@ -28,16 +28,16 @@ import { FiltersPlugin } from '#plugins/filters.ts';
 import { FontsPlugin } from '#plugins/fonts.ts';
 import { OpenGraphCardPlugin } from '#plugins/opengraph-cards.ts';
 import { PostsPlugin } from '#plugins/posts.ts';
-import { PostCSSPlugin, postcss } from '#plugins/postcss.ts';
+import { LightningCSSPlugin, css } from '#plugins/lightningcss.ts';
 import { RedHatDeckPlugin } from '#plugins/redhat-deck.ts';
 import { RHDSPlugin } from '#plugins/rhds.ts';
 import { DC23Plugin } from '#plugins/devconf-brno-2023.ts';
 import { DC25Plugin } from '#plugins/devconf-brno-2025.ts';
-import { JamPackPlugin } from '#plugins/jampack.ts';
+import { NetlifyImageCDNPlugin } from '#plugins/netlify-image-cdn.ts';
+import { HTMLOptimizePlugin } from '#plugins/html-optimize.ts';
 import { WebCDSDWorkaroundPlugin } from '#plugins/dsd/webc-dsd-slot-workaround.ts';
 import { FedEmbedPlugin } from '#plugins/fed-embed/fed-embed.ts';
 import { RSSSummaryPlugin } from '#plugins/rss-summary.ts';
-import { DTLSPlugin } from '#plugins/dtls.ts';
 import { GoVanityImportsPlugin } from '#plugins/go-vanity-imports.ts';
 
 import Prism from 'prismjs/components/index.js';
@@ -77,10 +77,9 @@ export default function(eleventyConfig: UserConfig) {
       bundles: ['svg'],
       transforms: [
         async function(content: string) {
-          if (this.type === 'css') {
-            return postcss(content);
-          } else {
-            return content;
+          switch (this.type) {
+            case 'css': return css(content);
+            default: return content;
           }
         }
       ]
@@ -90,7 +89,6 @@ export default function(eleventyConfig: UserConfig) {
   eleventyConfig.addPlugin(YAMLDataPlugin);
   eleventyConfig.addPlugin(MarkdownTweaksPlugin);
   eleventyConfig.addPlugin(FedEmbedPlugin);
-  eleventyConfig.addPlugin(DTLSPlugin);
   eleventyConfig.addPlugin(GoVanityImportsPlugin);
   eleventyConfig.addPlugin(WebCDSDWorkaroundPlugin);
   eleventyConfig.addPlugin(OpenGraphCardPlugin);
@@ -107,8 +105,15 @@ export default function(eleventyConfig: UserConfig) {
   eleventyConfig.addPlugin(TimeToReadPlugin);
   eleventyConfig.addPlugin(EmbedPlugin, { lite: true });
   eleventyConfig.addPlugin(EmojiWrapPlugin, { exclude: /^_site\/.*-repro\.html$/ });
-  eleventyConfig.addPlugin(JamPackPlugin, { exclude: ['decks/**/*', '**/go-import.html'] });
-  eleventyConfig.addPlugin(PostCSSPlugin, { include: /devconf-brno-2023\/components\/.*\.css/ });
+  eleventyConfig.addPlugin(NetlifyImageCDNPlugin, {
+    quality: 80,
+    format: 'avif',
+    exclude: ['decks/', 'go-import.html'],
+  });
+  eleventyConfig.addPlugin(HTMLOptimizePlugin, {
+    exclude: ['decks/', 'go-import.html'],
+  });
+  eleventyConfig.addPlugin(LightningCSSPlugin);
 
   eleventyConfig.addPlugin(EleventyRSSPlugin);
   eleventyConfig.addPlugin(RSSSummaryPlugin);

@@ -4,3 +4,5 @@ netlify/**/*
 .patches/*
 .cache/**/*
 .github/**/*
+# TODO: fix this deck
+decks/nvim-regexplainer/**/*
