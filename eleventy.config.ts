@@ -160,7 +160,6 @@ export default function(eleventyConfig: UserConfig) {
       '@patternfly/pfe-core/decorators/observes.js',
       '@patternfly/pfe-core/functions/random.js',
       '@patternfly/pfe-core/functions/context.js',
-      '@rhds/tokens/media.js',
       'lit',
       'lit/async-directive.js',
       'lit/decorators.js',
@@ -190,6 +189,10 @@ export default function(eleventyConfig: UserConfig) {
         ['@rhds/elements']: `${rhdsPrefix}/elements.js`,
         ['@rhds/elements/']: `${rhdsPrefix}/elements/`,
         ['@rhds/elements/lib/']: `${rhdsPrefix}/lib/`,
+        // @rhds/tokens v3 has a packaging bug (TypeScript in .cjs file) that breaks @jspm/generator
+        // Use CDN URLs directly as a workaround
+        ['@rhds/tokens/media.js']: 'https://esm.sh/@rhds/tokens@3.0.2/media.js',
+        ['@rhds/tokens/css/default-theme.css.js']: 'https://esm.sh/@rhds/tokens@3.0.2/css/default-theme.css.js',
       };
     }
   });

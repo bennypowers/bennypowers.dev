@@ -50,7 +50,7 @@ abbr {
 }
 
 abbr::after {
-  content: ' (' attr(title) ')';
+  content: " (" attr(title) ")";
   font-family: var(--body-font-family);
   font-weight: var(--body-font-weight);
   display: inline;
@@ -90,8 +90,8 @@ h3 {
   display: grid;
   margin-bottom: 12px;
   grid-template-areas:
-    'name social'
-    'address social';
+    "name social"
+    "address social";
 }
 
 #identity h1 {
@@ -131,7 +131,7 @@ h3 {
 }
 
 #social a::before {
-  content: attr(title) ': ';
+  content: attr(title) ": ";
   font-style: normal;
 }
 
@@ -159,7 +159,7 @@ h3 {
 }
 
 #summary ul li:not(:last-of-type)::after {
-  content: ', ';
+  content: ", ";
 }
 
 #tools {
@@ -179,7 +179,7 @@ h3 {
 }
 
 #qualifications dd a::after {
-  content: ': ' attr(href);
+  content: ": " attr(href);
 }
 
 #experience,
@@ -206,7 +206,7 @@ h3 {
 }
 
 :is(#experience, #open-source) ul li:not(:last-of-type)::after {
-  content: ', ';
+  content: ", ";
 }
 
 :is(.experience, .open-source) ul li {
@@ -235,7 +235,7 @@ h3 {
 }
 
 :is(#experience, #open-source) .technologies h3::after {
-  content: ':';
+  content: ":";
 }
 
 #tools ul {
@@ -254,7 +254,7 @@ h3 {
 }
 
 #tools ul li:not(:last-of-type)::after {
-  content: ', ';
+  content: ", ";
   display: inline;
 }
 

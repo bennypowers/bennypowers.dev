@@ -235,7 +235,7 @@ blockquote {
   font-size: 110%;
   font-weight: 600;
   &::before {
-    content: '“';
+    content: "“";
     background: var(--magic);
     font-family: var(--heading-font);
     font-size: 300%;

@@ -56,12 +56,12 @@ slidem-deck {
 
     transition: opacity .3s ease-in;
 
-    &>ul {
+    & > ul {
       margin-inline: auto;
       margin-block-start: 3em;
       width: max-content;
 
-      &>li {
+      & > li {
         margin-block-end: .25em;
 
         &::marker {
@@ -74,7 +74,7 @@ slidem-deck {
       & .progressive-reveal {
         position: relative;
 
-        &>img {
+        & > img {
           position: absolute;
 
           &[past] {
@@ -126,16 +126,16 @@ slidem-deck {
 
   & th {
     text-align: right;
-  }
 
-  & th.rotate {
-    rotate: 315deg;
-    white-space: nowrap;
-    max-width: 1em;
-    height: 7em;
-    translate: 0.5em 3em;
-    transform-origin: left;
-    position: relative;
+    &.rotate {
+      rotate: 315deg;
+      white-space: nowrap;
+      max-width: 1em;
+      height: 7em;
+      translate: 0.5em 3em;
+      transform-origin: left;
+      position: relative;
+    }
   }
 }
 

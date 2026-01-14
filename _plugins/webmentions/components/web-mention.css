@@ -6,8 +6,7 @@ web-mention {
   &.many { --avatar-size: 40px; }
 
   & .h-entry {
-    column-gap: calc(var(--avatar-size, 60px) / 4);
-    row-gap: calc(var(--avatar-size, 60px) / 8);
+    gap: calc(var(--avatar-size, 60px) / 8) calc(var(--avatar-size, 60px) / 4);
     margin-block-end: 1em;
     margin-inline-start: var(--avatar-size, 60px);
     border-radius: 16px;
