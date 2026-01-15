@@ -38,9 +38,10 @@ export async function css(
       exclude: Features.LightDark,
     });
     return result.code.toString();
-  } catch {
+  } catch (e) {
     // Fallback to original CSS if LightningCSS can't process it
     // (e.g., advanced nesting syntax that browsers support natively)
+    console.error('[lightningcss] Transform error:', (e as Error).message);
     return typeof input === 'string' ? input : await input;
   }
 }

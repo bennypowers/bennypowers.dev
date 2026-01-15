@@ -74,7 +74,7 @@ export default function(eleventyConfig: UserConfig) {
       'npm:@11ty/eleventy-plugin-syntaxhighlight/*.webc',
     ],
     bundlePluginOptions: {
-      bundles: ['svg'],
+      bundles: ['css', 'svg'],
       transforms: [
         async function(content: string) {
           switch (this.type) {

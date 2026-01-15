@@ -19,7 +19,7 @@
     }
   }
 
-  @media (min-width: 800px) & {
+  @media (min-width: 800px) {
     width: 800px;
     margin-inline: auto;
   }
