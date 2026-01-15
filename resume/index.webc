@@ -59,16 +59,7 @@ const getResumeData = tag =>
     <span itemprop="addressCountry">Israel</span>
     <span itemprop="nationality" role="img" aria-label="Israeli">🇮🇱</span>
     <span itemprop="nationality" role="img" aria-label="Canadian">🇨🇦</span>
-    <details id="contact-disclosure">
-      <summary class="screen-only">Contact</summary>
-
-      <a itemprop="email" href="mailto:web@bennypowers.com">web@bennypowers.com</a>
-      <a itemprop="telephone" href="tel:+972544825726">054-482-5726</a>
-      <p class="screen-only">To book a live mentoring session, find me on codementor.io. For all other enquiries, please email me.</p>
-      <a id="codementor-badge" class="screen-only" href="https://www.codementor.io/@bennyp?refer=badge">
-        <img src="https://www.codementor.io/m-badges/bennyp/find-me-on-cm-b.svg" alt="Codementor badge">
-      </a>
-    </details>
+    <a itemprop="email" href="mailto:web@bennypowers.com">web@bennypowers.com</a>
   </address>
 </header>
 

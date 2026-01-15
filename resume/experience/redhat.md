@@ -3,7 +3,7 @@ organization:
   name: Red Hat
   href: https://redhat.com
   address: Remote (Israel)
-role: Principal UX Engineer
+role: Senior Principal Software Engineer
 startDate: 2021-10
 endDate: Present
 technologies:
@@ -11,6 +11,7 @@ technologies:
   - css3
   - javascript
   - typescript
+  - golang
   - web-components
   - a11y
   - github
@@ -20,5 +21,6 @@ technologies:
 ---
 
 Maintained and updated design systems. Contributed to upstream open source
-projects. Implemented developer tooling. Maintained NPM packages. Worked across
-multiple organizations with different constraints. Mentored students and peers.
+projects. Created and maintained developer tooling. Maintained Go and NPM
+packages. Worked across multiple organizations with different constraints.
+Mentored students and peers.

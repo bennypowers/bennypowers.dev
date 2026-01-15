@@ -239,35 +239,46 @@ main > div > a {
   }
 }
 
-#identity [itemprop="jobTitle"] {
-  font-size: 1.2rem;
-  font-weight: 600;
-  display: block;
-}
+#identity {
+  display: flex;
+  flex-flow: wrap;
+  grid-area: head;
+  gap: var(--grid-gap);
+  flex: 1;
+  padding-inline: 1.6em;
 
-#identity [itemprop="telephone"] {
-  display: inline-block;
-  break-inside: avoid;
-}
+  & [itemprop="jobTitle"] {
+    font-size: 1.2rem;
+    font-weight: 600;
+    display: block;
+  }
 
-#identity address {
-  width: 220px;
-}
+  & [itemprop="telephone"] {
+    display: inline-block;
+    break-inside: avoid;
+  }
 
-#identity h1 {
-  text-align: left;
-  width: 100%;
+  & address {
+    width: 220px;
+  }
 
-  &:after {
-    content: none;
-    display: none;
+  & h1 {
+    text-align: left;
+    margin: 0;
+    margin-inline-end: auto;
+
+    &:after {
+      content: none;
+      display: none;
+    }
   }
 }
 
 #social {
   display: flex;
   flex-flow: row nowrap;
-  gap: 8px;
+  align-items: center;
+  column-gap: 8px;
 
   & svg {
     width: 32px;
@@ -276,7 +287,13 @@ main > div > a {
 
   & a {
     color: inherit;
-    text-decoration: none;
+    text-decoration: none
+  }
+  & a, & button {
+    display: inline-block;
+    margin: 0;
+    padding: 0;
+    align-self: center;
   }
 }
 
@@ -335,19 +352,6 @@ main > div > a {
   background: white;
 }
 
-#codementor-badge {
-  text-align: center;
-  display: block;
-  margin: 16px auto;
-}
-
-#contact-dialog-content {
-  --mdc-theme-primary: var(--app-primary-color);
-
-  max-width: 500px;
-  display: flex;
-  flex-flow: column nowrap;
-}
 
 #tools ul {
   letter-spacing: -1px;
@@ -402,18 +406,6 @@ main > div > a {
   margin-bottom: 14px;
 }
 
-#identity {
-  display: flex;
-  flex-flow: wrap;
-  grid-area: head;
-
-  @media (width >= 595px) {
-    display: flex;
-    flex-flow: column;
-    gap: var(--grid-gap)
-  }
-}
-
 @media (width >= 595px) {
   main {
     width: min-content;
@@ -449,17 +441,11 @@ main > div > a {
 
   #footer {
     grid-area: foot;
-    position: fixed;
-    bottom: 0;
+    align-self: end;
   }
 
   main {
-    max-height: 80vh;
     padding: 0 var(--grid-gap);
-  }
-
-  #identity {
-    position: fixed;
   }
 
   h2 {
