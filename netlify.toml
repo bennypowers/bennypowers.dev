@@ -18,6 +18,19 @@
   to = "https://bennypowers.github.io/shul-tools/:splat"
   status = 200
   force = true
+# Serve minimal XHTML for Go module discovery - asimonim
+[[redirects]]
+  from = "/asimonim"
+  to = "/asimonim/go-import.html"
+  status = 200
+  force = true
+  query = {go-get = "1"}
+[[redirects]]
+  from = "/asimonim/*"
+  to = "/asimonim/go-import.html"
+  status = 200
+  force = true
+  query = {go-get = "1"}
 # Serve minimal XHTML for Go module discovery - dtls
 [[redirects]]
   from = "/dtls"

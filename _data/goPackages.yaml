@@ -1,6 +1,14 @@
 # Central registry of Go packages hosted on bennypowers.dev
 # Used by go-imports.njk template to automatically generate go-import pages
 
+- name: asimonim
+  importPath: bennypowers.dev/asimonim
+  vcs: git
+  repoUrl: https://github.com/bennypowers/asimonim
+  goSource:
+    home: https://bennypowers.dev/asimonim/
+    directory: https://github.com/bennypowers/asimonim/tree/main{/dir}
+    file: https://github.com/bennypowers/asimonim/blob/main{/dir}/{file}#L{line}
 - name: cem
   importPath: bennypowers.dev/cem
   vcs: git
