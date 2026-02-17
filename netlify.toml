@@ -61,7 +61,7 @@
 [[redirects]]
   from = "/cem/docs/mcp/writing-descriptions/"
   to = "https://bennypowers.github.io/cem/docs/usage/effective-mcp-descriptions/"
-  status = 200
+  status = 301
   force = true
 [[redirects]]
   from = "/cem/*"
