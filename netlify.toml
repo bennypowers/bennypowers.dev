@@ -60,7 +60,7 @@
 # Proxy all other /cem requests to GitHub Pages
 [[redirects]]
   from = "/cem/docs/mcp/writing-descriptions/"
-  to = "https://bennypowers.github.io/cem/docs/usage/effective-mcp-descriptions/"
+  to = "https://bennypowers.dev/cem/docs/usage/effective-mcp-descriptions/"
   status = 301
   force = true
 [[redirects]]
