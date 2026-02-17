@@ -59,6 +59,11 @@
   query = {go-get = "1"}
 # Proxy all other /cem requests to GitHub Pages
 [[redirects]]
+  from = "/cem/docs/mcp/writing-descriptions/"
+  to = "https://bennypowers.github.io/cem/docs/usage/effective-mcp-descriptions/"
+  status = 200
+  force = true
+[[redirects]]
   from = "/cem/*"
   to = "https://bennypowers.github.io/cem/:splat"
   status = 200
