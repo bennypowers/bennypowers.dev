@@ -104,7 +104,7 @@ Leo replied promptly advising me to check the soldering job on the BAT+ pad, whi
 
 ## The Firmware
 
-As first I tried ZMK's Studio AppImage to configure the layout, but it's really annoying to use - ironically it's heavily mouse based, and there's no import/export so I couldn't use LLM tools to translate my QMK json into ZMK format.
+As first I tried ZMK's Studio AppImage to configure the layout, but it's really annoying to use - ironically it's heavily mouse based, and there's no import/export so I couldn't use LLM tools to translate my [QMK json](https://github.com/bennypowers/qmk_firmware/blob/cantor/nusah/keyboards/cantor/keymaps/nusah/keymap.json) into ZMK format.
 
 So eventually I cloned beekeeb's firmware repo and ported over [my layout](https://github.com/bennypowers/zmk-keyboard-toucan) that way.
 
