@@ -1,0 +1,68 @@
+---
+layout: gnome2-shell.webc
+title: Help
+permalink: /help/
+---
+
+<gtk2-window label="Help" window-url="/help/" icon="apps/help-browser" focused close-href="/">
+  <gtk2-scrolled-window>
+    <div class="window-content">
+      <h1>Help</h1>
+
+      <h2>Inspirations</h2>
+      <table>
+        <thead><tr><th>Project</th><th>Description</th></tr></thead>
+        <tbody>
+          <tr><td>GNOME 2</td><td>The classic GNOME desktop environment (2002-2011)</td></tr>
+          <tr><td>Fedora 10 (Cambridge)</td><td>Desktop icon layout and overall look and feel</td></tr>
+          <tr><td>Clearlooks</td><td>Default GTK2 theme from GNOME 2.22 onwards</td></tr>
+          <tr><td><a href="https://github.com/jpfleury/clearlooks-phenix">Clearlooks-Phenix</a></td><td>GTK3 port of Clearlooks, used as colour reference</td></tr>
+        </tbody>
+      </table>
+
+      <h2>Dependencies and Licenses</h2>
+      <table>
+        <thead><tr><th>Dependency</th><th>License</th><th>Use</th></tr></thead>
+        <tbody>
+          <tr>
+            <td><a href="https://tango.freedesktop.org/Tango_Icon_Library">Tango Icon Theme</a></td>
+            <td>Public Domain</td>
+            <td>Menu and desktop icons</td>
+          </tr>
+          <tr>
+            <td><a href="https://dejavu-fonts.github.io/">DejaVu Sans</a></td>
+            <td>Bitstream Vera / DejaVu License (free)</td>
+            <td>UI font, matching GNOME 2 default</td>
+          </tr>
+          <tr>
+            <td><a href="https://lit.dev/">Lit</a></td>
+            <td>BSD 3-Clause</td>
+            <td>Web component framework for all gtk2-* and gnome2-* elements</td>
+          </tr>
+          <tr>
+            <td><a href="https://www.11ty.dev/">Eleventy</a></td>
+            <td>MIT</td>
+            <td>Static site generator</td>
+          </tr>
+          <tr>
+            <td><a href="https://commons.wikimedia.org/wiki/File:Gnomelogo.svg">GNOME Foot Logo</a></td>
+            <td>GNOME Foundation</td>
+            <td>Panel icon</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h2>Custom Elements</h2>
+      <p>This site uses custom HTML elements to recreate the GTK2 widget toolkit:</p>
+      <ul>
+        <li><code>&lt;gtk2-window&gt;</code> - window frame with titlebar and controls</li>
+        <li><code>&lt;gtk2-menu-button&gt;</code> - panel menu trigger with dropdown</li>
+        <li><code>&lt;gtk2-menu-item&gt;</code> - menu item with icon, label, and submenu support</li>
+        <li><code>&lt;gtk2-scrolled-window&gt;</code> - scrollable content area</li>
+        <li><code>&lt;gnome2-panel&gt;</code> - top and bottom panels</li>
+        <li><code>&lt;gnome2-desktop&gt;</code> - desktop container with icon grid and window area</li>
+        <li><code>&lt;desktop-icon&gt;</code> - desktop shortcut icon</li>
+      </ul>
+    </div>
+  </gtk2-scrolled-window>
+</gtk2-window>

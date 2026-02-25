@@ -1,0 +1,340 @@
+<!doctype html>
+<script webc:setup>
+const EXCLUDED_TAGS = new Set($data.excludedTags);
+const tagSlug = t => t.toLowerCase().replace(/\s+/g, '-').replace(/[^\w-]/g, '');
+const menuTags = Object.keys($data.collections)
+  .filter(tag => !EXCLUDED_TAGS.has(tag) && !tag.match(/^resume-/))
+  .filter(tag => $data.collections[tag]?.some(p => p.data && !p.data?.tags?.includes('deck')))
+  .sort()
+  .map(tag => ({
+    name: tag,
+    href: `/tags/${tagSlug(tag)}/`,
+    posts: $data.collections[tag]
+      .filter(p => p.url && p.data && !p.data?.tags?.includes('deck'))
+      .reverse()
+      .map(p => ({ title: p.data.title, href: p.url })),
+  }));
+const menuDecks = ($data.collections.deck ?? [])
+  .filter(d => d.url && d.data?.title)
+  .sort((a, b) => (b.date ?? 0) - (a.date ?? 0))
+  .map(d => ({ title: d.data.title, href: d.url }));
+const menuPostYears = (() => {
+  const byYear = new Map();
+  for (const m of ($data.collections.postsByMonth ?? [])) {
+    const year = m.month.split('-')[0];
+    if (!byYear.has(year)) byYear.set(year, []);
+    byYear.get(year).push({
+      label: m.month.split('-')[1],
+      href: `/posts/${m.month}/`,
+      posts: m.posts
+        .filter(p => p.url && p.data)
+        .map(p => ({ title: p.data.title, href: p.url })),
+    });
+  }
+  return [...byYear.entries()]
+    .sort((a, b) => b[0].localeCompare(a[0]))
+    .map(([year, months]) => ({ year, months }));
+})();
+</script>
+<html :lang="lang ?? 'en'"
+      :dir="dir ?? lang === 'he' ? 'rtl' : 'ltr'">
+
+<head>
+  <meta charset="utf-8">
+  <title @text="title || 'Benny Powers, Web Developer'"></title>
+  <meta name="viewport"
+        content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
+  <meta name="generator"
+        content="Eleventy">
+  <meta name="theme-color"
+        content="#305573">
+  <meta name="mobile-web-app-capable"
+        content="yes">
+  <meta name="application-name"
+        content="Benny Powers, Web Developer">
+  <meta name="apple-mobile-web-app-capable"
+        content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style"
+        content="black-translucent">
+  <meta name="apple-mobile-web-app-title"
+        content="Benny Powers, Web Developer">
+  <meta name="msapplication-TileImage"
+        :content="url('/assets/images/manifest/icon-144x144.png')">
+  <meta name="msapplication-TileColor"
+        content="#305573">
+  <meta name="msapplication-tap-highlight"
+        content="no">
+  <meta name="author"
+        content="Benny Powers">
+  <meta name="date.created"
+        content="01-2017">
+  <meta name="HandheldFriendly"
+        content="true">
+  <meta name="description"
+        :content="description || 'Benny Powers, Web Developer'">
+
+  <meta property="og:title"
+        :content="title || 'Benny Powers'">
+  <meta property="og:description"
+        :content="description || 'Benny Powers, Web Developer'">
+  <meta property="og:type"
+        :content="layout?.replace?.(/\.(html|webc)/, '') == 'gnome2-window' ? 'article' : 'website'">
+  <meta property="og:site_name"
+        content="Benny Powers, Web Developer">
+  <meta property="og:locale"
+        content="en_US">
+  <meta property="og:url"
+        :content="`https://bennypowers.dev${page?.url || '/'}`">
+  <meta property="og:image"
+        :content="coverImage || '/assets/images/logo/bp-logo-dark@2x.png'">
+  <meta property="og:image:width"
+        content="1024">
+  <meta property="og:image:height"
+        content="1024">
+  <meta property="og:image:type"
+        :content="mime(coverImage) ?? 'image/png'">
+
+  <link rel="apple-touch-icon"
+        webc:keep
+        :href="url('/assets/images/manifest/icon-48x48.png')">
+  <link rel="apple-touch-icon"
+        sizes="72x72"
+        webc:keep
+        :href="url('/assets/images/manifest/icon-72x72.png')">
+  <link rel="apple-touch-icon"
+        sizes="96x96"
+        webc:keep
+        :href="url('/assets/images/manifest/icon-96x96.png')">
+  <link rel="apple-touch-icon"
+        sizes="144x144"
+        webc:keep
+        :href="url('/assets/images/manifest/icon-144x144.png')">
+  <link rel="apple-touch-icon"
+        sizes="192x192"
+        webc:keep
+        :href="url('/assets/images/manifest/icon-192x192.png')">
+  <link rel="shortcut icon"
+        webc:keep
+        :href="include('icon.svg').then(x => `data:image/svg+xml,${encodeURIComponent(x)}`)">
+  <link rel="icon"
+        webc:keep
+        :href="url('/assets/images/favicon.ico?v=2')">
+  <link rel="manifest"
+        webc:keep
+        :href="url('/manifest.webmanifest')">
+
+  <link rel="webmention"
+        href="https://webmention.io/bennypowers.dev/webmention">
+  <link rel="pingback"
+        href="https://webmention.io/bennypowers.dev/xmlrpc">
+
+  <noscript>
+    <style>
+      :not(:defined) {
+        display: initial;
+      }
+    </style>
+  </noscript>
+
+  <link rel="stylesheet"
+        href="clearlooks-page.css">
+
+  <script webc:keep>
+    // Blocking script: apply color scheme + window position before first paint
+    try {
+      var _scheme = localStorage.getItem('cl-color-scheme') ?? 'system';
+      document.documentElement.style.colorScheme =
+        _scheme === 'light' ? 'light only' :
+        _scheme === 'dark' ? 'dark only' : 'light dark';
+      document.documentElement.dataset.scheme = _scheme === 'light' || _scheme === 'dark' ? _scheme : 'system';
+    } catch {}
+    try {
+      var _entries = JSON.parse(sessionStorage.getItem('gnome2-wm-windows') || '[]');
+      var _url = location.pathname;
+      var _entry = _entries.find(function(e) { return e.url === _url; });
+      if (_entry && _entry.x != null) {
+        var _s = document.createElement('style');
+        _s.id = 'gnome2-wm-initial-pos';
+        _s.textContent = _entry.maximized
+          ? 'gtk2-window[window-url="' + CSS.escape(_url) + '"] { inset: 0; margin: 0; width: 100%; height: 100%; max-height: none; border-radius: 0; box-shadow: none; }'
+          : 'gtk2-window[window-url="' + CSS.escape(_url) + '"] { inset-block-start: ' + _entry.y + 'px; inset-inline-start: ' + _entry.x + 'px; margin: 0;' + (_entry.width ? ' width: ' + _entry.width + 'px;' : '') + (_entry.height ? ' height: ' + _entry.height + 'px;' : '') + ' }';
+        document.head.appendChild(_s);
+      }
+    } catch {}
+    try {
+      var _wp = localStorage.getItem('cl-wallpaper');
+      if (_wp) {
+        var _wpStyle = localStorage.getItem('cl-wp-style') || 'fill';
+        var _bgColor = localStorage.getItem('cl-bg-color') || '#305573';
+        var _bgColor2 = localStorage.getItem('cl-bg-color2') || '#1a2a3a';
+        var _colorMode = localStorage.getItem('cl-color-mode') || 'solid';
+        var _styles = { centered: 'auto no-repeat center', fill: 'cover no-repeat center', scaled: 'contain no-repeat center', zoom: 'cover no-repeat center', tiled: 'auto repeat' };
+        var _s2 = _styles[_wpStyle] || _styles.fill;
+        var _parts = _s2.split(' ');
+        var _colorBg = _colorMode === 'horizontal' ? 'linear-gradient(to right,' + _bgColor + ',' + _bgColor2 + ')' : _colorMode === 'vertical' ? 'linear-gradient(to bottom,' + _bgColor + ',' + _bgColor2 + ')' : _bgColor;
+        var _ws = document.createElement('style');
+        _ws.id = 'gnome2-wp-initial';
+        _ws.textContent = 'gnome2-desktop { --cl-desktop-bg: url(' + _wp + ') ' + (_parts[2] || 'center') + ' / ' + _parts[0] + ' ' + (_parts[1] || 'no-repeat') + ', ' + _colorBg + '; }';
+        document.head.appendChild(_ws);
+      } else {
+        var _colorMode = localStorage.getItem('cl-color-mode') || 'solid';
+        var _bgColor = localStorage.getItem('cl-bg-color');
+        if (_bgColor) {
+          var _bgColor2 = localStorage.getItem('cl-bg-color2') || '#1a2a3a';
+          var _colorBg = _colorMode === 'horizontal' ? 'linear-gradient(to right,' + _bgColor + ',' + _bgColor2 + ')' : _colorMode === 'vertical' ? 'linear-gradient(to bottom,' + _bgColor + ',' + _bgColor2 + ')' : _bgColor;
+          var _ws = document.createElement('style');
+          _ws.id = 'gnome2-wp-initial';
+          _ws.textContent = 'gnome2-desktop { --cl-desktop-bg: ' + _colorBg + '; }';
+          document.head.appendChild(_ws);
+        }
+      }
+    } catch {}
+  </script>
+
+  <link rel="stylesheet"
+        webc:keep
+        :href="url('/assets/prism.css')">
+
+  <link rel="stylesheet"
+        webc:for="sheet of stylesheets ?? []"
+        webc:keep
+        :media="sheet.media ?? false"
+        :async="!!sheet.async"
+        :href="url(sheet.href)">
+
+  <script type="importmap"
+          webc:keep
+          webc:if="importMap"
+          @raw="JSON.stringify(importMap, null, watch ? 2 : 0)"></script>
+  <!-- ES Module Shims: Import maps polyfill for modules browsers without import maps support (all except Chrome 89+) -->
+  <script webc:if="importMap"
+          async
+          src="https://ga.jspm.io/npm:es-module-shims@1.5.1/dist/es-module-shims.js"
+          crossorigin="anonymous"
+          webc:keep></script>
+
+  <script webc:for="script of scripts ?? []"
+          webc:keep
+          :type="script.type ?? false"
+          :src="url(script.src)"></script>
+
+  <script type="module"
+          webc:keep>import "gnome2/gnome2-session.js";</script>
+  <style @raw="getBundle('css')"
+         webc:keep></style>
+  <script @raw="getBundle('js')"
+          webc:keep></script>
+
+  <style data-bundle="watch"
+         webc:if="watch"
+         webc:keep>
+    html :has(body.unpublished) {
+      border: 4px solid hotpink;
+    }
+
+    #latest .unpublished {
+      border: 4px solid hotpink;
+    }
+
+    .list .unpublished div::after,
+    .post.unpublished #side-menu div::before {
+      border: 4px solid hotpink;
+      display: inline-block;
+      padding: .3em .6em;
+      content: ' UNPUBLISHED';
+      font-style: italic;
+      font-size: 200%;
+      font-weight: bolder;
+    }
+  </style>
+
+  <script data-goatcounter="https://bp-dev.goatcounter.com/count"
+          async
+          src="https://gc.zgo.at/count.js"
+          webc:keep></script>
+</head>
+
+<body :class="bodyClasses ?? ''">
+  <gnome2-desktop>
+    <gnome2-panel slot="top-panel"
+                  position="top">
+      <gnome2-session slot="start">
+        <gtk2-menu-item webc:for="y of menuPostYears"
+                        slot="places-posts"
+                        :label="y.year"
+                        icon="places/folder">
+          <gtk2-menu slot="submenu">
+            <gtk2-menu-item webc:for="m of y.months"
+                            :label="m.label"
+                            :href="m.href"
+                            icon="places/folder">
+              <gtk2-menu slot="submenu">
+                <gtk2-menu-item webc:for="post of m.posts"
+                                :label="post.title"
+                                :href="post.href"
+                                icon="mimetypes/text-html"></gtk2-menu-item>
+              </gtk2-menu>
+            </gtk2-menu-item>
+          </gtk2-menu>
+        </gtk2-menu-item>
+        <gtk2-menu-item webc:for="tag of menuTags"
+                        slot="places-tags"
+                        :label="tag.name"
+                        :href="tag.href"
+                        icon="places/folder">
+          <gtk2-menu slot="submenu">
+            <gtk2-menu-item webc:for="post of tag.posts"
+                            :label="post.title"
+                            :href="post.href"
+                            icon="apps/accessories-text-editor"></gtk2-menu-item>
+          </gtk2-menu>
+        </gtk2-menu-item>
+        <gtk2-menu-item webc:for="deck of menuDecks"
+                        slot="places-decks"
+                        :label="deck.title"
+                        :href="deck.href"
+                        icon="mimetypes/x-office-presentation"></gtk2-menu-item>
+      </gnome2-session>
+      <gnome2-clock slot="end"></gnome2-clock>
+    </gnome2-panel>
+
+    <desktop-icon slot="icons"
+                  label="Posts"
+                  href="/posts/"
+                  icon="/assets/icons/gnome/places/user-home.svg"></desktop-icon>
+    <desktop-icon slot="icons"
+                  label="Tags"
+                  href="/tags/"
+                  icon="/assets/icons/gnome/places/folder.svg"></desktop-icon>
+    <desktop-icon slot="icons"
+                  label="Latest"
+                  href="/latest/"
+                  icon="/assets/icons/gnome/places/folder-saved-search.svg"></desktop-icon>
+    <desktop-icon slot="icons"
+                  label="Decks"
+                  href="/decks/"
+                  icon="/assets/icons/gnome/mimetypes/x-office-presentation.svg"></desktop-icon>
+    <desktop-icon slot="icons"
+                  label="Resume"
+                  href="/resume/"
+                  icon="/assets/icons/gnome/mimetypes/x-office-document.svg"></desktop-icon>
+
+    <template @raw="content"
+              webc:nokeep></template>
+
+    <gnome2-panel slot="bottom-panel"
+                  position="bottom">
+      <gnome2-window-list :window-title="title || ''"></gnome2-window-list>
+      <gnome2-workspace-switcher slot="end"></gnome2-workspace-switcher>
+    </gnome2-panel>
+  </gnome2-desktop>
+
+  <svg id="icon-sprite-sheet"
+       width="0"
+       height="0"
+       aria-hidden="true">
+    <defs @raw="getBundle('svg')"></defs>
+  </svg>
+</body>
+
+</html>

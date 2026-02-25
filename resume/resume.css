@@ -432,13 +432,6 @@ main > div > a {
     --tool-size: 64px;
   }
 
-  body {
-    display: grid;
-    grid-template-areas:
-      "head main"
-      "foot main";
-  }
-
   #footer {
     grid-area: foot;
     align-self: end;

@@ -1,0 +1,132 @@
+/* Clearlooks GTK2 Theme - Pure CSS Recreation */
+/* GNOME 2.16 era (circa 2006) */
+
+:host {
+  /* === Tango Palette === */
+  --tango-sky-blue-1: #729fcf;
+  --tango-sky-blue-2: #3465a4;
+  --tango-sky-blue-3: #204a87;
+
+  --tango-aluminium-1: #eeeeec;
+  --tango-aluminium-2: #d3d7cf;
+  --tango-aluminium-3: #babdb6;
+  --tango-aluminium-4: #888a85;
+  --tango-aluminium-5: #555753;
+  --tango-aluminium-6: #2e3436;
+
+  --tango-butter-1: #fce94f;
+  --tango-butter-2: #edd400;
+  --tango-butter-3: #c4a000;
+
+  --tango-chameleon-1: #8ae234;
+  --tango-chameleon-2: #73d216;
+  --tango-chameleon-3: #4e9a06;
+
+  --tango-orange-1: #fcaf3e;
+  --tango-orange-2: #f57900;
+  --tango-orange-3: #ce5c00;
+
+  --tango-chocolate-1: #e9b96e;
+  --tango-chocolate-2: #c17d11;
+  --tango-chocolate-3: #8f5902;
+
+  --tango-plum-1: #ad7fa8;
+  --tango-plum-2: #75507b;
+  --tango-plum-3: #5c3566;
+
+  --tango-scarlet-1: #ef2929;
+  --tango-scarlet-2: #cc0000;
+  --tango-scarlet-3: #a40000;
+
+  /* === Clearlooks Window === */
+  --cl-titlebar-bg: linear-gradient(to bottom, light-dark(#93b3d3, #4a6a8a), light-dark(#6a92b8, #3a5570));
+  --cl-titlebar-bg-unfocused: linear-gradient(to bottom, light-dark(#eae9e8, #3c3c3c), light-dark(#e0dfde, #333333));
+  --cl-titlebar-text: #ffffff;
+  --cl-titlebar-text-unfocused: light-dark(#807d78, #888a85);
+  --cl-titlebar-text-shadow: 0 1px 1px rgba(0, 0, 0, 0.4);
+  --cl-titlebar-height: 24px;
+  --cl-titlebar-radius: 3px 3px 0 0;
+
+  --cl-window-bg: light-dark(#edeceb, #2e3436);
+  --cl-window-border: light-dark(#9d9c9b, #1a1a1a);
+  --cl-window-shadow: 2px 4px 12px light-dark(rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0.5));
+  --cl-window-radius: 3px;
+
+  /* === Clearlooks Buttons === */
+  --cl-button-bg: linear-gradient(to bottom, light-dark(#fefefe, #4a4a4a), light-dark(#f0efee, #434343), light-dark(#e6e5e4, #3c3c3c), light-dark(#dadddb, #383838));
+  --cl-button-bg-hover: linear-gradient(to bottom, light-dark(#ffffff, #555555), light-dark(#f5f4f3, #4d4d4d), light-dark(#edeceb, #464646), light-dark(#e4e3e2, #434343));
+  --cl-button-bg-active: linear-gradient(to bottom, light-dark(#d4d3d2, #333333), light-dark(#dbdad9, #383838), light-dark(#e2e1e0, #3c3c3c), light-dark(#eaeae9, #404040));
+  --cl-button-border: light-dark(#9d9c9b, #1a1a1a);
+  --cl-button-text: light-dark(#2e3436, #eeeeec);
+  --cl-button-radius: 3px;
+  --cl-button-padding: 4px 12px;
+  --cl-button-shadow-focus: 0 0 0 1px #729fcf;
+
+  /* === Title Bar Buttons === */
+  --cl-minmax-bg: linear-gradient(to bottom, light-dark(#93b3d3, #4a6a8a), light-dark(#7a9bba, #3a5570));
+  --cl-minmax-bg-hover: linear-gradient(to bottom, light-dark(#a3c3e3, #5a7a9a), light-dark(#8aabca, #4a6580));
+  --cl-minmax-bg-active: linear-gradient(to bottom, light-dark(#6a8ba8, #3a5060), light-dark(#7a9bba, #3a5570));
+  --cl-minmax-border: light-dark(#6b7e95, #2a4050);
+
+  /* === Clearlooks Panel === */
+  --cl-panel-bg: linear-gradient(to bottom, light-dark(#edeceb, #3c3c3c), light-dark(#e6e5e4, #393939), light-dark(#dddcdb, #363636), light-dark(#cecdcb, #323232));
+  --cl-panel-border-bottom: light-dark(#d0cfce, #1a1a1a);
+  --cl-panel-border-top: light-dark(#ffffff, #444848);
+  --cl-panel-text: light-dark(#2e3436, #eeeeec);
+  --cl-panel-height: 26px;
+
+  /* === Clearlooks Menu === */
+  --cl-menu-bg: light-dark(#ffffff, #3c3c3c);
+  --cl-menu-border: light-dark(#ababaa, #1a1a1a);
+  --cl-menu-shadow: 1px 1px 3px light-dark(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.4));
+  --cl-menu-item-hover-bg: linear-gradient(to bottom, light-dark(#a4c2e8, #4a6a8a), light-dark(#9cb9dd, #436289), light-dark(#98b4d8, #3f5e84), light-dark(#90aace, #3a587c));
+  --cl-menu-item-hover-text: #ffffff;
+  --cl-menu-item-text: light-dark(#2e3436, #eeeeec);
+  --cl-menu-item-disabled: #888a85;
+  --cl-menu-separator: light-dark(#d3d7cf, #555753);
+  --cl-menu-item-padding: 3px 6px 3px 4px;
+  --cl-menu-radius: 0;
+
+  /* === Clearlooks Scrollbar === */
+  --cl-scrollbar-track: light-dark(#d9d7d5, #3c3c3c);
+  --cl-scrollbar-thumb: linear-gradient(to right, light-dark(#a3bfe1, #4a6a8a), light-dark(#8daed0, #3a5a7a));
+  --cl-scrollbar-thumb-hover: linear-gradient(to right, light-dark(#b3cce8, #5a7a9a), light-dark(#9dbede, #4a6a8a));
+  --cl-scrollbar-width: 14px;
+  --cl-scrollbar-border: light-dark(#9d9c9b, #1a1a1a);
+
+  /* === Fonts === */
+  --cl-font-family: "DejaVu Sans", "Bitstream Vera Sans", sans-serif;
+  --cl-font-size: 13px;
+  --cl-font-size-small: 11px;
+  --cl-font-size-title: 13px;
+
+  /* === Desktop === */
+  --cl-desktop-bg: light-dark(#305573, #1a2a3a);
+  --cl-desktop-icon-text: #ffffff;
+  --cl-desktop-icon-text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);
+
+  /* === General === */
+  --cl-focus-color: #729fcf;
+  --cl-selection-bg: light-dark(#86abd9, #3465a4);
+  --cl-selection-text: #ffffff;
+  --cl-tooltip-bg: light-dark(#e7f3fd, #3c3c3c);
+  --cl-tooltip-border: light-dark(#2e3436, #1a1a1a);
+  --cl-tooltip-text: light-dark(#2e3436, #eeeeec);
+}
+
+/* === Font Face Declarations === */
+@font-face {
+  font-family: "DejaVu Sans";
+  src: url("/assets/fonts/DejaVuSans/DejaVuSans-Regular.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "DejaVu Sans";
+  src: url("/assets/fonts/DejaVuSans/DejaVuSans-Bold.woff2") format("woff2");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}

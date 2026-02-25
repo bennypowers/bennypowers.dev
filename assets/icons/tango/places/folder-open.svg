@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48">
+  <defs>
+    <linearGradient id="openFolderBack" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#3465a4"/>
+      <stop offset="100%" stop-color="#3465a4"/>
+    </linearGradient>
+    <linearGradient id="openFolderFront" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#729fcf"/>
+      <stop offset="100%" stop-color="#3465a4"/>
+    </linearGradient>
+  </defs>
+  <!-- Back panel -->
+  <path d="M4 10 L4 38 L8 18 L42 18 L42 16 C42 14.5 41 14 40 14 L22 14 L18 10 L6 10 C5 10 4 10.5 4 10 Z" fill="#3465a4" stroke="#2e3436" stroke-width="1" stroke-linejoin="round"/>
+  <!-- Tab -->
+  <path d="M6 10 L18 10 L22 14 L6 14 Z" fill="#3465a4" stroke="#2e3436" stroke-width="1" stroke-linejoin="round"/>
+  <!-- Front panel (angled open) -->
+  <path d="M8 18 L42 18 L38 42 L4 42 Z" fill="url(#openFolderFront)" stroke="#2e3436" stroke-width="1" stroke-linejoin="round"/>
+  <!-- Highlight -->
+  <path d="M9 20 L41 20 L40.5 22 L8.5 22 Z" fill="#eeeeec" opacity="0.3"/>
+</svg>

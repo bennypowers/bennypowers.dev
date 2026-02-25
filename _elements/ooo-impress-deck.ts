@@ -1,0 +1,94 @@
+import { LitElement, html, css } from 'lit';
+import { customElement, property } from 'lit/decorators.js';
+
+@customElement('ooo-impress-deck')
+export class OooImpressDeck extends LitElement {
+  static styles = css`
+    :host {
+      display: block;
+      position: relative;
+    }
+
+    a {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-decoration: none;
+      color: #2e3436;
+    }
+
+    img {
+      display: block;
+      width: 100%;
+      aspect-ratio: 5/3;
+      height: auto;
+      object-fit: cover;
+      background: white;
+      border: 1px solid #666;
+      box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);
+    }
+
+    a:hover img,
+    a:focus img {
+      border-color: #3465a4;
+      box-shadow: 0 0 0 2px #3465a4, 2px 2px 4px rgba(0, 0, 0, 0.4);
+    }
+
+    span {
+      display: block;
+      margin-block-start: 4px;
+      padding: 2px 6px;
+      background: rgba(255, 255, 255, 0.85);
+      border-radius: 2px;
+      font-family: var(--cl-font-family, "DejaVu Sans", sans-serif);
+      font-size: 11px;
+      text-align: center;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      max-width: 100%;
+    }
+
+    :host([draft])::after {
+      content: 'DRAFT';
+      position: absolute;
+      text-align: center;
+      font-size: 1.2em;
+      font-weight: bold;
+      padding: 4px 8px;
+      inset-block-start: 8px;
+      inset-inline-start: 8px;
+      background: red;
+      color: white;
+      opacity: .8;
+      pointer-events: none;
+      border-radius: .3em;
+      line-height: 1;
+      z-index: 1;
+    }
+  `;
+
+  @property() accessor href = '';
+  @property() accessor src = '';
+  @property() accessor label = '';
+  @property({ type: Boolean, reflect: true }) accessor draft = false;
+
+  render() {
+    return html`
+      <a href="${this.href}">
+        <img src="${this.src}"
+             alt="${this.label}"
+             loading="lazy"
+             width="200"
+             height="120">
+        <span>${this.label}</span>
+      </a>
+    `;
+  }
+}
+
+declare global {
+  interface HTMLElementTagNameMap {
+    'ooo-impress-deck': OooImpressDeck;
+  }
+}

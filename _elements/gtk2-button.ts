@@ -1,0 +1,73 @@
+import { LitElement, html, css } from 'lit';
+import { customElement, property } from 'lit/decorators.js';
+
+@customElement('gtk2-button')
+export class Gtk2Button extends LitElement {
+  static styles = css`
+    :host {
+      display: inline-block;
+    }
+
+    button {
+      font-family: var(--cl-font-family, "DejaVu Sans", sans-serif);
+      font-size: var(--cl-font-size, 13px);
+      color: var(--cl-button-text, #2e3436);
+      background: var(--cl-button-bg, linear-gradient(to bottom, #fefefe, #f0efee, #e6e5e4, #dadddb));
+      border: 1px solid var(--cl-button-border, #9d9c9b);
+      border-radius: var(--cl-button-radius, 3px);
+      padding: var(--cl-button-padding, 4px 12px);
+      cursor: pointer;
+      outline: none;
+      min-height: 24px;
+      line-height: 1;
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.4);
+    }
+
+    button:hover {
+      background: var(--cl-button-bg-hover, linear-gradient(to bottom, #ffffff, #f5f4f3, #edeceb, #e4e3e2));
+    }
+
+    button:active {
+      background: var(--cl-button-bg-active, linear-gradient(to bottom, #d4d3d2, #dbdad9, #e2e1e0, #eaeae9));
+      box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.15);
+    }
+
+    button:focus-visible {
+      box-shadow: var(--cl-button-shadow-focus, 0 0 0 1px #729fcf);
+      border-color: var(--cl-focus-color, #729fcf);
+    }
+
+    button:disabled {
+      opacity: 0.5;
+      cursor: default;
+    }
+
+    :host([icon]) button {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    ::slotted(img),
+    ::slotted(svg) {
+      width: 16px;
+      height: 16px;
+    }
+  `;
+
+  @property({ type: Boolean, reflect: true }) accessor disabled = false;
+
+  render() {
+    return html`
+      <button ?disabled=${this.disabled} part="button">
+        <slot></slot>
+      </button>
+    `;
+  }
+}
+
+declare global {
+  interface HTMLElementTagNameMap {
+    'gtk2-button': Gtk2Button;
+  }
+}

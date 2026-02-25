@@ -1,0 +1,177 @@
+---
+layout: gnome2-shell.webc
+bodyClasses: h-entry post
+---
+
+
+<gtk2-window :label="title"
+            :window-url="page.url"
+            icon="apps/accessories-text-editor"
+            focused
+            resizable
+            close-href="/">
+  <gtk2-scrolled-window>
+    <article class="e-content window-content">
+      <header class="post-header">
+        <h1 class="p-name">
+          <a class="p-uid"
+             @html="title"
+             :href="`https://bennypowers.dev${$data.page.url}`"></a>
+        </h1>
+        <div class="post-meta">
+          <date-time class="dt-published"
+                     :datetime="datePublished || $data.page.date"
+                     dateStyle="medium"></date-time>
+          <span webc:if="timeToRead" class="reading-time" @text="timeToRead(content)"></span>
+        </div>
+        <img id="cover-image"
+             class="u-photo"
+             height="400"
+            :alt="coverImageAlt ?? ''"
+            :src="coverImage"
+            :title="coverImageAlt ?? false"
+             webc:if="coverImage">
+      </header>
+
+      <template webc:nokeep @raw="content"></template>
+
+      <a id="tldr"
+         webc:if="watch || isProductionBuild"
+         href="https://brid.gy/publish/mastodon"></a>
+      <a class="u-bridgy-fed" href="https://fed.brid.gy/" hidden="from-humans"></a>
+    </article>
+
+    <nav class="post-nav" aria-label="Post navigation">
+      <a webc:if="getPreviousCollectionItem.call(this, $data.collections.posts)"
+         class="prev"
+         :href="getPreviousCollectionItem.call(this, $data.collections.posts)?.url"
+         @text="`← ${getPreviousCollectionItem.call(this, $data.collections.posts)?.data?.title ?? 'Previous'}`"></a>
+      <a webc:if="getNextCollectionItem.call(this, $data.collections.posts)"
+         class="next"
+         :href="getNextCollectionItem.call(this, $data.collections.posts)?.url"
+         @text="`${getNextCollectionItem.call(this, $data.collections.posts)?.data?.title ?? 'Next'} →`"></a>
+    </nav>
+  </gtk2-scrolled-window>
+</gtk2-window>
+
+<template webc:nokeep webc:if="webmentions?.replies?.length || webmentions?.likes?.length || webmentions?.reposts?.length">
+<gtk2-window :label="`${title} - Conversation`"
+             :window-url="`pidgin:${page.url}`"
+             icon="apps/internet-group-chat"
+             data-app="pidgin"
+             resizable>
+  <gtk2-menu-bar slot="menubar">
+    <gtk2-menu-button label="Conversation">
+      <gtk2-menu-item label="Close"></gtk2-menu-item>
+    </gtk2-menu-button>
+    <gtk2-menu-button label="Buddies">
+      <gtk2-menu-item label="Get Info" disabled></gtk2-menu-item>
+    </gtk2-menu-button>
+    <gtk2-menu-button label="Tools">
+      <gtk2-menu-item label="Plugins" disabled></gtk2-menu-item>
+    </gtk2-menu-button>
+    <gtk2-menu-button label="Help">
+      <gtk2-menu-item label="About" href="https://indieweb.org/Webmention"></gtk2-menu-item>
+    </gtk2-menu-button>
+  </gtk2-menu-bar>
+  <pidgin-conversation :post-url="`https://bennypowers.dev${page.url}`">
+    <pidgin-message webc:for="m of webmentions.replies"
+                    type="reply"
+                    class="h-cite u-comment"
+                    :timestamp="m['wm-received'] || m.published"
+                    :url="m.url"
+                    :author-name="m.author.name"
+                    :author-url="m.author.url">
+      <span class="p-content p-name"
+            @html="resolveBridgyMentions(m.content?.html || m.content?.text || '')"></span>
+    </pidgin-message>
+    <pidgin-message webc:for="m of webmentions.likes ?? []"
+                    type="like"
+                    class="h-cite"
+                    :timestamp="m['wm-received'] || m.published"
+                    :url="m.url"
+                    :author-name="m.author.name"
+                    :author-url="m.author.url"></pidgin-message>
+    <pidgin-message webc:for="m of webmentions.reposts ?? []"
+                    type="repost"
+                    class="h-cite"
+                    :timestamp="m['wm-received'] || m.published"
+                    :url="m.url"
+                    :author-name="m.author.name"
+                    :author-url="m.author.url"></pidgin-message>
+  </pidgin-conversation>
+  <span slot="statusbar"
+        @text="`${(webmentions?.replies?.length ?? 0) + (webmentions?.likes?.length ?? 0) + (webmentions?.reposts?.length ?? 0)} messages`"></span>
+</gtk2-window>
+</template>
+
+<style>
+  .window-content {
+    padding: 16px 24px;
+    font-size: 14px;
+    line-height: 1.6;
+  }
+
+  .post-header {
+    margin-block-end: 16px;
+    padding-block-end: 12px;
+    border-block-end: 1px solid #d3d7cf;
+  }
+
+  .post-header h1 {
+    font-size: 20px;
+    margin-block: 0 8px;
+  }
+
+  .post-header h1 a {
+    color: #2e3436;
+    text-decoration: none;
+  }
+
+  .post-meta {
+    display: flex;
+    gap: 16px;
+    color: #888a85;
+    font-size: 12px;
+  }
+
+  #cover-image {
+    width: 100%;
+    max-height: 300px;
+    object-fit: cover;
+    border-radius: 3px;
+    margin-block-start: 12px;
+  }
+
+  .post-nav {
+    display: flex;
+    justify-content: space-between;
+    padding: 12px 24px;
+    border-block-start: 1px solid #d3d7cf;
+    font-size: 12px;
+    gap: 16px;
+  }
+
+  .post-nav a {
+    color: #3465a4;
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+  .post-nav .next {
+    margin-inline-start: auto;
+  }
+
+  .post-sidebar-data {
+    display: none;
+  }
+
+  @media (max-width: 767px) {
+    .window-content {
+      padding: 12px 16px;
+    }
+  }
+</style>

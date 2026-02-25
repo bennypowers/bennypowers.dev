@@ -1,17 +1,10 @@
 <script webc:setup>
   const getTags = ($data) => {
-    const EXCLUDED_TAGS = new Set([
-      'all',
-      'devconf23',
-      'pf-collab',
-      'icon',
-      'posts',
-      'slides',
-      'starting-functional-javascript',
-    ]);
+    const EXCLUDED_TAGS = new Set($data.excludedTags);
     return Object.fromEntries(Object.keys($data.collections)
       .filter(tag => !EXCLUDED_TAGS.has(tag) && !tag.match(/^resume-/))
-      .map(tag => [tag, $data.collections[tag]])
+      .map(tag => [tag, $data.collections[tag].filter(p => !p.data?.tags?.includes('deck'))])
+      .filter(([, posts]) => posts.length > 0)
       .sort(([,a], [,b]) => b.length - a.length));
   };
 </script>
