@@ -124,7 +124,7 @@ bodyClasses: h-entry post
   }
 
   .post-header h1 a {
-    color: #2e3436;
+    color: light-dark(#2e3436, #eeeeec);
     text-decoration: none;
   }
 
