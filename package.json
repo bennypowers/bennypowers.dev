@@ -32,6 +32,7 @@
     "@11ty/eleventy-plugin-syntaxhighlight": "^5.0.2",
     "@11ty/eleventy-plugin-webc": "^0.11.2",
     "@jspm/generator": "^2.8.0",
+    "@lit-labs/ssr": "^4.0.0",
     "@parse5/tools": "^0.7.0",
     "@rhds/elements": "^4.0.2",
     "@rhds/tokens": "^3.0.2",
@@ -54,6 +55,7 @@
     "html-minifier-terser": "^7.2.0",
     "lightningcss": "^1.30.2",
     "linkedom": "^0.18.12",
+    "lit": "^3.3.2",
     "markdown-it-anchor": "^9.2.0",
     "markdown-it-attrs": "^4.3.1",
     "markdown-it-deflist": "^3.0.0",
@@ -69,5 +71,11 @@
   },
   "overrides": {
     "@11ty/webc": "0.11.3"
+  },
+  "devDependencies": {
+    "esbuild": "^0.27.3",
+    "piscina": "^5.1.4",
+    "ts-blank-space": "^0.7.0",
+    "tsx": "^4.21.0"
   }
 }

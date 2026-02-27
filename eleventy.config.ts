@@ -39,6 +39,8 @@ import { WebCDSDWorkaroundPlugin } from '#plugins/dsd/webc-dsd-slot-workaround.t
 import { FedEmbedPlugin } from '#plugins/fed-embed/fed-embed.ts';
 import { RSSSummaryPlugin } from '#plugins/rss-summary.ts';
 import { GoVanityImportsPlugin } from '#plugins/go-vanity-imports.ts';
+import { EsbuildPlugin } from '#plugins/esbuild.ts';
+import { LitSSRPlugin } from '#plugins/lit-ssr.ts';
 
 import Prism from 'prismjs/components/index.js';
 
@@ -55,6 +57,7 @@ export default function(eleventyConfig: UserConfig) {
   eleventyConfig.addWatchTarget('decks/**/*.css');
   eleventyConfig.addWatchTarget('decks/*/*.md');
   eleventyConfig.addWatchTarget('decks/*/index.webc');
+  eleventyConfig.addWatchTarget('_elements/**/*.ts');
   eleventyConfig.watchIgnores.add('assets/images/*');
   eleventyConfig.watchIgnores.add('decks/starting-functional-javascript/images/*');
 
@@ -114,6 +117,9 @@ export default function(eleventyConfig: UserConfig) {
     exclude: ['decks/', 'go-import.html'],
   });
   eleventyConfig.addPlugin(LightningCSSPlugin);
+  eleventyConfig.addPlugin(EsbuildPlugin);
+  !isWatch() &&
+  eleventyConfig.addPlugin(LitSSRPlugin);
 
   eleventyConfig.addPlugin(EleventyRSSPlugin);
   eleventyConfig.addPlugin(RSSSummaryPlugin);
@@ -138,6 +144,7 @@ export default function(eleventyConfig: UserConfig) {
   eleventyConfig.addPlugin(ImportMapPlugin, {
     specs: [
       'tslib',
+      '@lit-labs/ssr-client/lit-element-hydrate-support.js',
       '@patternfly/elements/pf-button/pf-button.js',
       '@patternfly/elements/pf-card/pf-card.js',
       '@patternfly/elements/pf-icon/pf-icon.js',
@@ -183,6 +190,7 @@ export default function(eleventyConfig: UserConfig) {
       const pathPrefix = configData?.pathPrefix ?? process.env.ELEVENTY_PATH_PREFIX ?? '';
       const rhdsPrefix = `/${pathPrefix}/assets/@rhds/elements`.replace(/\/+/, '/');
       return {
+        'gnome2/': '/_elements/',
         slidem: `/assets/decks.min.js`,
         'slidem/slidem-slide.js': `/assets/decks.min.js`,
         ['@rhds/icons/']: `/assets/@rhds/icons/`,
@@ -198,7 +206,7 @@ export default function(eleventyConfig: UserConfig) {
   });
 
   return {
-    templateFormats: [ 'md', 'njk', 'html', 'svg', 'css' ],
+    templateFormats: [ 'md', 'njk', 'html', 'svg', 'css', '11ty.ts', '11ty.js' ],
     markdownTemplateEngine: 'njk',
     htmlTemplateEngine: 'njk',
   };

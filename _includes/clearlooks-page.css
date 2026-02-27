@@ -1,0 +1,454 @@
+/* Clearlooks page-level styles */
+
+@font-face {
+  font-family: "DejaVu Sans";
+  src: url("/assets/fonts/DejaVuSans/DejaVuSans-Regular.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "DejaVu Sans";
+  src: url("/assets/fonts/DejaVuSans/DejaVuSans-Bold.woff2") format("woff2");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* === Reset === */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+:root {
+  color-scheme: light dark;
+
+  /* === Fonts === */
+  --cl-font-family: "DejaVu Sans", "Bitstream Vera Sans", sans-serif;
+  --cl-font-size: 13px;
+  --cl-font-size-small: 11px;
+  --cl-font-size-title: 13px;
+  --fixed-font: "Fira Code", "Operator Mono", monospace;
+
+  /* === Clearlooks Window === */
+  --cl-titlebar-bg: linear-gradient(to bottom, light-dark(#93b3d3, #4a6a8a), light-dark(#6a92b8, #3a5570));
+  --cl-titlebar-bg-unfocused: linear-gradient(to bottom, light-dark(#eae9e8, #3c3c3c), light-dark(#e0dfde, #333333));
+  --cl-titlebar-text: #ffffff;
+  --cl-titlebar-text-unfocused: light-dark(#807d78, #888a85);
+  --cl-titlebar-text-shadow: 0 1px 1px rgba(0, 0, 0, 0.4);
+  --cl-titlebar-height: 24px;
+  --cl-titlebar-radius: 3px 3px 0 0;
+
+  --cl-window-bg: light-dark(#edeceb, #2e3436);
+  --cl-window-border: light-dark(#9d9c9b, #1a1a1a);
+  --cl-window-shadow: 2px 4px 12px light-dark(rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0.5));
+  --cl-window-radius: 3px;
+
+  /* === Clearlooks Buttons === */
+  --cl-button-bg: linear-gradient(to bottom, light-dark(#fefefe, #4a4a4a), light-dark(#f0efee, #434343), light-dark(#e6e5e4, #3c3c3c), light-dark(#dadddb, #383838));
+  --cl-button-bg-hover: linear-gradient(to bottom, light-dark(#ffffff, #555555), light-dark(#f5f4f3, #4d4d4d), light-dark(#edeceb, #464646), light-dark(#e4e3e2, #434343));
+  --cl-button-bg-active: linear-gradient(to bottom, light-dark(#d4d3d2, #333333), light-dark(#dbdad9, #383838), light-dark(#e2e1e0, #3c3c3c), light-dark(#eaeae9, #404040));
+  --cl-button-border: light-dark(#9d9c9b, #1a1a1a);
+  --cl-button-text: light-dark(#2e3436, #eeeeec);
+  --cl-button-radius: 3px;
+  --cl-button-padding: 4px 12px;
+  --cl-button-shadow-focus: 0 0 0 1px #729fcf;
+
+  /* === Title Bar Buttons === */
+  --cl-minmax-bg: linear-gradient(to bottom, light-dark(#93b3d3, #4a6a8a), light-dark(#7a9bba, #3a5570));
+  --cl-minmax-bg-hover: linear-gradient(to bottom, light-dark(#a3c3e3, #5a7a9a), light-dark(#8aabca, #4a6580));
+  --cl-minmax-bg-active: linear-gradient(to bottom, light-dark(#6a8ba8, #3a5060), light-dark(#7a9bba, #3a5570));
+  --cl-minmax-border: light-dark(#6b7e95, #2a4050);
+
+  /* === Clearlooks Panel === */
+  --cl-panel-bg: linear-gradient(to bottom, light-dark(#edeceb, #3c3c3c), light-dark(#e6e5e4, #393939), light-dark(#dddcdb, #363636), light-dark(#cecdcb, #323232));
+  --cl-panel-border-bottom: light-dark(#d0cfce, #1a1a1a);
+  --cl-panel-border-top: light-dark(#ffffff, #444848);
+  --cl-panel-text: light-dark(#2e3436, #eeeeec);
+  --cl-panel-height: 26px;
+
+  /* === Clearlooks Menu === */
+  --cl-menu-bg: light-dark(#ffffff, #3c3c3c);
+  --cl-menu-border: light-dark(#ababaa, #1a1a1a);
+  --cl-menu-shadow: 1px 1px 3px light-dark(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.4));
+  --cl-menu-item-hover-bg: linear-gradient(to bottom, light-dark(#a4c2e8, #4a6a8a), light-dark(#9cb9dd, #436289), light-dark(#98b4d8, #3f5e84), light-dark(#90aace, #3a587c));
+  --cl-menu-item-hover-text: #ffffff;
+  --cl-menu-item-text: light-dark(#2e3436, #eeeeec);
+  --cl-menu-item-disabled: #888a85;
+  --cl-menu-separator: light-dark(#d3d7cf, #555753);
+  --cl-menu-item-padding: 3px 6px 3px 4px;
+  --cl-menu-radius: 0;
+
+  /* === Clearlooks Scrollbar === */
+  --cl-scrollbar-track: light-dark(#d9d7d5, #3c3c3c);
+  --cl-scrollbar-thumb: linear-gradient(to right, light-dark(#a3bfe1, #4a6a8a), light-dark(#8daed0, #3a5a7a));
+  --cl-scrollbar-thumb-hover: linear-gradient(to right, light-dark(#b3cce8, #5a7a9a), light-dark(#9dbede, #4a6a8a));
+  --cl-scrollbar-width: 14px;
+  --cl-scrollbar-border: light-dark(#9d9c9b, #1a1a1a);
+
+  /* === Desktop === */
+  --cl-desktop-bg: light-dark(#305573, #1a2a3a);
+  --cl-desktop-icon-text: #ffffff;
+  --cl-desktop-icon-text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);
+
+  /* === General === */
+  --cl-focus-color: #729fcf;
+  --cl-selection-bg: light-dark(#86abd9, #3465a4);
+  --cl-selection-text: #ffffff;
+  --cl-tooltip-bg: light-dark(#e7f3fd, #3c3c3c);
+  --cl-tooltip-border: light-dark(#2e3436, #1a1a1a);
+  --cl-tooltip-text: light-dark(#2e3436, #eeeeec);
+
+  /* === Page-level colors === */
+  --cl-text: light-dark(#2e3436, #eeeeec);
+  --cl-text-secondary: light-dark(#555753, #babdb6);
+  --cl-heading: light-dark(#2e3436, #eeeeec);
+  --cl-link: light-dark(#3465a4, #729fcf);
+  --cl-link-hover: light-dark(#729fcf, #a0c4e8);
+  --cl-link-visited: light-dark(#75507b, #ad7fa8);
+  --cl-code-bg: light-dark(#e0dede, #3c3c3c);
+  --cl-pre-bg: light-dark(#2e3436, #1a1a1a);
+  --cl-pre-text: #eeeeec;
+  --cl-border: light-dark(#d3d7cf, #555753);
+  --cl-th-bg: light-dark(#e0dede, #3c3c3c);
+  --cl-row-even: light-dark(#f7f6f5, #333636);
+}
+
+html {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  min-height: 100%;
+  font-family: var(--cl-font-family);
+  font-size: var(--cl-font-size);
+  color: var(--cl-text);
+  background: var(--cl-desktop-bg);
+  overflow: hidden;
+}
+
+img, video {
+  max-width: 100%;
+
+  &:not([height]) {
+    height: auto;
+  }
+}
+
+/* === Pre-definition styles (prevent FOUC before DSD/JS) === */
+gnome2-desktop:not(:defined) {
+  display: flex;
+  flex-direction: column;
+  height: 100dvh;
+  background: var(--cl-desktop-bg);
+  overflow: hidden;
+}
+
+gnome2-panel:not(:defined) {
+  display: flex;
+  align-items: center;
+  height: var(--cl-panel-height, 26px);
+  background: var(--cl-panel-bg);
+  flex-shrink: 0;
+}
+
+gtk2-window:not(:defined) {
+  display: flex;
+  flex-direction: column;
+  background: var(--cl-window-bg);
+  border-radius: var(--cl-window-radius, 3px);
+  box-shadow: var(--cl-window-shadow);
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+.gnome-foot {
+  width: 14px;
+  height: 17px;
+  flex-shrink: 0;
+}
+
+/* === View Transitions === */
+@view-transition {
+  navigation: auto;
+}
+
+/* Panels stay static across navigations */
+gnome2-panel[position="top"] {
+  view-transition-name: top-panel;
+}
+
+gnome2-panel[position="bottom"] {
+  view-transition-name: bottom-panel;
+}
+
+::view-transition-old(top-panel),
+::view-transition-new(top-panel),
+::view-transition-old(bottom-panel),
+::view-transition-new(bottom-panel),
+::view-transition-group(top-panel),
+::view-transition-group(bottom-panel) {
+  animation: none;
+}
+
+/* Instant swap — hide old, show new immediately */
+::view-transition-old(root) {
+  animation: none;
+  opacity: 0;
+}
+
+::view-transition-new(root) {
+  animation: none;
+}
+
+/* === Content Typography (inside windows) === */
+gtk2-window {
+  /* Readable content inside windows */
+  & :is(h1, h2, h3, h4, h5, h6) {
+    font-family: var(--cl-font-family);
+    font-weight: 700;
+    color: var(--cl-heading);
+    margin-block: 0.6em 0.3em;
+  }
+
+  & h1 { font-size: 18px; }
+  & h2 { font-size: 16px; }
+  & h3 { font-size: 14px; }
+
+  & a {
+    color: var(--cl-link);
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+
+    &:hover {
+      color: var(--cl-link-hover);
+    }
+
+    &:visited {
+      color: var(--cl-link-visited);
+    }
+  }
+
+  & p {
+    margin-block: 0.5em;
+    line-height: 1.5;
+  }
+
+  & code {
+    font-family: var(--fixed-font);
+    font-size: 12px;
+    background: var(--cl-code-bg);
+    padding: 1px 4px;
+    border-radius: 2px;
+  }
+
+  & pre {
+    background: var(--cl-pre-bg);
+    color: var(--cl-pre-text);
+    padding: 8px 12px;
+    border-radius: 3px;
+    overflow-x: auto;
+    font-family: var(--fixed-font);
+    font-size: 12px;
+    line-height: 1.4;
+
+    & code {
+      background: none;
+      padding: 0;
+      color: inherit;
+    }
+  }
+
+  & blockquote {
+    margin-inline: 12px;
+    padding-inline-start: 12px;
+    border-inline-start: 3px solid var(--cl-link-hover);
+    color: var(--cl-text-secondary);
+    font-style: italic;
+  }
+
+  & img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 3px;
+  }
+
+  & table {
+    border-collapse: collapse;
+    width: 100%;
+    font-size: 12px;
+
+    & th,
+    & td {
+      padding: 4px 8px;
+      border: 1px solid var(--cl-border);
+      text-align: start;
+    }
+
+    & th {
+      background: var(--cl-th-bg);
+      font-weight: 700;
+    }
+
+    & tr:nth-child(even) td {
+      background: var(--cl-row-even);
+    }
+  }
+
+  & ul, & ol {
+    padding-inline-start: 24px;
+
+    & li {
+      margin-block: 0.3em;
+    }
+  }
+
+  & dt {
+    font-weight: 700;
+    margin-block-start: 0.5em;
+  }
+
+  & dd {
+    margin-inline-start: 24px;
+  }
+}
+
+/* === Syntax Highlighting Overrides === */
+body code[class*="language-"],
+pre[class*="language-"] {
+  font-family: var(--fixed-font);
+}
+
+body pre[class*="language-"] {
+  max-width: 100%;
+  overflow-x: auto;
+}
+
+/* === Icon Sprite Sheet === */
+#icon-sprite-sheet {
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  height: 1px;
+  overflow: hidden;
+  position: absolute;
+  white-space: nowrap;
+  width: 1px;
+}
+
+/* === Window Content (used in listing pages) === */
+.window-content {
+  padding: 16px 24px;
+  font-size: 14px;
+  line-height: 1.6;
+
+  & h1 {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--cl-heading);
+    margin-block: 0 12px;
+  }
+
+  & h2 {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--cl-heading);
+  }
+
+  & a {
+    color: var(--cl-link);
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+
+    &:hover {
+      color: var(--cl-link-hover);
+    }
+
+    &:visited {
+      color: var(--cl-link-visited);
+    }
+  }
+}
+
+/* === Resume in window === */
+.resume-content {
+  padding: 24px;
+}
+
+/* === Nautilus Icon View === */
+.nautilus-icon-view,
+.folder-view {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+  gap: 4px;
+  padding: 8px;
+  align-content: start;
+}
+
+.nautilus-icon,
+.folder-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 6px 4px;
+  border-radius: 3px;
+  text-decoration: none;
+  color: var(--cl-text, #2e3436);
+  text-align: center;
+  cursor: default;
+  min-width: 0;
+
+  &:visited {
+    color: var(--cl-text, #2e3436);
+  }
+
+  &:hover img {
+    filter: brightness(1.3) saturate(1.2);
+  }
+
+  & img {
+    margin-block-end: 4px;
+    pointer-events: none;
+    flex-shrink: 0;
+  }
+}
+
+.nautilus-label,
+.folder-label {
+  font-size: 11px;
+  line-height: 1.3;
+  word-break: break-word;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  max-width: 100%;
+}
+
+.folder-count {
+  font-size: 10px;
+  opacity: 0.6;
+  margin-block-start: 1px;
+}
+
+/* === Mobile === */
+@media (width <= 767px) {
+  body {
+    overflow: auto;
+  }
+
+  .panel-menu-trigger {
+    min-height: 44px;
+    min-width: 44px;
+  }
+
+  .window-content {
+    padding: 12px 16px;
+  }
+}

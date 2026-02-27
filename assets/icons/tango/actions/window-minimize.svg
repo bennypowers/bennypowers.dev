@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+  <defs>
+    <linearGradient id="minGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#d3d7cf"/>
+      <stop offset="100%" stop-color="#babdb6"/>
+    </linearGradient>
+  </defs>
+  <circle cx="8" cy="8" r="7" fill="url(#minGrad)" stroke="#888a85" stroke-width="1"/>
+  <line x1="4" y1="8" x2="12" y2="8" stroke="#2e3436" stroke-width="2" stroke-linecap="round"/>
+</svg>

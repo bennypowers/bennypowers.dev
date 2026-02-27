@@ -1,28 +1,56 @@
 ---
-layout: html.webc
+layout: gnome2-shell.webc
 date: Created
 title: Posts
-bodyClasses: sidebar
-pagination:
-  data: collections.posts
-  reverse: true
-  size: 5
+permalink: "/posts/index.html"
 ---
-<bp-header></bp-header>
 
-<link rel="stylesheet" href="../sidebar.css">
-<link rel="stylesheet" href="index.css">
+<script webc:setup>
+const postYears = (() => {
+  const byYear = new Map();
+  for (const m of ($data.collections?.postsByMonth ?? [])) {
+    const year = m.month.split('-')[0];
+    if (!byYear.has(year)) byYear.set(year, 0);
+    byYear.set(year, byYear.get(year) + (m.posts?.length ?? 0));
+  }
+  return [...byYear.entries()]
+    .sort((a, b) => b[0].localeCompare(a[0]))
+    .map(([year, count]) => ({ label: year, href: `/posts/${year}/`, count }));
+})();
+</script>
 
-<main>
-  <h1 @text="h1 ? h1 : title"></h1>
-  <paginated-list :@posts="pagination.items"
-                  :@watch="watch">
-  </paginated-list>
-  <paginator-nav :@pages="pagination.pages"
-                 :@pagination="pagination"></paginator-nav>
-</main>
-
-<aside id="side-menu">
-  <h2>All Tags</h2>
-  <tag-list></tag-list>
-</aside>
+<gtk2-window label="Posts" window-url="/posts/" icon="places/folder" focused close-href="/">
+  <gtk2-menu-bar slot="menubar">
+    <gtk2-menu-button label="File">
+      <gtk2-menu-item label="Close Window" href="/" icon="actions/window-close"></gtk2-menu-item>
+    </gtk2-menu-button>
+    <gtk2-menu-button label="Edit">
+      <gtk2-menu-item label="Select All" disabled icon="actions/edit-select-all"></gtk2-menu-item>
+    </gtk2-menu-button>
+    <gtk2-menu-button label="View">
+      <gtk2-menu-item label="Icons" icon="places/folder"></gtk2-menu-item>
+    </gtk2-menu-button>
+    <gtk2-menu-button label="Places">
+      <gtk2-menu-item label="Home" href="/" icon="places/user-home"></gtk2-menu-item>
+      <gtk2-menu-item separator></gtk2-menu-item>
+      <gtk2-menu-item label="Posts" href="/posts/" icon="places/folder"></gtk2-menu-item>
+      <gtk2-menu-item label="Tags" href="/tags/" icon="places/folder"></gtk2-menu-item>
+      <gtk2-menu-item label="Decks" href="/decks/" icon="places/folder"></gtk2-menu-item>
+    </gtk2-menu-button>
+    <gtk2-menu-button label="Help">
+      <gtk2-menu-item label="About" href="/help/" icon="status/dialog-information"></gtk2-menu-item>
+    </gtk2-menu-button>
+  </gtk2-menu-bar>
+  <span slot="statusbar" @text="`${postYears.length} items`"></span>
+  <gtk2-scrolled-window>
+    <div class="folder-view">
+      <a webc:for="y of postYears"
+         class="folder-item"
+         :href="y.href">
+        <img src="/assets/icons/gnome/places/folder.svg" width="48" height="48" alt="" draggable="false">
+        <span class="folder-label" @text="y.label"></span>
+        <span class="folder-count" @text="`${y.count} posts`"></span>
+      </a>
+    </div>
+  </gtk2-scrolled-window>
+</gtk2-window>

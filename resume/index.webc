@@ -1,18 +1,16 @@
 ---
-layout: html.webc
+layout: gnome2-shell.webc
 datePublished: '2016'
 bodyAttributes:
   itemscope: ''
   itemtype: https://schema.org/Person
-noHeader: true
 eleventyImport:
   collections:
     - resume-experience
     - resume-education
     - resume-open-source
-fonts:
-  - Libre Franklin
-  - Anonymous Pro
+stylesheets:
+  - href: https://fonts.googleapis.com/css2?family=Libre+Franklin&family=Anonymous+Pro&display=swap
 ---
 
 <script webc:setup>
@@ -26,12 +24,20 @@ const getResumeData = tag =>
   .sort((a, b) => new Date(b.startDate).getTime() - new Date(a.startDate).getTime());
 </script>
 
-<bp-header></bp-header>
-
 <link rel="stylesheet" href="resume.css">
 <link rel="stylesheet" media="print" webc:keep href="resume-print.css">
 
-<script type="module" webc:keep src="resume.js"></script>
+<script type="module" webc:keep>
+  /** @param {string} id */
+  const $ = id => document.getElementById(id);
+  const printBtn = $('print-button');
+
+  printBtn.addEventListener('click', window.print.bind(window));
+</script>
+
+<gtk2-window label="About - Benny Powers" window-url="/resume/" icon="status/dialog-information" focused close-href="/">
+<gtk2-scrolled-window>
+<div class="window-content resume-content">
 
 <header id="identity">
   <h1>
@@ -206,3 +212,7 @@ const getResumeData = tag =>
   </section>
 
 </main>
+
+</div>
+</gtk2-scrolled-window>
+</gtk2-window>

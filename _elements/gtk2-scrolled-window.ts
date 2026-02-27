@@ -1,0 +1,71 @@
+import { LitElement, html, css } from 'lit';
+import { customElement, property } from 'lit/decorators.js';
+
+@customElement('gtk2-scrolled-window')
+export class Gtk2ScrolledWindow extends LitElement {
+  static styles = css`
+    :host {
+      display: block;
+      overflow: auto;
+      min-height: 0;
+      flex: 1;
+    }
+
+    :host(::-webkit-scrollbar) {
+      width: var(--cl-scrollbar-width, 14px);
+      height: var(--cl-scrollbar-width, 14px);
+    }
+
+    :host(::-webkit-scrollbar-track) {
+      background: var(--cl-scrollbar-track, #d9d7d5);
+    }
+
+    :host(::-webkit-scrollbar-thumb) {
+      background: linear-gradient(to right, light-dark(#a3bfe1, #4a6a8a), light-dark(#8daed0, #3a5a7a));
+      border: 1px solid var(--cl-scrollbar-border, #9d9c9b);
+      border-radius: 2px;
+    }
+
+    :host(::-webkit-scrollbar-thumb:hover) {
+      background: linear-gradient(to right, light-dark(#b3cce8, #5a7a9a), light-dark(#9dbede, #4a6a8a));
+    }
+
+    :host(::-webkit-scrollbar-corner) {
+      background: var(--cl-scrollbar-track, #d9d7d5);
+    }
+
+    #viewport {
+      padding: var(--gtk-scrolled-window-padding, 12px);
+    }
+
+    @supports (scrollbar-width: thin) {
+      :host {
+        scrollbar-width: auto;
+        scrollbar-color: light-dark(#a3bfe1, #4a6a8a) light-dark(#d9d7d5, #3c3c3c);
+      }
+    }
+  `;
+
+  @property({ type: Boolean }) accessor hscrollbar = true;
+  @property({ type: Boolean }) accessor vscrollbar = true;
+
+  render() {
+    return html`
+      <div id="viewport" part="viewport">
+        <slot></slot>
+      </div>
+    `;
+  }
+
+  connectedCallback() {
+    super.connectedCallback();
+    if (!this.hscrollbar) this.style.overflowX = 'hidden';
+    if (!this.vscrollbar) this.style.overflowY = 'hidden';
+  }
+}
+
+declare global {
+  interface HTMLElementTagNameMap {
+    'gtk2-scrolled-window': Gtk2ScrolledWindow;
+  }
+}
