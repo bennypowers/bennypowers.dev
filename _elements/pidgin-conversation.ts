@@ -6,6 +6,7 @@ type Protocol = 'fediverse' | 'bluesky' | 'webmention' | '';
 
 const PROTOCOL_STORAGE_KEY = 'pidgin-protocol';
 const INSTANCE_STORAGE_KEY = 'pidgin-instance';
+const SOURCE_URL_STORAGE_KEY = 'pidgin-source-url';
 
 @customElement('pidgin-conversation')
 export class PidginConversation extends LitElement {
@@ -77,7 +78,8 @@ export class PidginConversation extends LitElement {
         border-radius: 2px;
         background: light-dark(#ffffff, #1a1a1a);
         color: var(--cl-text, light-dark(#2e3436, #eeeeec));
-        width: 160px;
+        flex: 1;
+        min-width: 160px;
       }
     }
 
@@ -175,18 +177,20 @@ export class PidginConversation extends LitElement {
 
   @state() accessor protocol: Protocol = '';
   @state() accessor instance = '';
+  @state() accessor sourceUrl = '';
   @state() accessor statusMessage = '';
 
   @query('.input') accessor inputEl!: HTMLDivElement;
 
   get #configured(): boolean {
     if (this.protocol === 'fediverse') return !!this.instance;
+    if (this.protocol === 'webmention') return !!this.sourceUrl;
     return !!this.protocol;
   }
 
   get #placeholder(): string {
     if (!this.protocol) return 'Select a protocol to reply...';
-    if (this.protocol === 'webmention') return 'Paste your reply URL...';
+    if (this.protocol === 'webmention') return 'Send a webmention from your reply URL';
     if (this.protocol === 'fediverse' && !this.instance) return 'Enter your instance URL above...';
     return 'Type a message...';
   }
@@ -196,6 +200,7 @@ export class PidginConversation extends LitElement {
     try {
       this.protocol = (localStorage.getItem(PROTOCOL_STORAGE_KEY) as Protocol) || '';
       this.instance = localStorage.getItem(INSTANCE_STORAGE_KEY) || '';
+      this.sourceUrl = localStorage.getItem(SOURCE_URL_STORAGE_KEY) || '';
     } catch {}
     // Sort messages chronologically and insert date dividers
     requestAnimationFrame(() => this.#organizeMessages());
@@ -268,8 +273,29 @@ export class PidginConversation extends LitElement {
                  @change=${this.#onInstanceChange}
                  @keydown=${(e: KeyboardEvent) => { if (e.key === 'Enter') this.#onInstanceChange(e); }}>
         ` : ''}
+        ${this.protocol === 'webmention' ? html`
+          <input type="url"
+                 placeholder="https://you.example.com/reply-post"
+                 .value=${this.sourceUrl}
+                 @change=${this.#onSourceUrlChange}
+                 @keydown=${(e: KeyboardEvent) => { if (e.key === 'Enter') this.#onSourceUrlChange(e); }}>
+        ` : ''}
       </div>
 
+      ${this.protocol === 'webmention' ? html`
+      <form class="input-area" @submit=${this.#onWebmentionSubmit}
+            action=${this.#webmentionEndpoint ?? ''}
+            method="POST">
+        <input type="hidden" name="source" .value=${this.sourceUrl}>
+        <input type="hidden" name="target" .value=${this.postUrl}>
+        <div class="input"
+             contenteditable="false"
+             data-placeholder=${this.#placeholder}></div>
+        <button class="send"
+                type="submit"
+                ?disabled=${!this.#configured}>Send</button>
+      </form>
+      ` : html`
       <div class="input-area">
         <div class="input"
              contenteditable=${this.#configured ? 'true' : 'false'}
@@ -279,12 +305,23 @@ export class PidginConversation extends LitElement {
                 ?disabled=${!this.#configured}
                 @click=${this.#onSend}>Send</button>
       </div>
+      `}
     `;
   }
 
   #selectProtocol(p: Protocol) {
     this.protocol = this.protocol === p ? '' : p;
     try { localStorage.setItem(PROTOCOL_STORAGE_KEY, this.protocol); } catch {}
+  }
+
+  get #webmentionEndpoint(): string | null {
+    return document.querySelector('link[rel=webmention]')?.getAttribute('href') ?? null;
+  }
+
+  #onSourceUrlChange(e: Event) {
+    this.sourceUrl = (e.target as HTMLInputElement).value.trim();
+    try { localStorage.setItem(SOURCE_URL_STORAGE_KEY, this.sourceUrl); } catch {}
+    this.requestUpdate();
   }
 
   #onInstanceChange(e: Event) {
@@ -318,28 +355,48 @@ export class PidginConversation extends LitElement {
         this.inputEl.textContent = '';
         break;
       }
-      case 'webmention': {
-        const endpoint = document.querySelector('link[rel=webmention]')?.getAttribute('href');
-        if (!endpoint) {
-          this.statusMessage = 'No webmention endpoint found on this page.';
-          return;
-        }
-        this.statusMessage = 'Sending webmention...';
-        fetch(endpoint, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-          body: `source=${encodeURIComponent(text)}&target=${encodeURIComponent(this.postUrl)}`,
-        }).then(res => {
-          this.statusMessage = res.ok
-            ? `Webmention sent! (${res.status})`
-            : `Error: ${res.status} ${res.statusText}`;
-          if (res.ok) this.inputEl.textContent = '';
-        }).catch(err => {
-          this.statusMessage = `Failed: ${err.message}`;
-        });
-        break;
-      }
     }
+  }
+
+  #onWebmentionSubmit(e: SubmitEvent) {
+    e.preventDefault();
+    const endpoint = this.#webmentionEndpoint;
+    if (!endpoint) {
+      this.statusMessage = 'No webmention endpoint found on this page.';
+      return;
+    }
+    if (!this.sourceUrl) return;
+
+    // Optimistically append the reply to the conversation
+    const msg = document.createElement('pidgin-message');
+    msg.setAttribute('type', 'reply');
+    msg.setAttribute('timestamp', new Date().toISOString());
+    msg.setAttribute('url', this.sourceUrl);
+    msg.setAttribute('author-name', 'You');
+    msg.setAttribute('author-url', this.sourceUrl);
+    msg.innerHTML = `<a href="${this.sourceUrl}">${this.sourceUrl}</a>`;
+    this.appendChild(msg);
+
+    // Scroll to bottom
+    this.updateComplete?.then(() => {
+      const conv = this.shadowRoot?.querySelector('.conversation');
+      if (conv) conv.scrollTop = conv.scrollHeight;
+    });
+
+    this.statusMessage = 'Sending webmention...';
+    fetch(endpoint, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: `source=${encodeURIComponent(this.sourceUrl)}&target=${encodeURIComponent(this.postUrl)}`,
+    }).then(res => {
+      this.statusMessage = res.ok
+        ? `Webmention sent! (${res.status})`
+        : `Error: ${res.status} ${res.statusText}`;
+      if (!res.ok) msg.remove();
+    }).catch(err => {
+      this.statusMessage = `Failed: ${err.message}`;
+      msg.remove();
+    });
   }
 }
 
