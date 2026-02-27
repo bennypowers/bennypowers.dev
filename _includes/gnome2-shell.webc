@@ -324,7 +324,8 @@ const menuPostYears = (() => {
 
     <gnome2-panel slot="bottom-panel"
                   position="bottom">
-      <gnome2-window-list :window-title="title || ''"></gnome2-window-list>
+      <gnome2-window-list :window-title="title || ''"
+                          :window-icon="windowIcon || 'places/folder'"></gnome2-window-list>
       <gnome2-workspace-switcher slot="end"></gnome2-workspace-switcher>
     </gnome2-panel>
   </gnome2-desktop>

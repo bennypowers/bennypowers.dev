@@ -1,6 +1,7 @@
 ---
 layout: gnome2-shell.webc
 bodyClasses: h-entry post
+windowIcon: apps/accessories-text-editor
 ---
 
 
