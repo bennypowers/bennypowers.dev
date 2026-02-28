@@ -248,7 +248,6 @@ export class Gtk2Window extends LitElement {
         box-shadow: none;
         border: none;
         width: 100% !important;
-        height: auto !important;
       }
 
       #titlebar {

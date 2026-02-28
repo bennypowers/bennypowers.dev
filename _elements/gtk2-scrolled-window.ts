@@ -9,6 +9,7 @@ export class Gtk2ScrolledWindow extends LitElement {
       overflow: auto;
       min-height: 0;
       flex: 1;
+      overscroll-behavior: contain;
     }
 
     :host(::-webkit-scrollbar) {

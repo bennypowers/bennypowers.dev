@@ -439,10 +439,6 @@ body pre[class*="language-"] {
 
 /* === Mobile === */
 @media (width <= 767px) {
-  body {
-    overflow: auto;
-  }
-
   .panel-menu-trigger {
     min-height: 44px;
     min-width: 44px;
