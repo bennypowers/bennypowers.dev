@@ -55,6 +55,14 @@ const APP_DEFS: Record<string, AppDef> = {
     width: '280px',
     height: '360px',
   },
+  supertux: {
+    module: 'gnome2/gnome2-supertux.js',
+    tag: 'gnome2-supertux',
+    label: 'SuperTux',
+    icon: 'apps/supertux',
+    width: '800px',
+    height: '600px',
+  },
   about: {
     module: 'gnome2/gnome2-about.js',
     tag: 'gnome2-about',
