@@ -192,9 +192,18 @@ export class Gnome2WindowList extends LitElement {
 
   #onButtonClick(e: Event) {
     const target = (e.target as Element)?.closest('a');
-    if (target?.dataset.focused === 'true') {
+    if (!target) return;
+    const url = target.getAttribute('href') ?? '';
+    if (target.dataset.focused === 'true') {
       e.preventDefault();
-      this.dispatchEvent(new WMMinimizeEvent(target.getAttribute('href') ?? ''));
+      this.dispatchEvent(new WMMinimizeEvent(url));
+    } else {
+      // Prevent navigation for pseudo-URLs (app:*) — dispatch focus event instead
+      e.preventDefault();
+      this.dispatchEvent(Object.assign(
+        new Event('wm-focus', { bubbles: true, composed: true }),
+        { url },
+      ));
     }
   }
 

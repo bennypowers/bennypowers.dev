@@ -119,6 +119,7 @@ export class Gnome2Session extends LitElement {
   #currentUrl = '';
   #isMobile = false;
   #tracking = false;
+  #topZ = 100;
   #rafId = 0;
 
   // --- Storage helpers ---
@@ -244,7 +245,7 @@ export class Gnome2Session extends LitElement {
     const activeWorkspace = this.#getActiveWorkspace();
     const windowList = document.querySelector('gnome2-window-list');
     if (!windowList) return;
-    (windowList as any).entries = this.#entries
+    const taskbarEntries = this.#entries
       .filter(e => e.workspace === activeWorkspace)
       .map(e => ({
         url: e.url,
@@ -253,6 +254,19 @@ export class Gnome2Session extends LitElement {
         focused: e.url === this.#currentUrl,
         minimized: e.minimized,
       }));
+    // Include app windows (calculator, mines, pidgin, etc.)
+    for (const win of this.#desktop?.querySelectorAll('gtk2-window[data-app]') as NodeListOf<HTMLElement> ?? []) {
+      const appWs = parseInt(win.getAttribute('data-workspace') || '0', 10);
+      if (appWs !== activeWorkspace) continue;
+      taskbarEntries.push({
+        url: win.getAttribute('window-url') ?? '',
+        title: win.getAttribute('label') || '',
+        icon: win.getAttribute('icon') || undefined,
+        focused: win.getAttribute('window-url') === this.#currentUrl,
+        minimized: win.style.display === 'none',
+      });
+    }
+    (windowList as any).entries = taskbarEntries;
   }
 
   #syncMiniatures() {
@@ -432,6 +446,11 @@ export class Gnome2Session extends LitElement {
     }
   }
 
+  /** Generate a CSS-safe view-transition-name from a window URL. */
+  static #vtName(url: string) {
+    return `wm-${url.replace(/[^a-zA-Z0-9_-]/g, '-')}`;
+  }
+
   // --- Active window context ---
 
   /** Pin every currently-focused window's visual position into inline styles,
@@ -457,39 +476,103 @@ export class Gnome2Session extends LitElement {
       this.#pinFocusedWindows();
     }
     this.#currentUrl = url;
+    // Raise the target window above all others
+    const target = this.#desktop?.querySelector(`gtk2-window[window-url="${CSS.escape(url)}"]`) as HTMLElement | null;
+    if (target) target.style.zIndex = String(++this.#topZ);
     const update = () => this.#provider?.setValue(url);
     if (typeof document.startViewTransition === 'function') {
-      // Temporarily name each window so they crossfade independently in place.
-      // Skip windows with viewTransitionName 'none' (newly created, should appear instantly).
-      const windows = this.#desktop?.querySelectorAll('gtk2-window') as NodeListOf<HTMLElement>;
-      for (const win of windows) {
-        if (win.style.viewTransitionName === 'none') continue;
-        const wurl = win.getAttribute('window-url');
-        if (wurl) win.style.viewTransitionName = `wm-${wurl.replace(/[^a-zA-Z0-9_-]/g, '-')}`;
-      }
-      const vt = document.startViewTransition(update);
-      vt.finished.then(() => {
-        for (const win of windows) win.style.viewTransitionName = '';
-      });
+      document.startViewTransition(update);
     } else {
       update();
     }
   }
 
+  // --- SPA window navigation ---
+
+  async #openWindow(url: string) {
+    const desktop = this.#desktop;
+    if (!desktop) return;
+
+    // If the window already exists, just show and focus it
+    const existing = desktop.querySelector(`gtk2-window[window-url="${CSS.escape(url)}"]`) as HTMLElement | null;
+    if (existing) {
+      existing.style.display = '';
+      const entry = this.#entries.find(e => e.url === url);
+      if (entry) {
+        entry.minimized = false;
+        this.#saveWindows();
+      }
+      this.#setActiveWindow(url);
+      this.#updateTaskbar();
+      this.#syncMiniatures();
+      history.pushState(null, '', url);
+      return;
+    }
+
+    // Fetch and create a new window
+    const sourceWindow = await Gnome2Session.#fetchWindowContent(url);
+    if (!sourceWindow) {
+      // Can't fetch — fall back to real navigation
+      this.#savePositions();
+      location.href = url;
+      return;
+    }
+
+    const title = sourceWindow.getAttribute('label') || url;
+    const icon = sourceWindow.getAttribute('icon') || undefined;
+    const closeHref = sourceWindow.getAttribute('close-href') || '/';
+
+    const windowEl = document.createElement('gtk2-window');
+    windowEl.setAttribute('label', title);
+    windowEl.setAttribute('window-url', url);
+    windowEl.setAttribute('close-href', closeHref);
+    windowEl.style.viewTransitionName = Gnome2Session.#vtName(url);
+    if (icon) windowEl.setAttribute('icon', icon);
+    windowEl.innerHTML = sourceWindow.innerHTML;
+
+    desktop.appendChild(windowEl);
+
+    this.#addWindow(url, title, icon);
+    this.#setActiveWindow(url);
+    this.#positionBackgroundWindows();
+    this.#updateTaskbar();
+    this.#syncMiniatures();
+
+    history.pushState(null, '', url);
+  }
+
   // --- App launcher ---
 
   async #launchApp(id: string) {
-    const existing = document.querySelector(`gtk2-window[data-app="${id}"]`);
-    if (existing) {
-      (existing as HTMLElement).style.display = '';
-      this.#setActiveWindow('app:' + id);
-      return;
-    }
     const def = APP_DEFS[id];
     if (!def) return;
-    await import(def.module);
     const desktop = this.#desktop;
     if (!desktop) return;
+
+    // Check for existing window (fully initialized or placeholder from blocking script)
+    const existing = desktop.querySelector(`gtk2-window[data-app="${id}"]`) as HTMLElement | null;
+    if (existing) {
+      existing.style.display = '';
+      // Placeholder has no children — fill it with content
+      if (!existing.querySelector(def.tag)) {
+        await import(def.module);
+        const child = document.createElement(def.tag);
+        if (def.attrs) {
+          for (const [k, v] of Object.entries(def.attrs())) child.setAttribute(k, v);
+        }
+        existing.appendChild(child);
+        existing.addEventListener('close', () => {
+          existing.remove();
+          try { sessionStorage.removeItem('app-' + id); } catch {}
+        });
+      }
+      this.#setActiveWindow('app:' + id);
+      this.#updateTaskbar();
+      return;
+    }
+
+    // Create fresh window
+    await import(def.module);
     const win = document.createElement('gtk2-window');
     win.setAttribute('label', def.label);
     win.setAttribute('icon', def.icon);
@@ -502,7 +585,6 @@ export class Gnome2Session extends LitElement {
     win.style.width = def.width;
     win.style.height = def.height;
     win.style.position = 'absolute';
-    win.style.zIndex = '200';
     win.style.insetBlockStart = '40px';
     win.style.insetInlineEnd = '40px';
     const child = document.createElement(def.tag);
@@ -510,7 +592,7 @@ export class Gnome2Session extends LitElement {
       for (const [k, v] of Object.entries(def.attrs())) child.setAttribute(k, v);
     }
     win.appendChild(child);
-    win.style.viewTransitionName = 'none';
+    win.style.viewTransitionName = Gnome2Session.#vtName(`app:${id}`);
     desktop.appendChild(win);
     this.#setActiveWindow('app:' + id);
     win.addEventListener('close', () => {
@@ -518,6 +600,7 @@ export class Gnome2Session extends LitElement {
       try { sessionStorage.removeItem('app-' + id); } catch {}
     });
     try { sessionStorage.setItem('app-' + id, '1'); } catch {}
+    this.#updateTaskbar();
   }
 
   // --- WM Event Handlers ---
@@ -548,11 +631,16 @@ export class Gnome2Session extends LitElement {
     if (this.#isMobile) return;
     const { url } = e as WMMinimizeEvent;
     if (!url) return;
-    this.#toggleMinimize(url);
     const win = this.#desktop?.querySelector(`gtk2-window[window-url="${CSS.escape(url)}"]`) as HTMLElement | null;
-    if (win) {
-      const entry = this.#entries.find(en => en.url === url);
-      win.style.display = entry?.minimized ? 'none' : '';
+    if (win?.hasAttribute('data-app')) {
+      // App window — toggle display directly
+      win.style.display = win.style.display === 'none' ? '' : 'none';
+    } else {
+      this.#toggleMinimize(url);
+      if (win) {
+        const entry = this.#entries.find(en => en.url === url);
+        win.style.display = entry?.minimized ? 'none' : '';
+      }
     }
     this.#updateTaskbar();
     this.#syncMiniatures();
@@ -567,19 +655,16 @@ export class Gnome2Session extends LitElement {
       return;
     }
 
-    // Pseudo-URLs (app:*) or the current page — focus in place
-    if (url.includes(':') || url === location.pathname) {
-      const win = this.#desktop?.querySelector(`gtk2-window[window-url="${CSS.escape(url)}"]`) as HTMLElement | null;
-      if (win) win.style.zIndex = '200';
+    // Pseudo-URLs (app:*) — focus in place, no pushState
+    if (url.includes(':')) {
       this.#setActiveWindow(url);
       this.#updateTaskbar();
       this.#syncMiniatures();
       return;
     }
 
-    // Different page — navigate (MPA)
-    this.#savePositions();
-    location.href = url;
+    // Page URLs — SPA open/focus
+    this.#openWindow(url);
   };
 
   #onWmShowDesktop = (e: Event) => {
@@ -644,12 +729,36 @@ export class Gnome2Session extends LitElement {
   // --- Save-on-navigate handlers ---
 
   #onPageHide = () => this.#savePositions();
+
   #onPageSwap = () => this.#savePositions();
 
-  #onNavClick = (e: MouseEvent) => {
-    const link = (e.target as Element)?.closest?.('a[href]') as HTMLAnchorElement | null;
-    if (link && link.href && !link.href.startsWith('javascript:')) {
-      this.#savePositions();
+  #onLinkClick = (e: MouseEvent) => {
+    if (this.#isMobile) return;
+    if (e.defaultPrevented) return;
+    if (e.ctrlKey || e.metaKey || e.shiftKey) return;
+    const link = Gnome2Session.#fromComposed(e, 'a[href]') as HTMLAnchorElement | null;
+    if (!link) return;
+    if (link.matches('.titlebar-button')) return;
+    const href = link.getAttribute('href');
+    if (!href || href.startsWith('#') || href.startsWith('javascript:')) return;
+    if (link.target && link.target !== '_self') return;
+    if (link.hasAttribute('download')) return;
+    if (link.origin !== location.origin) return;
+    e.preventDefault();
+    this.#openWindow(link.pathname);
+  };
+
+  #onPopState = () => {
+    if (this.#isMobile) return;
+    const url = location.pathname;
+    const existing = this.#desktop?.querySelector(`gtk2-window[window-url="${CSS.escape(url)}"]`) as HTMLElement | null;
+    if (existing) {
+      existing.style.display = '';
+      this.#setActiveWindow(url);
+      this.#updateTaskbar();
+      this.#syncMiniatures();
+    } else {
+      location.reload();
     }
   };
 
@@ -678,6 +787,7 @@ export class Gnome2Session extends LitElement {
 
     if (currentWindow) {
       currentWindow.setAttribute('window-url', this.#currentUrl);
+      currentWindow.style.viewTransitionName = Gnome2Session.#vtName(this.#currentUrl);
     }
 
     this.#entries = this.#getWindows();
@@ -735,6 +845,7 @@ export class Gnome2Session extends LitElement {
       windowEl.setAttribute('label', entry.title);
       windowEl.setAttribute('window-url', entry.url!);
       windowEl.setAttribute('close-href', '/');
+      windowEl.style.viewTransitionName = Gnome2Session.#vtName(entry.url!);
       if (entry.icon) windowEl.setAttribute('icon', entry.icon);
       windowEl.innerHTML = sourceWindow.innerHTML;
 
@@ -755,7 +866,8 @@ export class Gnome2Session extends LitElement {
     // Save positions before any navigation
     window.addEventListener('pagehide', this.#onPageHide);
     document.addEventListener('pageswap', this.#onPageSwap);
-    document.addEventListener('click', this.#onNavClick, { capture: true });
+    document.addEventListener('click', this.#onLinkClick, { capture: true });
+    window.addEventListener('popstate', this.#onPopState);
 
     // Real-time miniature updates during drag/resize
     desktop.addEventListener('gotpointercapture', this.#onGotPointerCapture, true);
@@ -785,7 +897,8 @@ export class Gnome2Session extends LitElement {
 
     window.removeEventListener('pagehide', this.#onPageHide);
     document.removeEventListener('pageswap', this.#onPageSwap);
-    document.removeEventListener('click', this.#onNavClick, { capture: true });
+    document.removeEventListener('click', this.#onLinkClick, { capture: true });
+    window.removeEventListener('popstate', this.#onPopState);
   }
 
   /** Find the first element matching selector in the composed event path */

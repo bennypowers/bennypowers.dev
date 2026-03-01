@@ -461,9 +461,10 @@ export class Gtk2Window extends LitElement {
 
     const unfocused = !this.focused && !!this.windowUrl;
 
-    // Unfocused: defer the WMFocusEvent so the user can drag first
+    // Unfocused: raise immediately, defer the WMFocusEvent so the user can drag first
     if (unfocused) {
       this.#deferFocus = true;
+      this.style.zIndex = '10000';
       const titlebar = e.currentTarget as Element;
       const onUp = () => {
         this.#deferFocus = false;
