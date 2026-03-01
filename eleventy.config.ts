@@ -118,7 +118,6 @@ export default function(eleventyConfig: UserConfig) {
   });
   eleventyConfig.addPlugin(LightningCSSPlugin);
   eleventyConfig.addPlugin(EsbuildPlugin);
-  !isWatch() &&
   eleventyConfig.addPlugin(LitSSRPlugin);
 
   eleventyConfig.addPlugin(EleventyRSSPlugin);

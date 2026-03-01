@@ -180,6 +180,22 @@ gtk2-window:not(:defined) {
   navigation: auto;
 }
 
+/* Window contents crossfade — prevents blank-frame flash in Firefox */
+::view-transition-old(*),
+::view-transition-new(*) {
+  animation-duration: 100ms;
+}
+
+/* Root: instant swap (everything not named transitions immediately) */
+::view-transition-old(root) {
+  animation: none;
+  opacity: 0;
+}
+
+::view-transition-new(root) {
+  animation: none;
+}
+
 /* Panels stay static across navigations */
 gnome2-panel[position="top"] {
   view-transition-name: top-panel;
@@ -195,16 +211,6 @@ gnome2-panel[position="bottom"] {
 ::view-transition-new(bottom-panel),
 ::view-transition-group(top-panel),
 ::view-transition-group(bottom-panel) {
-  animation: none;
-}
-
-/* Instant swap — hide old, show new immediately */
-::view-transition-old(root) {
-  animation: none;
-  opacity: 0;
-}
-
-::view-transition-new(root) {
   animation: none;
 }
 

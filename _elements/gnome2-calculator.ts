@@ -65,76 +65,76 @@ export class Gnome2Calculator extends LitElement {
 
   `;
 
-  @state() accessor _display = '0';
-  @state() accessor _accumulator = 0;
-  @state() accessor _operator = '';
-  @state() accessor _resetNext = false;
+  @state() accessor #display = '0';
+  @state() accessor #accumulator = 0;
+  @state() accessor #operator = '';
+  @state() accessor #resetNext = false;
 
   #input(digit: string) {
-    if (this._resetNext || this._display === '0') {
-      this._display = digit;
-      this._resetNext = false;
+    if (this.#resetNext || this.#display === '0') {
+      this.#display = digit;
+      this.#resetNext = false;
     } else {
-      this._display += digit;
+      this.#display += digit;
     }
   }
 
   #decimal() {
-    if (this._resetNext) {
-      this._display = '0.';
-      this._resetNext = false;
-    } else if (!this._display.includes('.')) {
-      this._display += '.';
+    if (this.#resetNext) {
+      this.#display = '0.';
+      this.#resetNext = false;
+    } else if (!this.#display.includes('.')) {
+      this.#display += '.';
     }
   }
 
   #op(operator: string) {
     this.#evaluate();
-    this._accumulator = parseFloat(this._display);
-    this._operator = operator;
-    this._resetNext = true;
+    this.#accumulator = parseFloat(this.#display);
+    this.#operator = operator;
+    this.#resetNext = true;
   }
 
   #evaluate() {
-    if (!this._operator) return;
-    const current = parseFloat(this._display);
+    if (!this.#operator) return;
+    const current = parseFloat(this.#display);
     let result: number;
-    switch (this._operator) {
-      case '+': result = this._accumulator + current; break;
-      case '-': result = this._accumulator - current; break;
-      case '×': result = this._accumulator * current; break;
-      case '÷': result = current === 0 ? NaN : this._accumulator / current; break;
+    switch (this.#operator) {
+      case '+': result = this.#accumulator + current; break;
+      case '-': result = this.#accumulator - current; break;
+      case '×': result = this.#accumulator * current; break;
+      case '÷': result = current === 0 ? NaN : this.#accumulator / current; break;
       default: return;
     }
-    this._display = Number.isNaN(result) ? 'Error' : String(result);
-    this._operator = '';
-    this._resetNext = true;
+    this.#display = Number.isNaN(result) ? 'Error' : String(result);
+    this.#operator = '';
+    this.#resetNext = true;
   }
 
   #clear() {
-    this._display = '0';
-    this._accumulator = 0;
-    this._operator = '';
-    this._resetNext = false;
+    this.#display = '0';
+    this.#accumulator = 0;
+    this.#operator = '';
+    this.#resetNext = false;
   }
 
   #clearEntry() {
-    this._display = '0';
+    this.#display = '0';
   }
 
   #backspace() {
-    if (this._display.length <= 1 || this._display === 'Error') {
-      this._display = '0';
+    if (this.#display.length <= 1 || this.#display === 'Error') {
+      this.#display = '0';
     } else {
-      this._display = this._display.slice(0, -1);
+      this.#display = this.#display.slice(0, -1);
     }
   }
 
   #negate() {
-    if (this._display !== '0' && this._display !== 'Error') {
-      this._display = this._display.startsWith('-')
-        ? this._display.slice(1)
-        : '-' + this._display;
+    if (this.#display !== '0' && this.#display !== 'Error') {
+      this.#display = this.#display.startsWith('-')
+        ? this.#display.slice(1)
+        : '-' + this.#display;
     }
   }
 
@@ -163,7 +163,7 @@ export class Gnome2Calculator extends LitElement {
 
   render() {
     return html`
-      <div id="display">${this._display}</div>
+      <div id="display">${this.#display}</div>
       <div id="buttons">
         <button @click=${this.#backspace}>Bksp</button>
         <button @click=${this.#clearEntry}>CE</button>

@@ -25,7 +25,7 @@ export class Gnome2Clock extends LitElement {
     }
   `;
 
-  @state() accessor _time = '';
+  @state() accessor #time = '';
 
   #timer: ReturnType<typeof setInterval> | null = null;
 
@@ -52,11 +52,11 @@ export class Gnome2Clock extends LitElement {
   });
 
   #updateTime() {
-    this._time = Gnome2Clock.#fmt.format(new Date());
+    this.#time = Gnome2Clock.#fmt.format(new Date());
   }
 
   render() {
-    return html`<time datetime=${new Date().toISOString()}>${this._time}</time>`;
+    return html`<time datetime=${new Date().toISOString()}>${this.#time}</time>`;
   }
 }
 

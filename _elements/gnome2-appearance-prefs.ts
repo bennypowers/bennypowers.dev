@@ -253,12 +253,12 @@ export class Gnome2AppearancePrefs extends LitElement {
 
   @property({ attribute: 'close-href' }) accessor closeHref = '/';
 
-  @state() accessor _scheme = 'system';
-  @state() accessor _wallpaper = '';
-  @state() accessor _wpStyle = 'fill';
-  @state() accessor _bgColor = '#305573';
-  @state() accessor _bgColor2 = '#1a2a3a';
-  @state() accessor _colorMode = 'solid';
+  @state() accessor #scheme = 'system';
+  @state() accessor #wallpaper = '';
+  @state() accessor #wpStyle = 'fill';
+  @state() accessor #bgColor = '#305573';
+  @state() accessor #bgColor2 = '#1a2a3a';
+  @state() accessor #colorMode = 'solid';
 
   static #wallpapers: Wallpaper[] = [
     { src: '', alt: 'Default' },
@@ -271,17 +271,17 @@ export class Gnome2AppearancePrefs extends LitElement {
   connectedCallback() {
     super.connectedCallback();
     try {
-      this._scheme = localStorage.getItem('cl-color-scheme') ?? 'system';
-      this._wallpaper = localStorage.getItem('cl-wallpaper') ?? '';
-      this._wpStyle = localStorage.getItem('cl-wp-style') ?? 'fill';
-      this._bgColor = localStorage.getItem('cl-bg-color') ?? '#305573';
-      this._bgColor2 = localStorage.getItem('cl-bg-color2') ?? '#1a2a3a';
-      this._colorMode = localStorage.getItem('cl-color-mode') ?? 'solid';
+      this.#scheme = localStorage.getItem('cl-color-scheme') ?? 'system';
+      this.#wallpaper = localStorage.getItem('cl-wallpaper') ?? '';
+      this.#wpStyle = localStorage.getItem('cl-wp-style') ?? 'fill';
+      this.#bgColor = localStorage.getItem('cl-bg-color') ?? '#305573';
+      this.#bgColor2 = localStorage.getItem('cl-bg-color2') ?? '#1a2a3a';
+      this.#colorMode = localStorage.getItem('cl-color-mode') ?? 'solid';
     } catch {}
   }
 
   #selectScheme(scheme: string) {
-    this._scheme = scheme;
+    this.#scheme = scheme;
     const root = document.documentElement;
     root.style.colorScheme =
       scheme === 'light' ? 'light only' :
@@ -291,31 +291,31 @@ export class Gnome2AppearancePrefs extends LitElement {
   }
 
   #selectWallpaper(src: string) {
-    this._wallpaper = src;
+    this.#wallpaper = src;
     this.#applyDesktopBg();
     try { localStorage.setItem('cl-wallpaper', src); } catch {}
   }
 
   #selectStyle(e: Event) {
-    this._wpStyle = (e.target as HTMLSelectElement).value;
+    this.#wpStyle = (e.target as HTMLSelectElement).value;
     this.#applyDesktopBg();
-    try { localStorage.setItem('cl-wp-style', this._wpStyle); } catch {}
+    try { localStorage.setItem('cl-wp-style', this.#wpStyle); } catch {}
   }
 
   #selectColorMode(e: Event) {
-    this._colorMode = (e.target as HTMLSelectElement).value;
+    this.#colorMode = (e.target as HTMLSelectElement).value;
     this.#applyDesktopBg();
-    try { localStorage.setItem('cl-color-mode', this._colorMode); } catch {}
+    try { localStorage.setItem('cl-color-mode', this.#colorMode); } catch {}
   }
 
   #selectColor(e: Event, which: 'primary' | 'secondary') {
     const color = (e.target as HTMLInputElement).value;
-    if (which === 'primary') this._bgColor = color;
-    else this._bgColor2 = color;
+    if (which === 'primary') this.#bgColor = color;
+    else this.#bgColor2 = color;
     this.#applyDesktopBg();
     try {
-      localStorage.setItem('cl-bg-color', this._bgColor);
-      localStorage.setItem('cl-bg-color2', this._bgColor2);
+      localStorage.setItem('cl-bg-color', this.#bgColor);
+      localStorage.setItem('cl-bg-color2', this.#bgColor2);
     } catch {}
   }
 
@@ -331,21 +331,21 @@ export class Gnome2AppearancePrefs extends LitElement {
       zoom: 'cover no-repeat center',
       tiled: 'auto repeat',
     };
-    const bgStyle = styleMap[this._wpStyle] ?? styleMap.fill;
+    const bgStyle = styleMap[this.#wpStyle] ?? styleMap.fill;
 
     let colorBg: string;
-    if (this._colorMode === 'horizontal') {
-      colorBg = `linear-gradient(to right, ${this._bgColor}, ${this._bgColor2})`;
-    } else if (this._colorMode === 'vertical') {
-      colorBg = `linear-gradient(to bottom, ${this._bgColor}, ${this._bgColor2})`;
+    if (this.#colorMode === 'horizontal') {
+      colorBg = `linear-gradient(to right, ${this.#bgColor}, ${this.#bgColor2})`;
+    } else if (this.#colorMode === 'vertical') {
+      colorBg = `linear-gradient(to bottom, ${this.#bgColor}, ${this.#bgColor2})`;
     } else {
-      colorBg = this._bgColor;
+      colorBg = this.#bgColor;
     }
 
-    if (this._wallpaper) {
+    if (this.#wallpaper) {
       const [size, repeat, position] = bgStyle.split(' ');
       desktop.style.setProperty('--cl-desktop-bg',
-        `url(${this._wallpaper}) ${position ?? 'center'} / ${size} ${repeat ?? 'no-repeat'}, ${colorBg}`);
+        `url(${this.#wallpaper}) ${position ?? 'center'} / ${size} ${repeat ?? 'no-repeat'}, ${colorBg}`);
     } else {
       desktop.style.setProperty('--cl-desktop-bg', colorBg);
     }
@@ -353,7 +353,7 @@ export class Gnome2AppearancePrefs extends LitElement {
 
   #renderThemeItem(scheme: string, label: string, previewClass: string, auto = false) {
     return html`
-      <button class="theme-item ${classMap({ selected: this._scheme === scheme })}"
+      <button class="theme-item ${classMap({ selected: this.#scheme === scheme })}"
               @click=${() => this.#selectScheme(scheme)}>
         <div class="theme-preview ${previewClass}">
           <div class="preview-titlebar"></div>
@@ -392,7 +392,7 @@ export class Gnome2AppearancePrefs extends LitElement {
               <div class="scroll-container wallpaper-scroll">
                 <div class="wallpaper-grid">
                   ${Gnome2AppearancePrefs.#wallpapers.map(({ src, alt }) => html`
-                    <button class="wallpaper-item ${classMap({ selected: this._wallpaper === src })}"
+                    <button class="wallpaper-item ${classMap({ selected: this.#wallpaper === src })}"
                             @click=${() => this.#selectWallpaper(src)}>
                       ${src
                         ? html`<img class="wallpaper-thumb" src="${src}" alt="${alt}" loading="lazy">`
@@ -404,7 +404,7 @@ export class Gnome2AppearancePrefs extends LitElement {
               </div>
               <div class="control-row">
                 <label for="wp-style">Style:</label>
-                <select id="wp-style" .value=${this._wpStyle} @change=${this.#selectStyle}>
+                <select id="wp-style" .value=${this.#wpStyle} @change=${this.#selectStyle}>
                   <option value="centered">Centered</option>
                   <option value="fill">Fill screen</option>
                   <option value="scaled">Scaled</option>
@@ -417,17 +417,17 @@ export class Gnome2AppearancePrefs extends LitElement {
             <div class="section-label">Colors</div>
             <div class="section-content">
               <div class="control-row">
-                <select .value=${this._colorMode} @change=${this.#selectColorMode}>
+                <select .value=${this.#colorMode} @change=${this.#selectColorMode}>
                   <option value="solid">Solid color</option>
                   <option value="horizontal">Horizontal gradient</option>
                   <option value="vertical">Vertical gradient</option>
                 </select>
                 <input type="color" class="color-swatch"
-                       .value=${this._bgColor}
+                       .value=${this.#bgColor}
                        @input=${(e: Event) => this.#selectColor(e, 'primary')}>
-                ${this._colorMode !== 'solid' ? html`
+                ${this.#colorMode !== 'solid' ? html`
                   <input type="color" class="color-swatch"
-                         .value=${this._bgColor2}
+                         .value=${this.#bgColor2}
                          @input=${(e: Event) => this.#selectColor(e, 'secondary')}>
                 ` : nothing}
               </div>

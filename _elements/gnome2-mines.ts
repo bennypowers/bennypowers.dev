@@ -142,10 +142,10 @@ export class Gnome2Mines extends LitElement {
     }
   `;
 
-  @state() accessor _board: Cell[][] = [];
-  @state() accessor _gameState: 'playing' | 'won' | 'lost' = 'playing';
-  @state() accessor _time = 0;
-  @state() accessor _started = false;
+  @state() accessor #board: Cell[][] = [];
+  @state() accessor #gameState: 'playing' | 'won' | 'lost' = 'playing';
+  @state() accessor #time = 0;
+  @state() accessor #started = false;
 
   #timer: ReturnType<typeof setInterval> | null = null;
 
@@ -160,21 +160,21 @@ export class Gnome2Mines extends LitElement {
   }
 
   get #flagCount() {
-    return this._board.flat().filter(c => c.flagged).length;
+    return this.#board.flat().filter(c => c.flagged).length;
   }
 
   get #face() {
-    if (this._gameState === 'lost') return '😵';
-    if (this._gameState === 'won') return '😎';
+    if (this.#gameState === 'lost') return '😵';
+    if (this.#gameState === 'won') return '😎';
     return '🙂';
   }
 
   #newGame() {
     this.#stopTimer();
-    this._time = 0;
-    this._started = false;
-    this._gameState = 'playing';
-    this._board = Array.from({ length: ROWS }, () =>
+    this.#time = 0;
+    this.#started = false;
+    this.#gameState = 'playing';
+    this.#board = Array.from({ length: ROWS }, () =>
       Array.from({ length: COLS }, () => ({
         mine: false,
         revealed: false,
@@ -189,25 +189,25 @@ export class Gnome2Mines extends LitElement {
     while (placed < MINES) {
       const r = Math.floor(Math.random() * ROWS);
       const c = Math.floor(Math.random() * COLS);
-      if (this._board[r][c].mine) continue;
+      if (this.#board[r][c].mine) continue;
       if (Math.abs(r - excludeRow) <= 1 && Math.abs(c - excludeCol) <= 1) continue;
-      this._board[r][c].mine = true;
+      this.#board[r][c].mine = true;
       placed++;
     }
     // count adjacents
     for (let r = 0; r < ROWS; r++) {
       for (let c = 0; c < COLS; c++) {
-        if (this._board[r][c].mine) continue;
+        if (this.#board[r][c].mine) continue;
         let count = 0;
         for (let dr = -1; dr <= 1; dr++) {
           for (let dc = -1; dc <= 1; dc++) {
             const nr = r + dr, nc = c + dc;
-            if (nr >= 0 && nr < ROWS && nc >= 0 && nc < COLS && this._board[nr][nc].mine) {
+            if (nr >= 0 && nr < ROWS && nc >= 0 && nc < COLS && this.#board[nr][nc].mine) {
               count++;
             }
           }
         }
-        this._board[r][c].adjacent = count;
+        this.#board[r][c].adjacent = count;
       }
     }
   }
@@ -215,7 +215,7 @@ export class Gnome2Mines extends LitElement {
   #startTimer() {
     if (this.#timer) return;
     this.#timer = setInterval(() => {
-      if (this._time < 999) this._time++;
+      if (this.#time < 999) this.#time++;
     }, 1000);
   }
 
@@ -227,12 +227,12 @@ export class Gnome2Mines extends LitElement {
   }
 
   #reveal(r: number, c: number) {
-    if (this._gameState !== 'playing') return;
-    const cell = this._board[r][c];
+    if (this.#gameState !== 'playing') return;
+    const cell = this.#board[r][c];
     if (cell.revealed || cell.flagged) return;
 
-    if (!this._started) {
-      this._started = true;
+    if (!this.#started) {
+      this.#started = true;
       this.#placeMines(r, c);
       this.#startTimer();
     }
@@ -240,10 +240,10 @@ export class Gnome2Mines extends LitElement {
     cell.revealed = true;
 
     if (cell.mine) {
-      this._gameState = 'lost';
+      this.#gameState = 'lost';
       this.#stopTimer();
       // reveal all mines
-      for (const row of this._board) {
+      for (const row of this.#board) {
         for (const c of row) {
           if (c.mine) c.revealed = true;
         }
@@ -264,12 +264,12 @@ export class Gnome2Mines extends LitElement {
     }
 
     // check win
-    const unrevealed = this._board.flat().filter(c => !c.revealed).length;
+    const unrevealed = this.#board.flat().filter(c => !c.revealed).length;
     if (unrevealed === MINES) {
-      this._gameState = 'won';
+      this.#gameState = 'won';
       this.#stopTimer();
       // auto-flag remaining
-      for (const row of this._board) {
+      for (const row of this.#board) {
         for (const c of row) {
           if (!c.revealed) c.flagged = true;
         }
@@ -281,8 +281,8 @@ export class Gnome2Mines extends LitElement {
 
   #flag(r: number, c: number, e: Event) {
     e.preventDefault();
-    if (this._gameState !== 'playing') return;
-    const cell = this._board[r][c];
+    if (this.#gameState !== 'playing') return;
+    const cell = this.#board[r][c];
     if (cell.revealed) return;
     cell.flagged = !cell.flagged;
     this.requestUpdate();
@@ -302,16 +302,16 @@ export class Gnome2Mines extends LitElement {
   }
 
   render() {
-    const hostClass = this._gameState === 'lost' ? 'game-over'
-                    : this._gameState === 'won' ? 'game-won' : '';
-    const minutes = String(Math.floor(this._time / 60)).padStart(2, '0');
-    const seconds = String(this._time % 60).padStart(2, '0');
+    const hostClass = this.#gameState === 'lost' ? 'game-over'
+                    : this.#gameState === 'won' ? 'game-won' : '';
+    const minutes = String(Math.floor(this.#time / 60)).padStart(2, '0');
+    const seconds = String(this.#time % 60).padStart(2, '0');
     return html`
       <div id="header">
         <button id="face" @click=${() => this.#newGame()}>${this.#face}</button>
       </div>
       <div id="board" class=${hostClass}>
-        ${this._board.flatMap((row, r) =>
+        ${this.#board.flatMap((row, r) =>
           row.map((cell, c) => {
             const classes = {
               cell: true,
@@ -319,7 +319,7 @@ export class Gnome2Mines extends LitElement {
               revealed: cell.revealed && !cell.mine,
               mine: cell.revealed && cell.mine,
               flagged: cell.flagged && !cell.revealed,
-              exploded: cell.revealed && cell.mine && this._gameState === 'lost',
+              exploded: cell.revealed && cell.mine && this.#gameState === 'lost',
             };
             return html`
               <div class=${classMap(classes)}

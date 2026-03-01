@@ -1,7 +1,9 @@
 import { LitElement, html, css } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
+import { ContextConsumer } from '@lit/context';
 import { WMMinimizeEvent } from './gnome2-window-list.js';
+import { activeWindowContext } from './gnome2-wm-context.js';
 
 export class WMFocusEvent extends Event {
   constructor(public url: string) {
@@ -253,6 +255,11 @@ export class Gtk2Window extends LitElement {
       #titlebar {
         border-radius: 0;
       }
+
+      .titlebar-button.minimize,
+      .titlebar-button.maximize {
+        display: none;
+      }
     }
   `;
 
@@ -265,8 +272,18 @@ export class Gtk2Window extends LitElement {
   @property({ type: Boolean, reflect: true }) accessor dialog = false;
   @property({ attribute: 'close-href' }) accessor closeHref = '/';
 
-  @state() accessor _offsetX = 0;
-  @state() accessor _offsetY = 0;
+  @state() accessor #offsetX = 0;
+  @state() accessor #offsetY = 0;
+
+  #activeWindow = new ContextConsumer(this, {
+    context: activeWindowContext,
+    subscribe: true,
+    callback: (activeUrl) => {
+      if (activeUrl !== undefined) {
+        this.focused = this.windowUrl === activeUrl;
+      }
+    },
+  });
 
   /** Resize snapshot — set in #onResizeStart, read in #onResizeMove */
   #resize: {
@@ -375,13 +392,17 @@ export class Gtk2Window extends LitElement {
     const rect = this.getBoundingClientRect();
     if (rect.top < workspaceTop) {
       // Push window down so titlebar is visible
-      this._offsetY += workspaceTop - rect.top;
-      this.style.transform = `translate(${this._offsetX}px, ${this._offsetY}px)`;
+      this.#offsetY += workspaceTop - rect.top;
+      this.style.transform = `translate(${this.#offsetX}px, ${this.#offsetY}px)`;
     }
   };
 
+  /** Set by #onTitlebarPointerDown to defer focus until pointerup (allows drag first). */
+  #deferFocus = false;
+
   #onHostPointerDown(e: PointerEvent) {
     if (!this.focused && this.windowUrl) {
+      if (this.#deferFocus) return;
       // Don't focus if clicking titlebar buttons (close/minimize/maximize)
       const path = e.composedPath();
       if (path.some(el => (el as Element)?.closest?.('.titlebar-button'))) return;
@@ -399,8 +420,8 @@ export class Gtk2Window extends LitElement {
   #onMaximize() {
     this.maximized = !this.maximized;
     if (this.maximized) {
-      this._offsetX = 0;
-      this._offsetY = 0;
+      this.#offsetX = 0;
+      this.#offsetY = 0;
       this.style.transform = '';
     }
     this.dispatchEvent(new Event('maximize'));
@@ -436,17 +457,40 @@ export class Gtk2Window extends LitElement {
   #drag: { startX: number; startY: number; minOffsetY: number } | null = null;
 
   #onTitlebarPointerDown(e: PointerEvent) {
-    if (this.maximized || (e.target as Element)?.closest('button, a')) return;
+    if ((e.target as Element)?.closest('button, a')) return;
+
+    const unfocused = !this.focused && !!this.windowUrl;
+
+    // Unfocused: defer the WMFocusEvent so the user can drag first
+    if (unfocused) {
+      this.#deferFocus = true;
+      const titlebar = e.currentTarget as Element;
+      const onUp = () => {
+        this.#deferFocus = false;
+        titlebar.removeEventListener('pointerup', onUp);
+        titlebar.removeEventListener('lostpointercapture', onLost);
+        this.dispatchEvent(new WMFocusEvent(this.windowUrl));
+      };
+      const onLost = () => {
+        this.#deferFocus = false;
+        titlebar.removeEventListener('pointerup', onUp);
+        titlebar.removeEventListener('lostpointercapture', onLost);
+      };
+      titlebar.addEventListener('pointerup', onUp);
+      titlebar.addEventListener('lostpointercapture', onLost);
+    }
+
+    if (this.maximized) return;
     // Find the workspace container (shadow DOM #windows div) to clamp drag bounds.
     // offsetParent doesn't work for slotted elements across shadow boundaries.
     const desktop = this.closest('gnome2-desktop');
     const workspace = desktop?.shadowRoot?.querySelector('#windows');
     const workspaceTop = workspace?.getBoundingClientRect().top ?? 0;
     const rect = this.getBoundingClientRect();
-    const baseTop = rect.top - workspaceTop - this._offsetY;
+    const baseTop = rect.top - workspaceTop - this.#offsetY;
     this.#drag = {
-      startX: e.clientX - this._offsetX,
-      startY: e.clientY - this._offsetY,
+      startX: e.clientX - this.#offsetX,
+      startY: e.clientY - this.#offsetY,
       minOffsetY: -baseTop,
     };
     Gtk2Window.#track(e.currentTarget as Element, e.pointerId, this.#onDragMove);
@@ -454,9 +498,9 @@ export class Gtk2Window extends LitElement {
 
   #onDragMove = (ev: PointerEvent) => {
     if (!this.#drag) return;
-    this._offsetX = ev.clientX - this.#drag.startX;
-    this._offsetY = Math.max(this.#drag.minOffsetY, ev.clientY - this.#drag.startY);
-    this.style.transform = `translate(${this._offsetX}px, ${this._offsetY}px)`;
+    this.#offsetX = ev.clientX - this.#drag.startX;
+    this.#offsetY = Math.max(this.#drag.minOffsetY, ev.clientY - this.#drag.startY);
+    this.style.transform = `translate(${this.#offsetX}px, ${this.#offsetY}px)`;
   };
 
   #onResizeStart(e: PointerEvent) {
@@ -476,8 +520,8 @@ export class Gtk2Window extends LitElement {
     this.style.insetBlockStart = `${rect.top - parentRect.top}px`;
     this.style.width = `${rect.width}px`;
     this.style.height = `${rect.height}px`;
-    this._offsetX = 0;
-    this._offsetY = 0;
+    this.#offsetX = 0;
+    this.#offsetY = 0;
 
     this.#resize = {
       cardinal: e.currentTarget.dataset.cardinal ?? '',

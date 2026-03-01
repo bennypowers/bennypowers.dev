@@ -18,15 +18,25 @@ import './gnome2-about.js';
 import './pidgin-conversation.js';
 import './pidgin-message.js';
 import './gnome2-workspace-switcher.js';
-import './gnome2-wm.js';
 import './ooo-impress.js';
 import './ooo-impress-deck.js';
 import './nautilus-paginated.js';
 
 import { LitElement, html, css, isServer } from 'lit';
 import { customElement } from 'lit/decorators.js';
+import { ContextProvider } from '@lit/context';
 
+import { activeWindowContext, type WindowEntry } from './gnome2-wm-context.js';
+import type { WMFocusEvent, WMCloseEvent } from './gtk2-window.js';
+import type { WMMinimizeEvent, WMShowDesktopEvent } from './gnome2-window-list.js';
+import type { WMWorkspaceSwitchEvent, MiniWindow } from './gnome2-workspace-switcher.js';
 import type { Gtk2MenuButton } from './gtk2-menu-button.js';
+
+const STORAGE_KEY = 'gnome2-wm-windows';
+const WORKSPACE_KEY = 'gnome2-wm-workspace';
+// Metacity 2.20 cascade constants (src/place.c)
+const CASCADE_INTERVAL = 50;
+const CASCADE_FUZZ = 15;
 
 interface AppDef {
   module: string;
@@ -82,47 +92,6 @@ const APP_DEFS: Record<string, AppDef> = {
   },
 };
 
-async function launchApp(id: string) {
-  const existing = document.querySelector(`gtk2-window[data-app="${id}"]`);
-  if (existing) {
-    (existing as HTMLElement).style.display = '';
-    existing.setAttribute('focused', '');
-    return;
-  }
-  const def = APP_DEFS[id];
-  if (!def) return;
-  await import(def.module);
-  const desktop = document.querySelector('gnome2-desktop');
-  if (!desktop) return;
-  const win = document.createElement('gtk2-window');
-  win.setAttribute('label', def.label);
-  win.setAttribute('icon', def.icon);
-  win.setAttribute('dialog', '');
-  win.setAttribute('focused', '');
-  win.setAttribute('data-app', id);
-  win.setAttribute('window-url', `app:${id}`);
-  try {
-    win.setAttribute('data-workspace', sessionStorage.getItem('gnome2-wm-workspace') || '0');
-  } catch { win.setAttribute('data-workspace', '0'); }
-  win.style.width = def.width;
-  win.style.height = def.height;
-  win.style.position = 'absolute';
-  win.style.zIndex = '200';
-  win.style.insetBlockStart = '40px';
-  win.style.insetInlineEnd = '40px';
-  const child = document.createElement(def.tag);
-  if (def.attrs) {
-    for (const [k, v] of Object.entries(def.attrs())) child.setAttribute(k, v);
-  }
-  win.appendChild(child);
-  desktop.appendChild(win);
-  win.addEventListener('close', () => {
-    win.remove();
-    try { sessionStorage.removeItem('app-' + id); } catch {}
-  });
-  try { sessionStorage.setItem('app-' + id, '1'); } catch {}
-}
-
 const GNOME_FOOT = html`<svg slot="icon"
      class="gnome-foot"
      width="14"
@@ -144,22 +113,679 @@ export class Gnome2Session extends LitElement {
     }
   `;
 
-  override connectedCallback() {
+  #desktop: HTMLElement | null = null;
+  #provider: ContextProvider<typeof activeWindowContext> | null = null;
+  #entries: WindowEntry[] = [];
+  #currentUrl = '';
+  #isMobile = false;
+  #tracking = false;
+  #rafId = 0;
+
+  // --- Storage helpers ---
+
+  #getActiveWorkspace(): number {
+    try {
+      return parseInt(sessionStorage.getItem(WORKSPACE_KEY) || '0', 10) || 0;
+    } catch {
+      return 0;
+    }
+  }
+
+  #saveActiveWorkspace(index: number) {
+    try {
+      sessionStorage.setItem(WORKSPACE_KEY, String(index));
+    } catch {}
+  }
+
+  #getWindows(): WindowEntry[] {
+    try {
+      const entries: WindowEntry[] = JSON.parse(sessionStorage.getItem(STORAGE_KEY) || '[]');
+      for (const entry of entries) {
+        if (entry.workspace == null) entry.workspace = 0;
+      }
+      return entries;
+    } catch {
+      return [];
+    }
+  }
+
+  #saveWindows() {
+    try {
+      sessionStorage.setItem(STORAGE_KEY, JSON.stringify(this.#entries));
+    } catch {}
+  }
+
+  #addWindow(url: string, title: string, icon?: string) {
+    const existing = this.#entries.find(e => e.url === url);
+    if (existing) {
+      existing.title = title;
+      existing.minimized = false;
+      if (icon) existing.icon = icon;
+    } else {
+      this.#entries.push({ url, title, icon, minimized: false, workspace: this.#getActiveWorkspace() });
+    }
+    this.#saveWindows();
+  }
+
+  #removeWindow(url: string) {
+    this.#entries = this.#entries.filter(e => e.url !== url);
+    this.#saveWindows();
+  }
+
+  #toggleMinimize(url: string) {
+    const entry = this.#entries.find(e => e.url === url);
+    if (entry) entry.minimized = !entry.minimized;
+    this.#saveWindows();
+  }
+
+  // --- Position helpers ---
+
+  #savePositions() {
+    const desktop = this.#desktop;
+    if (!desktop) return;
+    const desktopShadow = (desktop as any).shadowRoot;
+    const workspace = desktopShadow?.querySelector('#windows') ?? desktop;
+    const parentRect = workspace.getBoundingClientRect();
+    const windows = desktop.querySelectorAll('gtk2-window') as NodeListOf<HTMLElement>;
+    for (const win of windows) {
+      const url = win.getAttribute('window-url');
+      const entry = this.#entries.find(e => e.url === url);
+      if (!entry) continue;
+      const rect = win.getBoundingClientRect();
+      entry.x = rect.left - parentRect.left;
+      entry.y = rect.top - parentRect.top;
+      entry.width = rect.width;
+      entry.height = rect.height;
+      entry.maximized = win.hasAttribute('maximized');
+    }
+    this.#saveWindows();
+  }
+
+  static #applyPosition(win: HTMLElement, entry: WindowEntry) {
+    if (entry.maximized) {
+      win.setAttribute('maximized', '');
+      return;
+    }
+    if (entry.x != null && entry.y != null) {
+      win.style.insetBlockStart = `${entry.y}px`;
+      win.style.insetInlineStart = `${entry.x}px`;
+      win.style.margin = '0';
+    }
+    if (entry.width != null) {
+      win.style.width = `${entry.width}px`;
+    }
+    if (entry.height != null) {
+      win.style.height = `${entry.height}px`;
+    }
+  }
+
+  // --- Fetch + inject ---
+
+  static async #fetchWindowContent(url: string): Promise<Element | null> {
+    try {
+      const response = await fetch(url);
+      if (!response.ok) return null;
+      const html = await response.text();
+      const doc = new DOMParser().parseFromString(html, 'text/html');
+      const sourceWindow = doc.querySelector('gtk2-window');
+      if (!sourceWindow) return null;
+      for (const script of sourceWindow.querySelectorAll('script')) {
+        script.remove();
+      }
+      return sourceWindow;
+    } catch {
+      return null;
+    }
+  }
+
+  // --- Taskbar + miniatures ---
+
+  #updateTaskbar() {
+    const activeWorkspace = this.#getActiveWorkspace();
+    const windowList = document.querySelector('gnome2-window-list');
+    if (!windowList) return;
+    (windowList as any).entries = this.#entries
+      .filter(e => e.workspace === activeWorkspace)
+      .map(e => ({
+        url: e.url,
+        title: e.title,
+        icon: e.icon,
+        focused: e.url === this.#currentUrl,
+        minimized: e.minimized,
+      }));
+  }
+
+  #syncMiniatures() {
+    const desktop = this.#desktop;
+    if (!desktop) return;
+    const switcher = document.querySelector('gnome2-workspace-switcher') as any;
+    if (!switcher) return;
+    const activeWs = this.#getActiveWorkspace();
+    switcher.active = activeWs;
+
+    const desktopShadow = (desktop as any).shadowRoot;
+    const container = desktopShadow?.querySelector('#windows') ?? desktop;
+    const parentRect = container.getBoundingClientRect();
+    const dw = parentRect.width || 1;
+    const dh = parentRect.height || 1;
+
+    const minis: MiniWindow[] = [];
+    const windows = desktop.querySelectorAll('gtk2-window') as NodeListOf<HTMLElement>;
+    for (const win of windows) {
+      const url = win.getAttribute('window-url');
+      const appId = win.getAttribute('data-app');
+      let workspace: number;
+      let minimized: boolean;
+
+      if (appId) {
+        workspace = parseInt(win.getAttribute('data-workspace') || '0', 10);
+        minimized = win.style.display === 'none' && workspace === activeWs;
+      } else {
+        const entry = this.#entries.find(e => e.url === url);
+        if (!entry) continue;
+        workspace = entry.workspace;
+        minimized = entry.minimized;
+      }
+
+      if (win.style.display === 'none') {
+        const entry = !appId ? this.#entries.find(e => e.url === url) : undefined;
+        if (entry && entry.width != null && entry.height != null) {
+          minis.push({
+            workspace,
+            x: Math.max(0, (entry.x ?? 0) / dw),
+            y: Math.max(0, (entry.y ?? 0) / dh),
+            w: entry.width / dw,
+            h: entry.height / dh,
+            minimized,
+          });
+        } else {
+          const w = parseFloat(win.style.width) || 200;
+          const h = parseFloat(win.style.height) || 150;
+          const x = parseFloat(win.style.insetInlineStart) || parseFloat(win.style.insetInlineEnd) || 40;
+          const y = parseFloat(win.style.insetBlockStart) || 40;
+          minis.push({ workspace, x: x / dw, y: y / dh, w: w / dw, h: h / dh, minimized });
+        }
+        continue;
+      }
+
+      const rect = win.getBoundingClientRect();
+      minis.push({
+        workspace,
+        x: Math.max(0, (rect.left - parentRect.left) / dw),
+        y: Math.max(0, (rect.top - parentRect.top) / dh),
+        w: rect.width / dw,
+        h: rect.height / dh,
+        minimized,
+      });
+    }
+    switcher.windows = minis;
+  }
+
+  // --- Workspace visibility ---
+
+  #applyWorkspaceVisibility() {
+    const desktop = this.#desktop;
+    if (!desktop) return;
+    const activeWorkspace = this.#getActiveWorkspace();
+    const windows = desktop.querySelectorAll('gtk2-window') as NodeListOf<HTMLElement>;
+    for (const win of windows) {
+      const url = win.getAttribute('window-url');
+      const appId = win.getAttribute('data-app');
+      if (appId) {
+        const appWorkspace = parseInt(win.getAttribute('data-workspace') || '0', 10);
+        win.style.display = appWorkspace === activeWorkspace ? '' : 'none';
+        continue;
+      }
+      const entry = this.#entries.find(e => e.url === url);
+      if (!entry) continue;
+      if (entry.workspace !== activeWorkspace) {
+        win.style.display = 'none';
+      } else if (entry.minimized) {
+        win.style.display = 'none';
+      } else {
+        win.style.display = '';
+      }
+    }
+  }
+
+  /** Metacity-style cascade: find next cascade position avoiding existing windows. */
+  #findNextCascade(workW: number, workH: number, winW: number, winH: number): { x: number; y: number } {
+    const desktop = this.#desktop;
+    if (!desktop) return { x: 0, y: 0 };
+
+    // Collect existing window positions, sorted by distance from origin
+    const positions: { x: number; y: number }[] = [];
+    const desktopShadow = (desktop as any).shadowRoot;
+    const container = desktopShadow?.querySelector('#windows') ?? desktop;
+    const parentRect = container.getBoundingClientRect();
+    for (const win of desktop.querySelectorAll('gtk2-window') as NodeListOf<HTMLElement>) {
+      if (win.style.display === 'none') continue;
+      const rect = win.getBoundingClientRect();
+      positions.push({ x: rect.left - parentRect.left, y: rect.top - parentRect.top });
+    }
+    positions.sort((a, b) => (a.x + a.y) - (b.x + b.y));
+
+    let cx = 0;
+    let cy = 0;
+    let stage = 0;
+
+    // Walk through positioned windows; when one is within CASCADE_FUZZ of the
+    // candidate position, bump the candidate by CASCADE_INTERVAL.
+    for (let i = 0; i < positions.length; i++) {
+      const p = positions[i];
+      if (Math.abs(p.x - cx) < CASCADE_FUZZ && Math.abs(p.y - cy) < CASCADE_FUZZ) {
+        cx = p.x + CASCADE_INTERVAL;
+        cy = p.y + CASCADE_INTERVAL;
+
+        // Overflow: if the window would go off-screen, wrap
+        if (cx + winW > workW || cy + winH > workH) {
+          stage++;
+          cx = CASCADE_INTERVAL * stage;
+          cy = 0;
+          i = -1; // restart scan
+        }
+      }
+    }
+
+    return { x: cx, y: cy };
+  }
+
+  #positionBackgroundWindows() {
+    const desktop = this.#desktop;
+    if (!desktop) return;
+    const activeWorkspace = this.#getActiveWorkspace();
+    const desktopShadow = (desktop as any).shadowRoot;
+    const container = desktopShadow?.querySelector('#windows') ?? desktop;
+    const workRect = container.getBoundingClientRect();
+    const windows = desktop.querySelectorAll('gtk2-window') as NodeListOf<HTMLElement>;
+    let bgIndex = 0;
+    for (const win of windows) {
+      const url = win.getAttribute('window-url');
+      const entry = this.#entries.find(e => e.url === url);
+
+      if (win.hasAttribute('data-app')) continue;
+
+      if (entry && entry.workspace !== activeWorkspace) {
+        win.style.display = 'none';
+        continue;
+      }
+
+      if (url === this.#currentUrl) {
+        win.style.zIndex = '100';
+        if (entry?.x != null) {
+          Gnome2Session.#applyPosition(win, entry);
+        }
+      } else {
+        win.style.zIndex = String(bgIndex + 1);
+        if (entry?.x != null) {
+          Gnome2Session.#applyPosition(win, entry);
+        } else {
+          const winW = parseFloat(win.style.width) || 840;
+          const winH = parseFloat(win.style.height) || 560;
+          const pos = this.#findNextCascade(workRect.width, workRect.height, winW, winH);
+          win.style.insetBlockStart = `${pos.y}px`;
+          win.style.insetInlineStart = `${pos.x}px`;
+          win.style.margin = '0';
+        }
+        bgIndex++;
+      }
+    }
+  }
+
+  // --- Active window context ---
+
+  /** Pin every currently-focused window's visual position into inline styles,
+   *  so that removing the [focused] attribute (and its CSS centering) doesn't
+   *  cause the window to jump back. */
+  #pinFocusedWindows() {
+    const desktop = this.#desktop;
+    if (!desktop) return;
+    const desktopShadow = (desktop as any).shadowRoot;
+    const container = desktopShadow?.querySelector('#windows') ?? desktop;
+    const parentRect = container.getBoundingClientRect();
+    for (const w of desktop.querySelectorAll('gtk2-window[focused]') as NodeListOf<HTMLElement>) {
+      const rect = w.getBoundingClientRect();
+      const tx = new DOMMatrix(getComputedStyle(w).transform);
+      w.style.insetBlockStart = `${rect.top - parentRect.top - tx.m42}px`;
+      w.style.insetInlineStart = `${rect.left - parentRect.left - tx.m41}px`;
+      w.style.margin = '0';
+    }
+  }
+
+  #setActiveWindow(url: string) {
+    if (!this.#isMobile) {
+      this.#pinFocusedWindows();
+    }
+    this.#currentUrl = url;
+    const update = () => this.#provider?.setValue(url);
+    if (typeof document.startViewTransition === 'function') {
+      // Temporarily name each window so they crossfade independently in place.
+      // Skip windows with viewTransitionName 'none' (newly created, should appear instantly).
+      const windows = this.#desktop?.querySelectorAll('gtk2-window') as NodeListOf<HTMLElement>;
+      for (const win of windows) {
+        if (win.style.viewTransitionName === 'none') continue;
+        const wurl = win.getAttribute('window-url');
+        if (wurl) win.style.viewTransitionName = `wm-${wurl.replace(/[^a-zA-Z0-9_-]/g, '-')}`;
+      }
+      const vt = document.startViewTransition(update);
+      vt.finished.then(() => {
+        for (const win of windows) win.style.viewTransitionName = '';
+      });
+    } else {
+      update();
+    }
+  }
+
+  // --- App launcher ---
+
+  async #launchApp(id: string) {
+    const existing = document.querySelector(`gtk2-window[data-app="${id}"]`);
+    if (existing) {
+      (existing as HTMLElement).style.display = '';
+      this.#setActiveWindow('app:' + id);
+      return;
+    }
+    const def = APP_DEFS[id];
+    if (!def) return;
+    await import(def.module);
+    const desktop = this.#desktop;
+    if (!desktop) return;
+    const win = document.createElement('gtk2-window');
+    win.setAttribute('label', def.label);
+    win.setAttribute('icon', def.icon);
+    win.setAttribute('dialog', '');
+    win.setAttribute('data-app', id);
+    win.setAttribute('window-url', `app:${id}`);
+    try {
+      win.setAttribute('data-workspace', sessionStorage.getItem(WORKSPACE_KEY) || '0');
+    } catch { win.setAttribute('data-workspace', '0'); }
+    win.style.width = def.width;
+    win.style.height = def.height;
+    win.style.position = 'absolute';
+    win.style.zIndex = '200';
+    win.style.insetBlockStart = '40px';
+    win.style.insetInlineEnd = '40px';
+    const child = document.createElement(def.tag);
+    if (def.attrs) {
+      for (const [k, v] of Object.entries(def.attrs())) child.setAttribute(k, v);
+    }
+    win.appendChild(child);
+    win.style.viewTransitionName = 'none';
+    desktop.appendChild(win);
+    this.#setActiveWindow('app:' + id);
+    win.addEventListener('close', () => {
+      win.remove();
+      try { sessionStorage.removeItem('app-' + id); } catch {}
+    });
+    try { sessionStorage.setItem('app-' + id, '1'); } catch {}
+  }
+
+  // --- WM Event Handlers ---
+
+  #onWmClose = (e: Event) => {
+    const { url } = e as WMCloseEvent;
+    if (!url) return;
+
+    if (this.#isMobile) {
+      // On mobile, find the close-href and navigate after cleanup
+      const win = this.#desktop?.querySelector(`gtk2-window[window-url="${CSS.escape(url)}"]`) as HTMLElement | null;
+      const closeHref = win?.getAttribute('close-href') || '/';
+      this.#removeWindow(url);
+      if (win) win.remove();
+      this.#updateTaskbar();
+      location.href = closeHref;
+      return;
+    }
+
+    this.#removeWindow(url);
+    const win = this.#desktop?.querySelector(`gtk2-window[window-url="${CSS.escape(url)}"]`);
+    if (win) win.remove();
+    this.#updateTaskbar();
+    this.#syncMiniatures();
+  };
+
+  #onWmMinimize = (e: Event) => {
+    if (this.#isMobile) return;
+    const { url } = e as WMMinimizeEvent;
+    if (!url) return;
+    this.#toggleMinimize(url);
+    const win = this.#desktop?.querySelector(`gtk2-window[window-url="${CSS.escape(url)}"]`) as HTMLElement | null;
+    if (win) {
+      const entry = this.#entries.find(en => en.url === url);
+      win.style.display = entry?.minimized ? 'none' : '';
+    }
+    this.#updateTaskbar();
+    this.#syncMiniatures();
+  };
+
+  #onWmFocus = (e: Event) => {
+    const { url } = e as WMFocusEvent;
+    if (!url) return;
+
+    if (this.#isMobile) {
+      this.#setActiveWindow(url);
+      return;
+    }
+
+    // Pseudo-URLs (app:*) or the current page — focus in place
+    if (url.includes(':') || url === location.pathname) {
+      const win = this.#desktop?.querySelector(`gtk2-window[window-url="${CSS.escape(url)}"]`) as HTMLElement | null;
+      if (win) win.style.zIndex = '200';
+      this.#setActiveWindow(url);
+      this.#updateTaskbar();
+      this.#syncMiniatures();
+      return;
+    }
+
+    // Different page — navigate (MPA)
+    this.#savePositions();
+    location.href = url;
+  };
+
+  #onWmShowDesktop = (e: Event) => {
+    if (this.#isMobile) return;
+    const desktop = this.#desktop;
+    if (!desktop) return;
+    const { show } = e as WMShowDesktopEvent;
+    const windows = desktop.querySelectorAll('gtk2-window') as NodeListOf<HTMLElement>;
+    const activeWs = this.#getActiveWorkspace();
+    for (const win of windows) {
+      const url = win.getAttribute('window-url');
+      const appId = win.getAttribute('data-app');
+      if (appId) {
+        const appWs = parseInt(win.getAttribute('data-workspace') || '0', 10);
+        if (appWs === activeWs) win.style.display = show ? 'none' : '';
+      } else {
+        const entry = this.#entries.find(en => en.url === url);
+        if (entry && entry.workspace === activeWs) {
+          win.style.display = show ? 'none' : '';
+        }
+      }
+    }
+    for (const entry of this.#entries) {
+      if (entry.workspace === activeWs) {
+        entry.minimized = show;
+      }
+    }
+    this.#saveWindows();
+    this.#updateTaskbar();
+    this.#syncMiniatures();
+  };
+
+  #onWmWorkspaceSwitch = (e: Event) => {
+    if (this.#isMobile) return;
+    const { workspace } = e as WMWorkspaceSwitchEvent;
+    this.#saveActiveWorkspace(workspace);
+    this.#applyWorkspaceVisibility();
+    this.#updateTaskbar();
+    this.#syncMiniatures();
+  };
+
+  // --- Pointer tracking for miniatures ---
+
+  #onGotPointerCapture = () => { this.#tracking = true; };
+
+  #onLostPointerCapture = () => {
+    this.#tracking = false;
+    cancelAnimationFrame(this.#rafId);
+    this.#syncMiniatures();
+  };
+
+  #onPointerMove = () => {
+    if (!this.#tracking) return;
+    cancelAnimationFrame(this.#rafId);
+    this.#rafId = requestAnimationFrame(() => this.#syncMiniatures());
+  };
+
+  #onMaximize = () => {
+    this.#syncMiniatures();
+  };
+
+  // --- Save-on-navigate handlers ---
+
+  #onPageHide = () => this.#savePositions();
+  #onPageSwap = () => this.#savePositions();
+
+  #onNavClick = (e: MouseEvent) => {
+    const link = (e.target as Element)?.closest?.('a[href]') as HTMLAnchorElement | null;
+    if (link && link.href && !link.href.startsWith('javascript:')) {
+      this.#savePositions();
+    }
+  };
+
+  // --- Lifecycle ---
+
+  override async connectedCallback() {
     super.connectedCallback();
     if (isServer) return;
+
+    this.#isMobile = matchMedia('(max-width: 767px)').matches;
+    this.#desktop = document.querySelector('gnome2-desktop');
+    const desktop = this.#desktop;
+    if (!desktop) return;
+
+    // Create ContextProvider on gnome2-desktop
+    this.#currentUrl = location.pathname;
+    this.#provider = new ContextProvider(desktop, {
+      context: activeWindowContext,
+      initialValue: this.#currentUrl,
+    });
+
+    // Register current page window
+    const currentWindow = desktop.querySelector('gtk2-window') as HTMLElement | null;
+    const currentTitle = currentWindow?.getAttribute('label') || document.title;
+    const currentIcon = currentWindow?.getAttribute('icon') || undefined;
+
+    if (currentWindow) {
+      currentWindow.setAttribute('window-url', this.#currentUrl);
+    }
+
+    this.#entries = this.#getWindows();
+
+    if (currentWindow) {
+      this.#addWindow(this.#currentUrl, currentTitle, currentIcon);
+    }
+
+    // Always register WM event listeners (fixes mobile close/minimize)
+    desktop.addEventListener('wm-close', this.#onWmClose);
+    desktop.addEventListener('wm-minimize', this.#onWmMinimize);
+    desktop.addEventListener('wm-focus', this.#onWmFocus);
+    desktop.addEventListener('wm-show-desktop', this.#onWmShowDesktop);
+    desktop.addEventListener('wm-workspace-switch', this.#onWmWorkspaceSwitch);
+
+    // Listen for click events
     document.addEventListener('click', this.#onSchemeClick);
     document.addEventListener('click', this.#onLaunchClick);
+
+    // Restore previously-open apps
     try {
       for (const id of Object.keys(APP_DEFS)) {
-        if (sessionStorage.getItem('app-' + id)) launchApp(id);
+        if (sessionStorage.getItem('app-' + id)) this.#launchApp(id);
       }
     } catch {}
+
+    if (this.#isMobile) return;
+
+    // --- Desktop-only initialization ---
+
+    // Ensure current window is on the active workspace
+    const activeWorkspace = this.#getActiveWorkspace();
+    const currentEntry = this.#entries.find(e => e.url === this.#currentUrl);
+    if (currentEntry && currentEntry.workspace !== activeWorkspace) {
+      this.#saveActiveWorkspace(currentEntry.workspace);
+    }
+
+    // Fetch and inject background windows
+    for (const entry of [...this.#entries]) {
+      if (entry.url === this.#currentUrl) continue;
+
+      // Pidgin windows are page-specific SSR content, not fetchable
+      if (entry.url?.startsWith('pidgin:')) {
+        this.#removeWindow(entry.url);
+        continue;
+      }
+
+      const sourceWindow = await Gnome2Session.#fetchWindowContent(entry.url!);
+      if (!sourceWindow) {
+        this.#removeWindow(entry.url!);
+        continue;
+      }
+
+      const windowEl = document.createElement('gtk2-window');
+      windowEl.setAttribute('label', entry.title);
+      windowEl.setAttribute('window-url', entry.url!);
+      windowEl.setAttribute('close-href', '/');
+      if (entry.icon) windowEl.setAttribute('icon', entry.icon);
+      windowEl.innerHTML = sourceWindow.innerHTML;
+
+      if (entry.minimized || entry.workspace !== this.#getActiveWorkspace()) {
+        windowEl.style.display = 'none';
+      }
+
+      desktop.appendChild(windowEl);
+    }
+
+    this.#positionBackgroundWindows();
+    this.#updateTaskbar();
+    this.#syncMiniatures();
+
+    // Remove the blocking script's initial position style
+    document.getElementById('gnome2-wm-initial-pos')?.remove();
+
+    // Save positions before any navigation
+    window.addEventListener('pagehide', this.#onPageHide);
+    document.addEventListener('pageswap', this.#onPageSwap);
+    document.addEventListener('click', this.#onNavClick, { capture: true });
+
+    // Real-time miniature updates during drag/resize
+    desktop.addEventListener('gotpointercapture', this.#onGotPointerCapture, true);
+    desktop.addEventListener('lostpointercapture', this.#onLostPointerCapture, true);
+    desktop.addEventListener('pointermove', this.#onPointerMove, true);
+    desktop.addEventListener('maximize', this.#onMaximize);
   }
 
   override disconnectedCallback() {
     super.disconnectedCallback();
+    const desktop = this.#desktop;
+
     document.removeEventListener('click', this.#onSchemeClick);
     document.removeEventListener('click', this.#onLaunchClick);
+
+    if (desktop) {
+      desktop.removeEventListener('wm-close', this.#onWmClose);
+      desktop.removeEventListener('wm-minimize', this.#onWmMinimize);
+      desktop.removeEventListener('wm-focus', this.#onWmFocus);
+      desktop.removeEventListener('wm-show-desktop', this.#onWmShowDesktop);
+      desktop.removeEventListener('wm-workspace-switch', this.#onWmWorkspaceSwitch);
+      desktop.removeEventListener('gotpointercapture', this.#onGotPointerCapture, true);
+      desktop.removeEventListener('lostpointercapture', this.#onLostPointerCapture, true);
+      desktop.removeEventListener('pointermove', this.#onPointerMove, true);
+      desktop.removeEventListener('maximize', this.#onMaximize);
+    }
+
+    window.removeEventListener('pagehide', this.#onPageHide);
+    document.removeEventListener('pageswap', this.#onPageSwap);
+    document.removeEventListener('click', this.#onNavClick, { capture: true });
   }
 
   /** Find the first element matching selector in the composed event path */
@@ -186,14 +812,13 @@ export class Gnome2Session extends LitElement {
     const item = Gnome2Session.#fromComposed(e, '[data-launch]');
     if (!item) return;
     e.preventDefault();
-    // Close menus in both document and shadow DOMs
     for (const mb of document.querySelectorAll('gtk2-menu-button[open]')) {
       (mb as Gtk2MenuButton).hide();
     }
     for (const mb of this.shadowRoot?.querySelectorAll('gtk2-menu-button[open]') ?? []) {
       (mb as Gtk2MenuButton).hide();
     }
-    launchApp(item.dataset.launch!);
+    this.#launchApp(item.dataset.launch!);
   };
 
   render() {
@@ -221,6 +846,9 @@ export class Gnome2Session extends LitElement {
               <gtk2-menu-item label="Mines"
                               data-launch="mines"
                               icon="categories/applications-games"></gtk2-menu-item>
+              <gtk2-menu-item label="SuperTux"
+                              data-launch="supertux"
+                              icon="apps/supertux"></gtk2-menu-item>
             </gtk2-menu>
           </gtk2-menu-item>
           <gtk2-menu-item label="Internet"
