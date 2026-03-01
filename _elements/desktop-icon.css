@@ -54,8 +54,3 @@ a {
   line-height: 1.3;
 }
 
-@media (width <= 767px) {
-  :host {
-    display: none;
-  }
-}

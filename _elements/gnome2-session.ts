@@ -656,13 +656,22 @@ export class Gnome2Session extends LitElement {
     if (!url) return;
 
     if (this.#isMobile) {
-      // On mobile, find the close-href and navigate after cleanup
       const win = this.#desktop?.querySelector(`gtk2-window[window-url="${CSS.escape(url)}"]`) as HTMLElement | null;
-      const closeHref = win?.getAttribute('close-href') || '/';
       this.#removeWindow(url);
       if (win) win.remove();
       this.#updateTaskbar();
-      location.href = closeHref;
+      if (url.startsWith('app:')) {
+        // App windows — remove without navigation
+        const appId = url.slice(4);
+        try { sessionStorage.removeItem('app-' + appId); } catch {}
+        this.#setActiveWindow(this.#currentUrl, { animate: false });
+      } else {
+        // Page windows — navigate unless it's the current page
+        const closeHref = win?.getAttribute('close-href') || '/';
+        if (closeHref !== location.pathname) {
+          location.href = closeHref;
+        }
+      }
       return;
     }
 
@@ -674,7 +683,6 @@ export class Gnome2Session extends LitElement {
   };
 
   #onWmMinimize = (e: Event) => {
-    if (this.#isMobile) return;
     const { url } = e as WMMinimizeEvent;
     if (!url) return;
     const win = this.#desktop?.querySelector(`gtk2-window[window-url="${CSS.escape(url)}"]`) as HTMLElement | null;
@@ -789,7 +797,7 @@ export class Gnome2Session extends LitElement {
     if (e.ctrlKey || e.metaKey || e.shiftKey) return;
     const link = Gnome2Session.#fromComposed(e, 'a[href]') as HTMLAnchorElement | null;
     if (!link) return;
-    if (link.matches('#btn-close')) return;
+    if (link.closest('#titlebar-buttons')) return;
     const href = link.getAttribute('href');
     if (!href || href.startsWith('#') || href.startsWith('javascript:')) return;
     if (link.target && link.target !== '_self') return;

@@ -94,7 +94,7 @@
   gap: 2px;
   align-items: center;
 
-  a, button {
+  button {
     width: 18px;
     height: 18px;
     box-sizing: border-box;
@@ -125,7 +125,6 @@
     }
   }
 
-  :host(:not([focused])) & a,
   :host(:not([focused])) & button {
     border-color: light-dark(#9d9c9b, #555555);
     background: linear-gradient(to bottom, light-dark(#fefefe, #444444), light-dark(#f0efee, #404040), light-dark(#e6e5e4, #3c3c3c), light-dark(#dadddb, #3a3a3a));
@@ -234,7 +233,6 @@
     border-radius: 0;
   }
 
-  #btn-minimize,
   #btn-maximize {
     display: none;
   }

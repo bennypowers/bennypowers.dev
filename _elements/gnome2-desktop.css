@@ -71,9 +71,6 @@
     }
 
     @media (max-width: 767px) {
-      #icons {
-        display: none;
-      }
 
       #windows {
         display: flex;

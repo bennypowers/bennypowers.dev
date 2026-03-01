@@ -46,8 +46,3 @@
       padding-inline-end: 4px;
     }
 
-    @media (max-width: 767px) {
-      :host([position="bottom"]) {
-        display: none;
-      }
-    }

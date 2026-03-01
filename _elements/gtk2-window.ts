@@ -109,15 +109,14 @@ export class Gtk2Window extends LitElement {
               <line x1="1.5" y1="2.5" x2="8.5" y2="2.5" stroke="currentColor" stroke-width="1.5"/>
             </svg>
           </button>
-          <a id="btn-close"
-             aria-label="Close"
-             href=${this.closeHref}
-             @click=${this.#onClose}>
+          <button id="btn-close"
+                  aria-label="Close"
+                  @click=${this.#onClose}>
             <svg viewBox="0 0 10 10">
               <line x1="2" y1="2" x2="8" y2="8" stroke="currentColor" stroke-width="1.5"/>
               <line x1="8" y1="2" x2="2" y2="8" stroke="currentColor" stroke-width="1.5"/>
             </svg>
-          </a>
+          </button>
         </div>
       </div>
       <div id="body" part="body">
@@ -197,9 +196,8 @@ export class Gtk2Window extends LitElement {
     this.#onMaximize();
   }
 
-  #onClose(e: Event) {
+  #onClose() {
     if (this.windowUrl) {
-      e.preventDefault();
       this.dispatchEvent(new WMCloseEvent(this.windowUrl));
     }
     this.dispatchEvent(new Event('close'));

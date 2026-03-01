@@ -86,6 +86,7 @@
   display: none;
   position: fixed;
   z-index: 1000;
+  max-width: 100vw;
 }
 
 :host([active]) #submenu {
@@ -95,6 +96,35 @@
 #submenu ::slotted(gtk2-menu) {
   display: block;
   position: static;
+}
+
+@media (max-width: 767px) {
+  #item {
+    white-space: normal;
+  }
+
+  /* Submenus expand inline below their parent item */
+  #submenu {
+    position: static;
+    max-width: none;
+  }
+
+  :host([active]) #submenu {
+    display: block;
+  }
+
+  /* Indent submenu content */
+  #submenu ::slotted(gtk2-menu) {
+    padding-inline-start: 12px;
+  }
+
+  /* Flip arrow down when expanded */
+  :host([active]) #submenu-arrow {
+    border-inline-start: 4px solid transparent;
+    border-inline-end: 4px solid transparent;
+    border-block-start: 5px solid currentColor;
+    border-block-end: none;
+  }
 }
 
 a#item {

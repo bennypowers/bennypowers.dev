@@ -17,7 +17,10 @@ export class Gtk2MenuItem extends LitElement {
 
   get hasSubmenu(): boolean {
     if (isServer) return false;
-    return !!this.querySelector('[slot="submenu"]');
+    if (!this.querySelector('[slot="submenu"]')) return false;
+    // On mobile, items with href navigate directly — no submenu needed
+    if (this.#isMobile && this.href) return false;
+    return true;
   }
 
   get #iconSrc(): string {
@@ -67,6 +70,7 @@ export class Gtk2MenuItem extends LitElement {
   }
 
   #onMouseEnter = () => {
+    if (this.#isMobile) return; // mobile uses click instead
     // Sync focus for keyboard navigation
     if (!this.separator && !this.disabled) {
       this.shadowRoot?.querySelector<HTMLElement>('#item')?.focus();
@@ -92,13 +96,43 @@ export class Gtk2MenuItem extends LitElement {
     }, 300);
   };
 
+  #isMobile = typeof matchMedia === 'function' && matchMedia('(max-width: 767px)').matches;
+
   #positionSubmenu = () => {
     if (!this.hasSubmenu) return;
+    // Mobile: submenus expand inline (CSS handles it)
+    if (this.#isMobile) return;
+    // Desktop: cascade to the right, flip left, or overlay parent
     const submenu = this.shadowRoot?.querySelector('#submenu') as HTMLElement | null;
     if (!submenu) return;
     const rect = this.getBoundingClientRect();
+    const menuWidth = 180; // matches gtk2-menu min-width
+    let left = rect.right;
+    if (left + menuWidth > window.innerWidth) {
+      left = rect.left - menuWidth;
+    }
+    if (left < 0) {
+      const parentMenu = this.closest('gtk2-menu');
+      left = parentMenu?.getBoundingClientRect().left ?? 0;
+    }
     submenu.style.top = `${rect.top}px`;
-    submenu.style.left = `${rect.right}px`;
+    submenu.style.left = `${left}px`;
+  };
+
+  #onItemClick = (e: Event) => {
+    if (!this.#isMobile || !this.hasSubmenu) return;
+    e.preventDefault();
+    e.stopPropagation();
+    // Toggle submenu on mobile
+    if (this.active) {
+      this.active = false;
+    } else {
+      // Close sibling submenus
+      for (const sib of this.parentElement?.querySelectorAll(':scope > gtk2-menu-item[active]') ?? []) {
+        if (sib !== this) (sib as Gtk2MenuItem).active = false;
+      }
+      this.active = true;
+    }
   };
 
   render() {
@@ -115,12 +149,14 @@ export class Gtk2MenuItem extends LitElement {
     return html`
       ${this.href
         ? html`<a id="item" href=${this.href}
+                  @click=${this.#onItemClick}
                   ?inert=${this.disabled}
                   tabindex="-1"
                   aria-disabled=${this.disabled ? 'true' : nothing}
                   aria-haspopup=${this.hasSubmenu ? 'menu' : nothing}
                   aria-expanded=${this.hasSubmenu ? String(this.active) : nothing}>${content}</a>`
         : html`<div id="item"
+                    @click=${this.#onItemClick}
                     ?inert=${this.disabled}
                     tabindex="-1"
                     aria-disabled=${this.disabled ? 'true' : nothing}
