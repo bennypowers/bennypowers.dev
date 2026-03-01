@@ -18,6 +18,12 @@ export class WMCloseEvent extends Event {
   }
 }
 
+export class WMMoveEvent extends Event {
+  constructor(public url: string) {
+    super('wm-move', { bubbles: true, composed: true });
+  }
+}
+
 @customElement('gtk2-window')
 export class Gtk2Window extends LitElement {
   static styles = styles;
@@ -200,12 +206,13 @@ export class Gtk2Window extends LitElement {
   }
 
   /** Capture pointer, call onMove per move, auto-cleanup on up/lost. */
-  static #track(target: Element, pointerId: number, onMove: (ev: PointerEvent) => void) {
+  static #track(target: Element, pointerId: number, onMove: (ev: PointerEvent) => void, onEnd?: () => void) {
     target.setPointerCapture(pointerId);
     const cleanup = () => {
       target.removeEventListener('pointermove', onMove);
       target.removeEventListener('pointerup', cleanup);
       target.removeEventListener('lostpointercapture', cleanup);
+      onEnd?.();
     };
     target.addEventListener('pointermove', onMove);
     target.addEventListener('pointerup', cleanup);
@@ -253,8 +260,14 @@ export class Gtk2Window extends LitElement {
       startY: e.clientY - this.#offsetY,
       minOffsetY: -baseTop,
     };
-    Gtk2Window.#track(e.currentTarget as Element, e.pointerId, this.#onDragMove);
+    Gtk2Window.#track(e.currentTarget as Element, e.pointerId, this.#onDragMove, this.#onMoveEnd);
   }
+
+  #onMoveEnd = () => {
+    if (this.windowUrl) {
+      this.dispatchEvent(new WMMoveEvent(this.windowUrl));
+    }
+  };
 
   #onDragMove = (ev: PointerEvent) => {
     if (!this.#drag) return;
@@ -292,7 +305,7 @@ export class Gtk2Window extends LitElement {
       parentTop: parentRect.top,
     };
 
-    Gtk2Window.#track(e.currentTarget, e.pointerId, this.#onResizeMove);
+    Gtk2Window.#track(e.currentTarget, e.pointerId, this.#onResizeMove, this.#onMoveEnd);
   }
 
   #onResizeMove = (ev: PointerEvent) => {

@@ -28,7 +28,7 @@ import { ContextProvider } from '@lit/context';
 import styles from './gnome2-session.css';
 
 import { activeWindowContext, type WindowEntry } from './gnome2-wm-context.js';
-import type { WMFocusEvent, WMCloseEvent } from './gtk2-window.js';
+import type { WMFocusEvent, WMCloseEvent, WMMoveEvent } from './gtk2-window.js';
 import type { WMMinimizeEvent, WMShowDesktopEvent } from './gnome2-window-list.js';
 import type { WMWorkspaceSwitchEvent, MiniWindow } from './gnome2-workspace-switcher.js';
 import type { Gtk2MenuButton } from './gtk2-menu-button.js';
@@ -357,6 +357,51 @@ export class Gnome2Session extends LitElement {
     }
   }
 
+  /** Metacity-style placement: saved position → center if no overlap → cascade. */
+  #placeWindow(win: HTMLElement, url: string) {
+    const entry = this.#entries.find(e => e.url === url);
+    if (entry?.x != null) {
+      Gnome2Session.#applyPosition(win, entry);
+      return;
+    }
+    const container = (this.#desktop as any)?.shadowRoot?.querySelector('#windows');
+    const workRect = container?.getBoundingClientRect() ?? { width: 840, height: 560 };
+    const winW = parseFloat(win.style.width) || Math.min(workRect.width * 0.9, 840);
+    const winH = parseFloat(win.style.height) || Math.min(workRect.height * 0.8, 560);
+    // Try centering first (like Metacity's find_first_fit → center_tile_rect_in_area)
+    const cx = Math.max(0, (workRect.width - winW) / 2);
+    const cy = 16;
+    if (!this.#overlapsAnyWindow(cx, cy, winW, winH)) {
+      win.style.insetBlockStart = `${cy}px`;
+      win.style.insetInlineStart = `${cx}px`;
+      win.style.margin = '0';
+      return;
+    }
+    // Fall back to cascade
+    const pos = this.#findNextCascade(workRect.width, workRect.height, winW, winH);
+    win.style.insetBlockStart = `${pos.y}px`;
+    win.style.insetInlineStart = `${pos.x}px`;
+    win.style.margin = '0';
+  }
+
+  /** Check if a proposed rectangle overlaps any visible window. */
+  #overlapsAnyWindow(x: number, y: number, w: number, h: number): boolean {
+    const desktop = this.#desktop;
+    if (!desktop) return false;
+    const container = (desktop as any).shadowRoot?.querySelector('#windows') ?? desktop;
+    const parentRect = container.getBoundingClientRect();
+    for (const win of desktop.querySelectorAll('gtk2-window') as NodeListOf<HTMLElement>) {
+      if (win.style.display === 'none') continue;
+      const rect = win.getBoundingClientRect();
+      const wx = rect.left - parentRect.left;
+      const wy = rect.top - parentRect.top;
+      if (x < wx + rect.width && x + w > wx && y < wy + rect.height && y + h > wy) {
+        return true;
+      }
+    }
+    return false;
+  }
+
   /** Metacity-style cascade: find next cascade position avoiding existing windows. */
   #findNextCascade(workW: number, workH: number, winW: number, winH: number): { x: number; y: number } {
     const desktop = this.#desktop;
@@ -522,6 +567,8 @@ export class Gnome2Session extends LitElement {
       this.#pinFocusedWindows();
     }
 
+    this.#addWindow(url, title, icon);
+
     const windowEl = document.createElement('gtk2-window');
     windowEl.setAttribute('label', title);
     windowEl.setAttribute('window-url', url);
@@ -530,9 +577,9 @@ export class Gnome2Session extends LitElement {
     if (icon) windowEl.setAttribute('icon', icon);
     windowEl.innerHTML = sourceWindow.innerHTML;
 
+    this.#placeWindow(windowEl, url);
     desktop.appendChild(windowEl);
 
-    this.#addWindow(url, title, icon);
     this.#setActiveWindow(url, { animate: false });
     this.#updateTaskbar();
     this.#syncMiniatures();
@@ -696,6 +743,11 @@ export class Gnome2Session extends LitElement {
     this.#syncMiniatures();
   };
 
+  #onWmMove = () => {
+    this.#savePositions();
+    this.#syncMiniatures();
+  };
+
   #onWmWorkspaceSwitch = (e: Event) => {
     if (this.#isMobile) return;
     const { workspace } = e as WMWorkspaceSwitchEvent;
@@ -793,12 +845,15 @@ export class Gnome2Session extends LitElement {
 
     if (currentWindow) {
       this.#addWindow(this.#currentUrl, currentTitle, currentIcon);
+      // Apply saved position or center as default (replaces CSS auto-centering)
+      this.#placeWindow(currentWindow, this.#currentUrl);
     }
 
     // Always register WM event listeners (fixes mobile close/minimize)
     desktop.addEventListener('wm-close', this.#onWmClose);
     desktop.addEventListener('wm-minimize', this.#onWmMinimize);
     desktop.addEventListener('wm-focus', this.#onWmFocus);
+    desktop.addEventListener('wm-move', this.#onWmMove);
     desktop.addEventListener('wm-show-desktop', this.#onWmShowDesktop);
     desktop.addEventListener('wm-workspace-switch', this.#onWmWorkspaceSwitch);
 
@@ -886,6 +941,7 @@ export class Gnome2Session extends LitElement {
       desktop.removeEventListener('wm-close', this.#onWmClose);
       desktop.removeEventListener('wm-minimize', this.#onWmMinimize);
       desktop.removeEventListener('wm-focus', this.#onWmFocus);
+      desktop.removeEventListener('wm-move', this.#onWmMove);
       desktop.removeEventListener('wm-show-desktop', this.#onWmShowDesktop);
       desktop.removeEventListener('wm-workspace-switch', this.#onWmWorkspaceSwitch);
       desktop.removeEventListener('gotpointercapture', this.#onGotPointerCapture, true);

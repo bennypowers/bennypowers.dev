@@ -55,12 +55,6 @@
         height: min(90%, 730px);
       }
 
-      ::slotted(gtk2-window[focused]) {
-        inset-inline: 0;
-        margin-inline: auto;
-        inset-block-start: 16px;
-      }
-
       ::slotted(gtk2-window[window-url="/latest/"]) {
         width: min(90%, 475px);
         height: min(80%, 410px);
