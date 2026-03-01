@@ -1,29 +1,10 @@
-import { LitElement, html, css } from 'lit';
+import { LitElement, html } from 'lit';
 import { customElement, state } from 'lit/decorators.js';
+import styles from './gnome2-clock.css';
 
 @customElement('gnome2-clock')
 export class Gnome2Clock extends LitElement {
-  static styles = css`
-    :host {
-      display: flex;
-      align-items: center;
-      padding: 0 8px;
-      font-family: var(--cl-font-family, "DejaVu Sans", sans-serif);
-      font-size: var(--cl-font-size, 13px);
-      color: var(--cl-panel-text, #2e3436);
-      cursor: default;
-      white-space: nowrap;
-      height: 100%;
-    }
-
-    :host(:hover) {
-      background: rgba(0, 0, 0, 0.06);
-    }
-
-    time {
-      display: block;
-    }
-  `;
+  static styles = styles;
 
   @state() accessor #time = '';
 

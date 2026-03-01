@@ -151,6 +151,8 @@ const menuPostYears = (() => {
     try {
       var _entries = JSON.parse(sessionStorage.getItem('gnome2-wm-windows') || '[]');
       var _url = location.pathname;
+      var _win = document.querySelector('gtk2-window');
+      if (_win) _win.style.viewTransitionName = 'wm-' + _url.replace(/[^a-zA-Z0-9_-]/g, '-');
       var _entry = _entries.find(function(e) { return e.url === _url; });
       if (_entry && _entry.x != null) {
         var _s = document.createElement('style');
@@ -219,7 +221,7 @@ const menuPostYears = (() => {
           :src="url(script.src)"></script>
 
   <script type="module"
-          webc:keep>import "gnome2/gnome2-session.js";</script>
+          webc:keep>import "@lit-labs/ssr-client/lit-element-hydrate-support.js";import "gnome2/gnome2-session.js";</script>
   <style @raw="getBundle('css')"
          webc:keep></style>
   <script @raw="getBundle('js')"

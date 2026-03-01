@@ -1,19 +1,26 @@
 import type { UserConfig } from '@11ty/eleventy';
-import { transform } from 'esbuild';
+
+import { build } from 'esbuild';
+import { litCssPlugin } from 'esbuild-plugin-lit-css';
 
 export function EsbuildPlugin(eleventyConfig: UserConfig) {
   eleventyConfig.addTemplateFormats('ts');
   eleventyConfig.addExtension('ts', {
     outputFileExtension: 'js',
-    compile(inputContent: string, inputPath: string) {
+    compile(_inputContent: string, inputPath: string) {
       if (!inputPath.startsWith('./_elements/')) return;
       return async () => {
-        const result = await transform(inputContent, {
-          loader: 'ts',
+        const result = await build({
+          entryPoints: [inputPath],
+          bundle: false,
+          write: false,
           format: 'esm',
           target: 'es2022',
+          plugins: [
+            litCssPlugin({ inline: true }),
+          ],
         });
-        return result.code;
+        return result.outputFiles?.[0]?.text ?? '';
       };
     },
   });

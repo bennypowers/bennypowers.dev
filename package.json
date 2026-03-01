@@ -51,6 +51,7 @@
     "eleventy-plugin-youtube-embed": "^1.13.1",
     "emoji-regex": "^10.6.0",
     "emoji-short-name": "^2.1.0",
+    "esbuild-plugin-lit-css": "^4.1.0",
     "execa": "^9.6.1",
     "github-repository": "^0.4.0",
     "html-minifier-terser": "^7.2.0",

@@ -1,7 +1,8 @@
-import { LitElement, html, css } from 'lit';
+import { LitElement, html } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
+import styles from './gnome2-window-list.css';
 
 interface TaskbarEntry {
   url: string;
@@ -25,116 +26,7 @@ export class WMShowDesktopEvent extends Event {
 
 @customElement('gnome2-window-list')
 export class Gnome2WindowList extends LitElement {
-  static styles = css`
-    :host {
-      display: flex;
-      align-items: center;
-      flex: 1;
-      min-width: 0;
-      height: 100%;
-      padding: 2px 4px;
-      gap: 2px;
-    }
-
-    #show-desktop {
-      flex-shrink: 0;
-      width: 24px;
-      height: calc(100% - 2px);
-      border: 1px solid light-dark(#9d9c9b, #1a1a1a);
-      border-radius: 2px;
-      background: linear-gradient(to bottom, light-dark(#fefefe, #4a4a4a), light-dark(#f0efee, #434343), light-dark(#e6e5e4, #3c3c3c), light-dark(#dadddb, #383838));
-      cursor: default;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 0;
-      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.4);
-
-      &:hover {
-        background: linear-gradient(to bottom, light-dark(#ffffff, #555555), light-dark(#f5f4f3, #4d4d4d), light-dark(#edeceb, #464646), light-dark(#e4e3e2, #434343));
-      }
-
-      &:active,
-      &.active {
-        background: linear-gradient(to bottom, light-dark(#d4d3d2, #333333), light-dark(#dbdad9, #383838), light-dark(#e2e1e0, #3c3c3c), light-dark(#eaeae9, #404040));
-        box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.15);
-      }
-
-      svg {
-        width: 14px;
-        height: 14px;
-        color: light-dark(#555753, #babdb6);
-      }
-    }
-
-    .divider {
-      flex-shrink: 0;
-      display: flex;
-      gap: 0;
-      align-items: center;
-      margin-inline: 3px;
-      height: calc(100% - 6px);
-
-      &::before,
-      &::after {
-        content: '';
-        display: block;
-        width: 1px;
-        height: 100%;
-      }
-
-      &::before {
-        background: light-dark(#9d9c9b, #1a1a1a);
-      }
-
-      &::after {
-        background: light-dark(#ffffff, #555753);
-      }
-    }
-
-    a {
-      display: flex;
-      align-items: center;
-      gap: 4px;
-      height: calc(100% - 2px);
-      padding: 0 6px;
-      background: linear-gradient(to bottom, light-dark(#fefefe, #4a4a4a), light-dark(#f0efee, #434343), light-dark(#e6e5e4, #3c3c3c), light-dark(#dadddb, #383838));
-      border: 1px solid light-dark(#9d9c9b, #1a1a1a);
-      border-radius: 2px;
-      font-family: var(--cl-font-family, "DejaVu Sans", sans-serif);
-      font-size: var(--cl-font-size-small, 11px);
-      color: var(--cl-panel-text, light-dark(#2e3436, #eeeeec));
-      cursor: default;
-      min-width: 0;
-      max-width: 275px;
-      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.4);
-      text-decoration: none;
-      text-transform: capitalize;
-
-      &.active {
-        background: linear-gradient(to bottom, light-dark(#d4d3d2, #333333), light-dark(#dbdad9, #383838), light-dark(#e2e1e0, #3c3c3c), light-dark(#eaeae9, #404040));
-        box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.15);
-        border-color: light-dark(#9d9c9b, #111111);
-      }
-
-      &.minimized {
-        opacity: 0.7;
-      }
-
-      img {
-        width: 16px;
-        height: 16px;
-        flex-shrink: 0;
-      }
-
-      span {
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-        min-width: 0;
-      }
-    }
-  `;
+  static styles = styles;
 
   /** No-JS fallback: single window title from SSR */
   @property({ attribute: 'window-title' }) accessor windowTitle = '';
@@ -175,7 +67,7 @@ export class Gnome2WindowList extends LitElement {
              width="16"
              height="16">
       </button>
-      <div class="divider"></div>
+      <div id="divider"></div>
       ${this.#buttons.map(({ url, title, icon, focused, minimized }) => html`
       <a class="${classMap({ active: focused, minimized })}"
          href=${ifDefined(url)}

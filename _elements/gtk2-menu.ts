@@ -1,31 +1,10 @@
-import { LitElement, html, css, isServer, nothing } from 'lit';
+import { LitElement, html, isServer, nothing } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
+import styles from './gtk2-menu.css';
 
 @customElement('gtk2-menu')
 export class Gtk2Menu extends LitElement {
-  static styles = css`
-    :host {
-      display: none;
-      position: absolute;
-      z-index: 1000;
-      min-width: 180px;
-    }
-
-    :host([open]) {
-      display: block;
-    }
-
-    #menu {
-      background: var(--cl-menu-bg, #ffffff);
-      border: 1px solid var(--cl-menu-border, #ababaa);
-      border-radius: var(--cl-menu-radius, 0);
-      box-shadow: var(--cl-menu-shadow, 2px 4px 8px rgba(0, 0, 0, 0.2));
-      padding: 4px 0;
-      min-width: inherit;
-      max-height: min(calc(15 * var(--_menu-item-height, 28px)), 60dvh);
-      overflow-y: auto;
-    }
-  `;
+  static styles = styles;
 
   @property({ type: Boolean, reflect: true }) accessor open = false;
   @property({ attribute: 'accessible-label' }) accessor accessibleLabel = '';
@@ -114,7 +93,7 @@ export class Gtk2Menu extends LitElement {
   }
 
   #focusItem(el: HTMLElement | undefined) {
-    const item = el?.shadowRoot?.querySelector<HTMLElement>('.item');
+    const item = el?.shadowRoot?.querySelector<HTMLElement>('#item');
     item?.focus();
     item?.scrollIntoView({ block: 'nearest' });
   }
@@ -166,7 +145,7 @@ export class Gtk2Menu extends LitElement {
     if (parentItem) {
       parentItem.removeAttribute('active');
       this.open = false;
-      parentItem.shadowRoot?.querySelector<HTMLElement>('.item')?.focus();
+      parentItem.shadowRoot?.querySelector<HTMLElement>('#item')?.focus();
     }
   }
 }

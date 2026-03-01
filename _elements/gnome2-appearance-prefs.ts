@@ -1,7 +1,8 @@
-import { LitElement, html, css, nothing } from 'lit';
+import { LitElement, html, nothing } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
 import './gtk2-notebook.js';
+import styles from './gnome2-appearance-prefs.css';
 
 interface Wallpaper {
   src: string;
@@ -10,246 +11,7 @@ interface Wallpaper {
 
 @customElement('gnome2-appearance-prefs')
 export class Gnome2AppearancePrefs extends LitElement {
-  static styles = css`
-    :host {
-      display: flex;
-      flex-direction: column;
-      height: 100%;
-      font-family: var(--cl-font-family, "DejaVu Sans", sans-serif);
-      font-size: var(--cl-font-size, 13px);
-      background: var(--cl-window-bg, light-dark(#edeceb, #2e3436));
-    }
-
-    gtk2-notebook {
-      flex: 1;
-      min-height: 0;
-    }
-
-    .theme-panel {
-      height: 100%;
-
-      .scroll-container {
-        height: 100%;
-      }
-    }
-
-    .scroll-container {
-      overflow-y: auto;
-      overflow-x: hidden;
-      border: 1px solid light-dark(#9d9c9b, #555753);
-      background: light-dark(#ffffff, #1a1a1a);
-      box-shadow: inset 1px 1px 0 rgba(0, 0, 0, 0.08);
-    }
-
-    .theme-list {
-      display: flex;
-      gap: 18px;
-      flex-wrap: wrap;
-      padding: 18px;
-    }
-
-    .theme-item {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 4px;
-      padding: 6px;
-      border: 2px solid transparent;
-      border-radius: 3px;
-      background: none;
-      cursor: default;
-      font-family: inherit;
-      font-size: var(--cl-font-size-small, 11px);
-      color: light-dark(#2e3436, #eeeeec);
-
-      &:hover {
-        border-color: light-dark(#729fcf, #4a6a8a);
-      }
-
-      &.selected {
-        border-color: light-dark(#86abd9, #729fcf);
-        background: light-dark(rgba(134, 171, 217, 0.12), rgba(114, 159, 207, 0.15));
-      }
-    }
-
-    .theme-preview {
-      width: 138px;
-      height: 92px;
-      border-radius: 3px 3px 0 0;
-      border: 1px solid light-dark(#9d9c9b, #555753);
-      overflow: hidden;
-      display: flex;
-      flex-direction: column;
-    }
-
-    .preview-titlebar { height: 12px; flex-shrink: 0; }
-    .preview-body { flex: 1; display: flex; flex-direction: column; }
-    .preview-menubar { height: 8px; flex-shrink: 0; }
-    .preview-content {
-      flex: 1;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 9px;
-    }
-
-    .light-preview {
-      .preview-titlebar { background: linear-gradient(to bottom, #93b3d3, #6a92b8); }
-      .preview-menubar { background: #edeceb; }
-      .preview-content { background: #ffffff; }
-    }
-
-    .dark-preview {
-      .preview-titlebar { background: linear-gradient(to bottom, #4a6a8a, #3a5570); }
-      .preview-menubar { background: #2e3436; }
-      .preview-content { background: #1a1a1a; color: #babdb6; }
-    }
-
-    .system-preview {
-      .preview-titlebar { background: linear-gradient(to bottom, #93b3d3, #6a92b8); }
-      .preview-menubar { background: linear-gradient(to right, #edeceb 50%, #2e3436 50%); }
-      .preview-content { background: linear-gradient(to right, #ffffff 50%, #1a1a1a 50%); }
-    }
-
-    .preview-auto {
-      background: rgba(128, 128, 128, 0.6);
-      padding: 1px 4px;
-      border-radius: 2px;
-      color: #fff;
-    }
-
-    .section-label {
-      font-weight: 700;
-      font-size: var(--cl-font-size, 13px);
-      color: light-dark(#2e3436, #eeeeec);
-      padding: 0;
-      margin: 0;
-    }
-
-    .section-content {
-      padding-inline-start: 18px;
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-    }
-
-    .bg-panel {
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-    }
-
-    .wallpaper-scroll {
-      max-height: 200px;
-    }
-
-    .wallpaper-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 3px;
-      padding: 3px;
-    }
-
-    .wallpaper-item {
-      padding: 2px;
-      border: 2px solid transparent;
-      border-radius: 2px;
-      background: none;
-      cursor: default;
-
-      &:hover {
-        border-color: light-dark(#729fcf, #4a6a8a);
-      }
-
-      &.selected {
-        border-color: light-dark(#86abd9, #729fcf);
-      }
-    }
-
-    .wallpaper-thumb {
-      width: 100%;
-      aspect-ratio: 4 / 3;
-      object-fit: cover;
-      border-radius: 1px;
-      display: block;
-    }
-
-    .default-bg {
-      background: light-dark(#305573, #1a2a3a);
-    }
-
-    .control-row {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-
-    select {
-      font-family: inherit;
-      font-size: var(--cl-font-size-small, 11px);
-      padding: 2px 4px;
-      border: 1px solid light-dark(#9d9c9b, #555753);
-      border-radius: 3px;
-      background: var(--cl-button-bg);
-      color: light-dark(#2e3436, #eeeeec);
-      cursor: default;
-    }
-
-    .color-swatch {
-      width: 28px;
-      height: 18px;
-      padding: 0;
-      border: 1px solid light-dark(#9d9c9b, #555753);
-      border-radius: 3px;
-      cursor: default;
-      appearance: none;
-      -webkit-appearance: none;
-
-      &::-webkit-color-swatch-wrapper {
-        padding: 0;
-      }
-
-      &::-webkit-color-swatch {
-        border: none;
-        border-radius: 2px;
-      }
-    }
-
-    .button-bar {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      padding: 6px 12px;
-      flex-shrink: 0;
-    }
-
-    .spacer { flex: 1; }
-
-    .dialog-button {
-      display: inline-flex;
-      align-items: center;
-      gap: 4px;
-      padding: 3px 10px;
-      border: 1px solid light-dark(#9d9c9b, #1a1a1a);
-      border-radius: 3px;
-      background: var(--cl-button-bg);
-      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.4);
-      font-family: inherit;
-      font-size: 12px;
-      color: light-dark(#2e3436, #eeeeec);
-      text-decoration: none;
-      cursor: default;
-
-      &:hover {
-        background: var(--cl-button-bg-hover);
-      }
-
-      &:active {
-        background: var(--cl-button-bg-active);
-        box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.15);
-      }
-    }
-  `;
+  static styles = styles;
 
   @property({ attribute: 'close-href' }) accessor closeHref = '/';
 
@@ -375,9 +137,9 @@ export class Gnome2AppearancePrefs extends LitElement {
         <button slot="tab-0" class="active">Theme</button>
         <button slot="tab-1">Background</button>
 
-        <div slot="panel-0" class="theme-panel">
+        <div slot="panel-0" id="theme-panel">
           <div class="scroll-container">
-            <div class="theme-list">
+            <div id="theme-list">
               ${this.#renderThemeItem('light', 'Clearlooks', 'light-preview')}
               ${this.#renderThemeItem('dark', 'Clearlooks Dark', 'dark-preview')}
               ${this.#renderThemeItem('system', 'System', 'system-preview', true)}
@@ -386,11 +148,11 @@ export class Gnome2AppearancePrefs extends LitElement {
         </div>
 
         <div slot="panel-1">
-          <div class="bg-panel">
+          <div id="bg-panel">
             <div class="section-label">Wallpaper</div>
             <div class="section-content">
-              <div class="scroll-container wallpaper-scroll">
-                <div class="wallpaper-grid">
+              <div class="scroll-container" id="wallpaper-scroll">
+                <div id="wallpaper-grid">
                   ${Gnome2AppearancePrefs.#wallpapers.map(({ src, alt }) => html`
                     <button class="wallpaper-item ${classMap({ selected: this.#wallpaper === src })}"
                             @click=${() => this.#selectWallpaper(src)}>
@@ -436,9 +198,9 @@ export class Gnome2AppearancePrefs extends LitElement {
         </div>
       </gtk2-notebook>
 
-      <div class="button-bar">
-        <span class="spacer"></span>
-        <a href="${this.closeHref}" class="dialog-button">Close</a>
+      <div id="button-bar">
+        <span id="spacer"></span>
+        <a href="${this.closeHref}" id="close-btn">Close</a>
       </div>
     `;
   }

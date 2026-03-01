@@ -1,67 +1,10 @@
-import { LitElement, html, css } from 'lit';
+import { LitElement, html } from 'lit';
 import { customElement } from 'lit/decorators.js';
+import styles from './gtk2-notebook.css';
 
 @customElement('gtk2-notebook')
 export class Gtk2Notebook extends LitElement {
-  static styles = css`
-    :host {
-      display: flex;
-      flex-direction: column;
-      flex: 1;
-      min-height: 0;
-    }
-
-    #tab-bar {
-      display: flex;
-      gap: 0;
-      padding: 4px 6px 0;
-      flex-shrink: 0;
-    }
-
-    ::slotted([slot^="tab"]) {
-      font-family: var(--cl-font-family, "DejaVu Sans", sans-serif);
-      font-size: 12px;
-      padding: 3px 10px;
-      border: 1px solid light-dark(#9d9c9b, #555753);
-      border-bottom: 1px solid light-dark(#9d9c9b, #555753);
-      border-radius: 3px 3px 0 0;
-      background: linear-gradient(to bottom, light-dark(#e6e5e4, #3c3c3c), light-dark(#dadddb, #363636));
-      color: light-dark(#2e3436, #eeeeec);
-      cursor: default;
-      position: relative;
-      top: 1px;
-    }
-
-    ::slotted([slot^="tab"][aria-selected="true"]) {
-      background:
-        linear-gradient(to bottom,
-          light-dark(#acd0f6, #4a7aaa) 0px,
-          light-dark(#9ab6da, #3e6a9a) 2px,
-          var(--cl-window-bg, light-dark(#edeceb, #2e3436)) 2px);
-      border-color: light-dark(#5f87b2, #3a5a7a);
-      border-bottom-color: var(--cl-window-bg, light-dark(#edeceb, #2e3436));
-      z-index: 1;
-    }
-
-    #content {
-      flex: 1;
-      min-height: 0;
-      margin: 0 6px;
-      border: 1px solid light-dark(#9d9c9b, #555753);
-      border-radius: 0 3px 3px 3px;
-      background: var(--cl-window-bg, light-dark(#edeceb, #2e3436));
-      padding: 12px;
-      overflow: auto;
-    }
-
-    ::slotted([slot^="panel"]) {
-      display: none;
-    }
-
-    ::slotted([slot^="panel"][aria-hidden="false"]) {
-      display: block;
-    }
-  `;
+  static styles = styles;
 
   #tabs: Element[] = [];
   #panels: Element[] = [];

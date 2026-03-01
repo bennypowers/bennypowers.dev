@@ -1,6 +1,7 @@
-import { LitElement, html, css } from 'lit';
+import { LitElement, html } from 'lit';
 import { customElement, property, state, query } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
+import styles from './pidgin-conversation.css';
 
 type Protocol = 'fediverse' | 'bluesky' | 'webmention' | '';
 
@@ -10,168 +11,7 @@ const SOURCE_URL_STORAGE_KEY = 'pidgin-source-url';
 
 @customElement('pidgin-conversation')
 export class PidginConversation extends LitElement {
-  static styles = css`
-    :host {
-      display: flex;
-      flex-direction: column;
-      height: 100%;
-      font-family: var(--cl-font-family, "DejaVu Sans", sans-serif);
-      background: var(--cl-window-bg, light-dark(#edeceb, #2e3436));
-    }
-
-    .toolbar {
-      display: flex;
-      gap: 1px;
-      padding: 2px 4px;
-      border-bottom: 1px solid var(--cl-menu-separator, light-dark(#d3d7cf, #555753));
-
-      button {
-        font-family: var(--cl-font-family, "DejaVu Sans", sans-serif);
-        font-size: var(--cl-font-size-small, 11px);
-        padding: 2px 6px;
-        border: 1px solid var(--cl-button-border, light-dark(#9d9c9b, #555753));
-        border-radius: 2px;
-        background: var(--cl-button-bg);
-        color: var(--cl-button-text, light-dark(#2e3436, #eeeeec));
-        cursor: default;
-        min-width: 24px;
-        min-height: 20px;
-        opacity: 0.5;
-      }
-    }
-
-    .protocol-bar {
-      display: flex;
-      align-items: center;
-      gap: 4px;
-      padding: 4px 8px;
-      border-bottom: 1px solid var(--cl-menu-separator, light-dark(#d3d7cf, #555753));
-      font-size: var(--cl-font-size-small, 11px);
-
-      label {
-        color: var(--cl-text-secondary, light-dark(#555753, #babdb6));
-        margin-right: 2px;
-      }
-
-      button {
-        font-family: var(--cl-font-family, "DejaVu Sans", sans-serif);
-        font-size: var(--cl-font-size-small, 11px);
-        padding: 2px 8px;
-        border: 1px solid var(--cl-button-border, light-dark(#9d9c9b, #555753));
-        border-radius: 2px;
-        background: var(--cl-button-bg);
-        color: var(--cl-button-text, light-dark(#2e3436, #eeeeec));
-        cursor: default;
-
-        &.selected {
-          background: var(--cl-button-bg-active, light-dark(#d4d3d2, #333333));
-          box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.15);
-          border-color: var(--cl-focus-color, #729fcf);
-        }
-      }
-
-      input {
-        font-family: var(--cl-font-family, "DejaVu Sans", sans-serif);
-        font-size: var(--cl-font-size-small, 11px);
-        padding: 2px 4px;
-        border: 1px solid var(--cl-button-border, light-dark(#9d9c9b, #555753));
-        border-radius: 2px;
-        background: light-dark(#ffffff, #1a1a1a);
-        color: var(--cl-text, light-dark(#2e3436, #eeeeec));
-        flex: 1;
-        min-width: 160px;
-      }
-    }
-
-    .conversation {
-      flex: 1;
-      overflow-y: auto;
-      background: light-dark(#ffffff, #1a1a1a);
-      padding: 8px;
-      font-size: var(--cl-font-size, 13px);
-      line-height: 1.4;
-      min-height: 0;
-    }
-
-    ::slotted(.pidgin-date-divider) {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      margin: 8px 0 4px;
-      font-size: var(--cl-font-size-small, 11px);
-      color: light-dark(#888a85, #888a85);
-
-      &::before,
-      &::after {
-        content: '';
-        flex: 1;
-        height: 1px;
-        background: light-dark(#d3d7cf, #555753);
-      }
-    }
-
-    .input-area {
-      display: flex;
-      gap: 4px;
-      padding: 4px;
-      border-top: 1px solid var(--cl-menu-separator, light-dark(#d3d7cf, #555753));
-
-      .input {
-        flex: 1;
-        min-height: 48px;
-        background: light-dark(#ffffff, #1a1a1a);
-        border: 1px solid var(--cl-button-border, light-dark(#9d9c9b, #555753));
-        border-radius: 2px;
-        padding: 4px;
-        font-family: var(--cl-font-family, "DejaVu Sans", sans-serif);
-        font-size: var(--cl-font-size, 13px);
-        color: var(--cl-text, light-dark(#2e3436, #eeeeec));
-        outline: none;
-        overflow-y: auto;
-
-        &:empty::before {
-          content: attr(data-placeholder);
-          color: light-dark(#888a85, #888a85);
-          pointer-events: none;
-        }
-
-        &[contenteditable="false"] {
-          opacity: 0.6;
-        }
-      }
-
-      .send {
-        align-self: flex-end;
-        font-family: var(--cl-font-family, "DejaVu Sans", sans-serif);
-        font-size: 12px;
-        padding: 4px 16px;
-        border: 1px solid var(--cl-button-border, light-dark(#9d9c9b, #555753));
-        border-radius: var(--cl-button-radius, 3px);
-        background: var(--cl-button-bg);
-        color: var(--cl-button-text, light-dark(#2e3436, #eeeeec));
-        cursor: default;
-
-        &:disabled {
-          opacity: 0.5;
-        }
-
-        &:not(:disabled):hover {
-          background: var(--cl-button-bg-hover);
-        }
-
-        &:not(:disabled):active {
-          background: var(--cl-button-bg-active);
-        }
-      }
-    }
-
-    .status-msg {
-      padding: 4px 8px;
-      font-size: var(--cl-font-size-small, 11px);
-      color: light-dark(#888a85, #888a85);
-      font-style: italic;
-    }
-  `;
+  static styles = styles;
 
   @property({ attribute: 'post-url' }) accessor postUrl = '';
 
@@ -180,7 +20,7 @@ export class PidginConversation extends LitElement {
   @state() accessor sourceUrl = '';
   @state() accessor statusMessage = '';
 
-  @query('.input') accessor inputEl!: HTMLDivElement;
+  @query('#input') accessor inputEl!: HTMLDivElement;
 
   get #configured(): boolean {
     if (this.protocol === 'fediverse') return !!this.instance;
@@ -239,26 +79,26 @@ export class PidginConversation extends LitElement {
 
     // Scroll conversation to bottom
     this.updateComplete?.then(() => {
-      const conv = this.shadowRoot?.querySelector('.conversation');
+      const conv = this.shadowRoot?.querySelector('#conversation');
       if (conv) conv.scrollTop = conv.scrollHeight;
     });
   }
 
   render() {
     return html`
-      <div class="toolbar">
+      <div id="toolbar">
         <button disabled aria-label="Font">A</button>
         <button disabled aria-label="Bold"><b>B</b></button>
         <button disabled aria-label="Italic"><i>I</i></button>
         <button disabled aria-label="Underline"><u>U</u></button>
       </div>
 
-      <div class="conversation" role="log" aria-label="Conversation">
+      <div id="conversation" role="log" aria-label="Conversation">
         <slot></slot>
-        ${this.statusMessage ? html`<div class="status-msg">${this.statusMessage}</div>` : ''}
+        ${this.statusMessage ? html`<div id="status-msg">${this.statusMessage}</div>` : ''}
       </div>
 
-      <div class="protocol-bar">
+      <div id="protocol-bar">
         <label>Reply via:</label>
         <button class=${classMap({ selected: this.protocol === 'fediverse' })}
                 @click=${() => this.#selectProtocol('fediverse')}>Fediverse</button>
@@ -283,25 +123,25 @@ export class PidginConversation extends LitElement {
       </div>
 
       ${this.protocol === 'webmention' ? html`
-      <form class="input-area" @submit=${this.#onWebmentionSubmit}
+      <form id="input-area" @submit=${this.#onWebmentionSubmit}
             action=${this.#webmentionEndpoint ?? ''}
             method="POST">
         <input type="hidden" name="source" .value=${this.sourceUrl}>
         <input type="hidden" name="target" .value=${this.postUrl}>
-        <div class="input"
+        <div id="input"
              contenteditable="false"
              data-placeholder=${this.#placeholder}></div>
-        <button class="send"
+        <button id="send"
                 type="submit"
                 ?disabled=${!this.#configured}>Send</button>
       </form>
       ` : html`
-      <div class="input-area">
-        <div class="input"
+      <div id="input-area">
+        <div id="input"
              contenteditable=${this.#configured ? 'true' : 'false'}
              data-placeholder=${this.#placeholder}
              @keydown=${this.#onInputKeydown}></div>
-        <button class="send"
+        <button id="send"
                 ?disabled=${!this.#configured}
                 @click=${this.#onSend}>Send</button>
       </div>
@@ -379,7 +219,7 @@ export class PidginConversation extends LitElement {
 
     // Scroll to bottom
     this.updateComplete?.then(() => {
-      const conv = this.shadowRoot?.querySelector('.conversation');
+      const conv = this.shadowRoot?.querySelector('#conversation');
       if (conv) conv.scrollTop = conv.scrollHeight;
     });
 

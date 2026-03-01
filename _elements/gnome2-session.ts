@@ -22,9 +22,10 @@ import './ooo-impress.js';
 import './ooo-impress-deck.js';
 import './nautilus-paginated.js';
 
-import { LitElement, html, css, isServer } from 'lit';
+import { LitElement, html, isServer } from 'lit';
 import { customElement } from 'lit/decorators.js';
 import { ContextProvider } from '@lit/context';
+import styles from './gnome2-session.css';
 
 import { activeWindowContext, type WindowEntry } from './gnome2-wm-context.js';
 import type { WMFocusEvent, WMCloseEvent } from './gtk2-window.js';
@@ -105,13 +106,7 @@ const GNOME_FOOT = html`<svg slot="icon"
 
 @customElement('gnome2-session')
 export class Gnome2Session extends LitElement {
-  static styles = css`
-    :host {
-      display: flex;
-      align-items: stretch;
-      height: 100%;
-    }
-  `;
+  static styles = styles;
 
   #desktop: HTMLElement | null = null;
   #provider: ContextProvider<typeof activeWindowContext> | null = null;
@@ -471,7 +466,7 @@ export class Gnome2Session extends LitElement {
     }
   }
 
-  #setActiveWindow(url: string) {
+  #setActiveWindow(url: string, { animate = true } = {}) {
     if (!this.#isMobile) {
       this.#pinFocusedWindows();
     }
@@ -480,7 +475,7 @@ export class Gnome2Session extends LitElement {
     const target = this.#desktop?.querySelector(`gtk2-window[window-url="${CSS.escape(url)}"]`) as HTMLElement | null;
     if (target) target.style.zIndex = String(++this.#topZ);
     const update = () => this.#provider?.setValue(url);
-    if (typeof document.startViewTransition === 'function') {
+    if (animate && typeof document.startViewTransition === 'function') {
       document.startViewTransition(update);
     } else {
       update();
@@ -522,6 +517,11 @@ export class Gnome2Session extends LitElement {
     const icon = sourceWindow.getAttribute('icon') || undefined;
     const closeHref = sourceWindow.getAttribute('close-href') || '/';
 
+    // Pin existing focused windows so they stay put when focus changes
+    if (!this.#isMobile) {
+      this.#pinFocusedWindows();
+    }
+
     const windowEl = document.createElement('gtk2-window');
     windowEl.setAttribute('label', title);
     windowEl.setAttribute('window-url', url);
@@ -533,8 +533,7 @@ export class Gnome2Session extends LitElement {
     desktop.appendChild(windowEl);
 
     this.#addWindow(url, title, icon);
-    this.#setActiveWindow(url);
-    this.#positionBackgroundWindows();
+    this.#setActiveWindow(url, { animate: false });
     this.#updateTaskbar();
     this.#syncMiniatures();
 
@@ -738,7 +737,7 @@ export class Gnome2Session extends LitElement {
     if (e.ctrlKey || e.metaKey || e.shiftKey) return;
     const link = Gnome2Session.#fromComposed(e, 'a[href]') as HTMLAnchorElement | null;
     if (!link) return;
-    if (link.matches('.titlebar-button')) return;
+    if (link.matches('#btn-close')) return;
     const href = link.getAttribute('href');
     if (!href || href.startsWith('#') || href.startsWith('javascript:')) return;
     if (link.target && link.target !== '_self') return;

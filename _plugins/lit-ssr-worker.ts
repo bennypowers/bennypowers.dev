@@ -8,6 +8,7 @@ import '@lit-labs/ssr/lib/install-global-dom-shim.js';
 import { LitElementRenderer } from '@lit-labs/ssr/lib/lit-element-renderer.js';
 import { register as registerTS } from 'tsx/esm/api';
 
+import { register } from 'node:module';
 import { resolve } from 'node:path';
 import { pathToFileURL } from 'node:url';
 
@@ -26,6 +27,7 @@ interface WorkerInitData {
 const { imports } = Piscina.workerData as WorkerInitData;
 
 registerTS();
+register('./css-loader.js', import.meta.url);
 
 for (const bareSpec of imports) {
   const conventionalTagName = bareSpec.split('/').pop()?.split('.').shift();
@@ -43,53 +45,38 @@ for (const bareSpec of imports) {
 }
 
 class Gnome2SSRRenderer extends LitElementRenderer {
-  static styleCache = new Map<string, Thunk>();
+  static styleCache = new Map<string, string>();
 
   override renderShadow(renderInfo: RenderInfo): ThunkedRenderResult {
-    return [
-      this.#renderStyles(),
-      () => {
-        // @ts-expect-error: accessing internal render method
-        const templateResult = this.element.render();
-        return renderValue(templateResult, renderInfo);
-      },
-    ];
-  }
-
-  #renderStyles(): Thunk {
+    const result: (string | Thunk)[] = [];
     const styles = (this.element.constructor as typeof LitElement).elementStyles;
     if (styles !== undefined && styles.length > 0) {
-      return () => [
-        '<style>',
-        ...this.#thunkStyles(styles),
-        '</style>',
-      ];
-    } else {
-      return () => '';
+      result.push('<style>');
+      for (const style of styles) {
+        result.push(Gnome2SSRRenderer.#processCSS((style as CSSResult).cssText));
+      }
+      result.push('</style>');
     }
+    // @ts-expect-error: accessing internal render method
+    result.push(() => renderValue(this.element.render(), renderInfo));
+    return result;
   }
 
-  #thunkStyles(styles: CSSResultOrNative[]): Thunk[] {
-    return styles.flatMap(style => {
-      const { cssText } = style as CSSResult;
-      if (!Gnome2SSRRenderer.styleCache.has(cssText)) {
-        const processed = () => {
-          try {
-            const { code } = transform({
-              filename: 'constructed-stylesheet.css',
-              code: Buffer.from(cssText),
-              minify: true,
-              include: Features.Nesting,
-            });
-            return code.toString();
-          } catch {
-            return cssText;
-          }
-        };
-        Gnome2SSRRenderer.styleCache.set(cssText, processed);
+  static #processCSS(cssText: string): string {
+    if (!Gnome2SSRRenderer.styleCache.has(cssText)) {
+      try {
+        const { code } = transform({
+          filename: 'constructed-stylesheet.css',
+          code: Buffer.from(cssText),
+          minify: true,
+          include: Features.Nesting,
+        });
+        Gnome2SSRRenderer.styleCache.set(cssText, code.toString());
+      } catch {
+        Gnome2SSRRenderer.styleCache.set(cssText, cssText);
       }
-      return [Gnome2SSRRenderer.styleCache.get(cssText)!];
-    });
+    }
+    return Gnome2SSRRenderer.styleCache.get(cssText)!;
   }
 }
 

@@ -66,5 +66,8 @@ typings/
 
 _site
 
+# Build artifacts
+_plugins/lit-ssr-worker.js
+
 # Local Netlify folder
 .netlify

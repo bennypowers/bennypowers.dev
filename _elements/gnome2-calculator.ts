@@ -1,69 +1,10 @@
-import { LitElement, html, css } from 'lit';
+import { LitElement, html } from 'lit';
 import { customElement, state } from 'lit/decorators.js';
+import styles from './gnome2-calculator.css';
 
 @customElement('gnome2-calculator')
 export class Gnome2Calculator extends LitElement {
-  static styles = css`
-    :host {
-      display: flex;
-      flex-direction: column;
-      height: 100%;
-      background: var(--cl-window-bg, light-dark(#edeceb, #2e3436));
-      font-family: var(--cl-font-family, "DejaVu Sans", sans-serif);
-      padding: 6px;
-      gap: 4px;
-    }
-
-    #display {
-      background: light-dark(#ffffff, #1a1a1a);
-      border: 2px solid light-dark(#9d9c9b, #555753);
-      box-shadow: inset 1px 1px 0 rgba(0, 0, 0, 0.08);
-      padding: 8px 6px 8px 8px;
-      font-size: 20px;
-      font-family: var(--cl-font-family, "DejaVu Sans", sans-serif);
-      text-align: end;
-      color: light-dark(#2e3436, #eeeeec);
-      min-height: 32px;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-    }
-
-    #buttons {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 6px;
-      padding: 6px;
-      flex: 1;
-    }
-
-    button {
-      font-family: inherit;
-      font-size: 13px;
-      padding: 4px;
-      min-height: 28px;
-      border: 1px solid light-dark(#9d9c9b, #1a1a1a);
-      border-radius: 3px;
-      background: var(--cl-button-bg, linear-gradient(to bottom, #fefefe, #f0efee, #e6e5e4, #dadddb));
-      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.4);
-      color: light-dark(#2e3436, #eeeeec);
-      cursor: default;
-
-      &:hover {
-        background: var(--cl-button-bg-hover);
-      }
-
-      &:active {
-        background: var(--cl-button-bg-active);
-        box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.15);
-      }
-    }
-
-    .op {
-      font-weight: 700;
-    }
-
-  `;
+  static styles = styles;
 
   @state() accessor #display = '0';
   @state() accessor #accumulator = 0;

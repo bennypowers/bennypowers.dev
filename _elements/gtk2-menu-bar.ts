@@ -1,18 +1,11 @@
-import { LitElement, html, css } from 'lit';
+import { LitElement, html } from 'lit';
 import { customElement } from 'lit/decorators.js';
+
+import styles from './gtk2-menu-bar.css';
 
 @customElement('gtk2-menu-bar')
 export class Gtk2MenuBar extends LitElement {
-  static styles = css`
-    :host {
-      display: flex;
-      align-items: stretch;
-      height: 100%;
-      font-family: var(--cl-font-family, "DejaVu Sans", sans-serif);
-      font-size: var(--cl-font-size, 13px);
-      color: var(--cl-panel-text, #2e3436);
-    }
-  `;
+  static styles = styles;
 
   #internals = this.attachInternals();
 
