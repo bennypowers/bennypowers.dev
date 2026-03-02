@@ -83,10 +83,10 @@
     width: 16px;
     height: 16px;
   }
-}
 
-:host(:not([icon])) #window-icon {
-  display: none;
+  :host(:not([icon])) & {
+    display: none;
+  }
 }
 
 #titlebar-buttons {
@@ -123,12 +123,18 @@
       width: 10px;
       height: 10px;
     }
-  }
 
-  :host(:not([focused])) & button {
-    border-color: light-dark(#9d9c9b, #555555);
-    background: linear-gradient(to bottom, light-dark(#fefefe, #444444), light-dark(#f0efee, #404040), light-dark(#e6e5e4, #3c3c3c), light-dark(#dadddb, #3a3a3a));
-    color: light-dark(#888a85, #888a85);
+    :host(:not([focused])) & & {
+      border-color: light-dark(#9d9c9b, #555555);
+      background: linear-gradient(
+        to bottom,
+        light-dark(#fefefe, #444444),
+        light-dark(#f0efee, #404040),
+        light-dark(#e6e5e4, #3c3c3c),
+        light-dark(#dadddb, #3a3a3a)
+      );
+      color: light-dark(#888a85, #888a85);
+    }
   }
 }
 
@@ -215,13 +221,13 @@
   &[data-cardinal="nw"] { top: -4px; left: -4px; width: 12px; height: 12px; cursor: nw-resize; }
   &[data-cardinal="se"] { bottom: -4px; right: -4px; width: 12px; height: 12px; cursor: se-resize; }
   &[data-cardinal="sw"] { bottom: -4px; left: -4px; width: 12px; height: 12px; cursor: sw-resize; }
+
+  :host([maximized]) & {
+    display: none;
+  }
 }
 
-:host([maximized]) [data-cardinal] {
-  display: none;
-}
-
-@media (max-width: 767px) {
+@media (width <= 767px) {
   :host {
     border-radius: 0;
     box-shadow: none;

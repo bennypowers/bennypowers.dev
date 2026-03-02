@@ -1,4 +1,5 @@
 /* Clearlooks GTK2 Theme - Pure CSS Recreation */
+
 /* GNOME 2.16 era (circa 2006) */
 
 :host {
@@ -39,6 +40,7 @@
   --tango-scarlet-3: #a40000;
 
   /* === Clearlooks Window === */
+
   --cl-titlebar-bg: linear-gradient(to bottom, light-dark(#93b3d3, #4a6a8a), light-dark(#6a92b8, #3a5570));
   --cl-titlebar-bg-unfocused: linear-gradient(to bottom, light-dark(#eae9e8, #3c3c3c), light-dark(#e0dfde, #333333));
   --cl-titlebar-text: #ffffff;
@@ -53,6 +55,7 @@
   --cl-window-radius: 3px;
 
   /* === Clearlooks Buttons === */
+
   --cl-button-bg: linear-gradient(to bottom, light-dark(#fefefe, #4a4a4a), light-dark(#f0efee, #434343), light-dark(#e6e5e4, #3c3c3c), light-dark(#dadddb, #383838));
   --cl-button-bg-hover: linear-gradient(to bottom, light-dark(#ffffff, #555555), light-dark(#f5f4f3, #4d4d4d), light-dark(#edeceb, #464646), light-dark(#e4e3e2, #434343));
   --cl-button-bg-active: linear-gradient(to bottom, light-dark(#d4d3d2, #333333), light-dark(#dbdad9, #383838), light-dark(#e2e1e0, #3c3c3c), light-dark(#eaeae9, #404040));

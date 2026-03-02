@@ -19,7 +19,11 @@
   border: 1px solid light-dark(#9d9c9b, #555753);
   border-bottom: 1px solid light-dark(#9d9c9b, #555753);
   border-radius: 3px 3px 0 0;
-  background: linear-gradient(to bottom, light-dark(#e6e5e4, #3c3c3c), light-dark(#dadddb, #363636));
+  background: linear-gradient(
+    to bottom,
+    light-dark(#e6e5e4, #3c3c3c),
+    light-dark(#dadddb, #363636)
+  );
   color: light-dark(#2e3436, #eeeeec);
   cursor: default;
   position: relative;
@@ -29,9 +33,9 @@
 ::slotted([slot^="tab"][aria-selected="true"]) {
   background:
     linear-gradient(to bottom,
-      light-dark(#acd0f6, #4a7aaa) 0px,
-      light-dark(#9ab6da, #3e6a9a) 2px,
-      var(--cl-window-bg, light-dark(#edeceb, #2e3436)) 2px);
+    light-dark(#acd0f6, #4a7aaa) 0,
+    light-dark(#9ab6da, #3e6a9a) 2px,
+    var(--cl-window-bg, light-dark(#edeceb, #2e3436)) 2px);
   border-color: light-dark(#5f87b2, #3a5a7a);
   border-bottom-color: var(--cl-window-bg, light-dark(#edeceb, #2e3436));
   z-index: 1;

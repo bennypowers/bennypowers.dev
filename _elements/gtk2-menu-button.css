@@ -28,15 +28,15 @@ button {
     color: var(--_menubar-active-text, inherit);
     border-radius: var(--_menubar-active-radius, 0);
   }
-}
 
-button span::first-letter {
-  text-decoration: var(--_menubar-mnemonic, none);
-}
+  & span::first-letter {
+    text-decoration: var(--_menubar-mnemonic, none);
+  }
 
-button:focus-visible {
-  outline: 1px solid var(--cl-focus-color, #729fcf);
-  outline-offset: -1px;
+  &:focus-visible {
+    outline: 1px solid var(--cl-focus-color, #729fcf);
+    outline-offset: -1px;
+  }
 }
 
 ::slotted([slot="icon"]) {
@@ -50,10 +50,10 @@ button:focus-visible {
   top: 100%;
   inset-inline-start: 0;
   z-index: 1000;
-}
 
-:host([open]) #menu {
-  display: block;
+  :host([open]) & {
+    display: block;
+  }
 }
 
 #menu-container {
@@ -65,7 +65,7 @@ button:focus-visible {
   min-width: 180px;
 }
 
-@media (max-width: 767px) {
+@media (width <= 767px) {
   #menu {
     inset-inline-start: 0;
     inset-inline-end: 0;

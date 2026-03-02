@@ -1,89 +1,91 @@
-    :host {
-      display: flex;
-      flex-direction: column;
-      flex: 1;
-      min-height: 0;
-    }
+:host {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0;
+}
 
-    #toolbar {
-      display: flex;
-      align-items: center;
-      gap: 2px;
-      padding: 2px 4px;
-      background: var(--cl-window-bg, light-dark(#edeceb, #2e3436));
-      border-bottom: 1px solid light-dark(#d3d7cf, #555753);
-      flex-shrink: 0;
-    }
+#toolbar {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  padding: 2px 4px;
+  background: var(--cl-window-bg, light-dark(#edeceb, #2e3436));
+  border-bottom: 1px solid light-dark(#d3d7cf, #555753);
+  flex-shrink: 0;
 
-    #toolbar button {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      width: 24px;
-      height: 24px;
-      padding: 0;
-      border: 1px solid transparent;
-      border-radius: var(--cl-button-radius, 3px);
-      background: none;
-      cursor: pointer;
-      color: var(--cl-button-text, light-dark(#2e3436, #eeeeec));
-    }
+  & button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    padding: 0;
+    border: 1px solid transparent;
+    border-radius: var(--cl-button-radius, 3px);
+    background: none;
+    cursor: pointer;
+    color: var(--cl-button-text, light-dark(#2e3436, #eeeeec));
 
-    #toolbar button:hover:not(:disabled) {
-      background: var(--cl-button-bg-hover, linear-gradient(to bottom, #ffffff, #f5f4f3, #edeceb, #e4e3e2));
+    &:hover:not(:disabled) {
+      background:
+        var(--cl-button-bg-hover, linear-gradient(to bottom, #ffffff, #f5f4f3, #edeceb, #e4e3e2));
       border-color: var(--cl-button-border, light-dark(#9d9c9b, #555753));
     }
 
-    #toolbar button:active:not(:disabled) {
-      background: var(--cl-button-bg-active, linear-gradient(to bottom, #d4d3d2, #dbdad9, #e2e1e0, #eaeae9));
+    &:active:not(:disabled) {
+      background:
+        var(--cl-button-bg-active, linear-gradient(to bottom, #d4d3d2, #dbdad9, #e2e1e0, #eaeae9));
     }
 
-    #toolbar button:disabled {
+    &:disabled {
       opacity: 0.35;
       cursor: default;
     }
 
-    #toolbar button img {
+    & img {
       width: 16px;
       height: 16px;
     }
+  }
+}
 
-    #page-info {
-      font-family: var(--cl-font-family, "DejaVu Sans", sans-serif);
-      font-size: var(--cl-font-size-small, 11px);
-      color: var(--cl-button-text, light-dark(#2e3436, #eeeeec));
-      margin-inline-start: 8px;
-    }
+#page-info {
+  font-family: var(--cl-font-family, "DejaVu Sans", sans-serif);
+  font-size: var(--cl-font-size-small, 11px);
+  color: var(--cl-button-text, light-dark(#2e3436, #eeeeec));
+  margin-inline-start: 8px;
+}
 
-    #viewport {
-      flex: 1;
-      min-height: 0;
-      overflow: auto;
-      scrollbar-width: auto;
-      scrollbar-color: light-dark(#a3bfe1, #4a6a8a) light-dark(#d9d7d5, #3c3c3c);
-    }
+#viewport {
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+  scrollbar-width: auto;
+  scrollbar-color: light-dark(#a3bfe1, #4a6a8a) light-dark(#d9d7d5, #3c3c3c);
+}
 
-    #content {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
-      align-content: start;
-      gap: 4px;
-      padding: 8px;
-    }
+#content {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+  align-content: start;
+  gap: 4px;
+  padding: 8px;
+}
 
-    ::slotted(*) {
-      color: var(--cl-text, #2e3436);
-      text-align: center;
-      cursor: default;
-      border-radius: 3px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      min-width: 0;
-      padding: 6px 4px;
-      text-decoration: none;
-    }
+::slotted(*) {
+  color: var(--cl-text, #2e3436);
+  text-align: center;
+  cursor: default;
+  border-radius: 3px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 0;
+  padding: 6px 4px;
+  text-decoration: none;
+}
 
-    ::slotted([hidden]) {
-      display: none !important;
-    }
+::slotted([hidden]) {
+  display: none !important;
+}
