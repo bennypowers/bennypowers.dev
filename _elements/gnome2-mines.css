@@ -5,7 +5,7 @@
   background: var(--cl-window-bg, light-dark(#edeceb, #2e3436));
   font-family: var(--cl-font-family, "DejaVu Sans", sans-serif);
   user-select: none;
-  --_cell-size: 24px;
+  --_cell-size: 33px;
 }
 
 #header {
