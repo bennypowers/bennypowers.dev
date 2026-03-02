@@ -1,3 +1,4 @@
+import './ssr-shim.js';
 import { ContextRoot, createContext, type Context } from '@lit/context';
 import { isServer } from 'lit';
 
@@ -31,5 +32,16 @@ export interface WindowEntry {
   workspace: number;
 }
 
+export interface TaskbarEntry {
+  url: string;
+  title: string;
+  icon?: string;
+  focused: boolean;
+  minimized: boolean;
+}
+
 export const activeWindowContext =
   createContextWithRoot<string | undefined>('gnome2-active-window');
+
+export const taskbarContext =
+  createContextWithRoot<TaskbarEntry[]>('gnome2-taskbar');

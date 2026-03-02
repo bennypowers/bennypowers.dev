@@ -1,4 +1,4 @@
-import { LitElement, html } from 'lit';
+import { LitElement, html, isServer } from 'lit';
 import { customElement, state } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
 import styles from './gnome2-mines.css';
@@ -38,11 +38,13 @@ export class Gnome2Mines extends LitElement {
 
   connectedCallback() {
     super.connectedCallback();
+    if (isServer) return;
     this.#newGame();
   }
 
   disconnectedCallback() {
     super.disconnectedCallback();
+    if (isServer) return;
     this.#stopTimer();
   }
 

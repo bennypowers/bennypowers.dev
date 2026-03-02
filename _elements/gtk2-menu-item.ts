@@ -16,7 +16,6 @@ export class Gtk2MenuItem extends LitElement {
   @property({ type: Boolean, reflect: true }) accessor active = false;
 
   get hasSubmenu(): boolean {
-    if (isServer) return false;
     if (!this.querySelector('[slot="submenu"]')) return false;
     // On mobile, items with href navigate directly — no submenu needed
     if (this.#isMobile && this.href) return false;
@@ -96,7 +95,7 @@ export class Gtk2MenuItem extends LitElement {
     }, 300);
   };
 
-  #isMobile = typeof matchMedia === 'function' && matchMedia('(max-width: 767px)').matches;
+  #isMobile = !isServer && matchMedia('(max-width: 767px)').matches;
 
   #positionSubmenu = () => {
     if (!this.hasSubmenu) return;

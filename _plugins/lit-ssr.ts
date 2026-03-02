@@ -23,9 +23,10 @@ async function redactTSFileInPlace(path: string) {
 }
 
 const ELEMENT_MODULES = [
+  '_elements/gnome2-desktop.ts',
+  '_elements/gnome2-session.ts',
   '_elements/gnome2-panel.ts',
   '_elements/gnome2-clock.ts',
-  '_elements/gnome2-desktop.ts',
   '_elements/gnome2-window-list.ts',
   '_elements/gtk2-button.ts',
   '_elements/gtk2-scrolled-window.ts',

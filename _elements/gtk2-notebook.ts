@@ -1,4 +1,4 @@
-import { LitElement, html } from 'lit';
+import { LitElement, html, isServer } from 'lit';
 import { customElement } from 'lit/decorators.js';
 import styles from './gtk2-notebook.css';
 
@@ -11,12 +11,14 @@ export class Gtk2Notebook extends LitElement {
 
   connectedCallback() {
     super.connectedCallback();
+    if (isServer) return;
     this.addEventListener('click', this.#onTabClick);
     this.addEventListener('keydown', this.#onKeyDown);
   }
 
   disconnectedCallback() {
     super.disconnectedCallback();
+    if (isServer) return;
     this.removeEventListener('click', this.#onTabClick);
     this.removeEventListener('keydown', this.#onKeyDown);
   }

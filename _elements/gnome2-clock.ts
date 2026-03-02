@@ -1,4 +1,4 @@
-import { LitElement, html } from 'lit';
+import { LitElement, html, isServer } from 'lit';
 import { customElement, state } from 'lit/decorators.js';
 import styles from './gnome2-clock.css';
 
@@ -12,12 +12,14 @@ export class Gnome2Clock extends LitElement {
 
   connectedCallback() {
     super.connectedCallback();
+    if (isServer) return;
     this.#updateTime();
     this.#timer = setInterval(() => this.#updateTime(), 30000);
   }
 
   disconnectedCallback() {
     super.disconnectedCallback();
+    if (isServer) return;
     if (this.#timer) {
       clearInterval(this.#timer);
       this.#timer = null;

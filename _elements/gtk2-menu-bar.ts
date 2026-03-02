@@ -1,4 +1,4 @@
-import { LitElement, html } from 'lit';
+import { LitElement, html, isServer } from 'lit';
 import { customElement } from 'lit/decorators.js';
 
 import styles from './gtk2-menu-bar.css';
@@ -11,6 +11,7 @@ export class Gtk2MenuBar extends LitElement {
 
   connectedCallback() {
     super.connectedCallback();
+    if (isServer) return;
     this.#internals.role = 'menubar';
   }
 

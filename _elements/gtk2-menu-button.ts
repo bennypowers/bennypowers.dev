@@ -1,4 +1,4 @@
-import { LitElement, html, nothing } from 'lit';
+import { LitElement, html, isServer, nothing } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import styles from './gtk2-menu-button.css';
 
@@ -127,6 +127,7 @@ export class Gtk2MenuButton extends LitElement {
 
   disconnectedCallback() {
     super.disconnectedCallback();
+    if (isServer) return;
     document.removeEventListener('click', this.#onOutsideClick);
     document.removeEventListener('keydown', this.#onKeyDown);
   }

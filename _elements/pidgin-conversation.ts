@@ -1,4 +1,4 @@
-import { LitElement, html } from 'lit';
+import { LitElement, html, isServer } from 'lit';
 import { customElement, property, state, query } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
 import styles from './pidgin-conversation.css';
@@ -37,6 +37,7 @@ export class PidginConversation extends LitElement {
 
   connectedCallback() {
     super.connectedCallback();
+    if (isServer) return;
     try {
       this.protocol = (localStorage.getItem(PROTOCOL_STORAGE_KEY) as Protocol) || '';
       this.instance = localStorage.getItem(INSTANCE_STORAGE_KEY) || '';

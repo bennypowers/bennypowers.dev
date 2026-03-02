@@ -1,16 +1,11 @@
 import { LitElement, html } from 'lit';
-import { customElement, property, state } from 'lit/decorators.js';
+import { customElement, state } from 'lit/decorators.js';
+import { consume } from '@lit/context';
 import { classMap } from 'lit/directives/class-map.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
 import styles from './gnome2-window-list.css';
 
-interface TaskbarEntry {
-  url: string;
-  title: string;
-  icon?: string;
-  focused: boolean;
-  minimized: boolean;
-}
+import { taskbarContext, type TaskbarEntry } from './gnome2-wm-context.js';
 
 export class WMMinimizeEvent extends Event {
   constructor(public url: string) {
@@ -28,32 +23,25 @@ export class WMShowDesktopEvent extends Event {
 export class Gnome2WindowList extends LitElement {
   static styles = styles;
 
-  /** No-JS fallback: single window title from SSR */
-  @property({ attribute: 'window-title' }) accessor windowTitle = '';
-
-  /** No-JS fallback: single window icon from SSR */
-  @property({ attribute: 'window-icon' }) accessor windowIcon = '';
-
-  /** Set by the WM at runtime */
-  @state() accessor entries: TaskbarEntry[] = [];
+  @consume({ context: taskbarContext, subscribe: true })
+  @state()
+  accessor entries: TaskbarEntry[] = [];
 
   /** Whether all windows are minimized (show desktop active) */
   @state() accessor desktopShown = false;
 
-  /** Merged list: WM entries if available, otherwise fallback from attribute */
-  get #buttons(): TaskbarEntry[] {
-    if (this.entries.length)
-      return this.entries;
-    else if (!this.windowTitle)
-      return []
-    else
-      return [{
-        url: undefined,
-        title: this.windowTitle,
-        icon: this.windowIcon || undefined,
-        focused: true,
-        minimized: false,
-      }];
+  protected override willUpdate(): void {
+    // Ensure first render matches SSR — @consume won't have delivered yet
+    // during the constructor-time hydration render.
+    if (!this.entries.length) {
+      const desktop = this.closest('gnome2-desktop');
+      if (desktop && 'taskbarEntries' in desktop) {
+        const entries = (desktop as any).taskbarEntries;
+        if (entries?.length) {
+          this.entries = entries;
+        }
+      }
+    }
   }
 
   render() {
@@ -68,7 +56,7 @@ export class Gnome2WindowList extends LitElement {
              height="16">
       </button>
       <div id="divider"></div>
-      ${this.#buttons.map(({ url, title, icon, focused, minimized }) => html`
+      ${this.entries.map(({ url, title, icon, focused, minimized }) => html`
       <a class="${classMap({ active: focused, minimized })}"
          href=${ifDefined(url)}
          data-focused="${String(focused)}"
@@ -90,7 +78,6 @@ export class Gnome2WindowList extends LitElement {
       e.preventDefault();
       this.dispatchEvent(new WMMinimizeEvent(url));
     } else {
-      // Prevent navigation for pseudo-URLs (app:*) — dispatch focus event instead
       e.preventDefault();
       this.dispatchEvent(Object.assign(
         new Event('wm-focus', { bubbles: true, composed: true }),

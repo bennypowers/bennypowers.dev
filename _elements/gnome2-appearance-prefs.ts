@@ -1,4 +1,4 @@
-import { LitElement, html, nothing } from 'lit';
+import { LitElement, html, isServer, nothing } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
 import './gtk2-notebook.js';
@@ -32,6 +32,7 @@ export class Gnome2AppearancePrefs extends LitElement {
 
   connectedCallback() {
     super.connectedCallback();
+    if (isServer) return;
     try {
       this.#scheme = localStorage.getItem('cl-color-scheme') ?? 'system';
       this.#wallpaper = localStorage.getItem('cl-wallpaper') ?? '';

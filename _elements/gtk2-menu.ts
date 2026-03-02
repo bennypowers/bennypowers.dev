@@ -34,11 +34,13 @@ export class Gtk2Menu extends LitElement {
 
   connectedCallback() {
     super.connectedCallback();
+    if (isServer) return;
     this.addEventListener('keydown', this.#onKeyDown);
   }
 
   disconnectedCallback() {
     super.disconnectedCallback();
+    if (isServer) return;
     this.removeEventListener('keydown', this.#onKeyDown);
   }
 

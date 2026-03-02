@@ -76,13 +76,7 @@
 
 @media (width <= 767px) {
   #windows ::slotted(gtk2-window) {
-    position: static;
-    width: 100%;
-    max-height: none;
     flex: 1;
-  }
-
-  #windows ::slotted(gtk2-window:not([focused])) {
-    display: none;
+    min-height: calc(100vh - 2 * 26px /* panel height */);
   }
 }

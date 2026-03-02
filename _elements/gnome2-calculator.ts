@@ -1,4 +1,4 @@
-import { LitElement, html } from 'lit';
+import { LitElement, html, isServer } from 'lit';
 import { customElement, state } from 'lit/decorators.js';
 import styles from './gnome2-calculator.css';
 
@@ -81,11 +81,13 @@ export class Gnome2Calculator extends LitElement {
 
   connectedCallback() {
     super.connectedCallback();
+    if (isServer) return;
     this.addEventListener('keydown', this.#onKeyDown);
   }
 
   disconnectedCallback() {
     super.disconnectedCallback();
+    if (isServer) return;
     this.removeEventListener('keydown', this.#onKeyDown);
   }
 

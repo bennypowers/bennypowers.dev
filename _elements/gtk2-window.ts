@@ -1,7 +1,7 @@
-import { LitElement, html } from 'lit';
+import { LitElement, html, isServer } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
+import { consume } from '@lit/context';
 import { ifDefined } from 'lit/directives/if-defined.js';
-import { ContextConsumer } from '@lit/context';
 import { WMMinimizeEvent } from './gnome2-window-list.js';
 import { activeWindowContext } from './gnome2-wm-context.js';
 import styles from './gtk2-window.css';
@@ -30,25 +30,25 @@ export class Gtk2Window extends LitElement {
 
   @property({ reflect: true }) accessor label = '';
   @property({ reflect: true }) accessor icon = '';
-  @property({ attribute: 'window-url', reflect: true }) accessor windowUrl = '';
+  @property({ attribute: 'window-url' }) accessor windowUrl = '';
   @property({ type: Boolean, reflect: true }) accessor maximized = false;
   @property({ type: Boolean, reflect: true }) accessor focused = false;
   @property({ type: Boolean, reflect: true }) accessor resizable = false;
   @property({ type: Boolean, reflect: true }) accessor dialog = false;
   @property({ attribute: 'close-href' }) accessor closeHref = '/';
 
+  @consume({ context: activeWindowContext, subscribe: true })
+  @state()
+  accessor activeUrl: string | undefined = undefined;
+
   @state() accessor #offsetX = 0;
   @state() accessor #offsetY = 0;
 
-  #activeWindow = new ContextConsumer(this, {
-    context: activeWindowContext,
-    subscribe: true,
-    callback: (activeUrl) => {
-      if (activeUrl !== undefined) {
-        this.focused = this.windowUrl === activeUrl;
-      }
-    },
-  });
+  protected override willUpdate(): void {
+    if (this.activeUrl !== undefined) {
+      this.focused = this.windowUrl === this.activeUrl;
+    }
+  }
 
   /** Resize snapshot — set in #onResizeStart, read in #onResizeMove */
   #resize: {
@@ -137,12 +137,14 @@ export class Gtk2Window extends LitElement {
 
   connectedCallback() {
     super.connectedCallback();
+    if (isServer) return;
     this.addEventListener('pointerdown', this.#onHostPointerDown);
     window.addEventListener('resize', this.#onWindowResize);
   }
 
   disconnectedCallback() {
     super.disconnectedCallback();
+    if (isServer) return;
     this.removeEventListener('pointerdown', this.#onHostPointerDown);
     window.removeEventListener('resize', this.#onWindowResize);
   }
