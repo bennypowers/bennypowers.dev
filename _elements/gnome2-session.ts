@@ -1,3 +1,8 @@
+import type { WMFocusEvent, WMCloseEvent } from './gtk2-window.js';
+import type { WMMinimizeEvent, WMShowDesktopEvent } from './gnome2-window-list.js';
+import type { WMWorkspaceSwitchEvent, MiniWindow } from './gnome2-workspace-switcher.js';
+import type { Gtk2MenuButton } from './gtk2-menu-button.js';
+
 // Barrel imports — register all gnome2 custom elements
 import '@lit-labs/ssr-client/lit-element-hydrate-support.js';
 import './gnome2-desktop.js';
@@ -25,16 +30,14 @@ import './nautilus-paginated.js';
 import { LitElement, html, isServer } from 'lit';
 import { customElement } from 'lit/decorators.js';
 import { ContextProvider } from '@lit/context';
+
 import styles from './gnome2-session.css';
 
 import { activeWindowContext, type WindowEntry } from './gnome2-wm-context.js';
-import type { WMFocusEvent, WMCloseEvent, WMMoveEvent } from './gtk2-window.js';
-import type { WMMinimizeEvent, WMShowDesktopEvent } from './gnome2-window-list.js';
-import type { WMWorkspaceSwitchEvent, MiniWindow } from './gnome2-workspace-switcher.js';
-import type { Gtk2MenuButton } from './gtk2-menu-button.js';
 
 const STORAGE_KEY = 'gnome2-wm-windows';
 const WORKSPACE_KEY = 'gnome2-wm-workspace';
+
 // Metacity 2.20 cascade constants (src/place.c)
 const CASCADE_INTERVAL = 50;
 const CASCADE_FUZZ = 15;
@@ -688,12 +691,19 @@ export class Gnome2Session extends LitElement {
     const win = this.#desktop?.querySelector(`gtk2-window[window-url="${CSS.escape(url)}"]`) as HTMLElement | null;
     if (win?.hasAttribute('data-app')) {
       // App window — toggle display directly
-      win.style.display = win.style.display === 'none' ? '' : 'none';
+      const showing = win.style.display === 'none';
+      win.style.display = showing ? '' : 'none';
+      if (this.#isMobile && showing) {
+        this.#setActiveWindow(url, { animate: false });
+      }
     } else {
       this.#toggleMinimize(url);
       if (win) {
         const entry = this.#entries.find(en => en.url === url);
         win.style.display = entry?.minimized ? 'none' : '';
+        if (this.#isMobile && !entry?.minimized) {
+          this.#setActiveWindow(url, { animate: false });
+        }
       }
     }
     this.#updateTaskbar();
@@ -706,6 +716,7 @@ export class Gnome2Session extends LitElement {
 
     if (this.#isMobile) {
       this.#setActiveWindow(url);
+      this.#updateTaskbar();
       return;
     }
 
@@ -853,8 +864,10 @@ export class Gnome2Session extends LitElement {
 
     if (currentWindow) {
       this.#addWindow(this.#currentUrl, currentTitle, currentIcon);
-      // Apply saved position or center as default (replaces CSS auto-centering)
-      this.#placeWindow(currentWindow, this.#currentUrl);
+      if (!this.#isMobile) {
+        // Apply saved position or center as default (replaces CSS auto-centering)
+        this.#placeWindow(currentWindow, this.#currentUrl);
+      }
     }
 
     // Always register WM event listeners (fixes mobile close/minimize)
@@ -876,7 +889,12 @@ export class Gnome2Session extends LitElement {
       }
     } catch {}
 
-    if (this.#isMobile) return;
+    if (this.#isMobile) {
+      // Re-focus current page (app restoration may have stolen focus)
+      this.#setActiveWindow(this.#currentUrl, { animate: false });
+      this.#updateTaskbar();
+      return;
+    }
 
     // --- Desktop-only initialization ---
 
