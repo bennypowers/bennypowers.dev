@@ -18,9 +18,9 @@ export function EsbuildPlugin(eleventyConfig: UserConfig) {
           write: false,
           format: 'esm',
           target: 'es2022',
-          sourcemap: isDev ? 'inline' : 'linked',
+          sourcemap: isDev ? 'inline' : false,
           plugins: [
-            litCssPlugin({ inline: true }),
+            litCssPlugin({ filter: /\.css$/, inline: true }),
           ],
         });
         return result.outputFiles?.[0]?.text ?? '';
