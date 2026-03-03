@@ -1,5 +1,5 @@
 import { LitElement, html, nothing, isServer } from 'lit';
-import { customElement, property } from 'lit/decorators.js';
+import { customElement, property, state } from 'lit/decorators.js';
 import styles from './gtk2-menu-item.css';
 
 @customElement('gtk2-menu-item')
@@ -16,9 +16,11 @@ export class Gtk2MenuItem extends LitElement {
   @property({ type: Boolean, reflect: true }) accessor active = false;
   @property({ type: Boolean, reflect: true }) accessor checked = false;
 
+  /** Set via submenu-register event from a child gtk2-menu[slot="submenu"]. */
+  @state() accessor #hasSubmenuChild = false;
+
   get hasSubmenu(): boolean {
-    if (isServer) return false;
-    if (!this.querySelector('[slot="submenu"]')) return false;
+    if (!this.#hasSubmenuChild) return false;
     // On mobile, items with href navigate directly — no submenu needed
     if (this.#isMobile && this.href) return false;
     return true;
@@ -36,6 +38,8 @@ export class Gtk2MenuItem extends LitElement {
     if (!isServer) {
       this.addEventListener('mouseenter', this.#onMouseEnter);
       this.addEventListener('mouseleave', this.#onMouseLeave);
+      this.addEventListener('submenu-register', this.#onSubmenuRegister);
+      this.addEventListener('submenu-unregister', this.#onSubmenuUnregister);
     }
   }
 
@@ -44,9 +48,23 @@ export class Gtk2MenuItem extends LitElement {
     clearTimeout(this.#closeTimer);
     this.removeEventListener('mouseenter', this.#onMouseEnter);
     this.removeEventListener('mouseleave', this.#onMouseLeave);
+    this.removeEventListener('submenu-register', this.#onSubmenuRegister);
+    this.removeEventListener('submenu-unregister', this.#onSubmenuUnregister);
   }
 
+  #onSubmenuRegister = () => {
+    // Defer until after hydration so first render matches SSR output
+    this.updateComplete.then(() => { this.#hasSubmenuChild = true; });
+  };
+
+  #onSubmenuUnregister = () => {
+    this.#hasSubmenuChild = false;
+  };
+
   override firstUpdated() {
+    // Safe after hydration — detect submenu children via DOM
+    this.#hasSubmenuChild = !!this.querySelector('[slot="submenu"]');
+
     const submenuEl = this.shadowRoot?.querySelector('#submenu');
     if (submenuEl) {
       submenuEl.addEventListener('mouseenter', this.#onSubmenuEnter);

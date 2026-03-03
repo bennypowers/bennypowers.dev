@@ -36,12 +36,18 @@ export class Gtk2Menu extends LitElement {
     super.connectedCallback();
     if (isServer) return;
     this.addEventListener('keydown', this.#onKeyDown);
+    if (this.slot === 'submenu') {
+      this.dispatchEvent(new Event('submenu-register', { bubbles: true }));
+    }
   }
 
   disconnectedCallback() {
     super.disconnectedCallback();
     if (isServer) return;
     this.removeEventListener('keydown', this.#onKeyDown);
+    if (this.slot === 'submenu') {
+      this.dispatchEvent(new Event('submenu-unregister', { bubbles: true }));
+    }
   }
 
   #onKeyDown = (e: KeyboardEvent) => {
