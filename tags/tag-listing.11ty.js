@@ -47,7 +47,7 @@ export function render({ tag, collections, page }) {
     return /* html */`
     <a class="nautilus-icon" href="${post.url}">
       <img src="/assets/icons/gnome/mimetypes/text-html.svg" width="48" height="48" alt="" draggable="false">
-      <span class="nautilus-label">${title}</span>
+      <span class="nautilus-label" dir="auto">${title}</span>
     </a>`;
   }).join('\n');
 

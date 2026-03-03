@@ -45,7 +45,7 @@ permalink: "/posts/{{ monthData.month }}/"
       {%- for post in monthData.posts %}{% if post.url %}
       <a class="nautilus-icon" href="{{ post.url }}">
         <img src="/assets/icons/gnome/mimetypes/text-html.svg" width="48" height="48" alt="" draggable="false">
-        <span class="nautilus-label">{{ post.data.title }}</span>
+        <span class="nautilus-label" dir="auto">{{ post.data.title }}</span>
       </a>
       {% endif %}{%- endfor %}
     </div>

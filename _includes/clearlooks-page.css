@@ -420,6 +420,8 @@ body pre[class*="language-"] {
   }
 
   & img {
+    width: var(--nautilus-icon-size, 48px);
+    height: var(--nautilus-icon-size, 48px);
     margin-block-end: 4px;
     pointer-events: none;
     flex-shrink: 0;
@@ -442,6 +444,61 @@ body pre[class*="language-"] {
   font-size: 10px;
   opacity: 0.6;
   margin-block-start: 1px;
+}
+
+/* === Nautilus List View (Clearlooks treeview style) === */
+
+nautilus-folder[view="list"] > .folder-item {
+  display: grid;
+  /* horizontal-separator/2 (1px) + xpad (2px) = 3px per side */
+  grid-template-columns: calc(16px + 6px) 1fr 80px;
+  gap: 0;
+  align-items: center;
+  /* vertical-separator=0 (Clearlooks override), ypad=2 */
+  padding: 2px 3px;
+  text-align: start;
+  border-radius: 0;
+  font-size: var(--cl-font-size-small, 11px);
+  color: light-dark(#2e3436, #eeeeec);
+  background: light-dark(#ffffff, #2e3436);
+
+  & img {
+    width: 16px;
+    height: 16px;
+    margin-block-end: 0;
+    /* center icon in its cell */
+    justify-self: center;
+  }
+
+  /* Alternating row colors (rules_hint) */
+  &:nth-child(even) {
+    background: light-dark(#f7f7f5, #323232);
+  }
+
+  /* Clearlooks selected cell: gradient from base to 8% darker */
+  &:hover {
+    background: light-dark(
+      linear-gradient(to bottom, #d4e4f4, #c8dae8),
+      linear-gradient(to bottom, #3a5a7a, #344e6a)
+    );
+  }
+}
+
+nautilus-folder[view="list"] .folder-label {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  /* Override icon view line clamping */
+  display: block;
+  -webkit-line-clamp: unset;
+  -webkit-box-orient: unset;
+}
+
+nautilus-folder[view="list"] .folder-count {
+  text-align: end;
+  opacity: 0.7;
+  font-size: 11px;
+  margin-block-start: 0;
 }
 
 /* === Mobile === */

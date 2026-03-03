@@ -36,7 +36,7 @@ const allPublished = collections.posts.filter(isPublished).reverse();
        class="nautilus-icon"
        :href="post.url">
       <img src="/assets/icons/gnome/mimetypes/text-html.svg" width="48" height="48" alt="" draggable="false">
-      <span class="nautilus-label" @text="post.data.title"></span>
+      <span class="nautilus-label" dir="auto" @text="post.data.title"></span>
     </a>
   </nautilus-paginated>
 </gtk2-window>

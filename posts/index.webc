@@ -28,8 +28,10 @@ const postYears = (() => {
       <gtk2-menu-item label="Select All" disabled icon="actions/edit-select-all"></gtk2-menu-item>
     </gtk2-menu-button>
     <gtk2-menu-button label="View">
-      <gtk2-menu-item label="Icons" icon="places/folder"></gtk2-menu-item>
-      <gtk2-menu-item label="Arrange Items">
+      <gtk2-menu-item label="View as Icons" data-view="icons" checked></gtk2-menu-item>
+      <gtk2-menu-item label="View as List" data-view="list"></gtk2-menu-item>
+      <gtk2-menu-item separator></gtk2-menu-item>
+      <gtk2-menu-item label="Arrange Items" icon="actions/view-sort-ascending">
         <gtk2-menu slot="submenu">
           <gtk2-menu-item label="By Name" data-sort-field="name" checked></gtk2-menu-item>
           <gtk2-menu-item label="By Count" data-sort-field="count"></gtk2-menu-item>
@@ -38,6 +40,10 @@ const postYears = (() => {
           <gtk2-menu-item label="Descending" data-sort-order="descending" checked></gtk2-menu-item>
         </gtk2-menu>
       </gtk2-menu-item>
+      <gtk2-menu-item separator></gtk2-menu-item>
+      <gtk2-menu-item label="Zoom In" data-zoom="in" icon="actions/zoom-in"></gtk2-menu-item>
+      <gtk2-menu-item label="Zoom Out" data-zoom="out" icon="actions/zoom-out"></gtk2-menu-item>
+      <gtk2-menu-item label="Normal Size" data-zoom="normal" icon="actions/zoom-original"></gtk2-menu-item>
     </gtk2-menu-button>
     <gtk2-menu-button label="Places">
       <gtk2-menu-item label="Home" href="/" icon="places/user-home"></gtk2-menu-item>

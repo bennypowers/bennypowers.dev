@@ -16,15 +16,7 @@ export class Gtk2MenuItem extends LitElement {
   @property({ type: Boolean, reflect: true }) accessor active = false;
   @property({ type: Boolean, reflect: true }) accessor checked = false;
 
-  /** Set via submenu-register event from a child gtk2-menu[slot="submenu"]. */
-  @state() accessor #hasSubmenuChild = false;
-
-  get hasSubmenu(): boolean {
-    if (!this.#hasSubmenuChild) return false;
-    // On mobile, items with href navigate directly — no submenu needed
-    if (this.#isMobile && this.href) return false;
-    return true;
-  }
+  @property({ type: Boolean, reflect: true, attribute: 'has-submenu' }) accessor hasSubmenu = false;
 
   get #iconSrc(): string {
     return this.icon ? `/assets/icons/gnome/${this.icon}.svg` : '';
@@ -54,16 +46,16 @@ export class Gtk2MenuItem extends LitElement {
 
   #onSubmenuRegister = () => {
     // Defer until after hydration so first render matches SSR output
-    this.updateComplete.then(() => { this.#hasSubmenuChild = true; });
+    this.updateComplete.then(() => { this.hasSubmenu = true; });
   };
 
   #onSubmenuUnregister = () => {
-    this.#hasSubmenuChild = false;
+    this.hasSubmenu = false;
   };
 
   override firstUpdated() {
     // Safe after hydration — detect submenu children via DOM
-    this.#hasSubmenuChild = !!this.querySelector('[slot="submenu"]');
+    this.hasSubmenu = !!this.querySelector('[slot="submenu"]');
 
     const submenuEl = this.shadowRoot?.querySelector('#submenu');
     if (submenuEl) {
@@ -144,7 +136,8 @@ export class Gtk2MenuItem extends LitElement {
   };
 
   #onItemClick = (e: Event) => {
-    if (!this.#isMobile || !this.hasSubmenu) return;
+    // On mobile, items with href navigate directly — no submenu toggle
+    if (!this.#isMobile || !this.hasSubmenu || (this.#isMobile && this.href)) return;
     e.preventDefault();
     e.stopPropagation();
     // Toggle submenu on mobile

@@ -1,3 +1,9 @@
+## Maintaining Authenticity
+The source material is located in ../gnome2. You MUST Ensure all UI elements are visually consistent with their GNOME 2.20 source inspirations. However, we will use modern technology - custom elements, shadow DOM, css nesting, container queries, etc - to implement them.
+
+## Browser Support
+We support all browser features in Baseline 2025
+
 ## Window and State Management
 
 gnome2-desktop is the WM state store. It manages a `Map<wmId, WMWindowState>` and
@@ -31,3 +37,33 @@ Example: `gtk2-menu` dispatches `submenu-register` → `gtk2-menu-item` sets `#h
 
 For data counts known at template time (e.g. total items in a paginated list), pass the
 value as an attribute instead (e.g. `total-items`) so SSR renders the correct state.
+
+## Lit and DOM
+
+In Lit methods, when setting state, use lit `@property`s instead of get/has/setAttribute
+
+```ts
+// don't
+this.toggleAttribute('has-submenu');
+// do
+this.hasSubmenu = !this.hasSubmenu;
+```
+
+## DOM API and TypeScript
+When using DOM API with simple tag name selectors, it's not necessary to issue type assertions
+
+example:
+
+```ts
+const menu = this.querySelector('gtk2-menu');
+// menu has type Gtk2Menu
+```
+
+For complex selectors, prefer to use <> type assertion rather than `as`
+
+```ts
+// do
+const activeItems = this.querySelectorAll<Gtk2MenuItem>('gtk2-menu-item[active]');
+// don't
+const inctiveItems = this.querySelectorAll('gtk2-menu-item:not([active])') as NodeListOf<HTMLElement> | null;
+```

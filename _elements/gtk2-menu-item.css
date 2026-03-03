@@ -58,20 +58,32 @@
   justify-content: center;
   flex-shrink: 0;
 
-  :host(:not([icon])) & {
-    display: none;
-  }
-
-  :host([checked]:not([icon])) & {
+  :host(:not([icon]):not([has-submenu])) &,
+  :host([icon=""]:not([has-submenu])) & {
     display: flex;
 
     &::before {
       content: '';
-      width: 7px;
-      height: 7px;
+      width: 13px;
+      height: 13px;
       border-radius: 50%;
-      background: currentcolor;
+      border: 1px solid light-dark(#9d9c9b, #555753);
+      background: light-dark(#ffffff, #2e3436);
+      box-sizing: border-box;
+      box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.1);
     }
+  }
+
+  :host([checked]:not([icon]):not([has-submenu])) &::before,
+  :host([checked][icon=""]:not([has-submenu])) &::before {
+    background:
+      radial-gradient(circle, currentcolor 3px, transparent 3px),
+      light-dark(#ffffff, #2e3436);
+  }
+
+  :host([has-submenu]:not([icon])) &,
+  :host([has-submenu][icon=""]) & {
+    display: none;
   }
 
   & img {

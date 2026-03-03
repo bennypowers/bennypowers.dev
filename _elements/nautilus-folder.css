@@ -1,7 +1,98 @@
+/* === Icon View (default) === */
+
 :host {
+  --nautilus-icon-size: 48px;
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(calc(var(--nautilus-icon-size) + 62px), 1fr));
   gap: 4px;
   padding: 8px;
   align-content: start;
+}
+
+:host([zoom="32"]) { --nautilus-icon-size: 32px; }
+:host([zoom="64"]) { --nautilus-icon-size: 64px; }
+
+/* === List View === */
+
+:host([view="list"]) {
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+  gap: 0;
+}
+
+/* --- Treeview header (Clearlooks treeview-header style) --- */
+
+#list-header {
+  display: none;
+}
+
+:host([view="list"]) #list-header {
+  display: grid;
+  grid-template-columns: calc(16px + 6px) 1fr 80px;
+  gap: 0;
+  padding: 0 3px;
+  background: light-dark(#edeceb, #3c3c3c);
+  font-family: var(--cl-font-family, "DejaVu Sans", sans-serif);
+  font-size: var(--cl-font-size-small, 11px);
+  color: var(--cl-button-text, light-dark(#2e3436, #eeeeec));
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  /* Clearlooks highlight at top, border at bottom */
+  border-block-start: 1px solid light-dark(rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 0.08));
+  border-block-end: 1px solid light-dark(#bab5ab, #555753);
+}
+
+#list-header button {
+  background: none;
+  border: none;
+  /* Clearlooks treeview-header: xthickness=2, ythickness=1 */
+  padding: 1px 2px;
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+  text-align: start;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  min-height: 22px;
+  /* Clearlooks separator grip between columns */
+  border-inline-end: 1px solid light-dark(#d3d7cf, #555753);
+  box-shadow: inset -1px 0 0 light-dark(rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0.06));
+}
+
+#list-header button:last-of-type {
+  border-inline-end: none;
+  box-shadow: none;
+}
+
+#list-header button:hover {
+  background: light-dark(rgba(0, 0, 0, 0.04), rgba(255, 255, 255, 0.04));
+}
+
+#list-header button:active {
+  background: light-dark(rgba(0, 0, 0, 0.08), rgba(255, 255, 255, 0.08));
+}
+
+/* Sort indicator arrow (GTK sort indicator triangle) */
+#list-header button.sorted::after {
+  content: "";
+  display: inline-block;
+  width: 0;
+  height: 0;
+  border-inline: 4px solid transparent;
+  flex-shrink: 0;
+}
+
+#list-header button.sorted.asc::after {
+  border-block-end: 5px solid currentColor;
+}
+
+#list-header button.sorted.desc::after {
+  border-block-start: 5px solid currentColor;
+}
+
+#col-icon {
+  width: 24px;
 }
