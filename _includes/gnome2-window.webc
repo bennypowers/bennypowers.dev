@@ -12,7 +12,9 @@ windowIcon: apps/accessories-text-editor
             resizable
             close-href="/">
   <gtk2-scrolled-window>
-    <article class="e-content window-content">
+    <article class="e-content window-content"
+             :lang="lang ?? false"
+             :dir="dir ?? false">
       <header class="post-header">
         <h1 class="p-name">
           <a class="p-uid"
