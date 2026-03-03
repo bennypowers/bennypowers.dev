@@ -3,6 +3,8 @@ import type { UserConfig } from '@11ty/eleventy';
 import { build } from 'esbuild';
 import { litCssPlugin } from 'esbuild-plugin-lit-css';
 
+const isDev = process.argv.includes('--watch') || process.argv.includes('--serve');
+
 export function EsbuildPlugin(eleventyConfig: UserConfig) {
   eleventyConfig.addTemplateFormats('ts');
   eleventyConfig.addExtension('ts', {
@@ -16,6 +18,7 @@ export function EsbuildPlugin(eleventyConfig: UserConfig) {
           write: false,
           format: 'esm',
           target: 'es2022',
+          sourcemap: isDev ? 'inline' : 'linked',
           plugins: [
             litCssPlugin({ inline: true }),
           ],
