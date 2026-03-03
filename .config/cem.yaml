@@ -1,3 +1,8 @@
+sourceControlRootUrl: "https://github.com/bennypowers/bennypowers.github.io/tree/main/"
 generate:
   files:
     - _elements/**/*.ts
+  exclude:
+    - _elements/css.d.ts
+    - _elements/ssr-shim.ts
+  output: custom-elements.json

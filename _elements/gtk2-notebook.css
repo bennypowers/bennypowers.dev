@@ -13,6 +13,7 @@
 }
 
 ::slotted([slot^="tab"]) {
+  /** Clearlooks theme token. Font family for tab labels */
   font-family: var(--cl-font-family, "DejaVu Sans", sans-serif);
   font-size: 12px;
   padding: 3px 10px;
@@ -47,6 +48,8 @@
   margin: 0 6px;
   border: 1px solid light-dark(#9d9c9b, #555753);
   border-radius: 0 3px 3px 3px;
+
+  /** Clearlooks theme token. Panel content area background */
   background: var(--cl-window-bg, light-dark(#edeceb, #2e3436));
   padding: 12px;
   overflow: auto;

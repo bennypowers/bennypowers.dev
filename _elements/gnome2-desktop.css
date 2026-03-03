@@ -3,9 +3,21 @@
   flex-direction: column;
   height: 100vh;
   height: 100dvh;
+
+  /**
+   * Desktop wallpaper background.
+   * Accepts colors, gradients, or image backgrounds.
+   * Managed by gnome2-appearance-prefs.
+   */
   background: var(--cl-desktop-bg, #305573);
+
+  /** Clearlooks theme token. Font family */
   font-family: var(--cl-font-family, "DejaVu Sans", sans-serif);
+
+  /** Clearlooks theme token. Base font size */
   font-size: var(--cl-font-size, 13px);
+
+  /** Clearlooks theme token. Default text color */
   color: var(--cl-button-text, #2e3436);
   overflow: hidden;
 }

@@ -67,3 +67,31 @@ const activeItems = this.querySelectorAll<Gtk2MenuItem>('gtk2-menu-item[active]'
 // don't
 const inctiveItems = this.querySelectorAll('gtk2-menu-item:not([active])') as NodeListOf<HTMLElement> | null;
 ```
+
+## Documenting Elements
+
+Elements should have their implementation and source inspiration (in ../gnome2) analyzed,
+and based on the source material, write CEM JSDocs/HTML/CSS comments according to the
+[syntax guide](https://bennypowers.dev/cem/docs/usage/documenting-components/)
+and the [content guide](https://bennypowers.dev/cem/docs/usage/effective-mcp-descriptions/)
+
+The goal is to produce an accurate and helpful custom elements manifest, that will form
+the basis for future improvements via `cem mcp`
+
+### Where to document what
+
+- **Element description, `@summary`, `@fires`**: JSDoc on the class in `.ts` files
+- **Attribute descriptions**: JSDoc on `@property` decorators
+- **CSS custom properties**: `/** description */` comments in `.css` files, before the
+  `var()` reference
+- **Slots**: plain HTML comments before `<slot>` elements in the template
+- **Parts**: plain HTML comments before elements with `part` attribute
+- When a single element has **both** a slot and a part, use YAML nesting with `slot:` and
+  `part:` keys
+- When you need **both** `summary` and `description`, use YAML nesting
+
+### CEM tooling
+
+- Generate: `cem generate`
+- Health check: `cem health`
+- Config: `.config/cem.yaml`

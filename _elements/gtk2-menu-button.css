@@ -6,25 +6,35 @@
 }
 
 button {
+  /** Clearlooks theme token. Font family */
   font-family: var(--cl-font-family, "DejaVu Sans", sans-serif);
   font-size: inherit;
+
+  /** Clearlooks theme token. Panel text color */
   color: var(--cl-panel-text, #2e3436);
   background: none;
   border: none;
   padding: 0 var(--_menubar-padding, 8px);
   height: 100%;
   cursor: default;
+  /** Clearlooks theme token. Panel height */
   line-height: var(--cl-panel-height, 26px);
   display: inline-flex;
   align-items: center;
   gap: 2px;
 
   &:hover {
-    background: var(--_menubar-hover-bg, light-dark(rgba(0, 0, 0, 0.08), rgba(255, 255, 255, 0.08)));
+    background: var(
+      --_menubar-hover-bg,
+      light-dark(rgba(0, 0, 0, 0.08), rgba(255, 255, 255, 0.08))
+    );
   }
 
   :host([open]) & {
-    background: var(--_menubar-active-bg, light-dark(rgba(0, 0, 0, 0.08), rgba(255, 255, 255, 0.08)));
+    background: var(
+      --_menubar-active-bg,
+      light-dark(rgba(0, 0, 0, 0.08), rgba(255, 255, 255, 0.08))
+    );
     color: var(--_menubar-active-text, inherit);
     border-radius: var(--_menubar-active-radius, 0);
   }
@@ -34,6 +44,7 @@ button {
   }
 
   &:focus-visible {
+    /** Clearlooks theme token. Focus outline color */
     outline: 1px solid var(--cl-focus-color, #729fcf);
     outline-offset: -1px;
   }
@@ -57,9 +68,16 @@ button {
 }
 
 #menu-container {
+  /** Clearlooks theme token. Menu popup background */
   background: var(--cl-menu-bg, #ffffff);
+
+  /** Clearlooks theme token. Menu popup border color */
   border: 1px solid var(--cl-menu-border, #ababaa);
+
+  /** Clearlooks theme token. Menu popup border radius */
   border-radius: var(--cl-menu-radius, 0);
+
+  /** Clearlooks theme token. Menu popup shadow */
   box-shadow: var(--cl-menu-shadow, 1px 1px 3px rgba(0, 0, 0, 0.2));
   padding: 4px 0;
   min-width: 180px;

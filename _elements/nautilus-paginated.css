@@ -10,6 +10,8 @@
   align-items: center;
   gap: 2px;
   padding: 2px 4px;
+
+  /** Clearlooks theme token. Window body background for toolbar area */
   background: var(--cl-window-bg, light-dark(#edeceb, #2e3436));
   border-bottom: 1px solid light-dark(#d3d7cf, #555753);
   flex-shrink: 0;
@@ -22,18 +24,23 @@
     height: 24px;
     padding: 0;
     border: 1px solid transparent;
+    /** Clearlooks theme token. Button border radius */
     border-radius: var(--cl-button-radius, 3px);
     background: none;
     cursor: pointer;
+    /** Clearlooks theme token. Button text color */
     color: var(--cl-button-text, light-dark(#2e3436, #eeeeec));
 
     &:hover:not(:disabled) {
+      /** Clearlooks theme token. Button hover background */
       background:
         var(--cl-button-bg-hover, linear-gradient(to bottom, #ffffff, #f5f4f3, #edeceb, #e4e3e2));
+      /** Clearlooks theme token. Button border color */
       border-color: var(--cl-button-border, light-dark(#9d9c9b, #555753));
     }
 
     &:active:not(:disabled) {
+      /** Clearlooks theme token. Button active/pressed background */
       background:
         var(--cl-button-bg-active, linear-gradient(to bottom, #d4d3d2, #dbdad9, #e2e1e0, #eaeae9));
     }
@@ -51,8 +58,12 @@
 }
 
 #page-info {
+  /** Clearlooks theme token. Font family */
   font-family: var(--cl-font-family, "DejaVu Sans", sans-serif);
+
+  /** Clearlooks theme token. Small font size for page info */
   font-size: var(--cl-font-size-small, 11px);
+  /** Clearlooks theme token. Button text color */
   color: var(--cl-button-text, light-dark(#2e3436, #eeeeec));
   margin-inline-start: 8px;
 }
@@ -74,6 +85,7 @@
 }
 
 ::slotted(*) {
+  /** Clearlooks theme token. Primary text color */
   color: var(--cl-text, #2e3436);
   text-align: center;
   cursor: default;

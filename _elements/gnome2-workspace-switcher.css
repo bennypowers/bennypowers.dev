@@ -20,11 +20,19 @@
   overflow: hidden;
 
   &:hover:not(.active) {
-    background: linear-gradient(to bottom, light-dark(#f0f3fa, #5a5a5a), light-dark(#86abd9, #3a6a9a));
+    background: linear-gradient(
+      to bottom,
+      light-dark(#f0f3fa, #5a5a5a),
+      light-dark(#86abd9, #3a6a9a)
+    );
   }
 
   &.active {
-    background: linear-gradient(to bottom, light-dark(#649abc, #2a5a8a), light-dark(#8fb7e4, #4a7aaa));
+    background: linear-gradient(
+      to bottom,
+      light-dark(#649abc, #2a5a8a),
+      light-dark(#8fb7e4, #4a7aaa)
+    );
     border-color: light-dark(#6b7e95, #2a4a6a);
     box-shadow: inset 0 0 2px rgba(255, 255, 255, 0.3);
   }

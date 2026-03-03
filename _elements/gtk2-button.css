@@ -3,12 +3,25 @@
 }
 
 button {
+  /** Clearlooks theme token. Font family for button text */
   font-family: var(--cl-font-family, "DejaVu Sans", sans-serif);
+
+  /** Clearlooks theme token. Base font size */
   font-size: var(--cl-font-size, 13px);
+
+  /** Clearlooks theme token. Button label text color */
   color: var(--cl-button-text, #2e3436);
+
+  /** Clearlooks theme token. Button background, a Clearlooks gradient by default */
   background: var(--cl-button-bg, linear-gradient(to bottom, #fefefe, #f0efee, #e6e5e4, #dadddb));
+
+  /** Clearlooks theme token. Button border color */
   border: 1px solid var(--cl-button-border, #9d9c9b);
+
+  /** Clearlooks theme token. Button corner radius */
   border-radius: var(--cl-button-radius, 3px);
+
+  /** Clearlooks theme token. Button internal padding */
   padding: var(--cl-button-padding, 4px 12px);
   cursor: pointer;
   outline: none;
@@ -17,16 +30,27 @@ button {
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.4);
 
   &:hover {
-    background: var(--cl-button-bg-hover, linear-gradient(to bottom, #ffffff, #f5f4f3, #edeceb, #e4e3e2));
+    /** Clearlooks theme token. Button background on hover */
+    background: var(
+      --cl-button-bg-hover,
+      linear-gradient(to bottom, #ffffff, #f5f4f3, #edeceb, #e4e3e2)
+    );
   }
 
   &:active {
-    background: var(--cl-button-bg-active, linear-gradient(to bottom, #d4d3d2, #dbdad9, #e2e1e0, #eaeae9));
+    /** Clearlooks theme token. Button background when pressed */
+    background: var(
+      --cl-button-bg-active,
+      linear-gradient(to bottom, #d4d3d2, #dbdad9, #e2e1e0, #eaeae9)
+    );
     box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.15);
   }
 
   &:focus-visible {
+    /** Clearlooks theme token. Focus ring box-shadow */
     box-shadow: var(--cl-button-shadow-focus, 0 0 0 1px #729fcf);
+
+    /** Clearlooks theme token. Focus outline and border color */
     border-color: var(--cl-focus-color, #729fcf);
   }
 

@@ -84,6 +84,14 @@ interface WMWindowState {
   appId?: string;
 }
 
+/**
+ * Root window manager for the GNOME 2.20 desktop shell. MUST be
+ * the outermost layout element. Provides Metacity-style cascade
+ * placement, workspace switching, minimize/restore/close, and
+ * session persistence for managed `gtk2-window` elements.
+ *
+ * @summary GNOME 2 desktop shell and Metacity window manager
+ */
 @customElement('gnome2-desktop')
 export class Gnome2Desktop extends LitElement {
   static styles = styles;
@@ -96,8 +104,13 @@ export class Gnome2Desktop extends LitElement {
   @property({ attribute: false })
   accessor taskbarEntries: TaskbarEntry[] = [];
 
+  /** URL of the current page, used to initialize the active window during SSR */
   @property({ attribute: 'page-url' }) accessor pageUrl = '';
+
+  /** Title of the current page, used for the initial taskbar entry */
   @property({ attribute: 'page-title' }) accessor pageTitle = '';
+
+  /** Icon path for the current page window */
   @property({ attribute: 'page-icon' }) accessor pageIcon = '';
 
   /** Centralized window state keyed by wmId. */
@@ -995,15 +1008,20 @@ export class Gnome2Desktop extends LitElement {
 
   render() {
     return html`
+      <!-- A gnome2-panel element for the top panel. MUST contain navigation landmarks for screen reader users. -->
       <slot name="top-panel"></slot>
+      <!-- The desktop workspace area between panels. Contains icons and floating windows. -->
       <div id="workspace" part="workspace">
         <div id="icons">
+          <!-- Desktop icon elements (desktop-icon) displayed in column flow. Each icon SHOULD have a meaningful label for accessibility. -->
           <slot name="icons"></slot>
         </div>
         <div id="windows">
+          <!-- gtk2-window elements managed by the window manager. Each window provides its own focus management and ARIA roles. -->
           <slot></slot>
         </div>
       </div>
+      <!-- A gnome2-panel element for the bottom panel. SHOULD contain gnome2-window-list for keyboard-accessible window switching. -->
       <slot name="bottom-panel"></slot>
     `;
   }

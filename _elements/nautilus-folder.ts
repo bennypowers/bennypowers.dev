@@ -5,13 +5,28 @@ import styles from './nautilus-folder.css';
 
 const ZOOM_LEVELS = [32, 48, 64] as const;
 
+/**
+ * Nautilus 2.20 folder view. Provides icon view (grid) and list view
+ * (sortable table). Allows three zoom levels and column sorting. MUST
+ * contain child items with `data-sort-name` and `data-sort-count`
+ * attributes for sorting to work.
+ *
+ * @summary Nautilus-style icon/list folder view with sorting and zoom
+ */
 @customElement('nautilus-folder')
 export class NautilusFolder extends LitElement {
   static styles = styles;
 
+  /** Display mode: 'icons' for grid view, 'list' for table view with sortable columns */
   @property({ reflect: true }) accessor view: 'icons' | 'list' = 'icons';
+
+  /** Icon size in pixels. Valid values: 32, 48, 64 */
   @property({ type: Number, reflect: true }) accessor zoom: number = 48;
+
+  /** Sort field: 'name' or 'count'. Items MUST have matching `data-sort-name`/`data-sort-count` attributes. */
   @property({ attribute: 'sort-by', reflect: true }) accessor sortBy: string = 'name';
+
+  /** Sort direction: 'ascending' or 'descending' */
   @property({ attribute: 'sort-order', reflect: true }) accessor sortOrder: string = 'ascending';
 
   #items: HTMLElement[] = [];
@@ -133,6 +148,7 @@ export class NautilusFolder extends LitElement {
                   @click=${() => this.#sortByColumn('count')}>Items</button>
         </div>
       ` : nothing}
+      <!-- Folder item elements (links or interactive elements). Each child MUST have data-sort-name and data-sort-count attributes for sorting. Items SHOULD be focusable for keyboard and screen reader access. -->
       <slot></slot>
     `;
   }

@@ -9,10 +9,19 @@ interface Wallpaper {
   alt: string;
 }
 
+/**
+ * GNOME 2.20 Appearance Preferences dialog. Provides theme switching
+ * (light/dark/system) and background customization for `gnome2-desktop`.
+ * Settings persist to localStorage. Use when the user opens Preferences
+ * from the System menu.
+ *
+ * @summary GNOME 2 appearance preferences dialog
+ */
 @customElement('gnome2-appearance-prefs')
 export class Gnome2AppearancePrefs extends LitElement {
   static styles = styles;
 
+  /** URL to navigate to when the Close button is clicked */
   @property({ attribute: 'close-href' }) accessor closeHref = '/';
 
   @state() accessor #scheme = 'system';

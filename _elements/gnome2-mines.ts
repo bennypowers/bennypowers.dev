@@ -25,6 +25,14 @@ const ADJACENT_COLORS: Record<number, string> = {
   8: '#000000',
 };
 
+/**
+ * A minesweeper game modeled after GNOME Mines (gnomine) from
+ * gnome-games 2.20. Provides an 8x8 grid with 10 mines. Allows
+ * flag placement via right-click and auto-reveals empty regions.
+ * SHOULD be launched from the Applications > Games menu.
+ *
+ * @summary GNOME Mines (gnomine) minesweeper game
+ */
 @customElement('gnome2-mines')
 export class Gnome2Mines extends LitElement {
   static styles = styles;

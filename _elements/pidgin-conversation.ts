@@ -9,10 +9,18 @@ const PROTOCOL_STORAGE_KEY = 'pidgin-protocol';
 const INSTANCE_STORAGE_KEY = 'pidgin-instance';
 const SOURCE_URL_STORAGE_KEY = 'pidgin-source-url';
 
+/**
+ * Pidgin 2.x conversation window. Provides threaded messages with
+ * date dividers and allows replying via Fediverse, Bluesky, or
+ * Webmention. SHOULD be launched from Applications > Internet.
+ *
+ * @summary Pidgin-style conversation window with Fediverse/Bluesky/Webmention replies
+ */
 @customElement('pidgin-conversation')
 export class PidginConversation extends LitElement {
   static styles = styles;
 
+  /** URL of the post being discussed. Used as the reply context for Fediverse/Bluesky/Webmention. */
   @property({ attribute: 'post-url' }) accessor postUrl = '';
 
   @state() accessor protocol: Protocol = '';
@@ -95,6 +103,7 @@ export class PidginConversation extends LitElement {
       </div>
 
       <div id="conversation" role="log" aria-label="Conversation">
+        <!-- pidgin-message elements sorted chronologically. Each message SHOULD have timestamp and author-name for screen reader context. -->
         <slot></slot>
         ${this.statusMessage ? html`<div id="status-msg">${this.statusMessage}</div>` : ''}
       </div>

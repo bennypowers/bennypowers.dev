@@ -2,6 +2,14 @@ import { LitElement, html, isServer } from 'lit';
 import { customElement, state } from 'lit/decorators.js';
 import styles from './gnome2-clock.css';
 
+/**
+ * A clock applet modeled after the GNOME 2.20 panel clock. Provides
+ * a live date/time display formatted with `Intl.DateTimeFormat`,
+ * updating every 30 seconds. SHOULD be placed in the top panel's
+ * `end` slot for the classic GNOME desktop layout.
+ *
+ * @summary GNOME 2 panel clock applet
+ */
 @customElement('gnome2-clock')
 export class Gnome2Clock extends LitElement {
   static styles = styles;

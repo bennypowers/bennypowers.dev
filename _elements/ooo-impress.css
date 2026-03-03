@@ -3,6 +3,8 @@
   flex-direction: column;
   flex: 1;
   min-height: 0;
+
+  /** Clearlooks theme token. Window body background */
   background: var(--cl-window-bg, light-dark(#edeceb, #2e3436));
 }
 
@@ -15,13 +17,18 @@
 }
 
 .tab {
+  /** Clearlooks theme token. Font family */
   font-family: var(--cl-font-family, "DejaVu Sans", sans-serif);
   font-size: 11px;
   padding: 3px 8px;
   border: 1px solid light-dark(#9d9c9b, #555753);
   border-bottom: 1px solid light-dark(#9d9c9b, #555753);
   border-radius: 3px 3px 0 0;
-  background: linear-gradient(to bottom, light-dark(#e6e5e4, #3c3c3c), light-dark(#dadddb, #363636));
+  background: linear-gradient(
+    to bottom,
+    light-dark(#e6e5e4, #3c3c3c),
+    light-dark(#dadddb, #363636)
+  );
   color: light-dark(#2e3436, #eeeeec);
   cursor: default;
   position: relative;

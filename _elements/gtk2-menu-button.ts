@@ -2,25 +2,42 @@ import { LitElement, html, isServer, nothing } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import styles from './gtk2-menu-button.css';
 
+/**
+ * A labeled button that toggles a dropdown menu, modeled after GTK+ 2.20
+ * panel menu buttons. Use inside `gtk2-menu-bar` for top-level menus.
+ * Renders a trigger button with `role="menuitem"` and
+ * `aria-haspopup="menu"`. Opening one menu button auto-closes siblings.
+ *
+ * Keyboard: ArrowDown/ArrowUp navigate items, ArrowRight opens submenus,
+ * Escape closes, Home/End jump to first/last item.
+ *
+ * @summary Menu bar dropdown trigger button
+ */
 @customElement('gtk2-menu-button')
 export class Gtk2MenuButton extends LitElement {
   static styles = styles;
 
+  /** Display text for the trigger button */
   @property() accessor label = '';
+
+  /** Whether the dropdown menu is visible */
   @property({ type: Boolean, reflect: true }) accessor open = false;
 
   render() {
     return html`
+      <!-- The trigger button. Use to override hover, padding, or font styles. -->
       <button part="trigger"
               role="menuitem"
               aria-haspopup="menu"
               aria-expanded=${this.open}
               @click=${this.#onTriggerClick}>
+        <!-- An icon rendered before the label text, typically an SVG. SHOULD be 14px wide. -->
         <slot name="icon"></slot>
         <span>${this.label}</span>
       </button>
       <div id="menu">
         <div id="menu-container" role="menu" aria-label=${this.label}>
+          <!-- Dropdown menu content. SHOULD contain gtk2-menu-item elements. -->
           <slot></slot>
         </div>
       </div>

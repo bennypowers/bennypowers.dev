@@ -44,8 +44,10 @@ export interface TaskbarEntry {
   minimized: boolean;
 }
 
+/** Lit context providing the wmId of the currently focused window. Use for tracking which window has focus. */
 export const activeWindowContext =
   createContextWithRoot<string | undefined>('gnome2-active-window');
 
+/** Lit context providing the list of taskbar entries for the active workspace. Use for rendering the window list in the panel. */
 export const taskbarContext =
   createContextWithRoot<TaskbarEntry[]>('gnome2-taskbar');

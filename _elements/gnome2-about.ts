@@ -2,6 +2,14 @@ import { LitElement, html } from 'lit';
 import { customElement } from 'lit/decorators.js';
 import styles from './gnome2-about.css';
 
+/**
+ * An about dialog modeled after GNOME 2.20 about windows. SHOULD be
+ * launched from the System menu as a dialog window. Provides a banner
+ * image, site navigation, author bio, and stack info for
+ * bennypowers.dev.
+ *
+ * @summary GNOME 2 about dialog with site info and navigation
+ */
 @customElement('gnome2-about')
 export class Gnome2About extends LitElement {
   static styles = styles;
@@ -57,6 +65,7 @@ export class Gnome2About extends LitElement {
         <dd><a href="/tags/nvim/">nvim</a></dd>
       </dl>
 
+      <!-- An h-card microformat element (block element) for IndieWeb identity. SHOULD contain structured contact data. Hidden from screen readers when empty. -->
       <slot name="h-card"></slot>
     `;
   }

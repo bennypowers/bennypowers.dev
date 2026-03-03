@@ -2,6 +2,14 @@ import { LitElement, html, isServer } from 'lit';
 import { customElement, state } from 'lit/decorators.js';
 import styles from './gnome2-calculator.css';
 
+/**
+ * A basic calculator modeled after gcalctool 5.20 from GNOME 2.20.
+ * Provides a numeric display and 4x5 button grid for arithmetic.
+ * Allows full keyboard input (0-9, operators, Enter, Escape). Use
+ * when launched from the Applications > Accessories menu.
+ *
+ * @summary gcalctool-style basic calculator
+ */
 @customElement('gnome2-calculator')
 export class Gnome2Calculator extends LitElement {
   static styles = styles;

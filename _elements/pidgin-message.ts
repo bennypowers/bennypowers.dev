@@ -13,15 +13,30 @@ function formatTime(dateStr: string): string {
   return `(${h12}:${m}:${s} ${ampm})`;
 }
 
+/**
+ * A single message in a Pidgin-style conversation. Provides three
+ * display types: reply, like, and repost. MUST be placed inside
+ * `pidgin-conversation` for proper chronological ordering.
+ *
+ * @summary Pidgin-style conversation message (reply, like, or repost)
+ */
 @customElement('pidgin-message')
 export class PidginMessage extends LitElement {
   static styles = styles;
 
-  /** reply | like | repost */
+  /** Message type: 'reply' shows author + body, 'like' shows "likes this", 'repost' shows "shared this" */
   @property() accessor type: 'reply' | 'like' | 'repost' = 'reply';
+
+  /** ISO 8601 timestamp of the interaction. Displayed in 12-hour UTC format. */
   @property() accessor timestamp = '';
+
+  /** URL of the original interaction (linked from the timestamp) */
   @property() accessor url = '';
+
+  /** Display name of the message author */
   @property({ attribute: 'author-name' }) accessor authorName = '';
+
+  /** URL of the author's profile (linked from the author name) */
   @property({ attribute: 'author-url' }) accessor authorUrl = '';
   get #ts() {
     return formatTime(this.timestamp);
@@ -40,7 +55,7 @@ export class PidginMessage extends LitElement {
           ${this.#renderTimestamp()}
           <a id="sender" href=${this.authorUrl}
              target="_blank" rel="noopener">${this.authorName}:</a>
-          <span id="body"><slot></slot></span>`;
+          <span id="body"><!-- Reply message body content. MAY contain HTML with links. --><slot></slot></span>`;
       case 'like':
         return html`
           ${this.#renderTimestamp()}

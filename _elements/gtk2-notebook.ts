@@ -2,6 +2,13 @@ import { LitElement, html, isServer } from 'lit';
 import { customElement } from 'lit/decorators.js';
 import styles from './gtk2-notebook.css';
 
+/**
+ * A tabbed container modeled after GTK+ 2.20 GtkNotebook. Provides
+ * up to 4 tab/panel pairs with ARIA tab/tabpanel roles and keyboard
+ * navigation. Use for organizing content into switchable panels.
+ *
+ * @summary GTK-style tabbed notebook container
+ */
 @customElement('gtk2-notebook')
 export class Gtk2Notebook extends LitElement {
   static styles = styles;
@@ -91,15 +98,23 @@ export class Gtk2Notebook extends LitElement {
   render() {
     return html`
       <div id="tab-bar" role="tablist">
+        <!-- Tab button (button element with text) for the first panel. MUST be focusable for keyboard access. Gets role="tab" and aria-controls. -->
         <slot name="tab-0"></slot>
+        <!-- Tab button (button element with text) for the second panel. -->
         <slot name="tab-1"></slot>
+        <!-- Tab button (button element with text) for the third panel. -->
         <slot name="tab-2"></slot>
+        <!-- Tab button (button element with text) for the fourth panel. -->
         <slot name="tab-3"></slot>
       </div>
       <div id="content">
+        <!-- Content panel (block element) associated with tab-0. Gets role="tabpanel" and aria-labelledby. -->
         <slot name="panel-0"></slot>
+        <!-- Content panel associated with tab-1. -->
         <slot name="panel-1"></slot>
+        <!-- Content panel associated with tab-2. -->
         <slot name="panel-2"></slot>
+        <!-- Content panel associated with tab-3. -->
         <slot name="panel-3"></slot>
       </div>
     `;

@@ -2,10 +2,18 @@
   display: flex;
   flex-direction: column;
   height: 100%;
+
+  /** Clearlooks theme token. Window body background */
   background: var(--cl-window-bg, light-dark(#edeceb, #2e3436));
+
+  /** Clearlooks theme token. Font family */
   font-family: var(--cl-font-family, "DejaVu Sans", sans-serif);
+
+  /** Clearlooks theme token. Base font size */
   font-size: var(--cl-font-size, 13px);
   line-height: 1.6;
+
+  /** Clearlooks theme token. Primary text color */
   color: var(--cl-text, light-dark(#2e3436, #eeeeec));
   overflow-y: auto;
 }
@@ -21,6 +29,7 @@
 
 #separator {
   height: 1px;
+  /** Clearlooks theme token. Menu separator line color */
   background: var(--cl-menu-separator, light-dark(#d3d7cf, #555753));
   flex-shrink: 0;
 }
@@ -44,16 +53,19 @@
 nav {
   display: flex;
   gap: 5px;
+  /** Clearlooks theme token. Base font size */
   font-size: var(--cl-font-size, 13px);
   flex-wrap: wrap;
   align-items: center;
 
   a {
+    /** Clearlooks theme token. Primary text color */
     color: var(--cl-text, light-dark(#2e3436, #eeeeec));
     font-weight: 700;
     text-decoration: underline;
 
     &:hover {
+      /** Clearlooks theme token. Link text color */
       color: var(--cl-link, light-dark(#3465a4, #729fcf));
     }
   }
@@ -68,15 +80,18 @@ h1 {
   font-weight: 700;
   text-align: center;
   margin: 16px 24px 8px;
+  /** Clearlooks theme token. Heading text color */
   color: var(--cl-heading, light-dark(#2e3436, #eeeeec));
 }
 
 #bio {
   text-align: center;
   padding: 0 32px;
+  /** Clearlooks theme token. Secondary text color */
   color: var(--cl-text-secondary, light-dark(#555753, #babdb6));
 
   a {
+    /** Clearlooks theme token. Link text color */
     color: var(--cl-link, light-dark(#3465a4, #729fcf));
   }
 }
@@ -88,6 +103,7 @@ h1 {
 
 dl {
   padding: 0 24px;
+  /** Clearlooks theme token. Base font size */
   font-size: var(--cl-font-size, 13px);
 
   dt {
@@ -101,6 +117,7 @@ dl {
   }
 
   a {
+    /** Clearlooks theme token. Link text color */
     color: var(--cl-link, light-dark(#3465a4, #729fcf));
   }
 }

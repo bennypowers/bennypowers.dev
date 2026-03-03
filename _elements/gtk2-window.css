@@ -5,13 +5,25 @@
   flex-direction: column;
   position: relative;
   box-sizing: border-box;
+
+  /** Clearlooks theme token. Window corner radius */
   border-radius: var(--cl-window-radius, 6px);
+
+  /** Clearlooks theme token. Window drop shadow */
   box-shadow: var(--cl-window-shadow, 2px 4px 12px rgba(0, 0, 0, 0.35));
   overflow: visible;
+
+  /** Clearlooks theme token. Window body background color */
   background: var(--cl-window-bg, #f2f1f0);
   border: none;
+
+  /** Clearlooks theme token. Font family */
   font-family: var(--cl-font-family, "DejaVu Sans", sans-serif);
+
+  /** Clearlooks theme token. Base font size */
   font-size: var(--cl-font-size, 13px);
+
+  /** Clearlooks theme token. Window text color */
   color: var(--cl-button-text, #2e3436);
 }
 
@@ -31,9 +43,11 @@
 
 :host(:not([focused])) {
   #titlebar {
+    /** Clearlooks theme token. Unfocused window titlebar background */
     background: var(--cl-titlebar-bg-unfocused, linear-gradient(to bottom, #c0c0c0, #a0a0a0));
   }
   #title {
+    /** Clearlooks theme token. Unfocused window title text color */
     color: var(--cl-titlebar-text-unfocused, #888a85);
     text-shadow: none;
   }
@@ -42,8 +56,14 @@
 #titlebar {
   display: flex;
   align-items: center;
+
+  /** Clearlooks theme token. Titlebar height */
   height: var(--cl-titlebar-height, 24px);
+
+  /** Clearlooks theme token. Focused titlebar background gradient */
   background: var(--cl-titlebar-bg, linear-gradient(to bottom, #729fcf, #3465a4));
+
+  /** Clearlooks theme token. Titlebar corner radius */
   border-radius: var(--cl-titlebar-radius, 6px 6px 0 0);
   padding: 0 4px;
   user-select: none;
@@ -55,8 +75,14 @@
 #title {
   flex: 1;
   text-align: center;
+
+  /** Clearlooks theme token. Titlebar text color */
   color: var(--cl-titlebar-text, #ffffff);
+
+  /** Clearlooks theme token. Titlebar text shadow for legibility */
   text-shadow: var(--cl-titlebar-text-shadow, 0 1px 1px rgba(0, 0, 0, 0.4));
+
+  /** Clearlooks theme token. Titlebar font size */
   font-size: var(--cl-font-size-title, 13px);
   font-weight: 700;
   overflow: hidden;
@@ -99,7 +125,11 @@
     height: 18px;
     box-sizing: border-box;
     border-radius: 2px;
+
+    /** Clearlooks theme token. Titlebar button border color */
     border: 2px solid var(--cl-minmax-border, #6b7e95);
+
+    /** Clearlooks theme token. Titlebar button background */
     background: var(--cl-minmax-bg, linear-gradient(to bottom, #93b3d3, #7a9bba));
     cursor: pointer;
     display: flex;
@@ -111,10 +141,12 @@
     line-height: 1;
 
     &:hover {
+      /** Clearlooks theme token. Titlebar button hover background */
       background: var(--cl-minmax-bg-hover, linear-gradient(to bottom, #a3c3e3, #8aabca));
     }
 
     &:active {
+      /** Clearlooks theme token. Titlebar button active/pressed background */
       background: var(--cl-minmax-bg-active, linear-gradient(to bottom, #6a8ba8, #7a9bba));
     }
 
@@ -147,31 +179,39 @@
 }
 
 #menubar-area {
+  /** Clearlooks theme token. Panel height for menubar */
   --cl-panel-height: 22px;
   --_menubar-padding: 5px;
   --_menubar-mnemonic: underline;
+  /** Clearlooks theme token. Titlebar background reused for active menubar item */
   --_menubar-active-bg: var(--cl-titlebar-bg);
+  /** Clearlooks theme token. Titlebar text color reused for active menubar item */
   --_menubar-active-text: var(--cl-titlebar-text, #ffffff);
   --_menubar-active-radius: var(--cl-button-radius, 3px) var(--cl-button-radius, 3px) 0 0;
   --_menu-icon-size: 16px;
   --_menu-icon-gap: 4px;
   --_menu-item-height: 22px;
   --_menu-font-size: 12px;
+  /** Clearlooks theme token. Menu item padding */
   --cl-menu-item-padding: 2px 12px 2px 4px;
   border-bottom: 2px solid light-dark(#d3d7cf, #555753);
+  /** Clearlooks theme token. Window body background */
   background: var(--cl-window-bg, light-dark(#edeceb, #2e3436));
   flex-shrink: 0;
 
   ::slotted(gtk2-menu-bar) {
     height: 22px;
+    /** Clearlooks theme token. Small font size */
     font-size: var(--cl-font-size-small, 11px);
   }
 }
 
 #statusbar-area {
   border-top: 2px solid light-dark(#d3d7cf, #555753);
+  /** Clearlooks theme token. Window body background */
   background: var(--cl-window-bg, light-dark(#edeceb, #2e3436));
   padding: 2px 8px;
+  /** Clearlooks theme token. Small font size */
   font-size: var(--cl-font-size-small, 11px);
   color: light-dark(#555753, #babdb6);
   flex-shrink: 0;
@@ -184,6 +224,7 @@
 }
 
 :host([dialog]) #content {
+  /** Clearlooks theme token. Window body background */
   background: var(--cl-window-bg, light-dark(#edeceb, #2e3436));
 }
 

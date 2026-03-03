@@ -2,12 +2,24 @@ import { LitElement, html, nothing } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 import styles from './nautilus-paginated.css';
 
+/**
+ * Nautilus 2.20 paginated content container. Provides first/prev/next/
+ * last navigation for paging through child elements. Use when content
+ * exceeds a single view. SHOULD set `total-items` for correct SSR.
+ *
+ * @summary Nautilus-style paginated content with navigation toolbar
+ */
 @customElement('nautilus-paginated')
 export class NautilusPaginated extends LitElement {
   static styles = styles;
 
+  /** Number of items displayed per page */
   @property({ attribute: 'page-size', type: Number }) accessor pageSize = 9;
+
+  /** Total item count for SSR page calculation. Pass from template when item count is known at build time. */
   @property({ attribute: 'total-items', type: Number }) accessor totalItems = 0;
+
+  /** Set during SSR to hide overflow items. Removed after hydration. */
   @property({ type: Boolean, reflect: true, attribute: 'pending-hydration' }) accessor pendingHydration = true;
   @state() accessor #page = 0;
 
@@ -88,6 +100,7 @@ export class NautilusPaginated extends LitElement {
       </div>
       <div id="viewport">
         <div id="content">
+          <!-- Paginated child elements (links or block elements). Items beyond the current page are hidden. Each item SHOULD be focusable for keyboard and screen reader access. -->
           <slot></slot>
         </div>
       </div>

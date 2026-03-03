@@ -2,16 +2,34 @@ import { LitElement, html, isServer, nothing } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import styles from './gtk2-menu.css';
 
+/**
+ * A dropdown or context menu container modeled after GTK+ 2.20 GtkMenu.
+ * Holds `gtk2-menu-item` children and provides keyboard navigation
+ * (Arrow keys, Home, End, Escape). When used as a submenu, MUST be
+ * slotted into `gtk2-menu-item`'s `submenu` slot and will auto-register
+ * with the parent item via `submenu-register` event.
+ * Supports ARIA menu pattern with `role="menu"`.
+ *
+ * @summary GTK-style dropdown menu container
+ *
+ * @fires open - When the menu becomes visible via `show()`. No detail data.
+ * @fires close - When the menu is hidden via `hide()`. No detail data.
+ */
 @customElement('gtk2-menu')
 export class Gtk2Menu extends LitElement {
   static styles = styles;
 
+  /** Whether the menu is visible. Set via `show()`/`hide()`/`toggle()`. */
   @property({ type: Boolean, reflect: true }) accessor open = false;
+
+  /** Accessible label for the menu's `aria-label`. SHOULD describe the menu's purpose. */
   @property({ attribute: 'accessible-label' }) accessor accessibleLabel = '';
 
   render() {
     return html`
+      <!-- The menu popup container. Use to override background, border, or shadow. -->
       <div id="menu" role="menu" part="menu" aria-label=${this.accessibleLabel || nothing}>
+        <!-- Menu content. MUST contain gtk2-menu-item elements. Items receive focus via keyboard navigation. Separator items are supported. -->
         <slot></slot>
       </div>
     `;

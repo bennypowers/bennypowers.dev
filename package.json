@@ -75,6 +75,7 @@
     "@11ty/webc": "0.11.3"
   },
   "devDependencies": {
+    "@pwrs/cem": "^0.9.9",
     "esbuild": "^0.27.3",
     "piscina": "^5.1.4",
     "ts-blank-space": "^0.7.0",

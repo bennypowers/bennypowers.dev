@@ -2,7 +2,11 @@
   display: block;
   margin-bottom: 2px;
   word-wrap: break-word;
+
+  /** Clearlooks theme token. Font family */
   font-family: var(--cl-font-family, "DejaVu Sans", sans-serif);
+
+  /** Clearlooks theme token. Base font size */
   font-size: var(--cl-font-size, 13px);
   line-height: 1.4;
 }

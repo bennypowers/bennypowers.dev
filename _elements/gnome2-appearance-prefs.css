@@ -2,8 +2,14 @@
   display: flex;
   flex-direction: column;
   height: 100%;
+
+  /** Clearlooks theme token. Font family */
   font-family: var(--cl-font-family, "DejaVu Sans", sans-serif);
+
+  /** Clearlooks theme token. Base font size */
   font-size: var(--cl-font-size, 13px);
+
+  /** Clearlooks theme token. Window body background */
   background: var(--cl-window-bg, light-dark(#edeceb, #2e3436));
 }
 
@@ -45,6 +51,7 @@ gtk2-notebook {
   background: none;
   cursor: default;
   font-family: inherit;
+  /** Clearlooks theme token. Small font size */
   font-size: var(--cl-font-size-small, 11px);
   color: light-dark(#2e3436, #eeeeec);
 
@@ -106,6 +113,7 @@ gtk2-notebook {
 
 .section-label {
   font-weight: 700;
+  /** Clearlooks theme token. Base font size */
   font-size: var(--cl-font-size, 13px);
   color: light-dark(#2e3436, #eeeeec);
   padding: 0;
@@ -172,10 +180,12 @@ gtk2-notebook {
 
 select {
   font-family: inherit;
+  /** Clearlooks theme token. Small font size */
   font-size: var(--cl-font-size-small, 11px);
   padding: 2px 4px;
   border: 1px solid light-dark(#9d9c9b, #555753);
   border-radius: 3px;
+  /** Clearlooks theme token. Button background gradient */
   background: var(--cl-button-bg);
   color: light-dark(#2e3436, #eeeeec);
   cursor: default;
@@ -218,6 +228,7 @@ select {
   padding: 3px 10px;
   border: 1px solid light-dark(#9d9c9b, #1a1a1a);
   border-radius: 3px;
+  /** Clearlooks theme token. Button background gradient */
   background: var(--cl-button-bg);
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.4);
   font-family: inherit;
@@ -227,10 +238,12 @@ select {
   cursor: default;
 
   &:hover {
+    /** Clearlooks theme token. Button hover background */
     background: var(--cl-button-bg-hover);
   }
 
   &:active {
+    /** Clearlooks theme token. Button active/pressed background */
     background: var(--cl-button-bg-active);
     box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.15);
   }

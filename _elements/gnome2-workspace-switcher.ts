@@ -2,6 +2,7 @@ import { LitElement, html } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import styles from './gnome2-workspace-switcher.css';
 
+/** Dispatched when the user clicks a workspace to switch to it. Provides `workspace` number for the target workspace index. */
 export class WMWorkspaceSwitchEvent extends Event {
   constructor(public workspace: number) {
     super('wm-workspace-switch', { bubbles: true, composed: true });
@@ -21,12 +22,27 @@ export interface MiniWindow {
   minimized?: boolean;
 }
 
+/**
+ * A workspace switcher applet modeled after GNOME 2.20. Provides
+ * miniature workspace previews with proportionally-scaled window
+ * indicators. SHOULD be placed in the bottom panel's `end` slot.
+ * Allows workspace switching when the user clicks a preview.
+ *
+ * @summary GNOME 2 workspace switcher with miniature previews
+ *
+ * @fires {WMWorkspaceSwitchEvent} wm-workspace-switch - When a workspace is clicked. Detail: `workspace` number (zero-based index).
+ */
 @customElement('gnome2-workspace-switcher')
 export class Gnome2WorkspaceSwitcher extends LitElement {
   static styles = styles;
 
+  /** Zero-based index of the active workspace */
   @property({ type: Number }) accessor active = 0;
+
+  /** Total number of workspaces to display */
   @property({ type: Number }) accessor count = 4;
+
+  /** Window position data for rendering miniature indicators in each workspace */
   @property({ type: Array }) accessor windows: MiniWindow[] = [];
 
   /** Inner dimensions of the workspace box (after border) */

@@ -7,16 +7,20 @@
 }
 
 :host(::-webkit-scrollbar) {
+  /** Clearlooks theme token. Scrollbar track width */
   width: var(--cl-scrollbar-width, 14px);
   height: var(--cl-scrollbar-width, 14px);
 }
 
 :host(::-webkit-scrollbar-track) {
+  /** Clearlooks theme token. Scrollbar track background */
   background: var(--cl-scrollbar-track, #d9d7d5);
 }
 
 :host(::-webkit-scrollbar-thumb) {
   background: linear-gradient(to right, light-dark(#a3bfe1, #4a6a8a), light-dark(#8daed0, #3a5a7a));
+
+  /** Clearlooks theme token. Scrollbar thumb border color */
   border: 1px solid var(--cl-scrollbar-border, #9d9c9b);
   border-radius: 2px;
 }
@@ -30,6 +34,7 @@
 }
 
 #viewport {
+  /** Clearlooks theme token. Viewport internal padding */
   padding: var(--gtk-scrolled-window-padding, 12px);
 }
 

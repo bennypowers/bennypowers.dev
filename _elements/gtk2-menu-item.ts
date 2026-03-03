@@ -2,20 +2,42 @@ import { LitElement, html, nothing, isServer } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 import styles from './gtk2-menu-item.css';
 
+/**
+ * GTK+ 2.20 GtkMenuItem with Clearlooks highlighting. MUST be placed
+ * inside `gtk2-menu` or `gtk2-menu-button`. Provides links via `href`,
+ * submenu cascading, radio-check state, separators, and icons. Allows
+ * keyboard navigation via ArrowUp/ArrowDown/ArrowRight/ArrowLeft.
+ *
+ * @summary GTK-style menu item with icon, submenu, and link support
+ */
 @customElement('gtk2-menu-item')
 export class Gtk2MenuItem extends LitElement {
   #internals = !isServer ? this.attachInternals() : null;
 
   static styles = styles;
 
+  /** Display text for the menu item */
   @property() accessor label = '';
+
+  /** Navigation URL. When set, the item renders as an anchor element. */
   @property() accessor href = '';
+
+  /** Icon path relative to /assets/icons/gnome/, e.g. `apps/calculator`. Omit the `.svg` extension. */
   @property({ reflect: true }) accessor icon = '';
+
+  /** When true, renders as a horizontal separator line instead of an interactive item */
   @property({ type: Boolean, reflect: true }) accessor separator = false;
+
+  /** When true, the item is non-interactive and visually dimmed */
   @property({ type: Boolean, reflect: true }) accessor disabled = false;
+
+  /** Whether the item's submenu is currently expanded */
   @property({ type: Boolean, reflect: true }) accessor active = false;
+
+  /** When true, displays a radio-button check indicator. Sets `role="menuitemradio"`. */
   @property({ type: Boolean, reflect: true }) accessor checked = false;
 
+  /** Whether this item has a child submenu. Auto-set via `submenu-register` event. */
   @property({ type: Boolean, reflect: true, attribute: 'has-submenu' }) accessor hasSubmenu = false;
 
   get #iconSrc(): string {
@@ -159,7 +181,7 @@ export class Gtk2MenuItem extends LitElement {
 
     const content = html`
       <div id="icon">${this.icon ? html`<img src=${this.#iconSrc} alt="" width="24" height="24">` : nothing}</div>
-      <div id="label">${this.label}<slot></slot></div>
+      <div id="label">${this.label}<!-- Additional label content appended after the label attribute text. --><slot></slot></div>
       ${this.hasSubmenu ? html`<span id="submenu-arrow"></span>` : nothing}
     `;
 
@@ -181,6 +203,7 @@ export class Gtk2MenuItem extends LitElement {
                     aria-expanded=${this.hasSubmenu ? String(this.active) : nothing}>${content}</div>`
       }
       <div id="submenu" role=${this.hasSubmenu ? 'none' : nothing}>
+        <!-- A gtk2-menu element for cascading submenus. The child menu MUST set slot="submenu" and will auto-register with the parent item. -->
         <slot name="submenu"></slot>
       </div>
     `;

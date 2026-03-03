@@ -25,6 +25,14 @@ function fromComposed(e: Event, selector: string): HTMLElement | null {
   return null;
 }
 
+/**
+ * The GNOME 2 session menu applet. Provides Applications, Places,
+ * and System menus allowing navigation and app launching. SHOULD
+ * be placed in the top panel's `start` slot. Delegates app launching
+ * to `gnome2-desktop` for window management.
+ *
+ * @summary GNOME 2 session menu bar (Applications, Places, System)
+ */
 @customElement('gnome2-session')
 export class Gnome2Session extends LitElement {
   static styles = styles;
@@ -122,6 +130,7 @@ export class Gnome2Session extends LitElement {
                           href="/posts/"
                           icon="places/folder">
             <gtk2-menu slot="submenu">
+              <!-- Post navigation links (gtk2-menu-item elements) for the Places > Posts submenu. Each item SHOULD have a label and href for keyboard navigation. -->
               <slot name="places-posts"></slot>
             </gtk2-menu>
           </gtk2-menu-item>
@@ -129,6 +138,7 @@ export class Gnome2Session extends LitElement {
                           href="/tags/"
                           icon="places/folder">
             <gtk2-menu slot="submenu">
+              <!-- Tag navigation links (gtk2-menu-item elements) for the Places > Tags submenu. Each item SHOULD have a label and href. -->
               <slot name="places-tags"></slot>
             </gtk2-menu>
           </gtk2-menu-item>
@@ -136,6 +146,7 @@ export class Gnome2Session extends LitElement {
                           href="/decks/"
                           icon="places/folder">
             <gtk2-menu slot="submenu">
+              <!-- Deck navigation links (gtk2-menu-item elements) for the Places > Decks submenu. Each item SHOULD have a label and href. -->
               <slot name="places-decks"></slot>
             </gtk2-menu>
           </gtk2-menu-item>

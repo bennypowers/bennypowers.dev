@@ -6,6 +6,7 @@ import { WMMinimizeEvent } from './gnome2-window-list.js';
 import { activeWindowContext } from './gnome2-wm-context.js';
 import styles from './gtk2-window.css';
 
+/** Dispatched when a window requests focus from the window manager. Provides `wmId` and `url` for identifying the target window. */
 export class WMFocusEvent extends Event {
   wmId: string;
   url: string;
@@ -16,6 +17,7 @@ export class WMFocusEvent extends Event {
   }
 }
 
+/** Dispatched when a window's close button is clicked. Provides `wmId` and `url` for identifying the closed window. */
 export class WMCloseEvent extends Event {
   wmId: string;
   url: string;
@@ -26,6 +28,7 @@ export class WMCloseEvent extends Event {
   }
 }
 
+/** Dispatched after a window is dragged or resized to allow saving its position. Provides `wmId` and `url` for identifying the moved window. */
 export class WMMoveEvent extends Event {
   wmId: string;
   url: string;
@@ -36,18 +39,50 @@ export class WMMoveEvent extends Event {
   }
 }
 
+/**
+ * A draggable, resizable window modeled after Metacity 2.20. Provides
+ * titlebar with minimize/maximize/close, drag-to-move, and edge-resize.
+ * MUST be placed inside `gnome2-desktop` for WM integration. Consumes
+ * `activeWindowContext` to track focus state.
+ *
+ * @summary Metacity-style draggable, resizable application window
+ *
+ * @fires {WMFocusEvent} wm-focus - When focus is requested. Detail: `wmId`, `url`.
+ * @fires {WMCloseEvent} wm-close - When the close button is clicked. Detail: `wmId`, `url`.
+ * @fires {WMMoveEvent} wm-move - After drag or resize ends. Detail: `wmId`, `url`.
+ * @fires minimize - When the minimize button is clicked. No detail.
+ * @fires maximize - When maximize is toggled. No detail.
+ * @fires close - When the close button is clicked. No detail.
+ */
 @customElement('gtk2-window')
 export class Gtk2Window extends LitElement {
   static styles = styles;
 
+  /** Window title displayed in the titlebar */
   @property({ reflect: true }) accessor label = '';
+
+  /** Icon path relative to /assets/icons/gnome/, e.g. `apps/calculator` */
   @property({ reflect: true }) accessor icon = '';
+
+  /** Unique window manager identifier. Defaults to `window-url` if not set. */
   @property({ attribute: 'wm-id', reflect: true }) accessor wmId = '';
+
+  /** URL of the page content displayed in this window */
   @property({ attribute: 'window-url' }) accessor windowUrl = '';
+
+  /** Whether the window fills the workspace. Toggle via titlebar double-click. */
   @property({ type: Boolean, reflect: true }) accessor maximized = false;
+
+  /** Whether this window has focus. Managed by `gnome2-desktop` via context. */
   @property({ type: Boolean, reflect: true }) accessor focused = false;
+
+  /** Whether edge-resize handles are active */
   @property({ type: Boolean, reflect: true }) accessor resizable = false;
+
+  /** Dialog mode: hides statusbar and uses dialog sizing */
   @property({ type: Boolean, reflect: true }) accessor dialog = false;
+
+  /** URL to navigate to when the window is closed */
   @property({ attribute: 'close-href' }) accessor closeHref = '/';
 
   @consume({ context: activeWindowContext, subscribe: true })
@@ -90,11 +125,13 @@ export class Gtk2Window extends LitElement {
       <div data-cardinal="nw" @pointerdown=${this.#onResizeStart}></div>
       <div data-cardinal="se" @pointerdown=${this.#onResizeStart}></div>
       <div data-cardinal="sw" @pointerdown=${this.#onResizeStart}></div>
+      <!-- The Metacity-style titlebar. Use to override background gradient or height. -->
       <div id="titlebar"
            part="titlebar"
            @pointerdown=${this.#onTitlebarPointerDown}
            @dblclick=${this.#onTitlebarDblClick}>
         <div id="window-icon">
+          <!-- Custom window icon element, typically an img or svg. SHOULD be 16x16. MUST have role="presentation" or alt text. Falls back to the icon attribute. -->
           <slot name="icon">
             <img src=${ifDefined(this.#iconSrc)}
                  role="presentation"
@@ -135,15 +172,20 @@ export class Gtk2Window extends LitElement {
           </button>
         </div>
       </div>
+      <!-- The window body below the titlebar. Contains menubar, content, and statusbar areas. -->
       <div id="body" part="body">
         <div id="menubar-area">
+          <!-- A gtk2-menu-bar element for the window's menu bar. Provides keyboard-navigable menus. Renders below the titlebar. -->
           <slot name="menubar"></slot>
         </div>
         <div id="content-frame">
+          <!-- The main content area. Background is white/dark by default. Use for custom content backgrounds. -->
           <div id="content" part="content">
+            <!-- Main window content. Typically contains the application element or page content. -->
             <slot></slot>
           </div>
           <div id="statusbar-area">
+            <!-- Status bar content rendered at the bottom of the window. Hidden when dialog attribute is set. -->
             <slot name="statusbar"></slot>
           </div>
         </div>

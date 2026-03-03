@@ -45,9 +45,16 @@ a {
 }
 
 #label {
+  /** Clearlooks theme token. Desktop icon label text color, white for contrast against desktop background */
   color: var(--cl-desktop-icon-text, #ffffff);
+
+  /** Clearlooks theme token. Desktop icon label text shadow for legibility over wallpaper */
   text-shadow: var(--cl-desktop-icon-text-shadow, 1px 1px 2px rgba(0, 0, 0, 0.7));
+
+  /** Clearlooks theme token. Font family */
   font-family: var(--cl-font-family, "DejaVu Sans", sans-serif);
+
+  /** Clearlooks theme token. Small font size for icon labels */
   font-size: var(--cl-font-size-small, 11px);
   text-align: center;
   word-break: break-word;

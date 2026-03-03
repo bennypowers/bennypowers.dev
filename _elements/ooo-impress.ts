@@ -6,10 +6,18 @@ type View = 'normal' | 'sorter';
 
 const TABS = ['Normal', 'Outline', 'Notes', 'Handout', 'Slide Sorter'] as const;
 
+/**
+ * OpenOffice.org 2.x Impress presentation viewer. Provides view tabs
+ * with ARIA roles for switching between normal and slide sorter views.
+ * Use for displaying slide decks.
+ *
+ * @summary OpenOffice Impress-style presentation viewer
+ */
 @customElement('ooo-impress')
 export class OooImpress extends LitElement {
   static styles = styles;
 
+  /** Active view mode: 'normal' for single slide, 'sorter' for grid overview */
   @property({ reflect: true }) accessor view: View = 'normal';
 
   render() {
@@ -28,6 +36,7 @@ export class OooImpress extends LitElement {
         `;})}
       </div>
       <div id="workspace" role="tabpanel" aria-labelledby="${activeId}">
+        <!-- Slide content, typically ooo-impress-deck elements. Each deck SHOULD have a meaningful label for accessibility. -->
         <slot></slot>
       </div>
     `;

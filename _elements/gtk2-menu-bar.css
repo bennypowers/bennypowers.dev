@@ -2,7 +2,13 @@
   display: flex;
   align-items: stretch;
   height: 100%;
+
+  /** Clearlooks theme token. Font family */
   font-family: var(--cl-font-family, "DejaVu Sans", sans-serif);
+
+  /** Clearlooks theme token. Base font size */
   font-size: var(--cl-font-size, 13px);
+
+  /** Clearlooks theme token. Menu bar text color, inherited from panel */
   color: var(--cl-panel-text, #2e3436);
 }

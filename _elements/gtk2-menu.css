@@ -10,9 +10,16 @@
 }
 
 #menu {
+  /** Clearlooks theme token. Menu popup background color */
   background: var(--cl-menu-bg, #ffffff);
+
+  /** Clearlooks theme token. Menu popup border color */
   border: 1px solid var(--cl-menu-border, #ababaa);
+
+  /** Clearlooks theme token. Menu popup border radius */
   border-radius: var(--cl-menu-radius, 0);
+
+  /** Clearlooks theme token. Menu drop shadow */
   box-shadow: var(--cl-menu-shadow, 2px 4px 8px rgba(0, 0, 0, 0.2));
   padding: 4px 0;
   min-width: inherit;

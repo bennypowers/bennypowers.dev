@@ -13,6 +13,14 @@ function supportsCredentiallessIframe(): boolean {
   }
 }
 
+/**
+ * An embedded SuperTux game. Provides a credentialless iframe to
+ * play.supertux.org when the browser allows it, otherwise falls
+ * back to an external link. SHOULD be launched from the
+ * Applications > Games menu.
+ *
+ * @summary Embedded SuperTux game via credentialless iframe
+ */
 @customElement('gnome2-supertux')
 export class Gnome2Supertux extends LitElement {
   static styles = styles;

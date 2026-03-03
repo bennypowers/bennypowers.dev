@@ -1,10 +1,20 @@
 :host {
   display: flex;
   align-items: center;
+
+  /** Clearlooks theme token. Panel bar height */
   height: var(--cl-panel-height, 26px);
+
+  /** Clearlooks theme token. Panel background, a subtle Clearlooks gradient by default */
   background: var(--cl-panel-bg, linear-gradient(to bottom, #edeceb, #e6e5e4, #dddcdb, #cecdcb));
+
+  /** Clearlooks theme token. Font family */
   font-family: var(--cl-font-family, "DejaVu Sans", sans-serif);
+
+  /** Clearlooks theme token. Base font size */
   font-size: var(--cl-font-size, 13px);
+
+  /** Clearlooks theme token. Panel text color */
   color: var(--cl-panel-text, #2e3436);
   box-sizing: border-box;
   flex-shrink: 0;
@@ -12,7 +22,10 @@
 }
 
 :host([position="top"]) {
+  /** Clearlooks theme token. Panel top highlight border */
   border-top: 1px solid var(--cl-panel-border-top, #ffffff);
+
+  /** Clearlooks theme token. Panel bottom separator border */
   border-bottom: 1px solid var(--cl-panel-border-bottom, #d0cfce);
 }
 
