@@ -31,7 +31,7 @@ const allPublished = collections.posts.filter(isPublished).reverse();
     </gtk2-menu-button>
   </gtk2-menu-bar>
   <span slot="statusbar" @text="`${allPublished.length} items`"></span>
-  <nautilus-paginated page-size="9">
+  <nautilus-paginated page-size="9" :total-items="allPublished.length">
     <a webc:for="post of allPublished"
        class="nautilus-icon"
        :href="post.url">

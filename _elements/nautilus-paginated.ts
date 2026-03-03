@@ -7,12 +7,14 @@ export class NautilusPaginated extends LitElement {
   static styles = styles;
 
   @property({ attribute: 'page-size', type: Number }) accessor pageSize = 9;
+  @property({ attribute: 'total-items', type: Number }) accessor totalItems = 0;
   @state() accessor #page = 0;
 
   #items: Element[] = [];
 
   get #totalPages(): number {
-    return Math.max(1, Math.ceil(this.#items.length / this.pageSize));
+    const count = this.#items.length || this.totalItems;
+    return Math.max(1, Math.ceil(count / this.pageSize));
   }
 
   firstUpdated() {
