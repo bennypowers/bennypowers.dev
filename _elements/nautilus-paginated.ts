@@ -8,6 +8,7 @@ export class NautilusPaginated extends LitElement {
 
   @property({ attribute: 'page-size', type: Number }) accessor pageSize = 9;
   @property({ attribute: 'total-items', type: Number }) accessor totalItems = 0;
+  @property({ type: Boolean, reflect: true, attribute: 'pending-hydration' }) accessor pendingHydration = true;
   @state() accessor #page = 0;
 
   #items: Element[] = [];
@@ -18,6 +19,7 @@ export class NautilusPaginated extends LitElement {
   }
 
   firstUpdated() {
+    this.pendingHydration = false;
     this.#items = [...this.querySelectorAll(':scope > *')];
     this.#applyPage();
   }

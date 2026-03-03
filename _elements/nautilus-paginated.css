@@ -89,3 +89,8 @@
 ::slotted([hidden]) {
   display: none !important;
 }
+
+/* Hide overflow items before JS pagination takes over */
+:host([pending-hydration]) ::slotted(:nth-child(n + 10)) {
+  display: none !important;
+}
