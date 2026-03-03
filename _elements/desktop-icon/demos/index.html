@@ -1,0 +1,35 @@
+<meta itemprop="description" content="Desktop icons with attribute icon, slotted SVG icon, and long wrapping label">
+<style>
+  .demo-container {
+    display: flex;
+    gap: 24px;
+    padding: 24px;
+    background: #305573;
+    min-height: 200px;
+    align-items: start;
+  }
+</style>
+<div class="demo-container">
+  <desktop-icon
+    label="Home"
+    href="#home"
+    icon="/assets/icons/gnome/places/user-home.svg">
+  </desktop-icon>
+
+  <desktop-icon label="Custom Icon" href="#custom">
+    <svg slot="icon" width="48" height="48" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+      <rect x="4" y="4" width="40" height="40" rx="6" fill="#f57900"/>
+      <circle cx="24" cy="24" r="12" fill="#ffffff"/>
+      <circle cx="24" cy="24" r="6" fill="#f57900"/>
+    </svg>
+  </desktop-icon>
+
+  <desktop-icon
+    label="A Desktop Shortcut With a Very Long Label That Wraps to Multiple Lines"
+    href="#long-label"
+    icon="/assets/icons/gnome/places/folder.svg">
+  </desktop-icon>
+</div>
+<script type="module">
+  import 'gnome2/desktop-icon/desktop-icon.js';
+</script>

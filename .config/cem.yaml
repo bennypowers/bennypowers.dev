@@ -6,3 +6,21 @@ generate:
     - _elements/css.d.ts
     - _elements/ssr-shim.ts
   output: custom-elements.json
+  demoDiscovery:
+    fileGlob: "_elements/**/demos/*.html"
+    urlPattern: "_elements/:component/demos/:demo.html"
+    urlTemplate: "/elements/{{.component | alias}}/demo/{{.demo | slug}}/"
+serve:
+  port: 8222
+  transforms:
+    typescript:
+      enabled: true
+      target: es2022
+    css:
+      enabled: true
+      include:
+        - '_elements/**/*.css'
+  importMap:
+    override:
+      imports:
+        'gnome2/': '/_elements/'

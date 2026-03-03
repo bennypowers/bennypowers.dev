@@ -1,0 +1,72 @@
+<meta itemprop="description" content="Full GNOME 2 desktop shell with panels, windows, and icons">
+
+<style>
+  .demo {
+    height: 600px;
+    border: 1px solid #888;
+    overflow: hidden;
+  }
+</style>
+
+<div class="demo">
+  <gnome2-desktop page-url="/demo/" page-title="Demo Page" page-icon="apps/accessories-text-editor">
+    <gnome2-panel slot="top-panel" position="top">
+      <gnome2-session slot="start">
+      </gnome2-session>
+      <gnome2-clock slot="end"></gnome2-clock>
+    </gnome2-panel>
+
+    <desktop-icon slot="icons"
+                  label="Home"
+                  href="#home"
+                  icon="/assets/icons/gnome/places/user-home.svg">
+    </desktop-icon>
+    <desktop-icon slot="icons"
+                  label="Posts"
+                  href="#posts"
+                  icon="/assets/icons/gnome/places/folder.svg">
+    </desktop-icon>
+
+    <gtk2-window label="Demo Page"
+                 icon="apps/accessories-text-editor"
+                 window-url="/demo/"
+                 focused
+                 style="position: relative; width: 500px; height: 350px;">
+      <gtk2-scrolled-window>
+        <h2>Welcome to the Desktop Demo</h2>
+        <p>This is a full integration demo of the GNOME 2 desktop shell.
+           It includes the top panel with session menus and clock,
+           desktop icons, and a managed window.</p>
+        <p>Test scenarios:</p>
+        <ul>
+          <li>Click the Applications/Places/System menus</li>
+          <li>Click the window titlebar buttons (minimize, maximize, close)</li>
+          <li>Drag the window by its titlebar</li>
+          <li>Double-click the titlebar to maximize/restore</li>
+          <li>Click desktop icons</li>
+        </ul>
+      </gtk2-scrolled-window>
+    </gtk2-window>
+
+    <gnome2-panel slot="bottom-panel" position="bottom">
+      <gnome2-window-list></gnome2-window-list>
+      <gnome2-workspace-switcher slot="end" count="4"></gnome2-workspace-switcher>
+    </gnome2-panel>
+  </gnome2-desktop>
+</div>
+
+<script type="module">
+  import 'gnome2/gnome2-desktop/gnome2-desktop.js';
+  import 'gnome2/gnome2-panel/gnome2-panel.js';
+  import 'gnome2/gnome2-session/gnome2-session.js';
+  import 'gnome2/gnome2-clock/gnome2-clock.js';
+  import 'gnome2/gnome2-window-list/gnome2-window-list.js';
+  import 'gnome2/gnome2-workspace-switcher/gnome2-workspace-switcher.js';
+  import 'gnome2/desktop-icon/desktop-icon.js';
+  import 'gnome2/gtk2-window/gtk2-window.js';
+  import 'gnome2/gtk2-scrolled-window/gtk2-scrolled-window.js';
+  import 'gnome2/gtk2-menu-bar/gtk2-menu-bar.js';
+  import 'gnome2/gtk2-menu-button/gtk2-menu-button.js';
+  import 'gnome2/gtk2-menu-item/gtk2-menu-item.js';
+  import 'gnome2/gtk2-menu/gtk2-menu.js';
+</script>

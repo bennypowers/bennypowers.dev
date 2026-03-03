@@ -1,0 +1,24 @@
+<meta itemprop="description" content="Dropdown menu with text, icon, separator, and disabled items">
+<style>
+  .demo {
+    padding: 24px;
+    min-height: 300px;
+  }
+</style>
+<div class="demo">
+  <gtk2-menu open accessible-label="Example menu">
+    <gtk2-menu-item label="New Document" icon="actions/document-new"></gtk2-menu-item>
+    <gtk2-menu-item label="Open..." icon="actions/document-open"></gtk2-menu-item>
+    <gtk2-menu-item separator></gtk2-menu-item>
+    <gtk2-menu-item label="Save" icon="actions/document-save"></gtk2-menu-item>
+    <gtk2-menu-item label="Save As..." icon="actions/document-save-as"></gtk2-menu-item>
+    <gtk2-menu-item separator></gtk2-menu-item>
+    <gtk2-menu-item label="Print..." disabled></gtk2-menu-item>
+    <gtk2-menu-item separator></gtk2-menu-item>
+    <gtk2-menu-item label="Quit" icon="actions/system-log-out"></gtk2-menu-item>
+  </gtk2-menu>
+</div>
+<script type="module">
+  import 'gnome2/gtk2-menu/gtk2-menu.js';
+  import 'gnome2/gtk2-menu-item/gtk2-menu-item.js';
+</script>

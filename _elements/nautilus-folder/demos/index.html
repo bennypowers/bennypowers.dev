@@ -1,0 +1,85 @@
+<meta itemprop="description" content="Nautilus icon view with sortable folder items">
+<style>
+  .demo-container {
+    width: 500px;
+    height: 400px;
+    background: light-dark(#ffffff, #2e2e2e);
+    border: 1px solid light-dark(#bab5ab, #555753);
+    border-radius: 4px;
+    overflow: auto;
+  }
+
+  .folder-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 6px 4px;
+    border-radius: 3px;
+    text-decoration: none;
+    color: light-dark(#2e3436, #eeeeec);
+    font-family: "DejaVu Sans", sans-serif;
+    font-size: 12px;
+    cursor: default;
+  }
+
+  .folder-item:hover {
+    background: light-dark(rgba(52, 101, 164, 0.15), rgba(52, 101, 164, 0.3));
+  }
+
+  .folder-item img {
+    width: 48px;
+    height: 48px;
+    flex-shrink: 0;
+  }
+
+  .folder-label {
+    font-size: 11px;
+    line-height: 1.3;
+    word-break: break-word;
+    text-align: center;
+    max-width: 100%;
+  }
+
+  .folder-count {
+    font-size: 10px;
+    opacity: 0.6;
+    margin-block-start: 1px;
+  }
+</style>
+<div class="demo-container">
+  <nautilus-folder sort-by="name" sort-order="ascending">
+    <a class="folder-item" href="#documents" data-sort-name="Documents" data-sort-count="12">
+      <img src="/assets/icons/gnome/places/folder.svg" width="48" height="48" alt="">
+      <span class="folder-label">Documents</span>
+      <span class="folder-count">12 items</span>
+    </a>
+    <a class="folder-item" href="#music" data-sort-name="Music" data-sort-count="47">
+      <img src="/assets/icons/gnome/places/folder.svg" width="48" height="48" alt="">
+      <span class="folder-label">Music</span>
+      <span class="folder-count">47 items</span>
+    </a>
+    <a class="folder-item" href="#pictures" data-sort-name="Pictures" data-sort-count="83">
+      <img src="/assets/icons/gnome/places/folder.svg" width="48" height="48" alt="">
+      <span class="folder-label">Pictures</span>
+      <span class="folder-count">83 items</span>
+    </a>
+    <a class="folder-item" href="#projects" data-sort-name="Projects" data-sort-count="5">
+      <img src="/assets/icons/gnome/places/folder.svg" width="48" height="48" alt="">
+      <span class="folder-label">Projects</span>
+      <span class="folder-count">5 items</span>
+    </a>
+    <a class="folder-item" href="#templates" data-sort-name="Templates" data-sort-count="3">
+      <img src="/assets/icons/gnome/places/folder.svg" width="48" height="48" alt="">
+      <span class="folder-label">Templates</span>
+      <span class="folder-count">3 items</span>
+    </a>
+    <a class="folder-item" href="#videos" data-sort-name="Videos" data-sort-count="21">
+      <img src="/assets/icons/gnome/places/folder.svg" width="48" height="48" alt="">
+      <span class="folder-label">Videos</span>
+      <span class="folder-count">21 items</span>
+    </a>
+  </nautilus-folder>
+</div>
+<script type="module">
+  import 'gnome2/nautilus-folder/nautilus-folder.js';
+</script>

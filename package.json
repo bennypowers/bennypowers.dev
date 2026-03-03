@@ -8,7 +8,8 @@
   "scripts": {
     "build": "eleventy --config=eleventy.config.ts --incremental",
     "start": "eleventy --config=eleventy.config.ts --serve",
-    "postinstall": "patch-package && node --experimental-strip-types scripts/build-types.ts"
+    "postinstall": "patch-package && node --experimental-strip-types scripts/build-types.ts",
+    "demo": "cem serve"
   },
   "imports": {
     "#plugins/*": "./_plugins/*",
@@ -57,7 +58,9 @@
     "html-minifier-terser": "^7.2.0",
     "lightningcss": "^1.30.2",
     "linkedom": "^0.18.12",
+    "@lit/reactive-element": "^2.1.2",
     "lit": "^3.3.2",
+    "lit-html": "^3.3.2",
     "markdown-it-anchor": "^9.2.0",
     "markdown-it-attrs": "^4.3.1",
     "markdown-it-deflist": "^3.0.0",

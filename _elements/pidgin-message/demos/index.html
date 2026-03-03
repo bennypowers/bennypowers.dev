@@ -1,0 +1,41 @@
+<meta itemprop="description" content="Pidgin message variants: reply, like, and repost">
+<style>
+  .demo-container {
+    width: 500px;
+    padding: 8px;
+    background: light-dark(#ffffff, #2e2e2e);
+    border: 1px solid light-dark(#bab5ab, #555753);
+    border-radius: 4px;
+    font-family: "DejaVu Sans", sans-serif;
+    font-size: 12px;
+  }
+</style>
+<div class="demo-container">
+  <pidgin-message
+    type="reply"
+    timestamp="2025-11-15T14:32:00Z"
+    url="https://social.example/@alice/12345"
+    author-name="Alice Hacker"
+    author-url="https://social.example/@alice">
+    Great post! I really enjoyed reading about your approach to web components and shadow DOM.
+  </pidgin-message>
+
+  <pidgin-message
+    type="like"
+    timestamp="2025-11-15T15:10:00Z"
+    url="https://social.example/@bob/67890"
+    author-name="Bob Builder"
+    author-url="https://social.example/@bob">
+  </pidgin-message>
+
+  <pidgin-message
+    type="repost"
+    timestamp="2025-11-16T09:45:00Z"
+    url="https://bsky.app/profile/carol.dev/post/abc123"
+    author-name="Carol Danvers"
+    author-url="https://bsky.app/profile/carol.dev">
+  </pidgin-message>
+</div>
+<script type="module">
+  import 'gnome2/pidgin-message/pidgin-message.js';
+</script>

@@ -1,0 +1,30 @@
+<meta itemprop="description" content="Push button with default, disabled, and icon states">
+<style>
+  .demo {
+    padding: 24px;
+    display: flex;
+    gap: 12px;
+    align-items: start;
+  }
+  .icon {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+</style>
+<div class="demo">
+  <gtk2-button>Click Me</gtk2-button>
+  <gtk2-button disabled>Disabled</gtk2-button>
+  <gtk2-button>
+    <span class="icon">
+      <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true">
+        <rect x="2" y="2" width="12" height="12" rx="2" fill="#4e9a06" opacity="0.8"/>
+        <path d="M5 8h6M8 5v6" stroke="#fff" stroke-width="1.5" stroke-linecap="round"/>
+      </svg>
+      Add Item
+    </span>
+  </gtk2-button>
+</div>
+<script type="module">
+  import 'gnome2/gtk2-button/gtk2-button.js';
+</script>

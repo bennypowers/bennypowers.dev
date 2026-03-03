@@ -1,0 +1,28 @@
+<meta itemprop="description" content="GNOME 2 about dialog with site info, navigation, and h-card slot">
+<style>
+  .demo-container {
+    width: 550px;
+    height: 500px;
+    background: light-dark(#edeceb, #3c3c3c);
+    border: 1px solid light-dark(#bab5ab, #555753);
+    border-radius: 4px;
+    overflow: auto;
+  }
+
+  gnome2-about {
+    width: 100%;
+    height: 100%;
+  }
+</style>
+<div class="demo-container">
+  <gnome2-about>
+    <div slot="h-card" class="h-card">
+      <a class="u-url p-name" href="https://bennypowers.dev" rel="me">Benny Powers</a>
+      <span class="p-locality">Jerusalem</span>,
+      <span class="p-country-name">Israel</span>
+    </div>
+  </gnome2-about>
+</div>
+<script type="module">
+  import 'gnome2/gnome2-about/gnome2-about.js';
+</script>

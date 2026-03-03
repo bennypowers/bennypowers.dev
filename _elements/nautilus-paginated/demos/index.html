@@ -1,0 +1,45 @@
+<meta itemprop="description" content="Nautilus paginated content with navigation toolbar">
+<style>
+  .demo-container {
+    width: 480px;
+    background: light-dark(#ffffff, #2e2e2e);
+    border: 1px solid light-dark(#bab5ab, #555753);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+
+  .page-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 48px;
+    margin: 4px 8px;
+    border-radius: 4px;
+    font-family: "DejaVu Sans", sans-serif;
+    font-size: 13px;
+    font-weight: bold;
+    color: #fff;
+  }
+</style>
+<div class="demo-container">
+  <nautilus-paginated page-size="6" total-items="15">
+    <div class="page-item" style="background: #cc0000;">Item 1</div>
+    <div class="page-item" style="background: #f57900;">Item 2</div>
+    <div class="page-item" style="background: #edd400;">Item 3</div>
+    <div class="page-item" style="background: #73d216;">Item 4</div>
+    <div class="page-item" style="background: #3465a4;">Item 5</div>
+    <div class="page-item" style="background: #75507b;">Item 6</div>
+    <div class="page-item" style="background: #c17d11;">Item 7</div>
+    <div class="page-item" style="background: #cc0000;">Item 8</div>
+    <div class="page-item" style="background: #f57900;">Item 9</div>
+    <div class="page-item" style="background: #edd400;">Item 10</div>
+    <div class="page-item" style="background: #73d216;">Item 11</div>
+    <div class="page-item" style="background: #3465a4;">Item 12</div>
+    <div class="page-item" style="background: #75507b;">Item 13</div>
+    <div class="page-item" style="background: #c17d11;">Item 14</div>
+    <div class="page-item" style="background: #2e3436;">Item 15</div>
+  </nautilus-paginated>
+</div>
+<script type="module">
+  import 'gnome2/nautilus-paginated/nautilus-paginated.js';
+</script>

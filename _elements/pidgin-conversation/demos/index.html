@@ -1,0 +1,49 @@
+<meta itemprop="description" content="Pidgin conversation window with reply and like messages">
+<style>
+  .demo-container {
+    width: 520px;
+    height: 400px;
+    background: light-dark(#edeceb, #3c3c3c);
+    border: 1px solid light-dark(#bab5ab, #555753);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+
+  pidgin-conversation {
+    width: 100%;
+    height: 100%;
+  }
+</style>
+<div class="demo-container">
+  <pidgin-conversation post-url="https://bennypowers.dev/posts/example/">
+    <pidgin-message
+      type="reply"
+      timestamp="2025-11-15T14:32:00Z"
+      url="https://social.example/@alice/12345"
+      author-name="Alice Hacker"
+      author-url="https://social.example/@alice">
+      This is a really thoughtful article. I especially liked the section about context providers.
+    </pidgin-message>
+
+    <pidgin-message
+      type="reply"
+      timestamp="2025-11-15T16:05:00Z"
+      url="https://bsky.app/profile/dave.dev/post/xyz789"
+      author-name="Dave Grohl"
+      author-url="https://bsky.app/profile/dave.dev">
+      Thanks for sharing! The code examples were very clear.
+    </pidgin-message>
+
+    <pidgin-message
+      type="like"
+      timestamp="2025-11-15T18:20:00Z"
+      url="https://social.example/@eve/11111"
+      author-name="Eve Torres"
+      author-url="https://social.example/@eve">
+    </pidgin-message>
+  </pidgin-conversation>
+</div>
+<script type="module">
+  import 'gnome2/pidgin-conversation/pidgin-conversation.js';
+  import 'gnome2/pidgin-message/pidgin-message.js';
+</script>

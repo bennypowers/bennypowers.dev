@@ -1,0 +1,18 @@
+<meta itemprop="description" content="Menu button with dropdown containing New, Open, and Close items">
+<style>
+  .demo {
+    padding: 24px;
+    min-height: 250px;
+  }
+</style>
+<div class="demo">
+  <gtk2-menu-button label="File">
+    <gtk2-menu-item label="New" icon="actions/document-new"></gtk2-menu-item>
+    <gtk2-menu-item label="Open..." icon="actions/document-open"></gtk2-menu-item>
+    <gtk2-menu-item label="Close" icon="actions/window-close"></gtk2-menu-item>
+  </gtk2-menu-button>
+</div>
+<script type="module">
+  import 'gnome2/gtk2-menu-button/gtk2-menu-button.js';
+  import 'gnome2/gtk2-menu-item/gtk2-menu-item.js';
+</script>

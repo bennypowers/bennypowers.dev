@@ -1,0 +1,33 @@
+<meta itemprop="description" content="Horizontal menu bar with File and Edit dropdown menus">
+<style>
+  .demo {
+    padding: 24px;
+    min-height: 300px;
+  }
+</style>
+<div class="demo">
+  <gtk2-menu-bar>
+    <gtk2-menu-button label="File">
+      <gtk2-menu-item label="New" icon="actions/document-new"></gtk2-menu-item>
+      <gtk2-menu-item label="Open..." icon="actions/document-open"></gtk2-menu-item>
+      <gtk2-menu-item separator></gtk2-menu-item>
+      <gtk2-menu-item label="Save" icon="actions/document-save"></gtk2-menu-item>
+      <gtk2-menu-item separator></gtk2-menu-item>
+      <gtk2-menu-item label="Quit" icon="actions/system-log-out"></gtk2-menu-item>
+    </gtk2-menu-button>
+    <gtk2-menu-button label="Edit">
+      <gtk2-menu-item label="Undo" icon="actions/edit-undo"></gtk2-menu-item>
+      <gtk2-menu-item label="Redo" icon="actions/edit-redo"></gtk2-menu-item>
+      <gtk2-menu-item separator></gtk2-menu-item>
+      <gtk2-menu-item label="Cut" icon="actions/edit-cut"></gtk2-menu-item>
+      <gtk2-menu-item label="Copy" icon="actions/edit-copy"></gtk2-menu-item>
+      <gtk2-menu-item label="Paste" icon="actions/edit-paste"></gtk2-menu-item>
+    </gtk2-menu-button>
+  </gtk2-menu-bar>
+</div>
+<script type="module">
+  import 'gnome2/gtk2-menu-bar/gtk2-menu-bar.js';
+  import 'gnome2/gtk2-menu-button/gtk2-menu-button.js';
+  import 'gnome2/gtk2-menu/gtk2-menu.js';
+  import 'gnome2/gtk2-menu-item/gtk2-menu-item.js';
+</script>

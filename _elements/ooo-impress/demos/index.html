@@ -1,0 +1,33 @@
+<meta itemprop="description" content="OpenOffice Impress viewer with slide deck thumbnails">
+<style>
+  .demo-container {
+    width: 700px;
+    background: light-dark(#edeceb, #3c3c3c);
+    border: 1px solid light-dark(#bab5ab, #555753);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+</style>
+<div class="demo-container">
+  <ooo-impress view="sorter">
+    <ooo-impress-deck
+      href="#slide-1"
+      src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='120'%3E%3Crect width='200' height='120' fill='%233465a4'/%3E%3Ctext x='100' y='65' text-anchor='middle' fill='white' font-family='sans-serif' font-size='16'%3ESlide 1%3C/text%3E%3C/svg%3E"
+      label="Introduction">
+    </ooo-impress-deck>
+    <ooo-impress-deck
+      href="#slide-2"
+      src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='120'%3E%3Crect width='200' height='120' fill='%2373d216'/%3E%3Ctext x='100' y='65' text-anchor='middle' fill='white' font-family='sans-serif' font-size='16'%3ESlide 2%3C/text%3E%3C/svg%3E"
+      label="Overview">
+    </ooo-impress-deck>
+    <ooo-impress-deck
+      href="#slide-3"
+      src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='120'%3E%3Crect width='200' height='120' fill='%23f57900'/%3E%3Ctext x='100' y='65' text-anchor='middle' fill='white' font-family='sans-serif' font-size='16'%3ESlide 3%3C/text%3E%3C/svg%3E"
+      label="Conclusion">
+    </ooo-impress-deck>
+  </ooo-impress>
+</div>
+<script type="module">
+  import 'gnome2/ooo-impress/ooo-impress.js';
+  import 'gnome2/ooo-impress-deck/ooo-impress-deck.js';
+</script>

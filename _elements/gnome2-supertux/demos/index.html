@@ -1,0 +1,22 @@
+<meta itemprop="description" content="Embedded SuperTux game requiring credentialless iframe support">
+<style>
+  .demo-container {
+    width: 640px;
+    height: 480px;
+    background: #000;
+    border: 1px solid light-dark(#bab5ab, #555753);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+
+  gnome2-supertux {
+    width: 100%;
+    height: 100%;
+  }
+</style>
+<div class="demo-container">
+  <gnome2-supertux></gnome2-supertux>
+</div>
+<script type="module">
+  import 'gnome2/gnome2-supertux/gnome2-supertux.js';
+</script>

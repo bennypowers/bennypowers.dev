@@ -1,0 +1,22 @@
+<meta itemprop="description" content="GNOME 2 appearance preferences with theme and background settings">
+<style>
+  .demo-container {
+    width: 500px;
+    height: 450px;
+    background: light-dark(#edeceb, #3c3c3c);
+    border: 1px solid light-dark(#bab5ab, #555753);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+
+  gnome2-appearance-prefs {
+    width: 100%;
+    height: 100%;
+  }
+</style>
+<div class="demo-container">
+  <gnome2-appearance-prefs close-href="#"></gnome2-appearance-prefs>
+</div>
+<script type="module">
+  import 'gnome2/gnome2-appearance-prefs/gnome2-appearance-prefs.js';
+</script>

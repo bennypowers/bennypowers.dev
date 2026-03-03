@@ -1,0 +1,30 @@
+<meta itemprop="description" content="Menu item variants: icon, link, separator, checked, disabled, and submenu">
+<style>
+  .demo {
+    padding: 24px;
+    min-height: 400px;
+  }
+</style>
+<div class="demo">
+  <gtk2-menu open accessible-label="Menu item variants">
+    <gtk2-menu-item label="Calculator" icon="apps/accessories-calculator"></gtk2-menu-item>
+    <gtk2-menu-item label="Visit Example" href="#example"></gtk2-menu-item>
+    <gtk2-menu-item separator></gtk2-menu-item>
+    <gtk2-menu-item label="Show Toolbar" checked></gtk2-menu-item>
+    <gtk2-menu-item label="Show Statusbar" checked></gtk2-menu-item>
+    <gtk2-menu-item separator></gtk2-menu-item>
+    <gtk2-menu-item label="Unavailable Action" disabled></gtk2-menu-item>
+    <gtk2-menu-item separator></gtk2-menu-item>
+    <gtk2-menu-item label="Open Recent" has-submenu>
+      <gtk2-menu slot="submenu" accessible-label="Recent documents">
+        <gtk2-menu-item label="document.txt"></gtk2-menu-item>
+        <gtk2-menu-item label="spreadsheet.ods"></gtk2-menu-item>
+        <gtk2-menu-item label="presentation.odp"></gtk2-menu-item>
+      </gtk2-menu>
+    </gtk2-menu-item>
+  </gtk2-menu>
+</div>
+<script type="module">
+  import 'gnome2/gtk2-menu/gtk2-menu.js';
+  import 'gnome2/gtk2-menu-item/gtk2-menu-item.js';
+</script>

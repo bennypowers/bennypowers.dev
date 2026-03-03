@@ -1,0 +1,41 @@
+<meta itemprop="description" content="Tabbed notebook with three switchable panels">
+<style>
+  .demo {
+    padding: 24px;
+  }
+  gtk2-notebook {
+    min-height: 200px;
+  }
+  .panel-content {
+    padding: 8px;
+    font-family: "DejaVu Sans", sans-serif;
+    font-size: 13px;
+    color: light-dark(#2e3436, #eeeeec);
+  }
+</style>
+<div class="demo">
+  <gtk2-notebook>
+    <button slot="tab-0" class="active">General</button>
+    <button slot="tab-1">Details</button>
+    <button slot="tab-2">Advanced</button>
+    <div slot="panel-0">
+      <div class="panel-content">
+        <p>This is the General settings panel. Configure basic options here.</p>
+        <p>The first tab is active by default.</p>
+      </div>
+    </div>
+    <div slot="panel-1">
+      <div class="panel-content">
+        <p>This is the Details panel. View additional information about the selected item.</p>
+      </div>
+    </div>
+    <div slot="panel-2">
+      <div class="panel-content">
+        <p>This is the Advanced panel. Modify expert-level configuration options with care.</p>
+      </div>
+    </div>
+  </gtk2-notebook>
+</div>
+<script type="module">
+  import 'gnome2/gtk2-notebook/gtk2-notebook.js';
+</script>

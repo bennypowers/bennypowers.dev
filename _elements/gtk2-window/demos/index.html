@@ -1,0 +1,27 @@
+<meta itemprop="description" content="Basic window with titlebar, icon, and content">
+<style>
+  .demo {
+    padding: 24px;
+  }
+  .window-content {
+    padding: 16px;
+    font-family: "DejaVu Sans", sans-serif;
+    font-size: 13px;
+    color: light-dark(#2e3436, #eeeeec);
+  }
+</style>
+<div class="demo">
+  <gtk2-window
+    label="Demo Window"
+    icon="apps/accessories-text-editor"
+    focused
+    style="position: relative; width: 500px; height: 300px;">
+    <div class="window-content">
+      <p>This is a demo window rendered with the Metacity Clearlooks theme.</p>
+      <p>It includes a titlebar with minimize, maximize, and close buttons, plus a window icon and title label.</p>
+    </div>
+  </gtk2-window>
+</div>
+<script type="module">
+  import 'gnome2/gtk2-window/gtk2-window.js';
+</script>

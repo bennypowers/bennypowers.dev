@@ -1,0 +1,50 @@
+<meta itemprop="description" content="Window focus and dialog states">
+<style>
+  .demo {
+    padding: 24px;
+    display: flex;
+    gap: 24px;
+    flex-wrap: wrap;
+    align-items: start;
+  }
+  .window-content {
+    padding: 16px;
+    font-family: "DejaVu Sans", sans-serif;
+    font-size: 13px;
+    color: light-dark(#2e3436, #eeeeec);
+  }
+</style>
+<div class="demo">
+  <gtk2-window
+    label="Focused Window"
+    icon="apps/accessories-text-editor"
+    focused
+    style="position: relative; width: 360px; height: 220px;">
+    <div class="window-content">
+      <p>This window has focus. Note the active titlebar gradient.</p>
+    </div>
+  </gtk2-window>
+
+  <gtk2-window
+    label="Unfocused Window"
+    icon="apps/utilities-terminal"
+    style="position: relative; width: 360px; height: 220px;">
+    <div class="window-content">
+      <p>This window is unfocused. The titlebar appears desaturated.</p>
+    </div>
+  </gtk2-window>
+
+  <gtk2-window
+    label="Confirm Action"
+    icon="status/dialog-question"
+    focused
+    dialog
+    style="position: relative; width: 320px; height: 180px;">
+    <div class="window-content">
+      <p>This is a dialog window variant. It has no statusbar and uses dialog sizing.</p>
+    </div>
+  </gtk2-window>
+</div>
+<script type="module">
+  import 'gnome2/gtk2-window/gtk2-window.js';
+</script>
