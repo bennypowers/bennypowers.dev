@@ -5,8 +5,8 @@ import { classMap } from 'lit/directives/class-map.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
 import styles from './gnome2-window-list.css';
 
-import { WMFocusEvent } from './gtk2-window.js';
-import { taskbarContext, type TaskbarEntry } from './gnome2-wm-context.js';
+import { WMFocusEvent } from '../gtk2-window/gtk2-window.js';
+import { taskbarContext, type TaskbarEntry } from '../gnome2-wm-context/gnome2-wm-context.js';
 
 /** Dispatched when a window should be minimized to the taskbar. Provides `wmId` for identifying the target window. */
 export class WMMinimizeEvent extends Event {

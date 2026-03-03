@@ -1,7 +1,7 @@
 import { LitElement, html, isServer, nothing } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
-import './gtk2-notebook.js';
+import '../gtk2-notebook/gtk2-notebook.js';
 import styles from './gnome2-appearance-prefs.css';
 
 interface Wallpaper {

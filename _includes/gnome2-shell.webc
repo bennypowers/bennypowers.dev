@@ -223,29 +223,29 @@ const menuPostYears = (() => {
           webc:keep>
     import "@lit-labs/ssr-client/lit-element-hydrate-support.js";
     // desktop first, then session, then the rest
-    import "gnome2/gnome2-desktop.js";
-    import "gnome2/gnome2-session.js";
-    import 'gnome2/desktop-icon.js';
-    import 'gnome2/gnome2-clock.js';
-    import 'gnome2/gnome2-panel.js';
-    import 'gnome2/gnome2-window-list.js';
-    import 'gnome2/gtk2-window.js';
-    import 'gnome2/gtk2-scrolled-window.js';
-    import 'gnome2/gtk2-button.js';
-    import 'gnome2/gtk2-menu.js';
-    import 'gnome2/gtk2-menu-item.js';
-    import 'gnome2/gtk2-menu-button.js';
-    import 'gnome2/gtk2-menu-bar.js';
-    import 'gnome2/gtk2-notebook.js';
-    import 'gnome2/gnome2-appearance-prefs.js';
-    import 'gnome2/gnome2-about.js';
-    import 'gnome2/pidgin-conversation.js';
-    import 'gnome2/pidgin-message.js';
-    import 'gnome2/gnome2-workspace-switcher.js';
-    import 'gnome2/ooo-impress.js';
-    import 'gnome2/ooo-impress-deck.js';
-    import 'gnome2/nautilus-paginated.js';
-    import 'gnome2/nautilus-folder.js';
+    import "gnome2/gnome2-desktop/gnome2-desktop.js";
+    import "gnome2/gnome2-session/gnome2-session.js";
+    import 'gnome2/desktop-icon/desktop-icon.js';
+    import 'gnome2/gnome2-clock/gnome2-clock.js';
+    import 'gnome2/gnome2-panel/gnome2-panel.js';
+    import 'gnome2/gnome2-window-list/gnome2-window-list.js';
+    import 'gnome2/gtk2-window/gtk2-window.js';
+    import 'gnome2/gtk2-scrolled-window/gtk2-scrolled-window.js';
+    import 'gnome2/gtk2-button/gtk2-button.js';
+    import 'gnome2/gtk2-menu/gtk2-menu.js';
+    import 'gnome2/gtk2-menu-item/gtk2-menu-item.js';
+    import 'gnome2/gtk2-menu-button/gtk2-menu-button.js';
+    import 'gnome2/gtk2-menu-bar/gtk2-menu-bar.js';
+    import 'gnome2/gtk2-notebook/gtk2-notebook.js';
+    import 'gnome2/gnome2-appearance-prefs/gnome2-appearance-prefs.js';
+    import 'gnome2/gnome2-about/gnome2-about.js';
+    import 'gnome2/pidgin-conversation/pidgin-conversation.js';
+    import 'gnome2/pidgin-message/pidgin-message.js';
+    import 'gnome2/gnome2-workspace-switcher/gnome2-workspace-switcher.js';
+    import 'gnome2/ooo-impress/ooo-impress.js';
+    import 'gnome2/ooo-impress-deck/ooo-impress-deck.js';
+    import 'gnome2/nautilus-paginated/nautilus-paginated.js';
+    import 'gnome2/nautilus-folder/nautilus-folder.js';
   </script>
   <style @raw="getBundle('css')"
          webc:keep></style>

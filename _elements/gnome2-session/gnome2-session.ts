@@ -1,5 +1,5 @@
-import type { Gtk2MenuButton } from './gtk2-menu-button.js';
-import type { Gnome2Desktop } from './gnome2-desktop.js';
+import type { Gtk2MenuButton } from '../gtk2-menu-button/gtk2-menu-button.js';
+import type { Gnome2Desktop } from '../gnome2-desktop/gnome2-desktop.js';
 
 import { LitElement, html, isServer } from 'lit';
 import { customElement } from 'lit/decorators.js';

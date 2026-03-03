@@ -1,13 +1,13 @@
-import type { WMFocusEvent, WMCloseEvent, Gtk2Window } from './gtk2-window.js';
-import type { WMMinimizeEvent, WMRestoreEvent, WMShowDesktopEvent } from './gnome2-window-list.js';
-import type { WMWorkspaceSwitchEvent, MiniWindow } from './gnome2-workspace-switcher.js';
+import type { WMFocusEvent, WMCloseEvent, Gtk2Window } from '../gtk2-window/gtk2-window.js';
+import type { WMMinimizeEvent, WMRestoreEvent, WMShowDesktopEvent } from '../gnome2-window-list/gnome2-window-list.js';
+import type { WMWorkspaceSwitchEvent, MiniWindow } from '../gnome2-workspace-switcher/gnome2-workspace-switcher.js';
 
 import { LitElement, html, isServer } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { provide } from '@lit/context';
 import styles from './gnome2-desktop.css';
 
-import { activeWindowContext, taskbarContext, type WindowEntry, type TaskbarEntry } from './gnome2-wm-context.js';
+import { activeWindowContext, taskbarContext, type WindowEntry, type TaskbarEntry } from '../gnome2-wm-context/gnome2-wm-context.js';
 
 const STORAGE_KEY = 'gnome2-wm-windows';
 const WORKSPACE_KEY = 'gnome2-wm-workspace';
@@ -28,7 +28,7 @@ interface AppDef {
 
 const APP_DEFS: Record<string, AppDef> = {
   calculator: {
-    module: 'gnome2/gnome2-calculator.js',
+    module: 'gnome2/gnome2-calculator/gnome2-calculator.js',
     tag: 'gnome2-calculator',
     label: 'Calculator',
     icon: 'apps/accessories-calculator',
@@ -36,7 +36,7 @@ const APP_DEFS: Record<string, AppDef> = {
     height: '320px',
   },
   mines: {
-    module: 'gnome2/gnome2-mines.js',
+    module: 'gnome2/gnome2-mines/gnome2-mines.js',
     tag: 'gnome2-mines',
     label: 'Mines',
     icon: 'categories/applications-games',
@@ -44,7 +44,7 @@ const APP_DEFS: Record<string, AppDef> = {
     height: '360px',
   },
   supertux: {
-    module: 'gnome2/gnome2-supertux.js',
+    module: 'gnome2/gnome2-supertux/gnome2-supertux.js',
     tag: 'gnome2-supertux',
     label: 'SuperTux',
     icon: 'apps/supertux',
@@ -52,7 +52,7 @@ const APP_DEFS: Record<string, AppDef> = {
     height: '600px',
   },
   about: {
-    module: 'gnome2/gnome2-about.js',
+    module: 'gnome2/gnome2-about/gnome2-about.js',
     tag: 'gnome2-about',
     label: 'About bennypowers.dev',
     icon: 'status/dialog-information',
@@ -60,7 +60,7 @@ const APP_DEFS: Record<string, AppDef> = {
     height: '500px',
   },
   pidgin: {
-    module: 'gnome2/pidgin-conversation.js',
+    module: 'gnome2/pidgin-conversation/pidgin-conversation.js',
     tag: 'pidgin-conversation',
     label: 'Conversation',
     icon: 'apps/internet-group-chat',

@@ -1,4 +1,4 @@
-import './ssr-shim.js';
+import '../ssr-shim.js';
 import { ContextRoot, createContext, type Context } from '@lit/context';
 import { isServer } from 'lit';
 

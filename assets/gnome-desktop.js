@@ -1,18 +1,18 @@
 // GNOME Desktop controller
 // Manages panel menus and desktop interactions
-import 'gnome2/gtk2-button.js';
-import 'gnome2/gtk2-window.js';
-import 'gnome2/gtk2-scrolled-window.js';
-import 'gnome2/gtk2-menu.js';
-import 'gnome2/gtk2-menu-item.js';
-import 'gnome2/gtk2-menu-bar.js';
-import 'gnome2/gtk2-menu-button.js';
-import 'gnome2/gnome2-panel.js';
-import 'gnome2/gnome2-clock.js';
-import 'gnome2/gnome2-window-list.js';
-import 'gnome2/gnome2-workspace-switcher.js';
-import 'gnome2/gnome2-desktop.js';
-import 'gnome2/desktop-icon.js';
+import 'gnome2/gtk2-button/gtk2-button.js';
+import 'gnome2/gtk2-window/gtk2-window.js';
+import 'gnome2/gtk2-scrolled-window/gtk2-scrolled-window.js';
+import 'gnome2/gtk2-menu/gtk2-menu.js';
+import 'gnome2/gtk2-menu-item/gtk2-menu-item.js';
+import 'gnome2/gtk2-menu-bar/gtk2-menu-bar.js';
+import 'gnome2/gtk2-menu-button/gtk2-menu-button.js';
+import 'gnome2/gnome2-panel/gnome2-panel.js';
+import 'gnome2/gnome2-clock/gnome2-clock.js';
+import 'gnome2/gnome2-window-list/gnome2-window-list.js';
+import 'gnome2/gnome2-workspace-switcher/gnome2-workspace-switcher.js';
+import 'gnome2/gnome2-desktop/gnome2-desktop.js';
+import 'gnome2/desktop-icon/desktop-icon.js';
 
 class SchemeController {
   static #STORAGE_KEY = 'cl-color-scheme';

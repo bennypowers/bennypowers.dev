@@ -23,20 +23,20 @@ async function redactTSFileInPlace(path: string) {
 }
 
 const ELEMENT_MODULES = [
-  '_elements/gnome2-desktop.ts',
-  '_elements/gnome2-session.ts',
-  '_elements/gnome2-panel.ts',
-  '_elements/gnome2-clock.ts',
-  '_elements/gnome2-window-list.ts',
-  '_elements/gtk2-button.ts',
-  '_elements/gtk2-menu-bar.ts',
-  '_elements/gtk2-menu-button.ts',
-  '_elements/gtk2-menu-item.ts',
-  '_elements/gtk2-scrolled-window.ts',
-  '_elements/gtk2-window.ts',
-  '_elements/desktop-icon.ts',
-  '_elements/nautilus-paginated.ts',
-  '_elements/nautilus-folder.ts',
+  '_elements/gnome2-desktop/gnome2-desktop.ts',
+  '_elements/gnome2-session/gnome2-session.ts',
+  '_elements/gnome2-panel/gnome2-panel.ts',
+  '_elements/gnome2-clock/gnome2-clock.ts',
+  '_elements/gnome2-window-list/gnome2-window-list.ts',
+  '_elements/gtk2-button/gtk2-button.ts',
+  '_elements/gtk2-menu-bar/gtk2-menu-bar.ts',
+  '_elements/gtk2-menu-button/gtk2-menu-button.ts',
+  '_elements/gtk2-menu-item/gtk2-menu-item.ts',
+  '_elements/gtk2-scrolled-window/gtk2-scrolled-window.ts',
+  '_elements/gtk2-window/gtk2-window.ts',
+  '_elements/desktop-icon/desktop-icon.ts',
+  '_elements/nautilus-paginated/nautilus-paginated.ts',
+  '_elements/nautilus-folder/nautilus-folder.ts',
 ];
 
 export function LitSSRPlugin(eleventyConfig: UserConfig) {

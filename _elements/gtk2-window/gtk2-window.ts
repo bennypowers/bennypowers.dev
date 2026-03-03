@@ -2,8 +2,8 @@ import { LitElement, html, isServer } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 import { consume } from '@lit/context';
 import { ifDefined } from 'lit/directives/if-defined.js';
-import { WMMinimizeEvent } from './gnome2-window-list.js';
-import { activeWindowContext } from './gnome2-wm-context.js';
+import { WMMinimizeEvent } from '../gnome2-window-list/gnome2-window-list.js';
+import { activeWindowContext } from '../gnome2-wm-context/gnome2-wm-context.js';
 import styles from './gtk2-window.css';
 
 /** Dispatched when a window requests focus from the window manager. Provides `wmId` and `url` for identifying the target window. */
