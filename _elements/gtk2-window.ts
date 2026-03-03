@@ -7,20 +7,32 @@ import { activeWindowContext } from './gnome2-wm-context.js';
 import styles from './gtk2-window.css';
 
 export class WMFocusEvent extends Event {
-  constructor(public url: string) {
+  wmId: string;
+  url: string;
+  constructor(wmId: string, url?: string) {
     super('wm-focus', { bubbles: true, composed: true });
+    this.wmId = wmId;
+    this.url = url ?? wmId;
   }
 }
 
 export class WMCloseEvent extends Event {
-  constructor(public url: string) {
+  wmId: string;
+  url: string;
+  constructor(wmId: string, url?: string) {
     super('wm-close', { bubbles: true, composed: true });
+    this.wmId = wmId;
+    this.url = url ?? wmId;
   }
 }
 
 export class WMMoveEvent extends Event {
-  constructor(public url: string) {
+  wmId: string;
+  url: string;
+  constructor(wmId: string, url?: string) {
     super('wm-move', { bubbles: true, composed: true });
+    this.wmId = wmId;
+    this.url = url ?? wmId;
   }
 }
 
@@ -30,6 +42,7 @@ export class Gtk2Window extends LitElement {
 
   @property({ reflect: true }) accessor label = '';
   @property({ reflect: true }) accessor icon = '';
+  @property({ attribute: 'wm-id', reflect: true }) accessor wmId = '';
   @property({ attribute: 'window-url' }) accessor windowUrl = '';
   @property({ type: Boolean, reflect: true }) accessor maximized = false;
   @property({ type: Boolean, reflect: true }) accessor focused = false;
@@ -39,14 +52,17 @@ export class Gtk2Window extends LitElement {
 
   @consume({ context: activeWindowContext, subscribe: true })
   @state()
-  accessor activeUrl: string | undefined = undefined;
+  accessor activeWmId: string | undefined = undefined;
 
   @state() accessor #offsetX = 0;
   @state() accessor #offsetY = 0;
 
   protected override willUpdate(): void {
-    if (this.activeUrl !== undefined) {
-      this.focused = this.windowUrl === this.activeUrl;
+    if (!this.wmId && this.windowUrl) {
+      this.wmId = this.windowUrl;
+    }
+    if (this.activeWmId !== undefined) {
+      this.focused = this.wmId === this.activeWmId;
     }
   }
 
@@ -163,22 +179,17 @@ export class Gtk2Window extends LitElement {
     }
   };
 
-  /** Set by #onTitlebarPointerDown to defer focus until pointerup (allows drag first). */
-  #deferFocus = false;
-
   #onHostPointerDown(e: PointerEvent) {
-    if (!this.focused && this.windowUrl) {
-      if (this.#deferFocus) return;
-      // Don't focus if clicking titlebar buttons (close/minimize/maximize)
-      const path = e.composedPath();
-      if (path.some(el => (el as Element)?.closest?.('#titlebar-buttons'))) return;
-      this.dispatchEvent(new WMFocusEvent(this.windowUrl));
-    }
+    if (!this.wmId || this.focused) return;
+    // Don't focus if clicking titlebar buttons (close/minimize/maximize)
+    const path = e.composedPath();
+    if (path.some(el => (el as Element)?.closest?.('#titlebar-buttons'))) return;
+    this.dispatchEvent(new WMFocusEvent(this.wmId, this.windowUrl));
   };
 
   #onMinimize() {
-    if (this.windowUrl) {
-      this.dispatchEvent(new WMMinimizeEvent(this.windowUrl));
+    if (this.wmId) {
+      this.dispatchEvent(new WMMinimizeEvent(this.wmId, this.windowUrl));
     }
     this.dispatchEvent(new Event('minimize'));
   }
@@ -199,8 +210,8 @@ export class Gtk2Window extends LitElement {
   }
 
   #onClose() {
-    if (this.windowUrl) {
-      this.dispatchEvent(new WMCloseEvent(this.windowUrl));
+    if (this.wmId) {
+      this.dispatchEvent(new WMCloseEvent(this.wmId, this.windowUrl));
     }
     this.dispatchEvent(new Event('close'));
   }
@@ -225,26 +236,9 @@ export class Gtk2Window extends LitElement {
   #onTitlebarPointerDown(e: PointerEvent) {
     if ((e.target as Element)?.closest('button, a')) return;
 
-    const unfocused = !this.focused && !!this.windowUrl;
-
-    // Unfocused: raise immediately, defer the WMFocusEvent so the user can drag first
-    if (unfocused) {
-      this.#deferFocus = true;
-      this.style.zIndex = '10000';
-      const titlebar = e.currentTarget as Element;
-      const onUp = () => {
-        this.#deferFocus = false;
-        titlebar.removeEventListener('pointerup', onUp);
-        titlebar.removeEventListener('lostpointercapture', onLost);
-        this.dispatchEvent(new WMFocusEvent(this.windowUrl));
-      };
-      const onLost = () => {
-        this.#deferFocus = false;
-        titlebar.removeEventListener('pointerup', onUp);
-        titlebar.removeEventListener('lostpointercapture', onLost);
-      };
-      titlebar.addEventListener('pointerup', onUp);
-      titlebar.addEventListener('lostpointercapture', onLost);
+    // Focus immediately on titlebar grab
+    if (!this.focused && this.wmId) {
+      this.dispatchEvent(new WMFocusEvent(this.wmId, this.windowUrl));
     }
 
     if (this.maximized) return;
@@ -264,8 +258,8 @@ export class Gtk2Window extends LitElement {
   }
 
   #onMoveEnd = () => {
-    if (this.windowUrl) {
-      this.dispatchEvent(new WMMoveEvent(this.windowUrl));
+    if (this.wmId) {
+      this.dispatchEvent(new WMMoveEvent(this.wmId, this.windowUrl));
     }
   };
 

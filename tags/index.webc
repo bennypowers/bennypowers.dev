@@ -28,6 +28,15 @@ const allTags = Object.keys($data.collections)
     </gtk2-menu-button>
     <gtk2-menu-button label="View">
       <gtk2-menu-item label="Icons" icon="places/folder"></gtk2-menu-item>
+      <gtk2-menu-item label="Arrange Items">
+        <gtk2-menu slot="submenu">
+          <gtk2-menu-item label="By Name" data-sort-field="name"></gtk2-menu-item>
+          <gtk2-menu-item label="By Count" data-sort-field="count" checked></gtk2-menu-item>
+          <gtk2-menu-item separator></gtk2-menu-item>
+          <gtk2-menu-item label="Ascending" data-sort-order="ascending"></gtk2-menu-item>
+          <gtk2-menu-item label="Descending" data-sort-order="descending" checked></gtk2-menu-item>
+        </gtk2-menu>
+      </gtk2-menu-item>
     </gtk2-menu-button>
     <gtk2-menu-button label="Places">
       <gtk2-menu-item label="Home" href="/" icon="places/user-home"></gtk2-menu-item>
@@ -42,15 +51,17 @@ const allTags = Object.keys($data.collections)
   </gtk2-menu-bar>
   <span slot="statusbar" @text="`${allTags.length} items`"></span>
   <gtk2-scrolled-window>
-    <div class="folder-view">
+    <nautilus-folder sort-by="count" sort-order="descending">
       <a webc:for="tag of allTags"
          class="folder-item"
-         :href="tag.href">
+         :href="tag.href"
+         :data-sort-name="tag.name"
+         :data-sort-count="tag.count">
         <img src="/assets/icons/gnome/places/folder.svg" width="48" height="48" alt="">
         <span class="folder-label" @text="tag.name"></span>
         <span class="folder-count" @text="`${tag.count} posts`"></span>
       </a>
-    </div>
+    </nautilus-folder>
   </gtk2-scrolled-window>
 </gtk2-window>
 

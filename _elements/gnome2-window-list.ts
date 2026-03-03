@@ -5,11 +5,24 @@ import { classMap } from 'lit/directives/class-map.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
 import styles from './gnome2-window-list.css';
 
+import { WMFocusEvent } from './gtk2-window.js';
 import { taskbarContext, type TaskbarEntry } from './gnome2-wm-context.js';
 
 export class WMMinimizeEvent extends Event {
-  constructor(public url: string) {
-    super('wm-minimize', { bubbles: true, cancelable: true });
+  wmId: string;
+  url: string;
+  constructor(wmId: string, url?: string) {
+    super('wm-minimize', { bubbles: true, composed: true });
+    this.wmId = wmId;
+    this.url = url ?? wmId;
+  }
+}
+
+export class WMRestoreEvent extends Event {
+  wmId: string;
+  constructor(wmId: string) {
+    super('wm-restore', { bubbles: true, composed: true });
+    this.wmId = wmId;
   }
 }
 
@@ -30,20 +43,6 @@ export class Gnome2WindowList extends LitElement {
   /** Whether all windows are minimized (show desktop active) */
   @state() accessor desktopShown = false;
 
-  protected override willUpdate(): void {
-    // Ensure first render matches SSR — @consume won't have delivered yet
-    // during the constructor-time hydration render.
-    if (!this.entries.length) {
-      const desktop = this.closest('gnome2-desktop');
-      if (desktop && 'taskbarEntries' in desktop) {
-        const entries = (desktop as any).taskbarEntries;
-        if (entries?.length) {
-          this.entries = entries;
-        }
-      }
-    }
-  }
-
   render() {
     return html`
       <button id="show-desktop"
@@ -56,33 +55,32 @@ export class Gnome2WindowList extends LitElement {
              height="16">
       </button>
       <div id="divider"></div>
-      ${this.entries.map(({ url, title, icon, focused, minimized }) => html`
-      <a class="${classMap({ active: focused, minimized })}"
-         href=${ifDefined(url)}
-         data-focused="${String(focused)}"
-         @click=${this.#onButtonClick}>
+      ${this.entries.map(({ id, url, title, icon, focused, minimized }) => html`
+      <button class="${classMap({ active: focused, minimized, 'wm-entry': true })}"
+              data-wm-id="${id}"
+              data-wm-url="${url}"
+              data-wm-focused="${String(Boolean(focused))}"
+              data-wm-minimized="${String(Boolean(minimized))}"
+              @click=${this.#onEntryClick}>
         <img src="${ifDefined(icon ? `/assets/icons/gnome/${icon}.svg` : undefined)}"
              role="presentation"
              width="16"
              height="16">
         <span>${title}</span>
-      </a>
+      </button>
     `)}`;
   }
 
-  #onButtonClick(e: Event) {
-    const target = (e.target as Element)?.closest('a');
-    if (!target) return;
-    const url = target.getAttribute('href') ?? '';
-    if (target.dataset.focused === 'true') {
-      e.preventDefault();
-      this.dispatchEvent(new WMMinimizeEvent(url));
-    } else {
-      e.preventDefault();
-      this.dispatchEvent(Object.assign(
-        new Event('wm-focus', { bubbles: true, composed: true }),
-        { url },
-      ));
+  #onEntryClick(event: MouseEvent) {
+    if (event.currentTarget instanceof HTMLButtonElement) {
+      const { wmId, wmUrl, wmFocused, wmMinimized } = event.currentTarget.dataset;
+      if (wmMinimized === 'true') {
+        this.dispatchEvent(new WMRestoreEvent(wmId));
+      } else if (wmFocused === 'true') {
+        this.dispatchEvent(new WMMinimizeEvent(wmId, wmUrl));
+      } else {
+        this.dispatchEvent(new WMFocusEvent(wmId, wmUrl));
+      }
     }
   }
 

@@ -246,6 +246,7 @@ const menuPostYears = (() => {
     import 'gnome2/ooo-impress.js';
     import 'gnome2/ooo-impress-deck.js';
     import 'gnome2/nautilus-paginated.js';
+    import 'gnome2/nautilus-folder.js';
   </script>
   <style @raw="getBundle('css')"
          webc:keep></style>

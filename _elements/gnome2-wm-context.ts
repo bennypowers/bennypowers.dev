@@ -20,6 +20,7 @@ function createContextWithRoot<T>(
 }
 
 export interface WindowEntry {
+  id: string;
   url?: string;
   title: string;
   icon?: string;
@@ -30,9 +31,12 @@ export interface WindowEntry {
   height?: number;
   maximized?: boolean;
   workspace: number;
+  closeHref?: string;
+  appId?: string;
 }
 
 export interface TaskbarEntry {
+  id: string;
   url: string;
   title: string;
   icon?: string;

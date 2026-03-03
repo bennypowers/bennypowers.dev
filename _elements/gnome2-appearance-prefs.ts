@@ -43,14 +43,17 @@ export class Gnome2AppearancePrefs extends LitElement {
     } catch {}
   }
 
-  #selectScheme(scheme: string) {
-    this.#scheme = scheme;
-    const root = document.documentElement;
-    root.style.colorScheme =
-      scheme === 'light' ? 'light only' :
-      scheme === 'dark' ? 'dark only' : 'light dark';
-    root.dataset.scheme = scheme === 'light' || scheme === 'dark' ? scheme : 'system';
-    try { localStorage.setItem('cl-color-scheme', scheme); } catch {}
+  #selectScheme(event: MouseEvent) {
+    if (event.currentTarget instanceof HTMLElement) {
+      const { scheme } = event.currentTarget.dataset
+      this.#scheme = scheme;
+      const root = document.documentElement;
+      root.style.colorScheme =
+        scheme === 'light' ? 'light only' :
+        scheme === 'dark' ? 'dark only' : 'light dark';
+      root.dataset.scheme = scheme === 'light' || scheme === 'dark' ? scheme : 'system';
+      try { localStorage.setItem('cl-color-scheme', scheme); } catch {}
+    }
   }
 
   #selectWallpaper(src: string) {
@@ -115,9 +118,11 @@ export class Gnome2AppearancePrefs extends LitElement {
   }
 
   #renderThemeItem(scheme: string, label: string, previewClass: string, auto = false) {
+    const selected = this.#scheme === scheme
     return html`
-      <button class="theme-item ${classMap({ selected: this.#scheme === scheme })}"
-              @click=${() => this.#selectScheme(scheme)}>
+      <button class="theme-item ${classMap({ selected })}"
+              data-scheme="${scheme}"
+              @click=${this.#selectScheme}>
         <div class="theme-preview ${previewClass}">
           <div class="preview-titlebar"></div>
           <div class="preview-body">

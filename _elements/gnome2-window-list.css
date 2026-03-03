@@ -64,7 +64,7 @@
   }
 }
 
-a {
+button.wm-entry {
   display: flex;
   align-items: center;
   gap: 4px;

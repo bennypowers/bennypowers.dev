@@ -62,6 +62,18 @@
     display: none;
   }
 
+  :host([checked]:not([icon])) & {
+    display: flex;
+
+    &::before {
+      content: '';
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: currentcolor;
+    }
+  }
+
   & img {
     width: var(--_menu-icon-size, 24px);
     height: var(--_menu-icon-size, 24px);

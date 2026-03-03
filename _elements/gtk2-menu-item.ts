@@ -14,6 +14,7 @@ export class Gtk2MenuItem extends LitElement {
   @property({ type: Boolean, reflect: true }) accessor separator = false;
   @property({ type: Boolean, reflect: true }) accessor disabled = false;
   @property({ type: Boolean, reflect: true }) accessor active = false;
+  @property({ type: Boolean, reflect: true }) accessor checked = false;
 
   get hasSubmenu(): boolean {
     if (!this.querySelector('[slot="submenu"]')) return false;
@@ -53,6 +54,10 @@ export class Gtk2MenuItem extends LitElement {
   }
 
   override updated(changed: Map<string, unknown>) {
+    if (changed.has('checked') && this.#internals) {
+      this.#internals.role = 'menuitemradio';
+      this.#internals.ariaChecked = String(this.checked);
+    }
     if (changed.has('active')) {
       // Sync submenu open state so its keydown handler works
       const submenu = this.querySelector('[slot="submenu"]') as HTMLElement | null;
