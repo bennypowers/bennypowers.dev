@@ -15,7 +15,8 @@ interface OpenGraphCardData extends Record<`og${string}`, unknown> {
 
 async function getOpenGraphCardData(requestUrl: string) {
   try {
-    const html = await EleventyFetch(requestUrl, { type: 'text', duration: '1w' });
+    const result = await EleventyFetch(requestUrl, { type: 'text', duration: '1w' });
+    const html = Buffer.isBuffer(result) ? result.toString('utf-8') : result;
     if (typeof html !== 'string') {
       console.warn(`OpenGraph fetch failed for ${requestUrl}: received ${typeof html}`);
       return;
