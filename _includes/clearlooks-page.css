@@ -388,6 +388,7 @@ body pre[class*="language-"] {
 }
 
 /* === Nautilus Icon View === */
+
 .nautilus-icon-view,
 .folder-view {
   display: grid;

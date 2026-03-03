@@ -17,6 +17,7 @@ export class Gtk2MenuItem extends LitElement {
   @property({ type: Boolean, reflect: true }) accessor checked = false;
 
   get hasSubmenu(): boolean {
+    if (isServer) return false;
     if (!this.querySelector('[slot="submenu"]')) return false;
     // On mobile, items with href navigate directly — no submenu needed
     if (this.#isMobile && this.href) return false;
@@ -54,6 +55,7 @@ export class Gtk2MenuItem extends LitElement {
   }
 
   override updated(changed: Map<string, unknown>) {
+    if (isServer) return;
     if (changed.has('checked') && this.#internals) {
       this.#internals.role = 'menuitemradio';
       this.#internals.ariaChecked = String(this.checked);

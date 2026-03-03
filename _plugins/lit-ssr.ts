@@ -29,9 +29,14 @@ const ELEMENT_MODULES = [
   '_elements/gnome2-clock.ts',
   '_elements/gnome2-window-list.ts',
   '_elements/gtk2-button.ts',
+  '_elements/gtk2-menu-bar.ts',
+  '_elements/gtk2-menu-button.ts',
+  '_elements/gtk2-menu-item.ts',
   '_elements/gtk2-scrolled-window.ts',
   '_elements/gtk2-window.ts',
   '_elements/desktop-icon.ts',
+  '_elements/nautilus-paginated.ts',
+  '_elements/nautilus-folder.ts',
 ];
 
 export function LitSSRPlugin(eleventyConfig: UserConfig) {
@@ -54,7 +59,7 @@ export function LitSSRPlugin(eleventyConfig: UserConfig) {
     const { outputPath, inputPath } = this.page;
     if (!outputPath?.endsWith?.('.html')) return content;
     // Quick check: skip if no custom elements
-    if (!content.includes('gnome2-') && !content.includes('gtk2-') && !content.includes('desktop-icon')) {
+    if (!content.includes('gnome2-') && !content.includes('gtk2-') && !content.includes('desktop-icon') && !content.includes('nautilus-')) {
       return content;
     }
 
