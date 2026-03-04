@@ -1,13 +1,7 @@
 import { LitElement, html } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
+import { WMEvent } from '../lib/wm-event.js';
 import styles from './gnome2-workspace-switcher.css';
-
-/** Dispatched when the user clicks a workspace to switch to it. Provides `workspace` number for the target workspace index. */
-export class WMWorkspaceSwitchEvent extends Event {
-  constructor(public workspace: number) {
-    super('wm-workspace-switch', { bubbles: true, composed: true });
-  }
-}
 
 export interface MiniWindow {
   workspace: number;
@@ -30,7 +24,7 @@ export interface MiniWindow {
  *
  * @summary GNOME 2 workspace switcher with miniature previews
  *
- * @fires {WMWorkspaceSwitchEvent} wm-workspace-switch - When a workspace is clicked. Detail: `workspace` number (zero-based index).
+ * @fires {WMEvent} wm-event - workspace-switch: When a workspace is clicked. Detail: `workspace` number (zero-based index).
  */
 @customElement('gnome2-workspace-switcher')
 export class Gnome2WorkspaceSwitcher extends LitElement {
@@ -69,7 +63,7 @@ export class Gnome2WorkspaceSwitcher extends LitElement {
 
   #onWorkspaceClick(index: number) {
     if (index !== this.active) {
-      this.dispatchEvent(new WMWorkspaceSwitchEvent(index));
+      this.dispatchEvent(new WMEvent('workspace-switch', '', '', { workspace: index }));
     }
   }
 }

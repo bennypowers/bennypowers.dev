@@ -1,6 +1,6 @@
-import type { WMFocusEvent, WMCloseEvent, Gtk2Window } from '../gtk2-window/gtk2-window.js';
-import type { WMMinimizeEvent, WMRestoreEvent, WMShowDesktopEvent } from '../gnome2-window-list/gnome2-window-list.js';
-import type { WMWorkspaceSwitchEvent, MiniWindow } from '../gnome2-workspace-switcher/gnome2-workspace-switcher.js';
+import type { Gtk2Window } from '../gtk2-window/gtk2-window.js';
+import type { MiniWindow } from '../gnome2-workspace-switcher/gnome2-workspace-switcher.js';
+import { WMEvent } from '../lib/wm-event.js';
 
 import { LitElement, html, isServer } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
@@ -666,22 +666,32 @@ export class Gnome2Desktop extends LitElement {
 
   // ─── WM Event Handlers ───────────────────────────────────────
 
+  #onWmEvent = (e: Event) => {
+    const { wmEventType, wmId, detail } = e as WMEvent;
+    switch (wmEventType) {
+      case 'focus': return this.#onWmFocus(wmId);
+      case 'close': return this.#onWmClose(wmId);
+      case 'move': return this.#onWmMove();
+      case 'minimize': return this.#onWmMinimize(wmId);
+      case 'restore': return this.#onWmRestore(wmId);
+      case 'show-desktop': return this.#onWmShowDesktop(detail.show as boolean);
+      case 'workspace-switch': return this.#onWmWorkspaceSwitch(detail.workspace as number);
+    }
+  };
+
   /** Focus only — never navigates or creates windows. */
-  #onWmFocus = (e: Event) => {
-    const { wmId } = e as WMFocusEvent;
+  #onWmFocus(wmId: string) {
     if (!wmId) return;
     this.#focusWindow(wmId);
-  };
+  }
 
   /** Restore a minimized window — unminimize, raise, and focus. */
-  #onWmRestore = (e: Event) => {
-    const { wmId } = e as WMRestoreEvent;
+  #onWmRestore(wmId: string) {
     if (!wmId) return;
     this.#focusWindow(wmId);
-  };
+  }
 
-  #onWmClose = (e: Event) => {
-    const { wmId } = e as WMCloseEvent;
+  #onWmClose(wmId: string) {
     if (!wmId) return;
 
     const state = this.#windows.get(wmId);
@@ -718,16 +728,14 @@ export class Gnome2Desktop extends LitElement {
       }
     }
     this.#sync();
-  };
+  }
 
-  #onWmMinimize = (e: Event) => {
-    const { wmId } = e as WMMinimizeEvent;
+  #onWmMinimize(wmId: string) {
     if (!wmId) return;
     this.#toggleMinimize(wmId);
-  };
+  }
 
-  #onWmShowDesktop = (e: Event) => {
-    const { show } = e as WMShowDesktopEvent;
+  #onWmShowDesktop(show: boolean) {
     if (this.#isMobile) return;
     const activeWs = this.#getActiveWorkspace();
     for (const [id, state] of this.#windows) {
@@ -739,20 +747,19 @@ export class Gnome2Desktop extends LitElement {
     }
     this.#saveWindows();
     this.#sync();
-  };
+  }
 
-  #onWmMove = () => {
+  #onWmMove() {
     this.#savePositions();
     this.#syncMiniatures();
-  };
+  }
 
-  #onWmWorkspaceSwitch = (e: Event) => {
-    const { workspace } = e as WMWorkspaceSwitchEvent;
+  #onWmWorkspaceSwitch(workspace: number) {
     if (this.#isMobile) return;
     this.#saveActiveWorkspace(workspace);
     this.#applyWorkspaceVisibility();
     this.#sync();
-  };
+  }
 
   // ─── Pointer tracking for miniatures ──────────────────────────
 
@@ -857,14 +864,8 @@ export class Gnome2Desktop extends LitElement {
       );
     }
 
-    // Register WM event listeners (these don't cause re-renders)
-    this.addEventListener('wm-close', this.#onWmClose);
-    this.addEventListener('wm-minimize', this.#onWmMinimize);
-    this.addEventListener('wm-restore', this.#onWmRestore);
-    this.addEventListener('wm-focus', this.#onWmFocus);
-    this.addEventListener('wm-move', this.#onWmMove);
-    this.addEventListener('wm-show-desktop', this.#onWmShowDesktop);
-    this.addEventListener('wm-workspace-switch', this.#onWmWorkspaceSwitch);
+    // Register unified WM event listener (doesn't cause re-renders)
+    this.addEventListener('wm-event', this.#onWmEvent);
 
     // ── Defer full initialization until after hydration ──
     requestAnimationFrame(() => this.#boot());
@@ -988,13 +989,7 @@ export class Gnome2Desktop extends LitElement {
   override disconnectedCallback() {
     super.disconnectedCallback();
 
-    this.removeEventListener('wm-close', this.#onWmClose);
-    this.removeEventListener('wm-minimize', this.#onWmMinimize);
-    this.removeEventListener('wm-restore', this.#onWmRestore);
-    this.removeEventListener('wm-focus', this.#onWmFocus);
-    this.removeEventListener('wm-move', this.#onWmMove);
-    this.removeEventListener('wm-show-desktop', this.#onWmShowDesktop);
-    this.removeEventListener('wm-workspace-switch', this.#onWmWorkspaceSwitch);
+    this.removeEventListener('wm-event', this.#onWmEvent);
     this.removeEventListener('gotpointercapture', this.#onGotPointerCapture, true);
     this.removeEventListener('lostpointercapture', this.#onLostPointerCapture, true);
     this.removeEventListener('pointermove', this.#onPointerMove, true);

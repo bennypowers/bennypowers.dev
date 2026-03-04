@@ -2,42 +2,11 @@ import { LitElement, html, isServer } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 import { consume } from '@lit/context';
 import { ifDefined } from 'lit/directives/if-defined.js';
-import { WMMinimizeEvent } from '../gnome2-window-list/gnome2-window-list.js';
+import { WMEvent } from '../lib/wm-event.js';
 import { activeWindowContext } from '../gnome2-wm-context/gnome2-wm-context.js';
 import styles from './gtk2-window.css';
 
-/** Dispatched when a window requests focus from the window manager. Provides `wmId` and `url` for identifying the target window. */
-export class WMFocusEvent extends Event {
-  wmId: string;
-  url: string;
-  constructor(wmId: string, url?: string) {
-    super('wm-focus', { bubbles: true, composed: true });
-    this.wmId = wmId;
-    this.url = url ?? wmId;
-  }
-}
-
-/** Dispatched when a window's close button is clicked. Provides `wmId` and `url` for identifying the closed window. */
-export class WMCloseEvent extends Event {
-  wmId: string;
-  url: string;
-  constructor(wmId: string, url?: string) {
-    super('wm-close', { bubbles: true, composed: true });
-    this.wmId = wmId;
-    this.url = url ?? wmId;
-  }
-}
-
-/** Dispatched after a window is dragged or resized to allow saving its position. Provides `wmId` and `url` for identifying the moved window. */
-export class WMMoveEvent extends Event {
-  wmId: string;
-  url: string;
-  constructor(wmId: string, url?: string) {
-    super('wm-move', { bubbles: true, composed: true });
-    this.wmId = wmId;
-    this.url = url ?? wmId;
-  }
-}
+export { WMEvent } from '../lib/wm-event.js';
 
 /**
  * A draggable, resizable window modeled after Metacity 2.20. Provides
@@ -47,9 +16,9 @@ export class WMMoveEvent extends Event {
  *
  * @summary Metacity-style draggable, resizable application window
  *
- * @fires {WMFocusEvent} wm-focus - When focus is requested. Detail: `wmId`, `url`.
- * @fires {WMCloseEvent} wm-close - When the close button is clicked. Detail: `wmId`, `url`.
- * @fires {WMMoveEvent} wm-move - After drag or resize ends. Detail: `wmId`, `url`.
+ * @fires {WMEvent} wm-event - focus: When focus is requested. Detail: `wmId`, `url`.
+ * @fires {WMEvent} wm-event - close: When the close button is clicked. Detail: `wmId`, `url`.
+ * @fires {WMEvent} wm-event - move: After drag or resize ends. Detail: `wmId`, `url`.
  * @fires minimize - When the minimize button is clicked. No detail.
  * @fires maximize - When maximize is toggled. No detail.
  * @fires close - When the close button is clicked. No detail.
@@ -226,12 +195,12 @@ export class Gtk2Window extends LitElement {
     // Don't focus if clicking titlebar buttons (close/minimize/maximize)
     const path = e.composedPath();
     if (path.some(el => (el as Element)?.closest?.('#titlebar-buttons'))) return;
-    this.dispatchEvent(new WMFocusEvent(this.wmId, this.windowUrl));
+    this.dispatchEvent(new WMEvent('focus', this.wmId, this.windowUrl));
   };
 
   #onMinimize() {
     if (this.wmId) {
-      this.dispatchEvent(new WMMinimizeEvent(this.wmId, this.windowUrl));
+      this.dispatchEvent(new WMEvent('minimize', this.wmId, this.windowUrl));
     }
     this.dispatchEvent(new Event('minimize'));
   }
@@ -253,7 +222,7 @@ export class Gtk2Window extends LitElement {
 
   #onClose() {
     if (this.wmId) {
-      this.dispatchEvent(new WMCloseEvent(this.wmId, this.windowUrl));
+      this.dispatchEvent(new WMEvent('close', this.wmId, this.windowUrl));
     }
     this.dispatchEvent(new Event('close'));
   }
@@ -280,7 +249,7 @@ export class Gtk2Window extends LitElement {
 
     // Focus immediately on titlebar grab
     if (!this.focused && this.wmId) {
-      this.dispatchEvent(new WMFocusEvent(this.wmId, this.windowUrl));
+      this.dispatchEvent(new WMEvent('focus', this.wmId, this.windowUrl));
     }
 
     if (this.maximized) return;
@@ -301,7 +270,7 @@ export class Gtk2Window extends LitElement {
 
   #onMoveEnd = () => {
     if (this.wmId) {
-      this.dispatchEvent(new WMMoveEvent(this.wmId, this.windowUrl));
+      this.dispatchEvent(new WMEvent('move', this.wmId, this.windowUrl));
     }
   };
 
