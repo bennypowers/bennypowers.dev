@@ -1,16 +1,7 @@
 import { LitElement, html } from 'lit';
 import { customElement } from 'lit/decorators.js';
-import { registerApp } from '../lib/app-registry.js';
+import { appElement } from '../lib/app-registry.js';
 import styles from './gnome2-about.css';
-
-registerApp({
-  id: 'about',
-  tag: 'gnome2-about',
-  label: 'About bennypowers.dev',
-  icon: 'status/dialog-information',
-  width: '550px',
-  height: '500px',
-});
 
 /**
  * An about dialog modeled after GNOME 2.20 about windows. SHOULD be
@@ -20,8 +11,12 @@ registerApp({
  *
  * @summary GNOME 2 about dialog with site info and navigation
  */
+@appElement({ width: '550px', height: '500px' })
 @customElement('gnome2-about')
 export class Gnome2About extends LitElement {
+  static appId = 'about';
+  static appLabel = 'About bennypowers.dev';
+  static appIcon = 'status/dialog-information';
   static styles = styles;
 
   render() {

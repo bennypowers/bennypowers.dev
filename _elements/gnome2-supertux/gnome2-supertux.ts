@@ -1,16 +1,7 @@
 import { LitElement, html, isServer } from 'lit';
 import { customElement, state } from 'lit/decorators.js';
-import { registerApp } from '../lib/app-registry.js';
+import { appElement } from '../lib/app-registry.js';
 import styles from './gnome2-supertux.css';
-
-registerApp({
-  id: 'supertux',
-  tag: 'gnome2-supertux',
-  label: 'SuperTux',
-  icon: 'apps/supertux',
-  width: '800px',
-  height: '600px',
-});
 
 const SUPERTUX_URL = 'https://play.supertux.org/releases/0.6.3/';
 
@@ -31,8 +22,12 @@ function supportsCredentiallessIframe(): boolean {
  *
  * @summary Embedded SuperTux game via credentialless iframe
  */
+@appElement({ width: '800px', height: '600px' })
 @customElement('gnome2-supertux')
 export class Gnome2Supertux extends LitElement {
+  static appId = 'supertux';
+  static appLabel = 'SuperTux';
+  static appIcon = 'apps/supertux';
   static styles = styles;
 
   @state() accessor #canEmbed = supportsCredentiallessIframe();

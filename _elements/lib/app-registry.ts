@@ -9,23 +9,78 @@ export interface AppDef {
   attrs?: () => Record<string, string>;
 }
 
-/** Static map of app id → module specifier for lazy loading */
-const MODULE_MAP: Record<string, string> = {
-  calculator: 'gnome2/gnome2-calculator/gnome2-calculator.js',
-  mines: 'gnome2/gnome2-mines/gnome2-mines.js',
-  supertux: 'gnome2/gnome2-supertux/gnome2-supertux.js',
-  about: 'gnome2/gnome2-about/gnome2-about.js',
-  pidgin: 'gnome2/pidgin-conversation/pidgin-conversation.js',
+/** Map of app id → tag name for lazy loading before module is imported */
+const TAG_MAP: Record<string, string> = {
+  calculator: 'gnome2-calculator',
+  mines: 'gnome2-mines',
+  supertux: 'gnome2-supertux',
+  about: 'gnome2-about',
+  pidgin: 'pidgin-conversation',
 };
 
 const registry = new Map<string, AppDef>();
 
-/** Register app metadata. Called at module scope by each app element. */
-export function registerApp(def: Omit<AppDef, 'module'>) {
-  const module = MODULE_MAP[def.id];
-  if (module) {
-    registry.set(def.id, { ...def, module });
+function kebabCase(s: string): string {
+  return s
+    .replace(/([a-z0-9])([A-Z])/g, '$1-$2')
+    .replace(/([A-Z]+)([A-Z][a-z])/g, '$1-$2')
+    .toLowerCase();
+}
+
+function getTagName(klass: Function): string {
+  if (typeof customElements !== 'undefined' && 'getName' in customElements) {
+    const name = (customElements as { getName(c: Function): string | null }).getName(klass);
+    if (name) return name;
   }
+  return kebabCase(klass.name);
+}
+
+/** Static fields required on classes decorated with `@appElement` */
+interface AppElementStatics {
+  appId: string;
+  appLabel: string;
+  appIcon: string;
+  appAttrs?: () => Record<string, string>;
+}
+
+/**
+ * Class decorator that registers a Lit element as a launchable app.
+ * MUST be stacked above `@customElement` so its initializer runs after
+ * the element is defined in the custom elements registry.
+ *
+ * The class MUST have static `appId`, `appLabel`, and `appIcon` fields.
+ * TypeScript will error at compile time if any are missing. MAY have a
+ * static `appAttrs` field for dynamic attributes.
+ *
+ * The tag name is resolved via `customElements.getName()` when available
+ * (Baseline 2024). Falls back to kebab-casing the class name, which
+ * works for all elements in this project (e.g. `Gnome2Calculator` →
+ * `gnome2-calculator`). If a class name doesn't follow PascalCase
+ * matching its tag name, use `customElements.getName()` or rename.
+ *
+ * @example
+ * ```ts
+ * @appElement({ width: '260px', height: '320px' })
+ * @customElement('gnome2-calculator')
+ * class Gnome2Calculator extends LitElement {
+ *   static appId = 'calculator';
+ *   static appLabel = 'Calculator';
+ *   static appIcon = 'apps/accessories-calculator';
+ * }
+ * ```
+ */
+export function appElement(opts: { width: string; height: string }) {
+  return function<T extends (abstract new (...args: any[]) => any) & AppElementStatics>(
+    target: T,
+    context: ClassDecoratorContext,
+  ) {
+    context.addInitializer(function() {
+      const { appId: id, appLabel: label, appIcon: icon, appAttrs: attrs } = target;
+      const tag = getTagName(target);
+      const module = `gnome2/${tag}/${tag}.js`;
+      registry.set(id, { id, tag, module, label, icon, ...opts, ...(attrs && { attrs }) });
+    });
+  };
 }
 
 /** Get a registered app's metadata (available after its module is loaded). */
@@ -40,17 +95,19 @@ export function getAllApps(): AppDef[] {
 
 /** Get the module specifier for an app (available before loading). */
 export function getAppModule(id: string): string | undefined {
-  return MODULE_MAP[id];
+  const tag = TAG_MAP[id];
+  if (!tag) return undefined;
+  return `gnome2/${tag}/${tag}.js`;
 }
 
 /** Get all known app IDs (available before loading). */
 export function getAllAppIds(): string[] {
-  return Object.keys(MODULE_MAP);
+  return Object.keys(TAG_MAP);
 }
 
 /** Load an app module and return its metadata. */
 export async function loadApp(id: string): Promise<AppDef | null> {
-  const module = MODULE_MAP[id];
+  const module = getAppModule(id);
   if (!module) return null;
   await import(module);
   return registry.get(id) ?? null;

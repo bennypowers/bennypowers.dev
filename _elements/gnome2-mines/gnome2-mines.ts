@@ -1,17 +1,8 @@
 import { LitElement, html, isServer } from 'lit';
 import { customElement, state } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
-import { registerApp } from '../lib/app-registry.js';
+import { appElement } from '../lib/app-registry.js';
 import styles from './gnome2-mines.css';
-
-registerApp({
-  id: 'mines',
-  tag: 'gnome2-mines',
-  label: 'Mines',
-  icon: 'categories/applications-games',
-  width: '280px',
-  height: '360px',
-});
 
 interface Cell {
   mine: boolean;
@@ -43,8 +34,12 @@ const ADJACENT_COLORS: Record<number, string> = {
  *
  * @summary GNOME Mines (gnomine) minesweeper game
  */
+@appElement({ width: '280px', height: '360px' })
 @customElement('gnome2-mines')
 export class Gnome2Mines extends LitElement {
+  static appId = 'mines';
+  static appLabel = 'Mines';
+  static appIcon = 'categories/applications-games';
   static styles = styles;
 
   @state() accessor #board: Cell[][] = [];

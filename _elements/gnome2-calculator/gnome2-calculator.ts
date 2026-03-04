@@ -1,16 +1,7 @@
 import { LitElement, html, isServer } from 'lit';
 import { customElement, state } from 'lit/decorators.js';
-import { registerApp } from '../lib/app-registry.js';
+import { appElement } from '../lib/app-registry.js';
 import styles from './gnome2-calculator.css';
-
-registerApp({
-  id: 'calculator',
-  tag: 'gnome2-calculator',
-  label: 'Calculator',
-  icon: 'apps/accessories-calculator',
-  width: '260px',
-  height: '320px',
-});
 
 /**
  * A basic calculator modeled after gcalctool 5.20 from GNOME 2.20.
@@ -20,8 +11,12 @@ registerApp({
  *
  * @summary gcalctool-style basic calculator
  */
+@appElement({ width: '260px', height: '320px' })
 @customElement('gnome2-calculator')
 export class Gnome2Calculator extends LitElement {
+  static appId = 'calculator';
+  static appLabel = 'Calculator';
+  static appIcon = 'apps/accessories-calculator';
   static styles = styles;
 
   @state() accessor #display = '0';

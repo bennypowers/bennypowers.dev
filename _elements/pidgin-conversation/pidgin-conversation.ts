@@ -1,18 +1,8 @@
 import { LitElement, html, isServer } from 'lit';
 import { customElement, property, state, query } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
-import { registerApp } from '../lib/app-registry.js';
+import { appElement } from '../lib/app-registry.js';
 import styles from './pidgin-conversation.css';
-
-registerApp({
-  id: 'pidgin',
-  tag: 'pidgin-conversation',
-  label: 'Conversation',
-  icon: 'apps/internet-group-chat',
-  width: '450px',
-  height: '400px',
-  attrs: () => ({ 'post-url': `https://bennypowers.dev${location.pathname}` }),
-});
 
 type Protocol = 'fediverse' | 'bluesky' | 'webmention' | '';
 
@@ -27,8 +17,13 @@ const SOURCE_URL_STORAGE_KEY = 'pidgin-source-url';
  *
  * @summary Pidgin-style conversation window with Fediverse/Bluesky/Webmention replies
  */
+@appElement({ width: '450px', height: '400px' })
 @customElement('pidgin-conversation')
 export class PidginConversation extends LitElement {
+  static appId = 'pidgin';
+  static appLabel = 'Conversation';
+  static appIcon = 'apps/internet-group-chat';
+  static appAttrs = () => ({ 'post-url': `https://bennypowers.dev${location.pathname}` });
   static styles = styles;
 
   /** URL of the post being discussed. Used as the reply context for Fediverse/Bluesky/Webmention. */
