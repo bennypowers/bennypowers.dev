@@ -1,36 +1,14 @@
 import type { Gtk2Window } from '../gtk2-window/gtk2-window.js';
-import type { MiniWindow } from '../gnome2-workspace-switcher/gnome2-workspace-switcher.js';
-import { WMEvent } from '../lib/wm-event.js';
-import { fromComposed } from '../lib/from-composed.js';
 
 import { LitElement, html, isServer } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { provide } from '@lit/context';
 import styles from './gnome2-desktop.css';
 
-import { activeWindowContext, taskbarContext, type WindowEntry, type TaskbarEntry } from '../gnome2-wm-context/gnome2-wm-context.js';
+import { activeWindowContext, taskbarContext, type TaskbarEntry } from '../gnome2-wm-context/gnome2-wm-context.js';
 import { getApp, getAppModule, getAllAppIds } from '../lib/app-registry.js';
-
-const STORAGE_KEY = 'gnome2-wm-windows';
-const WORKSPACE_KEY = 'gnome2-wm-workspace';
-
-// Metacity 2.20 cascade constants (src/place.c)
-const CASCADE_INTERVAL = 50;
-const CASCADE_FUZZ = 15;
-
-/** Internal state for a single managed window. */
-interface WMWindowState {
-  id: string;
-  url: string;
-  title: string;
-  icon?: string;
-  minimized: boolean;
-  maximized: boolean;
-  workspace: number;
-  position?: { x: number; y: number; width: number; height: number };
-  closeHref?: string;
-  appId?: string;
-}
+import { WMController } from '../lib/wm-controller.js';
+import { SPAController, vtName, fetchWindowContent } from '../lib/spa-controller.js';
 
 /**
  * Root window manager for the GNOME 2.20 desktop shell. MUST be
@@ -61,503 +39,14 @@ export class Gnome2Desktop extends LitElement {
   /** Icon path for the current page window */
   @property({ attribute: 'page-icon' }) accessor pageIcon = '';
 
-  /** Centralized window state keyed by wmId. */
-  #windows = new Map<string, WMWindowState>();
-  #activeId: string | null = null;
-  #isMobile = false;
-  #booted = false;
-  #tracking = false;
-  #topZ = 100;
-  #rafId = 0;
+  /** Window manager controller */
+  readonly wm = new WMController(this, {
+    onActiveWindowChange: (id) => { this.activeWindow = id; },
+    onTaskbarChange: (entries) => { this.taskbarEntries = entries; },
+  });
 
-  // ─── DOM helpers ──────────────────────────────────────────────
-
-  /** Find a gtk2-window element by its wmId (or windowUrl fallback). */
-  #findWindowElement(id: string): Gtk2Window | null {
-    for (const win of this.querySelectorAll<Gtk2Window>('gtk2-window')) {
-      if (win.wmId === id || win.windowUrl === id) return win;
-    }
-    return null;
-  }
-
-  // ─── Storage ──────────────────────────────────────────────────
-
-  #getActiveWorkspace(): number {
-    try {
-      return parseInt(sessionStorage.getItem(WORKSPACE_KEY) || '0', 10) || 0;
-    } catch {
-      return 0;
-    }
-  }
-
-  #saveActiveWorkspace(index: number) {
-    try {
-      sessionStorage.setItem(WORKSPACE_KEY, String(index));
-    } catch {}
-  }
-
-  /** Deserialize sessionStorage into the window Map. */
-  #loadWindows(): Map<string, WMWindowState> {
-    try {
-      const raw: WindowEntry[] = JSON.parse(sessionStorage.getItem(STORAGE_KEY) || '[]');
-      const map = new Map<string, WMWindowState>();
-      for (const e of raw) {
-        const id = e.id ?? e.url ?? '';
-        map.set(id, {
-          id,
-          url: e.url ?? '',
-          title: e.title,
-          icon: e.icon,
-          minimized: e.minimized,
-          maximized: e.maximized ?? false,
-          workspace: e.workspace ?? 0,
-          position: (e.x != null && e.y != null)
-            ? { x: e.x, y: Math.max(0, e.y), width: e.width ?? 0, height: e.height ?? 0 }
-            : undefined,
-          closeHref: e.closeHref,
-          appId: e.appId,
-        });
-      }
-      return map;
-    } catch {
-      return new Map();
-    }
-  }
-
-  /** Serialize the window Map back to sessionStorage. */
-  #saveWindows() {
-    try {
-      const arr = [...this.#windows.values()].map(w => ({
-        id: w.id,
-        url: w.url,
-        title: w.title,
-        icon: w.icon,
-        minimized: w.minimized,
-        maximized: w.maximized,
-        workspace: w.workspace,
-        x: w.position?.x,
-        y: w.position?.y,
-        width: w.position?.width,
-        height: w.position?.height,
-        closeHref: w.closeHref,
-        appId: w.appId,
-      }));
-      sessionStorage.setItem(STORAGE_KEY, JSON.stringify(arr));
-    } catch {}
-  }
-
-  // ─── State machine ────────────────────────────────────────────
-
-  /** Add or update a window in the state map. */
-  #registerWindow(id: string, state: Omit<WMWindowState, 'id'>): WMWindowState {
-    const existing = this.#windows.get(id);
-    if (existing) {
-      existing.title = state.title;
-      existing.minimized = false;
-      if (state.icon) existing.icon = state.icon;
-      if (state.closeHref) existing.closeHref = state.closeHref;
-    } else {
-      this.#windows.set(id, { ...state, id });
-    }
-    this.#saveWindows();
-    return this.#windows.get(id)!;
-  }
-
-  /** Remove a window from the state map. */
-  #unregisterWindow(id: string) {
-    this.#windows.delete(id);
-    this.#saveWindows();
-  }
-
-  /** Focus a window: raise it, unminimize, update context. */
-  #focusWindow(id: string, { animate = true } = {}) {
-    const state = this.#windows.get(id);
-    if (state?.minimized) {
-      state.minimized = false;
-      this.#saveWindows();
-    }
-
-    if (!this.#isMobile) {
-      this.#pinFocusedWindows(id);
-    }
-
-    this.#activeId = id;
-
-    const el = this.#findWindowElement(id);
-    if (el) {
-      el.style.display = '';
-      el.style.zIndex = String(++this.#topZ);
-    }
-
-    const update = () => { this.activeWindow = id; };
-    if (animate && typeof document.startViewTransition === 'function') {
-      document.startViewTransition(update);
-    } else {
-      update();
-    }
-
-    this.#sync();
-  }
-
-  /** Toggle the minimized state of a window. */
-  #toggleMinimize(id: string) {
-    const state = this.#windows.get(id);
-    const el = this.#findWindowElement(id);
-    if (state) {
-      state.minimized = !state.minimized;
-      this.#saveWindows();
-      if (el) el.style.display = state.minimized ? 'none' : '';
-      if (this.#isMobile && !state.minimized) {
-        this.#activeId = id;
-        this.activeWindow = id;
-      }
-    }
-    this.#sync();
-  }
-
-  /** Recompute derived state: taskbar entries, miniatures. */
-  #sync() {
-    if (!this.#booted) return;
-    this.#updateTaskbar();
-    if (!this.#isMobile) this.#syncMiniatures();
-  }
-
-  // ─── Position helpers ─────────────────────────────────────────
-
-  #savePositions() {
-    const workspace = this.shadowRoot?.querySelector('#windows') ?? this;
-    const parentRect = workspace.getBoundingClientRect();
-    const windows = this.querySelectorAll<Gtk2Window>('gtk2-window');
-
-    // Batch all reads first
-    const rects = new Map<Gtk2Window, DOMRect>();
-    for (const win of windows) {
-      rects.set(win, win.getBoundingClientRect());
-    }
-
-    // Then write
-    for (const win of windows) {
-      const id = win.wmId || win.windowUrl;
-      const state = this.#windows.get(id);
-      if (!state) continue;
-      const rect = rects.get(win)!;
-      state.position = {
-        x: rect.left - parentRect.left,
-        y: Math.max(0, rect.top - parentRect.top),
-        width: rect.width,
-        height: rect.height,
-      };
-      state.maximized = win.maximized;
-    }
-    this.#saveWindows();
-  }
-
-  static #applyPosition(win: HTMLElement, state: WMWindowState) {
-    if (state.maximized) {
-      win.setAttribute('maximized', '');
-      return;
-    }
-    if (state.position) {
-      win.style.insetBlockStart = `${Math.max(0, state.position.y)}px`;
-      win.style.insetInlineStart = `${state.position.x}px`;
-      win.style.margin = '0';
-      if (state.position.width) win.style.width = `${state.position.width}px`;
-      if (state.position.height) win.style.height = `${state.position.height}px`;
-    }
-  }
-
-  /** Metacity-style placement: saved position → center if no overlap → cascade. */
-  #placeWindow(win: HTMLElement, id: string) {
-    const state = this.#windows.get(id);
-    if (state?.position) {
-      Gnome2Desktop.#applyPosition(win, state);
-      return;
-    }
-    const container = this.shadowRoot?.querySelector('#windows');
-    const workRect = container?.getBoundingClientRect() ?? { width: 840, height: 560 };
-    const winW = parseFloat(win.style.width) || Math.min(workRect.width * 0.9, 840);
-    const winH = parseFloat(win.style.height) || Math.min(workRect.height * 0.8, 560);
-    const cx = Math.max(0, (workRect.width - winW) / 2);
-    const cy = 16;
-    if (!this.#overlapsAnyWindow(cx, cy, winW, winH)) {
-      win.style.insetBlockStart = `${cy}px`;
-      win.style.insetInlineStart = `${cx}px`;
-      win.style.margin = '0';
-      return;
-    }
-    const pos = this.#findNextCascade(workRect.width, workRect.height, winW, winH);
-    win.style.insetBlockStart = `${Math.max(0, pos.y)}px`;
-    win.style.insetInlineStart = `${pos.x}px`;
-    win.style.margin = '0';
-  }
-
-  #overlapsAnyWindow(x: number, y: number, w: number, h: number): boolean {
-    const container = this.shadowRoot?.querySelector('#windows') ?? this;
-    const parentRect = container.getBoundingClientRect();
-    for (const win of this.querySelectorAll('gtk2-window')) {
-      if (win.style.display === 'none') continue;
-      const rect = win.getBoundingClientRect();
-      const wx = rect.left - parentRect.left;
-      const wy = rect.top - parentRect.top;
-      if (x < wx + rect.width && x + w > wx && y < wy + rect.height && y + h > wy) {
-        return true;
-      }
-    }
-    return false;
-  }
-
-  #findNextCascade(workW: number, workH: number, winW: number, winH: number): { x: number; y: number } {
-    const positions: { x: number; y: number }[] = [];
-    const container = this.shadowRoot?.querySelector('#windows') ?? this;
-    const parentRect = container.getBoundingClientRect();
-    for (const win of this.querySelectorAll('gtk2-window')) {
-      if (win.style.display === 'none') continue;
-      const rect = win.getBoundingClientRect();
-      positions.push({ x: rect.left - parentRect.left, y: rect.top - parentRect.top });
-    }
-    positions.sort((a, b) => (a.x + a.y) - (b.x + b.y));
-
-    let cx = 0;
-    let cy = 0;
-    let stage = 0;
-
-    for (let i = 0; i < positions.length; i++) {
-      const p = positions[i];
-      if (Math.abs(p.x - cx) < CASCADE_FUZZ && Math.abs(p.y - cy) < CASCADE_FUZZ) {
-        cx = p.x + CASCADE_INTERVAL;
-        cy = p.y + CASCADE_INTERVAL;
-
-        if (cx + winW > workW || cy + winH > workH) {
-          stage++;
-          cx = CASCADE_INTERVAL * stage;
-          cy = 0;
-          i = -1;
-        }
-      }
-    }
-
-    return { x: cx, y: cy };
-  }
-
-  #positionBackgroundWindows() {
-    const activeWorkspace = this.#getActiveWorkspace();
-    const container = this.shadowRoot?.querySelector('#windows') ?? this;
-    const workRect = container.getBoundingClientRect();
-    let bgIndex = 0;
-    for (const win of this.querySelectorAll<Gtk2Window>('gtk2-window')) {
-      const id = win.wmId || win.windowUrl;
-      const state = this.#windows.get(id);
-
-      if (state?.appId) continue;
-
-      if (state && state.workspace !== activeWorkspace) {
-        win.style.display = 'none';
-        continue;
-      }
-
-      if (id === this.#activeId) {
-        win.style.zIndex = String(this.#topZ);
-        if (state?.position) {
-          Gnome2Desktop.#applyPosition(win, state);
-        }
-      } else {
-        win.style.zIndex = String(bgIndex + 1);
-        if (state?.position) {
-          Gnome2Desktop.#applyPosition(win, state);
-        } else {
-          const winW = parseFloat(win.style.width) || 840;
-          const winH = parseFloat(win.style.height) || 560;
-          const pos = this.#findNextCascade(workRect.width, workRect.height, winW, winH);
-          win.style.insetBlockStart = `${Math.max(0, pos.y)}px`;
-          win.style.insetInlineStart = `${pos.x}px`;
-          win.style.margin = '0';
-        }
-        bgIndex++;
-      }
-    }
-  }
-
-  /** Generate a CSS-safe view-transition-name from a window URL. */
-  static #vtName(url: string) {
-    return `wm-${url.replace(/[^a-zA-Z0-9_-]/g, '-')}`;
-  }
-
-  // ─── Active window management ─────────────────────────────────
-
-  /** Pin currently-focused windows to absolute position (before switching focus).
-   *  @param excludeId  The window about to receive focus — skip it. */
-  #pinFocusedWindows(excludeId?: string) {
-    const container = this.shadowRoot?.querySelector('#windows') ?? this;
-    const parentRect = container.getBoundingClientRect();
-    for (const w of this.querySelectorAll<Gtk2Window>('gtk2-window[focused]')) {
-      const id = w.wmId || w.windowUrl;
-      if (id === excludeId) continue;
-      const rect = w.getBoundingClientRect();
-      const tx = new DOMMatrix(getComputedStyle(w).transform);
-      w.style.insetBlockStart = `${Math.max(0, rect.top - parentRect.top - tx.m42)}px`;
-      w.style.insetInlineStart = `${rect.left - parentRect.left - tx.m41}px`;
-      w.style.margin = '0';
-    }
-  }
-
-  // ─── Taskbar + miniatures ─────────────────────────────────────
-
-  #updateTaskbar() {
-    const activeWorkspace = this.#getActiveWorkspace();
-    const taskbarEntries: TaskbarEntry[] = [];
-    for (const [id, state] of this.#windows) {
-      if (state.workspace !== activeWorkspace) continue;
-      taskbarEntries.push({
-        id,
-        url: state.url,
-        title: state.title,
-        icon: state.icon,
-        focused: id === this.#activeId,
-        minimized: state.minimized,
-      });
-    }
-    this.taskbarEntries = taskbarEntries;
-  }
-
-  #syncMiniatures() {
-    const switcher = document.querySelector('gnome2-workspace-switcher');
-    if (!switcher) return;
-    const activeWs = this.#getActiveWorkspace();
-    switcher.active = activeWs;
-
-    const container = this.shadowRoot?.querySelector('#windows') ?? this;
-    const parentRect = container.getBoundingClientRect();
-    const dw = parentRect.width || 1;
-    const dh = parentRect.height || 1;
-
-    const minis: MiniWindow[] = [];
-    for (const win of this.querySelectorAll<Gtk2Window>('gtk2-window')) {
-      const id = win.wmId || win.windowUrl;
-      const state = this.#windows.get(id);
-      const workspace = state?.workspace ?? 0;
-      const minimized = state?.minimized ?? false;
-
-      if (win.style.display === 'none') {
-        if (state?.position && state.position.width && state.position.height) {
-          minis.push({
-            workspace,
-            x: Math.max(0, state.position.x / dw),
-            y: Math.max(0, state.position.y / dh),
-            w: state.position.width / dw,
-            h: state.position.height / dh,
-            minimized,
-          });
-        } else {
-          const w = parseFloat(win.style.width) || 200;
-          const h = parseFloat(win.style.height) || 150;
-          const x = parseFloat(win.style.insetInlineStart) || parseFloat(win.style.insetInlineEnd) || 40;
-          const y = parseFloat(win.style.insetBlockStart) || 40;
-          minis.push({ workspace, x: x / dw, y: y / dh, w: w / dw, h: h / dh, minimized });
-        }
-        continue;
-      }
-
-      const rect = win.getBoundingClientRect();
-      minis.push({
-        workspace,
-        x: Math.max(0, (rect.left - parentRect.left) / dw),
-        y: Math.max(0, (rect.top - parentRect.top) / dh),
-        w: rect.width / dw,
-        h: rect.height / dh,
-        minimized,
-      });
-    }
-    switcher.windows = minis;
-  }
-
-  // ─── Workspace visibility ─────────────────────────────────────
-
-  #applyWorkspaceVisibility() {
-    const activeWorkspace = this.#getActiveWorkspace();
-    for (const win of this.querySelectorAll<Gtk2Window>('gtk2-window')) {
-      const id = win.wmId || win.windowUrl;
-      const state = this.#windows.get(id);
-      if (!state) continue;
-      if (state.workspace !== activeWorkspace) {
-        win.style.display = 'none';
-      } else if (state.minimized) {
-        win.style.display = 'none';
-      } else {
-        win.style.display = '';
-      }
-    }
-  }
-
-  // ─── Fetch + inject ───────────────────────────────────────────
-
-  static async #fetchWindowContent(url: string): Promise<Element | null> {
-    try {
-      const response = await fetch(url);
-      if (!response.ok) return null;
-      const text = await response.text();
-      const doc = new DOMParser().parseFromString(text, 'text/html');
-      const sourceWindow = doc.querySelector('gtk2-window');
-      if (!sourceWindow) return null;
-      for (const script of sourceWindow.querySelectorAll('script')) {
-        script.remove();
-      }
-      return sourceWindow;
-    } catch {
-      return null;
-    }
-  }
-
-  // ─── SPA window navigation ────────────────────────────────────
-
-  async #openWindow(url: string) {
-    const wmId = url;
-    const existing = this.#findWindowElement(wmId);
-    if (existing) {
-      this.#focusWindow(wmId);
-      history.pushState(null, '', url);
-      return;
-    }
-
-    const sourceWindow = await Gnome2Desktop.#fetchWindowContent(url);
-    if (!sourceWindow) {
-      this.#savePositions();
-      location.href = url;
-      return;
-    }
-
-    const title = sourceWindow.getAttribute('label') || url;
-    const icon = sourceWindow.getAttribute('icon') || undefined;
-    const closeHref = sourceWindow.getAttribute('close-href') || '/';
-
-    if (!this.#isMobile) {
-      this.#pinFocusedWindows();
-    }
-
-    this.#registerWindow(wmId, {
-      url,
-      title,
-      icon,
-      minimized: false,
-      maximized: false,
-      workspace: this.#getActiveWorkspace(),
-      closeHref,
-    });
-
-    const windowEl = document.createElement('gtk2-window') as Gtk2Window;
-    windowEl.label = title;
-    windowEl.windowUrl = url;
-    windowEl.closeHref = closeHref;
-    windowEl.style.viewTransitionName = Gnome2Desktop.#vtName(url);
-    if (icon) windowEl.icon = icon;
-    windowEl.innerHTML = sourceWindow.innerHTML;
-
-    this.#placeWindow(windowEl, wmId);
-    this.appendChild(windowEl);
-
-    this.#focusWindow(wmId, { animate: false });
-
-    history.pushState(null, '', url);
-  }
+  /** SPA navigation controller */
+  readonly spa = new SPAController(this, { wm: this.wm });
 
   // ─── App launcher ─────────────────────────────────────────────
 
@@ -566,7 +55,7 @@ export class Gnome2Desktop extends LitElement {
     if (!module) return;
     const wmId = `app:${id}`;
 
-    const existingEl = this.#findWindowElement(wmId);
+    const existingEl = this.wm.findWindowElement(wmId);
 
     if (existingEl) {
       existingEl.style.display = '';
@@ -579,15 +68,15 @@ export class Gnome2Desktop extends LitElement {
         }
         existingEl.appendChild(child);
       }
-      if (focus) this.#focusWindow(wmId);
-      else this.#sync();
+      if (focus) this.wm.focusWindow(wmId);
+      else this.wm.sync();
       return;
     }
 
     await import(module);
     const def = getApp(id);
     if (!def) return;
-    const workspace = this.#getActiveWorkspace();
+    const workspace = this.wm.getActiveWorkspace();
     const win = document.createElement('gtk2-window') as Gtk2Window;
     win.setAttribute('label', def.label);
     win.setAttribute('icon', def.icon);
@@ -605,10 +94,10 @@ export class Gnome2Desktop extends LitElement {
       for (const [k, v] of Object.entries(def.attrs())) child.setAttribute(k, v);
     }
     win.appendChild(child);
-    win.style.viewTransitionName = Gnome2Desktop.#vtName(wmId);
+    win.style.viewTransitionName = vtName(wmId);
     this.appendChild(win);
 
-    this.#registerWindow(wmId, {
+    this.wm.registerWindow(wmId, {
       url: `app:${id}`,
       title: def.label,
       icon: def.icon,
@@ -618,176 +107,22 @@ export class Gnome2Desktop extends LitElement {
       appId: id,
     });
 
-    if (focus) this.#focusWindow(wmId);
-    else this.#sync();
+    if (focus) this.wm.focusWindow(wmId);
+    else this.wm.sync();
 
     try { sessionStorage.setItem(`app-${id}`, '1'); } catch {}
   }
 
-  // ─── WM Event Handlers ───────────────────────────────────────
-
-  #onWmEvent = (e: Event) => {
-    const { wmEventType, wmId, detail } = e as WMEvent;
-    switch (wmEventType) {
-      case 'focus': return this.#onWmFocus(wmId);
-      case 'close': return this.#onWmClose(wmId);
-      case 'move': return this.#onWmMove();
-      case 'minimize': return this.#onWmMinimize(wmId);
-      case 'restore': return this.#onWmRestore(wmId);
-      case 'show-desktop': return this.#onWmShowDesktop(detail.show as boolean);
-      case 'workspace-switch': return this.#onWmWorkspaceSwitch(detail.workspace as number);
-    }
-  };
-
-  /** Focus only — never navigates or creates windows. */
-  #onWmFocus(wmId: string) {
-    if (!wmId) return;
-    this.#focusWindow(wmId);
-  }
-
-  /** Restore a minimized window — unminimize, raise, and focus. */
-  #onWmRestore(wmId: string) {
-    if (!wmId) return;
-    this.#focusWindow(wmId);
-  }
-
-  #onWmClose(wmId: string) {
-    if (!wmId) return;
-
-    const state = this.#windows.get(wmId);
-    const el = this.#findWindowElement(wmId);
-
-    this.#unregisterWindow(wmId);
-    if (el) el.remove();
-
-    if (state?.appId) {
-      try { sessionStorage.removeItem(`app-${state.appId}`); } catch {}
-    }
-
-    if (this.#isMobile) {
-      if (state?.appId) {
-        // Stay on current page
-      } else {
-        const closeHref = state?.closeHref || '/';
-        if (closeHref !== location.pathname) {
-          location.href = closeHref;
-        }
-      }
-      this.#sync();
-      return;
-    }
-
-    // Desktop: focus next window after close
-    if (wmId === this.#activeId) {
-      const remaining = [...this.#windows.keys()];
-      if (remaining.length > 0) {
-        this.#focusWindow(remaining[remaining.length - 1], { animate: false });
-      } else {
-        this.#activeId = null;
-        this.activeWindow = undefined;
-      }
-    }
-    this.#sync();
-  }
-
-  #onWmMinimize(wmId: string) {
-    if (!wmId) return;
-    this.#toggleMinimize(wmId);
-  }
-
-  #onWmShowDesktop(show: boolean) {
-    if (this.#isMobile) return;
-    const activeWs = this.#getActiveWorkspace();
-    for (const [id, state] of this.#windows) {
-      if (state.workspace === activeWs) {
-        state.minimized = show;
-        const el = this.#findWindowElement(id);
-        if (el) el.style.display = show ? 'none' : '';
-      }
-    }
-    this.#saveWindows();
-    this.#sync();
-  }
-
-  #onWmMove() {
-    this.#savePositions();
-    this.#syncMiniatures();
-  }
-
-  #onWmWorkspaceSwitch(workspace: number) {
-    if (this.#isMobile) return;
-    this.#saveActiveWorkspace(workspace);
-    this.#applyWorkspaceVisibility();
-    this.#sync();
-  }
-
-  // ─── Pointer tracking for miniatures ──────────────────────────
-
-  #onGotPointerCapture = () => { this.#tracking = true; };
-
-  #onLostPointerCapture = () => {
-    this.#tracking = false;
-    cancelAnimationFrame(this.#rafId);
-    this.#syncMiniatures();
-  };
-
-  #onPointerMove = () => {
-    if (!this.#tracking) return;
-    cancelAnimationFrame(this.#rafId);
-    this.#rafId = requestAnimationFrame(() => this.#syncMiniatures());
-  };
-
-  #onMaximize = () => {
-    this.#syncMiniatures();
-  };
-
-  // ─── Save-on-navigate handlers ────────────────────────────────
-
-  #onPageHide = () => this.#savePositions();
-
-  #onPageSwap = () => this.#savePositions();
-
-  #onLinkClick = (e: MouseEvent) => {
-    if (this.#isMobile) return;
-    if (e.defaultPrevented) return;
-    if (e.ctrlKey || e.metaKey || e.shiftKey) return;
-    const link = fromComposed(e, 'a[href]') as HTMLAnchorElement | null;
-    if (!link) return;
-    if (link.closest('#titlebar-buttons')) return;
-    const href = link.getAttribute('href');
-    if (!href || href.startsWith('#') || href.startsWith('javascript:')) return;
-    if (link.target && link.target !== '_self') return;
-    if (link.hasAttribute('download')) return;
-    if (link.origin !== location.origin) return;
-    e.preventDefault();
-    this.#openWindow(link.pathname);
-  };
-
-  #onPopState = () => {
-    if (this.#isMobile) return;
-    const url = location.pathname;
-    const existing = this.#findWindowElement(url);
-    if (existing) {
-      this.#focusWindow(url, { animate: false });
-    } else {
-      location.reload();
-    }
-  };
-
   // ─── Lifecycle ────────────────────────────────────────────────
 
   protected override willUpdate(): void {
-    // Set initial context from page attributes — runs before the first render
-    // so that @provide values are available to descendants during SSR.
-    // Uses the same data source (page-* attributes) for both SSR and client
-    // to prevent hydration mismatches.
-    if (!this.#activeId) {
-      this.#activeId = isServer ? this.pageUrl : (this.pageUrl || location.pathname);
-      this.activeWindow = this.#activeId;
-      if (this.#activeId) {
+    if (!this.wm.activeId) {
+      this.wm.activeId = isServer ? this.pageUrl : (this.pageUrl || location.pathname);
+      this.activeWindow = this.wm.activeId;
+      if (this.wm.activeId) {
         this.taskbarEntries = [{
-          id: this.#activeId,
-          url: this.#activeId,
+          id: this.wm.activeId,
+          url: this.wm.activeId,
           title: this.pageTitle || '',
           icon: this.pageIcon || undefined,
           focused: true,
@@ -801,109 +136,95 @@ export class Gnome2Desktop extends LitElement {
     super.connectedCallback();
     if (isServer) return;
 
-    // ── Minimal initialization (safe before hydration) ──
+    this.wm.isMobile = matchMedia('(max-width: 767px)').matches;
 
-    this.#isMobile = matchMedia('(max-width: 767px)').matches;
-
-    // Set windowUrl on the SSR'd window (needed for wmId defaulting)
     const currentWindow = this.querySelector<Gtk2Window>('gtk2-window');
     if (currentWindow) {
       if (!currentWindow.windowUrl) {
-        currentWindow.windowUrl = this.#activeId ?? location.pathname;
+        currentWindow.windowUrl = this.wm.activeId ?? location.pathname;
       }
-      currentWindow.style.viewTransitionName = Gnome2Desktop.#vtName(
-        this.#activeId ?? location.pathname,
+      currentWindow.style.viewTransitionName = vtName(
+        this.wm.activeId ?? location.pathname,
       );
     }
 
-    // Register unified WM event listener (doesn't cause re-renders)
-    this.addEventListener('wm-event', this.#onWmEvent);
+    // WM controller registers its own wm-event listener via hostConnected
 
-    // ── Defer full initialization until after hydration ──
     requestAnimationFrame(() => this.#boot());
   }
 
-  /** Client-only initialization, runs after all elements have hydrated. */
   #boot() {
-    this.#booted = true;
-    const activeId = this.#activeId ?? location.pathname;
-    this.#activeId = activeId;
+    this.wm.booted = true;
+    const activeId = this.wm.activeId ?? location.pathname;
+    this.wm.activeId = activeId;
 
-    // Load persisted window state
-    this.#windows = this.#loadWindows();
+    this.wm.windows = this.wm.loadWindows();
 
-    // Register the current page's SSR'd window
     const currentWindow = this.querySelector<Gtk2Window>('gtk2-window');
     if (currentWindow) {
-      const currentTitle = currentWindow.label || document.title;
-      const currentIcon = currentWindow.icon || undefined;
-
-      this.#registerWindow(activeId, {
+      this.wm.registerWindow(activeId, {
         url: activeId,
-        title: currentTitle,
-        icon: currentIcon,
+        title: currentWindow.label || document.title,
+        icon: currentWindow.icon || undefined,
         minimized: false,
         maximized: currentWindow.maximized,
-        workspace: this.#getActiveWorkspace(),
+        workspace: this.wm.getActiveWorkspace(),
         closeHref: currentWindow.closeHref,
       });
 
-      if (!this.#isMobile) {
-        this.#placeWindow(currentWindow, activeId);
+      if (!this.wm.isMobile) {
+        this.wm.placeWindow(currentWindow, activeId);
       }
     }
 
-    // Also register any SSR'd pidgin window
     for (const win of this.querySelectorAll<Gtk2Window>('gtk2-window')) {
       if (win === currentWindow) continue;
       const id = win.wmId || win.windowUrl;
       if (!id) continue;
-      this.#registerWindow(id, {
+      this.wm.registerWindow(id, {
         url: win.windowUrl,
         title: win.label || '',
         icon: win.icon || undefined,
         minimized: false,
         maximized: win.maximized,
-        workspace: this.#getActiveWorkspace(),
+        workspace: this.wm.getActiveWorkspace(),
         appId: win.dataset.app,
       });
     }
 
-    // Restore previously-open apps
     try {
       for (const id of getAllAppIds()) {
         if (sessionStorage.getItem(`app-${id}`)) this.launchApp(id, { focus: false });
       }
     } catch {}
 
-    // Re-focus current page (app restoration may have stolen focus)
-    this.#focusWindow(activeId, { animate: false });
+    this.wm.focusWindow(activeId, { animate: false });
 
-    if (this.#isMobile) return;
+    if (this.wm.isMobile) return;
 
     // ── Desktop-only initialization ──
 
-    const activeWorkspace = this.#getActiveWorkspace();
-    const currentState = this.#windows.get(activeId);
+    const activeWorkspace = this.wm.getActiveWorkspace();
+    const currentState = this.wm.windows.get(activeId);
     if (currentState && currentState.workspace !== activeWorkspace) {
-      this.#saveActiveWorkspace(currentState.workspace);
+      this.wm.saveActiveWorkspace(currentState.workspace);
     }
 
     // Fetch and inject background windows (parallel)
     (async () => {
-      const entries = [...this.#windows].filter(([id]) =>
-        id !== activeId && !this.#findWindowElement(id)
+      const entries = [...this.wm.windows].filter(([id]) =>
+        id !== activeId && !this.wm.findWindowElement(id)
       );
 
       await Promise.all(entries.map(async ([id, state]) => {
         if (state.url?.startsWith('pidgin:')) {
-          this.#unregisterWindow(id);
+          this.wm.unregisterWindow(id);
           return;
         }
 
-        const sourceWindow = await Gnome2Desktop.#fetchWindowContent(state.url);
+        const sourceWindow = await fetchWindowContent(state.url);
         if (!sourceWindow) {
-          this.#unregisterWindow(id);
+          this.wm.unregisterWindow(id);
           return;
         }
 
@@ -911,47 +232,40 @@ export class Gnome2Desktop extends LitElement {
         windowEl.label = state.title;
         windowEl.windowUrl = state.url;
         windowEl.closeHref = state.closeHref || '/';
-        windowEl.style.viewTransitionName = Gnome2Desktop.#vtName(state.url);
+        windowEl.style.viewTransitionName = vtName(state.url);
         if (state.icon) windowEl.icon = state.icon;
         windowEl.innerHTML = sourceWindow.innerHTML;
 
-        if (state.minimized || state.workspace !== this.#getActiveWorkspace()) {
+        if (state.minimized || state.workspace !== this.wm.getActiveWorkspace()) {
           windowEl.style.display = 'none';
         }
 
         this.appendChild(windowEl);
       }));
 
-      this.#positionBackgroundWindows();
-      this.#sync();
+      this.wm.positionBackgroundWindows();
+      this.wm.sync();
     })();
 
     document.getElementById('gnome2-wm-initial-pos')?.remove();
 
-    window.addEventListener('pagehide', this.#onPageHide);
-    document.addEventListener('pageswap', this.#onPageSwap);
-    document.addEventListener('click', this.#onLinkClick, { capture: true });
-    window.addEventListener('popstate', this.#onPopState);
+    this.spa.attach();
 
-    this.addEventListener('gotpointercapture', this.#onGotPointerCapture, true);
-    this.addEventListener('lostpointercapture', this.#onLostPointerCapture, true);
-    this.addEventListener('pointermove', this.#onPointerMove, true);
-    this.addEventListener('maximize', this.#onMaximize);
+    this.addEventListener('gotpointercapture', this.wm.onGotPointerCapture, true);
+    this.addEventListener('lostpointercapture', this.wm.onLostPointerCapture, true);
+    this.addEventListener('pointermove', this.wm.onPointerMove, true);
+    this.addEventListener('maximize', this.wm.onMaximize);
   }
 
   override disconnectedCallback() {
     super.disconnectedCallback();
 
-    this.removeEventListener('wm-event', this.#onWmEvent);
-    this.removeEventListener('gotpointercapture', this.#onGotPointerCapture, true);
-    this.removeEventListener('lostpointercapture', this.#onLostPointerCapture, true);
-    this.removeEventListener('pointermove', this.#onPointerMove, true);
-    this.removeEventListener('maximize', this.#onMaximize);
+    this.spa.detach();
 
-    window.removeEventListener('pagehide', this.#onPageHide);
-    document.removeEventListener('pageswap', this.#onPageSwap);
-    document.removeEventListener('click', this.#onLinkClick, { capture: true });
-    window.removeEventListener('popstate', this.#onPopState);
+    this.removeEventListener('gotpointercapture', this.wm.onGotPointerCapture, true);
+    this.removeEventListener('lostpointercapture', this.wm.onLostPointerCapture, true);
+    this.removeEventListener('pointermove', this.wm.onPointerMove, true);
+    this.removeEventListener('maximize', this.wm.onMaximize);
   }
 
   render() {

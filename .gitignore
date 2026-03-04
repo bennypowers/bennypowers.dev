@@ -6,6 +6,7 @@ yarn-debug.log*
 yarn-error.log*
 custom-elements.json
 test-results
+playwright-report
 
 # Runtime data
 pids
