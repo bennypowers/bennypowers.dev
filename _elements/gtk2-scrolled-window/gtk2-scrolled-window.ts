@@ -1,4 +1,4 @@
-import { LitElement, html } from 'lit';
+import { LitElement, html, isServer } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import styles from './gtk2-scrolled-window.css';
 
@@ -14,6 +14,8 @@ import styles from './gtk2-scrolled-window.css';
 @customElement('gtk2-scrolled-window')
 export class Gtk2ScrolledWindow extends LitElement {
   static styles = styles;
+
+  #internals = !isServer ? this.attachInternals() : null;
 
   /** Whether horizontal scrolling is enabled */
   @property({ type: Boolean }) accessor hscrollbar = true;
@@ -35,6 +37,8 @@ export class Gtk2ScrolledWindow extends LitElement {
     super.connectedCallback();
     if (!this.hscrollbar) this.style.overflowX = 'hidden';
     if (!this.vscrollbar) this.style.overflowY = 'hidden';
+    if (!this.hasAttribute('tabindex')) this.tabIndex = 0;
+    if (this.#internals) this.#internals.role = 'region';
   }
 }
 

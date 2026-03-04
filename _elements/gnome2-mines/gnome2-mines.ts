@@ -1,7 +1,17 @@
 import { LitElement, html, isServer } from 'lit';
 import { customElement, state } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
+import { registerApp } from '../lib/app-registry.js';
 import styles from './gnome2-mines.css';
+
+registerApp({
+  id: 'mines',
+  tag: 'gnome2-mines',
+  label: 'Mines',
+  icon: 'categories/applications-games',
+  width: '280px',
+  height: '360px',
+});
 
 interface Cell {
   mine: boolean;
@@ -188,7 +198,7 @@ export class Gnome2Mines extends LitElement {
   #cellContent(cell: Cell, r: number, c: number) {
     if (cell.flagged && !cell.revealed) return '';
     if (!cell.revealed) return '';
-    if (cell.mine) return '💣';
+    if (cell.mine) return '';
     if (cell.adjacent === 0) return '';
     return String(cell.adjacent);
   }
@@ -207,27 +217,36 @@ export class Gnome2Mines extends LitElement {
       <div id="header">
         <button id="face" @click=${() => this.#newGame()}>${this.#face}</button>
       </div>
-      <div id="board" class=${hostClass}>
-        ${this.#board.flatMap((row, r) =>
-          row.map((cell, c) => {
-            const classes = {
-              cell: true,
-              hidden: !cell.revealed,
-              revealed: cell.revealed && !cell.mine,
-              mine: cell.revealed && cell.mine,
-              flagged: cell.flagged && !cell.revealed,
-              exploded: cell.revealed && cell.mine && this.#gameState === 'lost',
-            };
-            return html`
-              <div class=${classMap(classes)}
-                   style=${cell.revealed && cell.adjacent ? `color: ${this.#cellColor(cell)}` : ''}
-                   @click=${() => this.#reveal(r, c)}
-                   @contextmenu=${(e: Event) => this.#flag(r, c, e)}>
-                ${this.#cellContent(cell, r, c)}
-              </div>
-            `;
-          })
-        )}
+      <div id="board" role="grid" class=${hostClass}>
+        ${this.#board.map((row, r) => html`
+          <div class="row" role="row">
+            ${row.map((cell, c) => {
+              const classes = {
+                cell: true,
+                hidden: !cell.revealed,
+                revealed: cell.revealed && !cell.mine,
+                mine: cell.revealed && cell.mine,
+                flagged: cell.flagged && !cell.revealed,
+                exploded: cell.revealed && cell.mine && this.#gameState === 'lost',
+              };
+              const label = cell.flagged && !cell.revealed ? `Row ${r + 1}, Column ${c + 1}, flagged`
+                : !cell.revealed ? `Row ${r + 1}, Column ${c + 1}`
+                : cell.mine ? `Row ${r + 1}, Column ${c + 1}, mine`
+                : cell.adjacent === 0 ? `Row ${r + 1}, Column ${c + 1}, empty`
+                : `Row ${r + 1}, Column ${c + 1}, ${cell.adjacent} adjacent`;
+              return html`
+                <div class=${classMap(classes)}
+                     role="gridcell"
+                     aria-label=${label}
+                     style=${cell.revealed && cell.adjacent ? `color: ${this.#cellColor(cell)}` : ''}
+                     @click=${() => this.#reveal(r, c)}
+                     @contextmenu=${(e: Event) => this.#flag(r, c, e)}>
+                  ${this.#cellContent(cell, r, c)}
+                </div>
+              `;
+            })}
+          </div>
+        `)}
       </div>
       <div id="statusbar">
         <span>Flags: ${this.#flagCount}/${MINES}</span>

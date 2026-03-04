@@ -1,4 +1,4 @@
-import { LitElement, html } from 'lit';
+import { LitElement, html, isServer } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import styles from './gnome2-panel.css';
 
@@ -15,8 +15,18 @@ import styles from './gnome2-panel.css';
 export class Gnome2Panel extends LitElement {
   static styles = styles;
 
+  #internals = !isServer ? this.attachInternals() : null;
+
   /** Panel position: 'top' or 'bottom'. Controls border styling. */
   @property({ reflect: true }) accessor position: 'top' | 'bottom' = 'top';
+
+  override connectedCallback() {
+    super.connectedCallback();
+    if (this.#internals) {
+      this.#internals.role = 'navigation';
+      this.#internals.ariaLabel = this.position === 'top' ? 'Top panel' : 'Bottom panel';
+    }
+  }
 
   render() {
     return html`

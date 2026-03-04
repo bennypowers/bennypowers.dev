@@ -1,4 +1,6 @@
 README.md
+playwright-report/**/*
+test-results/**/*
 netlify/**/*
 .netlify/**/*
 .patches/*

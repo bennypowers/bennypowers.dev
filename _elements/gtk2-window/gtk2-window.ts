@@ -1,9 +1,11 @@
-import { LitElement, html, isServer } from 'lit';
+import { LitElement, html, isServer, nothing } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 import { consume } from '@lit/context';
 import { ifDefined } from 'lit/directives/if-defined.js';
 import { WMEvent } from '../lib/wm-event.js';
 import { activeWindowContext } from '../gnome2-wm-context/gnome2-wm-context.js';
+import '../gtk2-menu/gtk2-menu.js';
+import '../gtk2-menu-item/gtk2-menu-item.js';
 import styles from './gtk2-window.css';
 
 export { WMEvent } from '../lib/wm-event.js';
@@ -26,6 +28,8 @@ export { WMEvent } from '../lib/wm-event.js';
 @customElement('gtk2-window')
 export class Gtk2Window extends LitElement {
   static styles = styles;
+
+  #internals = !isServer ? this.attachInternals() : null;
 
   /** Window title displayed in the titlebar */
   @property({ reflect: true }) accessor label = '';
@@ -60,6 +64,9 @@ export class Gtk2Window extends LitElement {
 
   @state() accessor #offsetX = 0;
   @state() accessor #offsetY = 0;
+  @state() accessor #contextMenuOpen = false;
+  @state() accessor #contextMenuX = 0;
+  @state() accessor #contextMenuY = 0;
 
   protected override willUpdate(): void {
     if (!this.wmId && this.windowUrl) {
@@ -67,6 +74,10 @@ export class Gtk2Window extends LitElement {
     }
     if (this.activeWmId !== undefined) {
       this.focused = this.wmId === this.activeWmId;
+    }
+    if (this.#internals) {
+      this.#internals.role = this.dialog ? 'dialog' : 'application';
+      this.#internals.ariaLabel = this.label;
     }
   }
 
@@ -98,7 +109,8 @@ export class Gtk2Window extends LitElement {
       <div id="titlebar"
            part="titlebar"
            @pointerdown=${this.#onTitlebarPointerDown}
-           @dblclick=${this.#onTitlebarDblClick}>
+           @dblclick=${this.#onTitlebarDblClick}
+           @contextmenu=${this.#onTitlebarContextMenu}>
         <div id="window-icon">
           <!-- Custom window icon element, typically an img or svg. SHOULD be 16x16. MUST have role="presentation" or alt text. Falls back to the icon attribute. -->
           <slot name="icon">
@@ -141,6 +153,17 @@ export class Gtk2Window extends LitElement {
           </button>
         </div>
       </div>
+      ${this.#contextMenuOpen ? html`
+        <div id="context-menu"
+             style="position:fixed;top:${this.#contextMenuY}px;left:${this.#contextMenuX}px;z-index:10000">
+          <gtk2-menu open accessible-label="Window menu">
+            <gtk2-menu-item label="Minimize" @click=${() => { this.#contextMenuOpen = false; this.#onMinimize(); }}></gtk2-menu-item>
+            <gtk2-menu-item label=${this.maximized ? 'Restore' : 'Maximize'} @click=${() => { this.#contextMenuOpen = false; this.#onMaximize(); }}></gtk2-menu-item>
+            <gtk2-menu-item separator></gtk2-menu-item>
+            <gtk2-menu-item label="Close" @click=${() => { this.#contextMenuOpen = false; this.#onClose(); }}></gtk2-menu-item>
+          </gtk2-menu>
+        </div>
+      ` : nothing}
       <!-- The window body below the titlebar. Contains menubar, content, and statusbar areas. -->
       <div id="body" part="body">
         <div id="menubar-area">
@@ -167,6 +190,7 @@ export class Gtk2Window extends LitElement {
     if (isServer) return;
     this.addEventListener('pointerdown', this.#onHostPointerDown);
     window.addEventListener('resize', this.#onWindowResize);
+    document.addEventListener('click', this.#onDocumentClick);
   }
 
   disconnectedCallback() {
@@ -174,6 +198,7 @@ export class Gtk2Window extends LitElement {
     if (isServer) return;
     this.removeEventListener('pointerdown', this.#onHostPointerDown);
     window.removeEventListener('resize', this.#onWindowResize);
+    document.removeEventListener('click', this.#onDocumentClick);
   }
 
   #onWindowResize = () => {
@@ -226,6 +251,15 @@ export class Gtk2Window extends LitElement {
     }
     this.dispatchEvent(new Event('close'));
   }
+
+  #onTitlebarContextMenu(e: MouseEvent) {
+    e.preventDefault();
+    this.#contextMenuX = e.clientX;
+    this.#contextMenuY = e.clientY;
+    this.#contextMenuOpen = true;
+  }
+
+  #onDocumentClick = () => { this.#contextMenuOpen = false; };
 
   /** Capture pointer, call onMove per move, auto-cleanup on up/lost. */
   static #track(target: Element, pointerId: number, onMove: (ev: PointerEvent) => void, onEnd?: () => void) {

@@ -1,5 +1,6 @@
 import { LitElement, html, nothing, isServer } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
+import { positionSubmenu } from '../lib/position-submenu.js';
 import styles from './gtk2-menu-item.css';
 
 /**
@@ -138,23 +139,10 @@ export class Gtk2MenuItem extends LitElement {
 
   #positionSubmenu = () => {
     if (!this.hasSubmenu) return;
-    // Mobile: submenus expand inline (CSS handles it)
     if (this.#isMobile) return;
-    // Desktop: cascade to the right, flip left, or overlay parent
     const submenu = this.shadowRoot?.querySelector('#submenu') as HTMLElement | null;
     if (!submenu) return;
-    const rect = this.getBoundingClientRect();
-    const menuWidth = 180; // matches gtk2-menu min-width
-    let left = rect.right;
-    if (left + menuWidth > window.innerWidth) {
-      left = rect.left - menuWidth;
-    }
-    if (left < 0) {
-      const parentMenu = this.closest('gtk2-menu');
-      left = parentMenu?.getBoundingClientRect().left ?? 0;
-    }
-    submenu.style.top = `${rect.top}px`;
-    submenu.style.left = `${left}px`;
+    positionSubmenu(this, submenu);
   };
 
   #onItemClick = (e: Event) => {

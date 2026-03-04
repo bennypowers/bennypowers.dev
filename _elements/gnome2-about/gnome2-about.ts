@@ -1,6 +1,16 @@
 import { LitElement, html } from 'lit';
 import { customElement } from 'lit/decorators.js';
+import { registerApp } from '../lib/app-registry.js';
 import styles from './gnome2-about.css';
+
+registerApp({
+  id: 'about',
+  tag: 'gnome2-about',
+  label: 'About bennypowers.dev',
+  icon: 'status/dialog-information',
+  width: '550px',
+  height: '500px',
+});
 
 /**
  * An about dialog modeled after GNOME 2.20 about windows. SHOULD be

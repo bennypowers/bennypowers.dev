@@ -64,3 +64,19 @@ button {
 .op {
   font-weight: 700;
 }
+
+.mem {
+  font-size: 11px;
+  background: light-dark(
+    linear-gradient(to bottom, #f8f8f7, #eeedec, #e2e1e0, #d8d7d6),
+    linear-gradient(to bottom, #444444, #3c3c3c, #363636, #323232)
+  );
+}
+
+.fn {
+  font-size: 12px;
+  background: light-dark(
+    linear-gradient(to bottom, #f8f8f7, #eeedec, #e2e1e0, #d8d7d6),
+    linear-gradient(to bottom, #444444, #3c3c3c, #363636, #323232)
+  );
+}

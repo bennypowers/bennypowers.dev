@@ -1,6 +1,16 @@
 import { LitElement, html, isServer } from 'lit';
 import { customElement, state } from 'lit/decorators.js';
+import { registerApp } from '../lib/app-registry.js';
 import styles from './gnome2-calculator.css';
+
+registerApp({
+  id: 'calculator',
+  tag: 'gnome2-calculator',
+  label: 'Calculator',
+  icon: 'apps/accessories-calculator',
+  width: '260px',
+  height: '320px',
+});
 
 /**
  * A basic calculator modeled after gcalctool 5.20 from GNOME 2.20.
@@ -18,6 +28,7 @@ export class Gnome2Calculator extends LitElement {
   @state() accessor #accumulator = 0;
   @state() accessor #operator = '';
   @state() accessor #resetNext = false;
+  @state() accessor #memory = 0;
 
   #input(digit: string) {
     if (this.#resetNext || this.#display === '0') {
@@ -87,6 +98,39 @@ export class Gnome2Calculator extends LitElement {
     }
   }
 
+  #memoryClear() { this.#memory = 0; }
+
+  #memoryRecall() {
+    this.#display = String(this.#memory);
+    this.#resetNext = true;
+  }
+
+  #memoryAdd() { this.#memory += parseFloat(this.#display); }
+
+  #memorySubtract() { this.#memory -= parseFloat(this.#display); }
+
+  #percent() {
+    const current = parseFloat(this.#display);
+    if (this.#operator && this.#accumulator) {
+      this.#display = String(this.#accumulator * current / 100);
+    } else {
+      this.#display = String(current / 100);
+    }
+    this.#resetNext = true;
+  }
+
+  #sqrt() {
+    const val = parseFloat(this.#display);
+    this.#display = val < 0 ? 'Error' : String(Math.sqrt(val));
+    this.#resetNext = true;
+  }
+
+  #reciprocal() {
+    const val = parseFloat(this.#display);
+    this.#display = val === 0 ? 'Error' : String(1 / val);
+    this.#resetNext = true;
+  }
+
   connectedCallback() {
     super.connectedCallback();
     if (isServer) return;
@@ -110,12 +154,19 @@ export class Gnome2Calculator extends LitElement {
     else if (e.key === 'Escape') this.#clear();
     else if (e.key === 'Backspace') this.#backspace();
     else if (e.key === 'Delete') this.#clearEntry();
+    else if (e.key === 'r') this.#sqrt();
+    else if (e.key === '%') this.#percent();
   };
 
   render() {
     return html`
-      <div id="display">${this.#display}</div>
+      <div id="display" role="status" aria-live="polite" aria-label="Calculator display">${this.#display}</div>
       <div id="buttons">
+        <button @click=${this.#memoryClear} class="mem">MC</button>
+        <button @click=${this.#memoryRecall} class="mem">MR</button>
+        <button @click=${this.#memoryAdd} class="mem">M+</button>
+        <button @click=${this.#memorySubtract} class="mem">M−</button>
+
         <button @click=${this.#backspace}>Bksp</button>
         <button @click=${this.#clearEntry}>CE</button>
         <button @click=${this.#clear}>Clr</button>
@@ -140,6 +191,11 @@ export class Gnome2Calculator extends LitElement {
         <button @click=${this.#decimal}>.</button>
         <button @click=${this.#evaluate} class="op">=</button>
         <button @click=${() => this.#op('+')} class="op">+</button>
+
+        <button @click=${this.#sqrt} class="fn">\u221A</button>
+        <button @click=${this.#percent} class="fn">%</button>
+        <button @click=${this.#reciprocal} class="fn">1/x</button>
+        <span></span>
       </div>
     `;
   }

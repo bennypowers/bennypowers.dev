@@ -15,6 +15,7 @@ export class Gnome2Clock extends LitElement {
   static styles = styles;
 
   @state() accessor #time = '';
+  @state() accessor #iso = '';
 
   #timer: ReturnType<typeof setInterval> | null = null;
 
@@ -43,11 +44,13 @@ export class Gnome2Clock extends LitElement {
   });
 
   #updateTime() {
-    this.#time = Gnome2Clock.#fmt.format(new Date());
+    const now = new Date();
+    this.#time = Gnome2Clock.#fmt.format(now);
+    this.#iso = now.toISOString();
   }
 
   render() {
-    return html`<time datetime=${new Date().toISOString()}>${this.#time}</time>`;
+    return html`<time datetime=${this.#iso}>${this.#time}</time>`;
   }
 }
 

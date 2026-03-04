@@ -1,7 +1,18 @@
 import { LitElement, html, isServer } from 'lit';
 import { customElement, property, state, query } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
+import { registerApp } from '../lib/app-registry.js';
 import styles from './pidgin-conversation.css';
+
+registerApp({
+  id: 'pidgin',
+  tag: 'pidgin-conversation',
+  label: 'Conversation',
+  icon: 'apps/internet-group-chat',
+  width: '450px',
+  height: '400px',
+  attrs: () => ({ 'post-url': `https://bennypowers.dev${location.pathname}` }),
+});
 
 type Protocol = 'fediverse' | 'bluesky' | 'webmention' | '';
 

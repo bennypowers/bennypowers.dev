@@ -67,6 +67,10 @@
   min-height: 18px;
 }
 
+.row {
+  display: contents;
+}
+
 .cell {
   width: var(--_cell-size);
   height: var(--_cell-size);
@@ -102,12 +106,25 @@
 
   &.mine {
     background: light-dark(#ff4444, #cc0000);
+
+    &::after {
+      content: '';
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: #2e3436;
+      display: block;
+    }
   }
 
   &.flagged::after {
-    content: "⚑";
-    color: light-dark(#cc0000, #ef2929);
-    font-size: 14px;
+    content: '';
+    width: 0;
+    height: 0;
+    border-left: 6px solid light-dark(#cc0000, #ef2929);
+    border-top: 4px solid transparent;
+    border-bottom: 4px solid transparent;
+    display: block;
   }
 
   &.exploded {

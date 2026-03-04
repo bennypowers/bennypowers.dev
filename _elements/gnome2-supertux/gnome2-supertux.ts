@@ -1,6 +1,16 @@
 import { LitElement, html, isServer } from 'lit';
 import { customElement, state } from 'lit/decorators.js';
+import { registerApp } from '../lib/app-registry.js';
 import styles from './gnome2-supertux.css';
+
+registerApp({
+  id: 'supertux',
+  tag: 'gnome2-supertux',
+  label: 'SuperTux',
+  icon: 'apps/supertux',
+  width: '800px',
+  height: '600px',
+});
 
 const SUPERTUX_URL = 'https://play.supertux.org/releases/0.6.3/';
 

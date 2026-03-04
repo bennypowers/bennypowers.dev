@@ -170,6 +170,11 @@
   }
 }
 
+#context-menu {
+  position: fixed;
+  z-index: 10000;
+}
+
 #body {
   display: flex;
   flex-direction: column;

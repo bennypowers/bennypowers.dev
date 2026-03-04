@@ -1,6 +1,7 @@
 import type { Gtk2Window } from '../gtk2-window/gtk2-window.js';
 import type { MiniWindow } from '../gnome2-workspace-switcher/gnome2-workspace-switcher.js';
 import { WMEvent } from '../lib/wm-event.js';
+import { fromComposed } from '../lib/from-composed.js';
 
 import { LitElement, html, isServer } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
@@ -8,6 +9,7 @@ import { provide } from '@lit/context';
 import styles from './gnome2-desktop.css';
 
 import { activeWindowContext, taskbarContext, type WindowEntry, type TaskbarEntry } from '../gnome2-wm-context/gnome2-wm-context.js';
+import { getApp, getAppModule, getAllAppIds } from '../lib/app-registry.js';
 
 const STORAGE_KEY = 'gnome2-wm-windows';
 const WORKSPACE_KEY = 'gnome2-wm-workspace';
@@ -15,60 +17,6 @@ const WORKSPACE_KEY = 'gnome2-wm-workspace';
 // Metacity 2.20 cascade constants (src/place.c)
 const CASCADE_INTERVAL = 50;
 const CASCADE_FUZZ = 15;
-
-interface AppDef {
-  module: string;
-  tag: string;
-  label: string;
-  icon: string;
-  width: string;
-  height: string;
-  attrs?: () => Record<string, string>;
-}
-
-const APP_DEFS: Record<string, AppDef> = {
-  calculator: {
-    module: 'gnome2/gnome2-calculator/gnome2-calculator.js',
-    tag: 'gnome2-calculator',
-    label: 'Calculator',
-    icon: 'apps/accessories-calculator',
-    width: '260px',
-    height: '320px',
-  },
-  mines: {
-    module: 'gnome2/gnome2-mines/gnome2-mines.js',
-    tag: 'gnome2-mines',
-    label: 'Mines',
-    icon: 'categories/applications-games',
-    width: '280px',
-    height: '360px',
-  },
-  supertux: {
-    module: 'gnome2/gnome2-supertux/gnome2-supertux.js',
-    tag: 'gnome2-supertux',
-    label: 'SuperTux',
-    icon: 'apps/supertux',
-    width: '800px',
-    height: '600px',
-  },
-  about: {
-    module: 'gnome2/gnome2-about/gnome2-about.js',
-    tag: 'gnome2-about',
-    label: 'About bennypowers.dev',
-    icon: 'status/dialog-information',
-    width: '550px',
-    height: '500px',
-  },
-  pidgin: {
-    module: 'gnome2/pidgin-conversation/pidgin-conversation.js',
-    tag: 'pidgin-conversation',
-    label: 'Conversation',
-    icon: 'apps/internet-group-chat',
-    width: '450px',
-    height: '400px',
-    attrs: () => ({ 'post-url': `https://bennypowers.dev${location.pathname}` }),
-  },
-};
 
 /** Internal state for a single managed window. */
 interface WMWindowState {
@@ -279,11 +227,20 @@ export class Gnome2Desktop extends LitElement {
   #savePositions() {
     const workspace = this.shadowRoot?.querySelector('#windows') ?? this;
     const parentRect = workspace.getBoundingClientRect();
-    for (const win of this.querySelectorAll<Gtk2Window>('gtk2-window')) {
+    const windows = this.querySelectorAll<Gtk2Window>('gtk2-window');
+
+    // Batch all reads first
+    const rects = new Map<Gtk2Window, DOMRect>();
+    for (const win of windows) {
+      rects.set(win, win.getBoundingClientRect());
+    }
+
+    // Then write
+    for (const win of windows) {
       const id = win.wmId || win.windowUrl;
       const state = this.#windows.get(id);
       if (!state) continue;
-      const rect = win.getBoundingClientRect();
+      const rect = rects.get(win)!;
       state.position = {
         x: rect.left - parentRect.left,
         y: Math.max(0, rect.top - parentRect.top),
@@ -605,16 +562,17 @@ export class Gnome2Desktop extends LitElement {
   // ─── App launcher ─────────────────────────────────────────────
 
   async launchApp(id: string, { focus = true } = {}) {
-    const def = APP_DEFS[id];
-    if (!def) return;
+    const module = getAppModule(id);
+    if (!module) return;
     const wmId = `app:${id}`;
 
     const existingEl = this.#findWindowElement(wmId);
 
     if (existingEl) {
       existingEl.style.display = '';
-      if (!existingEl.querySelector(def.tag)) {
-        await import(def.module);
+      const def = getApp(id);
+      if (def && !existingEl.querySelector(def.tag)) {
+        await import(module);
         const child = document.createElement(def.tag);
         if (def.attrs) {
           for (const [k, v] of Object.entries(def.attrs())) child.setAttribute(k, v);
@@ -626,7 +584,9 @@ export class Gnome2Desktop extends LitElement {
       return;
     }
 
-    await import(def.module);
+    await import(module);
+    const def = getApp(id);
+    if (!def) return;
     const workspace = this.#getActiveWorkspace();
     const win = document.createElement('gtk2-window') as Gtk2Window;
     win.setAttribute('label', def.label);
@@ -791,7 +751,7 @@ export class Gnome2Desktop extends LitElement {
     if (this.#isMobile) return;
     if (e.defaultPrevented) return;
     if (e.ctrlKey || e.metaKey || e.shiftKey) return;
-    const link = Gnome2Desktop.#fromComposed(e, 'a[href]') as HTMLAnchorElement | null;
+    const link = fromComposed(e, 'a[href]') as HTMLAnchorElement | null;
     if (!link) return;
     if (link.closest('#titlebar-buttons')) return;
     const href = link.getAttribute('href');
@@ -813,14 +773,6 @@ export class Gnome2Desktop extends LitElement {
       location.reload();
     }
   };
-
-  /** Find the first element matching selector in the composed event path */
-  static #fromComposed(e: Event, selector: string): HTMLElement | null {
-    for (const el of e.composedPath()) {
-      if (el instanceof HTMLElement && el.matches(selector)) return el;
-    }
-    return null;
-  }
 
   // ─── Lifecycle ────────────────────────────────────────────────
 
@@ -919,7 +871,7 @@ export class Gnome2Desktop extends LitElement {
 
     // Restore previously-open apps
     try {
-      for (const id of Object.keys(APP_DEFS)) {
+      for (const id of getAllAppIds()) {
         if (sessionStorage.getItem(`app-${id}`)) this.launchApp(id, { focus: false });
       }
     } catch {}
@@ -937,21 +889,22 @@ export class Gnome2Desktop extends LitElement {
       this.#saveActiveWorkspace(currentState.workspace);
     }
 
-    // Fetch and inject background windows
+    // Fetch and inject background windows (parallel)
     (async () => {
-      for (const [id, state] of [...this.#windows]) {
-        if (id === activeId) continue;
-        if (this.#findWindowElement(id)) continue; // already in DOM (e.g. pidgin)
+      const entries = [...this.#windows].filter(([id]) =>
+        id !== activeId && !this.#findWindowElement(id)
+      );
 
+      await Promise.all(entries.map(async ([id, state]) => {
         if (state.url?.startsWith('pidgin:')) {
           this.#unregisterWindow(id);
-          continue;
+          return;
         }
 
         const sourceWindow = await Gnome2Desktop.#fetchWindowContent(state.url);
         if (!sourceWindow) {
           this.#unregisterWindow(id);
-          continue;
+          return;
         }
 
         const windowEl = document.createElement('gtk2-window') as Gtk2Window;
@@ -967,7 +920,7 @@ export class Gnome2Desktop extends LitElement {
         }
 
         this.appendChild(windowEl);
-      }
+      }));
 
       this.#positionBackgroundWindows();
       this.#sync();
@@ -1006,7 +959,7 @@ export class Gnome2Desktop extends LitElement {
       <!-- A gnome2-panel element for the top panel. MUST contain navigation landmarks for screen reader users. -->
       <slot name="top-panel"></slot>
       <!-- The desktop workspace area between panels. Contains icons and floating windows. -->
-      <div id="workspace" part="workspace">
+      <div id="workspace" part="workspace" role="main">
         <div id="icons">
           <!-- Desktop icon elements (desktop-icon) displayed in column flow. Each icon SHOULD have a meaningful label for accessibility. -->
           <slot name="icons"></slot>

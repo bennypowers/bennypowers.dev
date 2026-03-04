@@ -2,4 +2,7 @@
   display: flex;
   align-items: stretch;
   height: 100%;
+  --_menu-icon-size: 16px;
+  --_menu-icon-gap: 4px;
+  --_menu-item-height: 24px;
 }
