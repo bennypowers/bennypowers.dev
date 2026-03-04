@@ -9,7 +9,8 @@
     "build": "eleventy --config=eleventy.config.ts --incremental",
     "start": "eleventy --config=eleventy.config.ts --serve",
     "postinstall": "patch-package && node --experimental-strip-types scripts/build-types.ts",
-    "demo": "cem serve"
+    "demo": "cem serve",
+    "test": "playwright test"
   },
   "imports": {
     "#plugins/*": "./_plugins/*",
@@ -35,6 +36,7 @@
     "@jspm/generator": "^2.8.0",
     "@lit-labs/ssr": "^4.0.0",
     "@lit/context": "^1.1.6",
+    "@lit/reactive-element": "^2.1.2",
     "@parse5/tools": "^0.7.0",
     "@rhds/elements": "^4.0.2",
     "@rhds/tokens": "^3.0.2",
@@ -58,7 +60,6 @@
     "html-minifier-terser": "^7.2.0",
     "lightningcss": "^1.30.2",
     "linkedom": "^0.18.12",
-    "@lit/reactive-element": "^2.1.2",
     "lit": "^3.3.2",
     "lit-html": "^3.3.2",
     "markdown-it-anchor": "^9.2.0",
@@ -78,6 +79,7 @@
     "@11ty/webc": "0.11.3"
   },
   "devDependencies": {
+    "@playwright/test": "^1.58.2",
     "@pwrs/cem": "^0.9.9",
     "esbuild": "^0.27.3",
     "piscina": "^5.1.4",
