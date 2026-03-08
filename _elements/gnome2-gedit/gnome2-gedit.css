@@ -1,0 +1,171 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+
+  /** Clearlooks theme token. Window body background */
+  background: var(--cl-window-bg, light-dark(#edeceb, #2e3436));
+
+  /** Clearlooks theme token. Font family */
+  font-family: var(--cl-font-family, "DejaVu Sans", sans-serif);
+}
+
+/*
+ * Tab bar. Matches GtkNotebook tab styling from the Clearlooks engine:
+ * tabs sit flush above the editor area, with the active tab appearing
+ * "connected" to the content below.
+ */
+#tabbar {
+  display: flex;
+  align-items: flex-end;
+  gap: 0;
+  padding: 0 4px;
+  min-height: 26px;
+  border-bottom: 1px solid light-dark(#9d9c9b, #555753);
+  background: light-dark(#d6d4d2, #2a2e30);
+  overflow-x: auto;
+  scrollbar-width: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+/*
+ * Individual tab. Styled after GtkNotebook tabs in the Clearlooks
+ * engine: raised appearance with a top border radius.
+ */
+.tab {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 8px;
+  border: 1px solid light-dark(#9d9c9b, #555753);
+  border-bottom: none;
+  border-radius: 3px 3px 0 0;
+  background: light-dark(#dddcdb, #353839);
+  cursor: default;
+  white-space: nowrap;
+
+  /** Clearlooks theme token. Small font size for tab labels */
+  font-size: var(--cl-font-size-small, 11px);
+  color: light-dark(#555753, #babdb6);
+  margin-bottom: -1px;
+
+  &.active {
+    /** Clearlooks theme token. Window body background for active tab */
+    background: var(--cl-window-bg, light-dark(#edeceb, #2e3436));
+    color: light-dark(#2e3436, #eeeeec);
+    padding-top: 4px;
+    padding-bottom: 4px;
+    z-index: 1;
+  }
+
+  &:not(.active):hover {
+    background: light-dark(#e4e3e2, #3c4042);
+  }
+}
+
+.tab-label {
+  max-width: 140px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/*
+ * Tab close button. Small "x" matching the GtkNotebook close button
+ * style in Clearlooks: a compact, borderless button.
+ */
+.tab-close {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 14px;
+  height: 14px;
+  border: none;
+  border-radius: 2px;
+  background: transparent;
+  color: light-dark(#888a85, #888a85);
+  font-size: 10px;
+  line-height: 1;
+  padding: 0;
+  cursor: default;
+
+  &:hover {
+    background: light-dark(#c4c3c2, #555753);
+    color: light-dark(#2e3436, #eeeeec);
+  }
+}
+
+/*
+ * Editor area. Contains the line-number gutter and textarea side by
+ * side, matching the GtkSourceView layout in gedit 2.20.
+ */
+#editor-area {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+  border-bottom: 1px solid light-dark(#d3d7cf, #555753);
+}
+
+/*
+ * Line number gutter. Styled after the GtkSourceView left margin in
+ * gedit 2.20: a slightly darker background with right-aligned numbers.
+ */
+#gutter {
+  box-sizing: border-box;
+  min-width: 40px;
+  padding: 4px 6px 4px 4px;
+  background: light-dark(#e0dfde, #262a2c);
+  border-right: 1px solid light-dark(#d3d7cf, #555753);
+  color: light-dark(#888a85, #555753);
+  font-family: "DejaVu Sans Mono", "Bitstream Vera Sans Mono", monospace;
+  font-size: 12px;
+  line-height: 18px;
+  text-align: right;
+  overflow: hidden;
+  user-select: none;
+}
+
+.line-number {
+  height: 18px;
+}
+
+/*
+ * Main text editing area. Uses a native textarea styled to match the
+ * GtkSourceView text widget in gedit 2.20: white background, monospace
+ * font, no native borders.
+ */
+#editor {
+  flex: 1;
+  border: none;
+  outline: none;
+  resize: none;
+  padding: 4px 6px;
+  margin: 0;
+  font-family: "DejaVu Sans Mono", "Bitstream Vera Sans Mono", monospace;
+  font-size: 12px;
+  line-height: 18px;
+  background: light-dark(#ffffff, #1e2224);
+  color: light-dark(#2e3436, #eeeeec);
+  tab-size: 8;
+  white-space: pre;
+  overflow: auto;
+}
+
+/*
+ * Status bar. Matches the GtkStatusbar at the bottom of the gedit
+ * window: cursor position on the left, file type on the right.
+ */
+#statusbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 2px 8px;
+
+  /** Clearlooks theme token. Small font size for status bar text */
+  font-size: var(--cl-font-size-small, 11px);
+  color: light-dark(#555753, #babdb6);
+  border-top: 1px solid light-dark(#d3d7cf, #555753);
+  min-height: 18px;
+}

@@ -83,7 +83,7 @@ export class Gnome2Session extends LitElement {
                               data-launch="calculator"
                               icon="apps/accessories-calculator"></gtk2-menu-item>
               <gtk2-menu-item label="Text Editor"
-                              href="/posts/"
+                              data-launch="gedit"
                               icon="apps/accessories-text-editor"></gtk2-menu-item>
               <gtk2-menu-item label="Terminal"
                               data-launch="terminal"
