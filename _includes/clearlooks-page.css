@@ -215,20 +215,20 @@ gnome2-panel[position="bottom"] {
 }
 
 /* === Content Typography (inside windows) === */
-gtk2-window {
-  /* Readable content inside windows */
-  & :is(h1, h2, h3, h4, h5, h6) {
+/* :where() gives zero specificity so page-specific CSS always wins */
+:where(gtk2-window) {
+  & :where(h1, h2, h3, h4, h5, h6) {
     font-family: var(--cl-font-family);
     font-weight: 700;
     color: var(--cl-heading);
     margin-block: 0.6em 0.3em;
   }
 
-  & h1 { font-size: 18px; }
-  & h2 { font-size: 16px; }
-  & h3 { font-size: 14px; }
+  & :where(h1) { font-size: 18px; }
+  & :where(h2) { font-size: 16px; }
+  & :where(h3) { font-size: 14px; }
 
-  & a {
+  & :where(a) {
     color: var(--cl-link);
     text-decoration: underline;
     text-decoration-thickness: 1px;
@@ -242,12 +242,12 @@ gtk2-window {
     }
   }
 
-  & p {
+  & :where(p) {
     margin-block: 0.5em;
     line-height: 1.5;
   }
 
-  & code {
+  & :where(code) {
     font-family: var(--fixed-font);
     font-size: 12px;
     background: var(--cl-code-bg);
@@ -255,7 +255,7 @@ gtk2-window {
     border-radius: 2px;
   }
 
-  & pre {
+  & :where(pre) {
     background: var(--cl-pre-bg);
     color: var(--cl-pre-text);
     padding: 8px 12px;
@@ -265,14 +265,14 @@ gtk2-window {
     font-size: 12px;
     line-height: 1.4;
 
-    & code {
+    & :where(code) {
       background: none;
       padding: 0;
       color: inherit;
     }
   }
 
-  & blockquote {
+  & :where(blockquote) {
     margin-inline: 12px;
     padding-inline-start: 12px;
     border-inline-start: 3px solid var(--cl-link-hover);
@@ -280,48 +280,48 @@ gtk2-window {
     font-style: italic;
   }
 
-  & img {
+  & :where(img) {
     max-width: 100%;
     height: auto;
     border-radius: 3px;
   }
 
-  & table {
+  & :where(table) {
     border-collapse: collapse;
     width: 100%;
     font-size: 12px;
 
-    & th,
-    & td {
+    & :where(th),
+    & :where(td) {
       padding: 4px 8px;
       border: 1px solid var(--cl-border);
       text-align: start;
     }
 
-    & th {
+    & :where(th) {
       background: var(--cl-th-bg);
       font-weight: 700;
     }
 
-    & tr:nth-child(even) td {
+    & :where(tr:nth-child(even) td) {
       background: var(--cl-row-even);
     }
   }
 
-  & ul, & ol {
+  & :where(ul, ol) {
     padding-inline-start: 24px;
 
-    & li {
+    & :where(li) {
       margin-block: 0.3em;
     }
   }
 
-  & dt {
+  & :where(dt) {
     font-weight: 700;
     margin-block-start: 0.5em;
   }
 
-  & dd {
+  & :where(dd) {
     margin-inline-start: 24px;
   }
 }
