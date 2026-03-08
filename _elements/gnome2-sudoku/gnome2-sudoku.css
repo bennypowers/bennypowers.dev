@@ -1,0 +1,190 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  position: relative;
+
+  /** Clearlooks theme token. Window body background */
+  background: var(--cl-window-bg, light-dark(#edeceb, #2e3436));
+
+  /** Clearlooks theme token. Font family */
+  font-family: var(--cl-font-family, "DejaVu Sans", sans-serif);
+  user-select: none;
+
+  /** Cell size for the sudoku grid */
+  --_cell-size: 40px;
+
+  /** Thick border between 3x3 boxes */
+  --_box-border: 2px solid light-dark(#2e3436, #d3d7cf);
+
+  /** Thin border between cells within a box */
+  --_cell-border: 1px solid light-dark(#9d9c9b, #555753);
+}
+
+#board {
+  display: grid;
+  grid-template-columns: repeat(9, var(--_cell-size));
+  grid-template-rows: repeat(9, var(--_cell-size));
+  gap: 0;
+  padding: 12px;
+  flex: 1;
+  align-content: center;
+  justify-content: center;
+  background: light-dark(#edeceb, #2e3436);
+}
+
+.cell {
+  width: var(--_cell-size);
+  height: var(--_cell-size);
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  font-weight: 700;
+  cursor: default;
+  background: light-dark(#ffffff, #3c3c3c);
+  color: light-dark(#2e3436, #eeeeec);
+  border-right: var(--_cell-border);
+  border-bottom: var(--_cell-border);
+  position: relative;
+  outline: none;
+
+  /* Right edge of 3x3 boxes (columns 3, 6) */
+  &.box-right {
+    border-right: var(--_box-border);
+  }
+
+  /* Bottom edge of 3x3 boxes (rows 3, 6) */
+  &.box-bottom {
+    border-bottom: var(--_box-border);
+  }
+
+  /* Left edge of grid */
+  &.col-0 {
+    border-left: var(--_box-border);
+  }
+
+  /* Top edge of grid */
+  &.row-0 {
+    border-top: var(--_box-border);
+  }
+
+  /* Right edge of grid */
+  &.col-8 {
+    border-right: var(--_box-border);
+  }
+
+  /* Bottom edge of grid */
+  &.row-8 {
+    border-bottom: var(--_box-border);
+  }
+
+  /* Pre-filled (given) cells */
+  &.given {
+    background: light-dark(#e8e8e8, #4a4a4a);
+    color: light-dark(#2e3436, #d3d7cf);
+  }
+
+  /* Player-editable cells */
+  &.editable {
+    color: light-dark(#3465a4, #729fcf);
+    cursor: pointer;
+
+    &:hover {
+      background: light-dark(#d5e1f0, #3a4a5a);
+    }
+  }
+
+  /* Currently selected/focused cell */
+  &.selected {
+    outline: 3px solid light-dark(#3465a4, #729fcf);
+    outline-offset: -3px;
+    z-index: 1;
+  }
+
+  /* Highlighted row/col/box of selected cell */
+  &.highlighted {
+    background: light-dark(#eef3fa, #353545);
+
+    &.given {
+      background: light-dark(#dde4ed, #454555);
+    }
+  }
+
+  /* Conflict highlighting */
+  &.conflict {
+    color: light-dark(#cc0000, #ef2929);
+    background: light-dark(#ffdddd, #4a2a2a);
+
+    &.given {
+      background: light-dark(#f0cccc, #5a3a3a);
+    }
+  }
+}
+
+#statusbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 2px 8px;
+
+  /** Clearlooks theme token. Small font size for status bar text */
+  font-size: var(--cl-font-size-small, 11px);
+  color: light-dark(#555753, #babdb6);
+  border-top: 1px solid light-dark(#d3d7cf, #555753);
+  min-height: 18px;
+}
+
+.win-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.4);
+  z-index: 10;
+}
+
+.win-dialog {
+  background: light-dark(#edeceb, #2e3436);
+  border: 1px solid light-dark(#9d9c9b, #555753);
+  border-radius: 6px;
+  padding: 24px;
+  text-align: center;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+
+  & h3 {
+    margin: 0 0 8px;
+    color: light-dark(#2e3436, #eeeeec);
+  }
+
+  & p {
+    margin: 0 0 16px;
+    color: light-dark(#555753, #babdb6);
+  }
+
+  & button {
+
+    /** Clearlooks theme token. Button background gradient */
+    background: var(--cl-button-bg);
+    border: 1px solid light-dark(#9d9c9b, #555753);
+    border-radius: 3px;
+    padding: 4px 16px;
+    cursor: default;
+    color: light-dark(#2e3436, #eeeeec);
+    font-family: inherit;
+
+    &:hover {
+
+      /** Clearlooks theme token. Button hover background */
+      background: var(--cl-button-bg-hover);
+    }
+
+    &:active {
+
+      /** Clearlooks theme token. Button active/pressed background */
+      background: var(--cl-button-bg-active);
+    }
+  }
+}
