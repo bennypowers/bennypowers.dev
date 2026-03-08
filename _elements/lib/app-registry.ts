@@ -17,6 +17,7 @@ const TAG_MAP: Record<string, string> = {
   supertux: 'gnome2-supertux',
   about: 'gnome2-about',
   pidgin: 'pidgin-conversation',
+  terminal: 'gnome2-terminal',
 };
 
 const registry = new Map<string, AppDef>();

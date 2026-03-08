@@ -86,7 +86,7 @@ export class Gnome2Session extends LitElement {
                               href="/posts/"
                               icon="apps/accessories-text-editor"></gtk2-menu-item>
               <gtk2-menu-item label="Terminal"
-                              href="https://github.com/bennypowers"
+                              data-launch="terminal"
                               icon="apps/utilities-terminal"></gtk2-menu-item>
             </gtk2-menu>
           </gtk2-menu-item>

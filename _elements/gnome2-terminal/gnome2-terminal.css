@@ -1,0 +1,116 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background: #000000;
+  user-select: text;
+}
+
+#terminal {
+  flex: 1;
+  overflow-y: auto;
+  padding: 4px 6px;
+
+  /** GNOME Terminal monospace font */
+  font-family: "Monospace", "DejaVu Sans Mono", "Courier New", monospace;
+  font-size: 12px;
+  line-height: 1.15;
+  /** VTE default foreground: White on Black profile */
+  color: #aaaaaa;
+  cursor: text;
+
+  scrollbar-width: thin;
+
+  /** Clearlooks theme token. Scrollbar thumb gradient */
+  scrollbar-color: var(--cl-scrollbar-thumb, #4a6a8a) #1a1a1a;
+}
+
+.output-line {
+  margin: 0;
+  padding: 0;
+  white-space: pre-wrap;
+  word-break: break-all;
+  min-height: 1lh;
+
+  &.error {
+    color: #ef2929;
+  }
+
+  &.info {
+    color: #729fcf;
+  }
+
+  &.bold {
+    font-weight: 700;
+    color: #ffffff;
+  }
+
+  &.dir {
+    color: #729fcf;
+    font-weight: 700;
+  }
+}
+
+#input-line {
+  display: flex;
+  align-items: baseline;
+}
+
+#prompt {
+  flex-shrink: 0;
+  white-space: pre;
+  color: #4e9a06;
+  font-weight: 700;
+
+  .user {
+    color: #4e9a06;
+  }
+
+  .separator {
+    color: #ffffff;
+  }
+
+  .path {
+    color: #729fcf;
+  }
+
+  .dollar {
+    color: #ffffff;
+  }
+}
+
+#input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  outline: none;
+  /** VTE default foreground: White on Black profile */
+  color: #aaaaaa;
+
+  /** GNOME Terminal monospace font */
+  font-family: "Monospace", "DejaVu Sans Mono", "Courier New", monospace;
+  font-size: 12px;
+  line-height: 1.15;
+  padding: 0;
+  margin: 0;
+  caret-color: #aaaaaa;
+}
+
+#statusbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 2px 8px;
+
+  /** Clearlooks theme token. Small font size for status bar text */
+  font-size: var(--cl-font-size-small, 11px);
+  color: light-dark(#555753, #babdb6);
+  border-top: 1px solid light-dark(#d3d7cf, #555753);
+  min-height: 18px;
+
+  /** Clearlooks theme token. Window body background */
+  background: var(--cl-window-bg, light-dark(#edeceb, #2e3436));
+
+  /** Clearlooks theme token. Font family */
+  font-family: var(--cl-font-family, "DejaVu Sans", sans-serif);
+}
