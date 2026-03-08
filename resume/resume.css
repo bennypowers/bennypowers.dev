@@ -13,6 +13,16 @@
   --background-color: white;
 }
 
+.resume-content {
+  & ul, & ol {
+    padding-inline-start: 0;
+  }
+
+  & li {
+    margin-block: 0;
+  }
+}
+
 main {
   scroll-snap-type: x mandatory;
   opacity: 1;
@@ -320,17 +330,16 @@ main > div > a {
   }
 }
 
-#highlights {
-  max-width: 600px;
-
+#summary {
   & ul {
     columns: 2;
     list-style-position: inside;
+    max-width: 600px;
   }
-}
 
-#summary p {
-  margin-bottom: 10px;
+  & p {
+    margin-bottom: 10px;
+  }
 }
 
 #qualifications {
