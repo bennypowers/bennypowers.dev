@@ -19,6 +19,7 @@ const TAG_MAP: Record<string, string> = {
   pidgin: 'pidgin-conversation',
   terminal: 'gnome2-terminal',
   sudoku: 'gnome2-sudoku',
+  'same-gnome': 'gnome2-same-gnome',
   gnometris: 'gnome2-gnometris',
 };
 

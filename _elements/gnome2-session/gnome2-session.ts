@@ -102,6 +102,9 @@ export class Gnome2Session extends LitElement {
               <gtk2-menu-item label="Mines"
                               data-launch="mines"
                               icon="categories/applications-games"></gtk2-menu-item>
+              <gtk2-menu-item label="Same GNOME"
+                              data-launch="same-gnome"
+                              icon="apps/gnome-samegnome"></gtk2-menu-item>
               <gtk2-menu-item label="Sudoku"
                               data-launch="sudoku"
                               icon="apps/gnome-sudoku"></gtk2-menu-item>
