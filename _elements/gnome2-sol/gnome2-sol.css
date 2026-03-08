@@ -1,0 +1,201 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+
+  /** Clearlooks theme token. Font family */
+  font-family: var(--cl-font-family, "DejaVu Sans", sans-serif);
+  user-select: none;
+
+  /*
+   * Card dimensions preserve the 79:123 aspect ratio from the bonded.svg
+   * sprite sheet in gnome-games 2.20. The slot step (card + surrounding
+   * gap) uses CARD_SLOT_PROP = 0.8 from board.c to set spacing.
+   */
+  --_card-width: 65px;
+  --_card-height: 101px;
+  --_card-radius: 4px;
+  --_slot-step-x: calc(var(--_card-width) / 0.8);
+  --_cascade-offset: 17px;
+  --_cascade-offset-down: 4px;
+}
+
+#board {
+  flex: 1;
+  position: relative;
+  overflow: hidden;
+
+  /**
+   * AisleRiot baize background. Uses the actual baize.png tile from
+   * the gnome-games 2.20 aisleriot source (a diagonal green stripe
+   * pattern tiled across the playing surface by set_background_from_baize
+   * in board.c).
+   */
+  background: url('/assets/gnome/cards/baize.png');
+}
+
+/*
+ * Empty slot placeholder. Matches slot.svg from libgames-support:
+ * a rounded rectangle with fill #578132 and stroke #30580d at 1.48px.
+ */
+.slot {
+  position: absolute;
+  width: var(--_card-width);
+  height: var(--_card-height);
+  border-radius: var(--_card-radius);
+  border: 1.5px solid #30580d;
+  background: #578132;
+  box-sizing: border-box;
+}
+
+.slot.drop-target {
+  box-shadow: 0 0 0 2px #ffe040;
+}
+
+.card {
+  position: absolute;
+  width: var(--_card-width);
+  height: var(--_card-height);
+  border-radius: var(--_card-radius);
+  box-sizing: border-box;
+  cursor: default;
+  contain: layout style;
+}
+
+/*
+ * Card face rendering. Uses the bonded.svg sprite sheet from
+ * libgames-support as a CSS background-image. The sprite is a
+ * 1027x615 grid of 13 columns (ranks A-K) x 5 rows (clubs,
+ * diamonds, hearts, spades, extras). Each cell is 79x123.
+ *
+ * background-size scales the full sheet so each cell matches
+ * --_card-width x --_card-height. background-position is set
+ * per-card via inline style in the template.
+ */
+.card-face {
+  width: 100%;
+  height: 100%;
+  border-radius: var(--_card-radius);
+  box-sizing: border-box;
+  overflow: hidden;
+  background-image: url('/assets/gnome/cards/bonded.svg');
+  background-size: calc(13 * var(--_card-width)) calc(5 * var(--_card-height));
+  background-repeat: no-repeat;
+}
+
+/*
+ * Card back. The bonded theme card back is at sprite position
+ * column 2, row 4 (x=158, y=492): a blue (#557fa4) rectangle
+ * with the GNOME foot logo in white.
+ */
+.card-back {
+  width: 100%;
+  height: 100%;
+  border-radius: var(--_card-radius);
+  box-sizing: border-box;
+  overflow: hidden;
+  background-image: url('/assets/gnome/cards/bonded.svg');
+  background-size: calc(13 * var(--_card-width)) calc(5 * var(--_card-height));
+  background-repeat: no-repeat;
+  background-position:
+    calc(-2 * var(--_card-width))
+    calc(-4 * var(--_card-height));
+}
+
+.card.dragging {
+  opacity: 0.85;
+  z-index: 1000;
+  pointer-events: none;
+  filter: drop-shadow(2px 4px 4px rgba(0, 0, 0, 0.4));
+}
+
+.card.drag-source {
+  visibility: hidden;
+}
+
+/*
+ * Stock recycle indicator. Shown when the stock is empty but redeals
+ * remain. Uses the slot colors from slot.svg with a dashed border.
+ */
+.stock-recycle {
+  position: absolute;
+  width: var(--_card-width);
+  height: var(--_card-height);
+  border-radius: var(--_card-radius);
+  border: 1.5px dashed #30580d;
+  background: transparent;
+  box-sizing: border-box;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #4a8a2a;
+  font-size: 24px;
+}
+
+/*
+ * Status bar. Matches the GtkStatusbar layout in window.c which
+ * shows game messages, score, and the games-clock widget.
+ */
+#statusbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 2px 8px;
+
+  /** Clearlooks theme token. Small font size for status bar text */
+  font-size: var(--cl-font-size-small, 11px);
+  color: light-dark(#555753, #babdb6);
+
+  /** Clearlooks theme token. Window body background */
+  background: var(--cl-window-bg, light-dark(#edeceb, #2e3436));
+  border-top: 1px solid light-dark(#d3d7cf, #555753);
+  min-height: 18px;
+}
+
+/*
+ * Game-over dialog. Matches show_game_over_dialog() in window.c
+ * which uses gtk_message_dialog with GTK_MESSAGE_INFO and buttons
+ * for New Game / Close.
+ */
+.game-won-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.45);
+  z-index: 2000;
+}
+
+.game-won-dialog {
+  background: var(--cl-window-bg, light-dark(#edeceb, #2e3436));
+  border: 1px solid light-dark(#9d9c9b, #555753);
+  border-radius: 6px;
+  padding: 16px 24px;
+  text-align: center;
+
+  /** Clearlooks theme token. Window text color */
+  color: var(--cl-text-color, light-dark(#2e3436, #eeeeec));
+
+  & h3 {
+    margin: 0 0 8px;
+    font-size: 14px;
+  }
+
+  & button {
+    margin-top: 8px;
+    padding: 4px 16px;
+    border: 1px solid light-dark(#9d9c9b, #555753);
+    border-radius: 3px;
+
+    /** Clearlooks theme token. Button background gradient */
+    background: var(--cl-button-bg);
+    cursor: default;
+
+    &:active {
+      /** Clearlooks theme token. Button active/pressed background */
+      background: var(--cl-button-bg-active);
+    }
+  }
+}

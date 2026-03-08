@@ -13,6 +13,7 @@ export interface AppDef {
 const TAG_MAP: Record<string, string> = {
   calculator: 'gnome2-calculator',
   mines: 'gnome2-mines',
+  sol: 'gnome2-sol',
   supertux: 'gnome2-supertux',
   about: 'gnome2-about',
   pidgin: 'pidgin-conversation',
