@@ -1,0 +1,217 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+
+  /** Clearlooks theme token. Window body background */
+  background: var(--cl-window-bg, light-dark(#edeceb, #2e3436));
+
+  /** Clearlooks theme token. Font family */
+  font-family: var(--cl-font-family, "DejaVu Sans", sans-serif);
+  user-select: none;
+  /** Block size from tetris.cpp: BLOCK_SIZE = 40 */
+  --_cell-size: 40px;
+}
+
+#content {
+  display: flex;
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+}
+
+#field-wrapper {
+  flex: 1;
+  display: flex;
+  align-items: start;
+  justify-content: center;
+  padding: 6px;
+  min-height: 0;
+  overflow: hidden;
+}
+
+#board {
+  display: grid;
+  grid-template-columns: repeat(14, var(--_cell-size));
+  grid-template-rows: repeat(20, var(--_cell-size));
+  gap: 0;
+  background: light-dark(#000000, #1a1a2e);
+  border: 2px solid light-dark(#555753, #2e3436);
+  box-shadow: inset 0 0 0 1px light-dark(#2e3436, #000000);
+  flex-shrink: 0;
+}
+
+.cell {
+  width: var(--_cell-size);
+  height: var(--_cell-size);
+  box-sizing: border-box;
+
+  &.filled {
+    border: 1px solid rgba(0, 0, 0, 0.3);
+    box-shadow:
+      inset 1px 1px 0 rgba(255, 255, 255, 0.3),
+      inset -1px -1px 0 rgba(0, 0, 0, 0.2);
+  }
+
+  &.ghost {
+    border: 1px dashed rgba(255, 255, 255, 0.3);
+  }
+
+  /* Tango palette piece colors matching gnometris */
+
+  /** Tango Scarlet Red for L-piece */
+  &.color-0 { background: #cc0000; }
+
+  /** Tango Chameleon Green for J-piece */
+  &.color-1 { background: #73d216; }
+
+  /** Tango Sky Blue for T-piece */
+  &.color-2 { background: #3465a4; }
+
+  /** Tango Butter Yellow for S-piece */
+  &.color-3 { background: #edd400; }
+
+  /** Tango Plum Purple for Z-piece */
+  &.color-4 { background: #75507b; }
+
+  /** Tango Orange for I-piece */
+  &.color-5 { background: #f57900; }
+
+  /** Tango Aluminium Light for O-piece */
+  &.color-6 { background: #729fcf; }
+}
+
+#sidebar {
+  width: 110px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 10px;
+  border-left: 1px solid light-dark(#d3d7cf, #555753);
+}
+
+#preview-frame {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+#preview-label {
+  /** Clearlooks theme token. Small font size */
+  font-size: var(--cl-font-size-small, 11px);
+  color: light-dark(#555753, #babdb6);
+}
+
+#preview {
+  display: grid;
+  grid-template-columns: repeat(4, var(--_cell-size));
+  grid-template-rows: repeat(4, var(--_cell-size));
+  gap: 0;
+  background: light-dark(#1a1a1a, #0a0a1e);
+  border: 1px solid light-dark(#555753, #2e3436);
+}
+
+#score-frame {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.score-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+
+  /** Clearlooks theme token. Small font size */
+  font-size: var(--cl-font-size-small, 11px);
+  color: light-dark(#2e3436, #eeeeec);
+}
+
+.score-label {
+  color: light-dark(#555753, #babdb6);
+}
+
+.score-value {
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+#statusbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 2px 8px;
+
+  /** Clearlooks theme token. Small font size for status bar text */
+  font-size: var(--cl-font-size-small, 11px);
+  color: light-dark(#555753, #babdb6);
+  border-top: 1px solid light-dark(#d3d7cf, #555753);
+  min-height: 18px;
+}
+
+.paused-overlay,
+.game-over-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.7);
+  z-index: 1;
+}
+
+.paused-text,
+.game-over-text {
+  color: #ffffff;
+  font-size: 18px;
+  font-weight: 700;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+}
+
+.game-over-dialog {
+  text-align: center;
+  color: #ffffff;
+
+  & h3 {
+    margin: 0 0 8px;
+    font-size: 16px;
+  }
+
+  & p {
+    margin: 0 0 12px;
+    font-size: 12px;
+  }
+
+  & button {
+    /** Clearlooks theme token. Button background gradient */
+    background: var(--cl-button-bg);
+    border: 1px solid light-dark(#9d9c9b, #555753);
+    border-radius: 3px;
+    padding: 4px 12px;
+
+    /** Clearlooks theme token. Button text color */
+    color: var(--cl-button-text, light-dark(#2e3436, #eeeeec));
+
+    /** Clearlooks theme token. Font family */
+    font-family: var(--cl-font-family, "DejaVu Sans", sans-serif);
+    font-size: 12px;
+    cursor: default;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.4);
+
+    &:hover {
+      /** Clearlooks theme token. Button hover background */
+      background: var(--cl-button-bg-hover);
+    }
+
+    &:active {
+      /** Clearlooks theme token. Button active/pressed background */
+      background: var(--cl-button-bg-active);
+      box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.15);
+    }
+  }
+}
+
+#board-container {
+  position: relative;
+}

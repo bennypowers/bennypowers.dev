@@ -96,6 +96,9 @@ export class Gnome2Session extends LitElement {
               <gtk2-menu-item label="AisleRiot Solitaire"
                               data-launch="sol"
                               icon="apps/gnome-aisleriot"></gtk2-menu-item>
+              <gtk2-menu-item label="Gnometris"
+                              data-launch="gnometris"
+                              icon="apps/gnome-gnometris"></gtk2-menu-item>
               <gtk2-menu-item label="Mines"
                               data-launch="mines"
                               icon="categories/applications-games"></gtk2-menu-item>
