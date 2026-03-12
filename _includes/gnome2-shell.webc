@@ -135,6 +135,10 @@ const menuPostYears = (() => {
     </style>
   </noscript>
 
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="stylesheet"
+        webc:keep
+        :href="googleFonts(fonts)">
   <link rel="stylesheet"
         href="clearlooks-page.css">
 

@@ -16,6 +16,22 @@
   font-display: swap;
 }
 
+@font-face {
+  font-family: "Nachlieli CLM";
+  src: url("/assets/fonts/NachlieliCLM/NachlieliCLM-Light.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Nachlieli CLM";
+  src: url("/assets/fonts/NachlieliCLM/NachlieliCLM-Bold.woff2") format("woff2");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
 /* === Reset === */
 *,
 *::before,
@@ -28,6 +44,9 @@
 
   /* === Fonts === */
   --cl-font-family: "DejaVu Sans", "Bitstream Vera Sans", sans-serif;
+  --cl-font-family-he-sans: "Nachlieli CLM", "Nachlieli", sans-serif;
+  --cl-font-family-he-serif: "Frank Ruhl Libre", "Frank Ruehl", serif;
+  --cl-font-family-he-mono: "Miriam Mono", "Miriam Mono CLM", "Fira Code", "Operator Mono", monospace;
   --cl-font-size: 13px;
   --cl-font-size-small: 11px;
   --cl-font-size-title: 13px;
@@ -212,6 +231,16 @@ gnome2-panel[position="bottom"] {
 ::view-transition-group(top-panel),
 ::view-transition-group(bottom-panel) {
   animation: none;
+}
+
+/* === Hebrew Typography === */
+:where(gtk2-window):lang(he) {
+  --cl-font-family: var(--cl-font-family-he-sans);
+  --fixed-font: var(--cl-font-family-he-mono);
+
+  & :where(h1, h2, h3, h4, h5, h6) {
+    font-family: var(--cl-font-family-he-serif);
+  }
 }
 
 /* === Content Typography (inside windows) === */
