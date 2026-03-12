@@ -25,7 +25,7 @@ windowIcon: apps/accessories-text-editor
           <date-time class="dt-published"
                      :datetime="datePublished || $data.page.date"
                      dateStyle="medium"></date-time>
-          <span webc:if="timeToRead" class="reading-time" @text="timeToRead(content)"></span>
+          <span webc:if="timeToRead" class="reading-time" @text="timeToRead(content, lang ?? 'en')"></span>
         </div>
         <img id="cover-image"
              class="u-photo"
