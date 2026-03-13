@@ -60,7 +60,57 @@ tags:
 נִסִּים אַחֲרוֹנִים יִגְבְּרוּ עַד בְּלִי דַּי, לָרִאשׁוֹנִים יִקְחוּ אֶת הַמָּקוֹם  
 נֵצַח נְצָחִים קְדֻשָּׁתְךָ נַקְדִּישׁ בַּחַיִּים וּבְשִׂמְחָה וּבְשָׁלוֹם.
 
----
+## The Lion's Roar of Redemption                                                                 
+                                                                                                
+They pierced the faithful on a feast day — in slaughter, hope was spurned;
+The word to Son of Man was set: for those secure, gathered from the world.
+Gog drew his bow from Persian land and sent his arrows far;
+A generation burns unbowed — their bush, unconsumed by war.
+
+Berzerkers breached the border, to land once parched, now green;
+The blood of innocents cries out, on high to set the battle's scene.
+Against the host of cruel Gog, his host all wicked and depraved,
+Iron swords in hand, when the lion roars who is not afraid?
+
+Their sentence came in sudden force — that evil from the North,
+Know well the reckoning is paid, struck blind each chariot and horse,
+Such dread and terror, pit and snare, went out to all who heard:
+The beepers in their pockets — five thousand felled without a word.
+
+Awake, awake! My people rise, a lion in his den;
+Behold, I send Elijah now, the prophet among men.
+He comes to turn the fathers' hearts upon the sons once more —
+Not by might, and not by power: but by My spirit, says the Lord.
+
+To Jerusalem Your city, in compassion You'll return,
+For students of the Torah and the Law they love to learn;
+The warriors found courage — it was for this our feet were strong,
+Were not Your Torah our delight, we'd have perished in the throng.
+
+The Redeemer came to Zion, as was shown to every eye,
+To those who turn from sin in Jacob, faithful now to the Most High;
+Our tongues shall fill with singing when we see the foe brought low —
+The cub arose, the lion roared — the nations then shall know.
+
+Revealed in quake and thunder, with a mighty hand and cry,
+He stretched His arm against His foes and cast them down to die;
+His feet upon the Mount of Olives, robed in crimson hue —
+A fountain ope'd for David's house, to cleanse from sin anew.
+
+The Lord's right hand exalted — on His people, mercies pour;
+The wicked's name shall rot, crushed under mountains evermore,
+Salvation everlasting sprouts for Israel's faithful band,
+A pit of ruin for the tyrant — the lion roars across the land.
+
+Make way, O nations, make; at autumn's season to Jerusalem come;
+Build booths unto yourselves — a simple charge, and simply done.
+Ungrateful rebels! spurn the gift, your faithlessness laid bare —
+Storm and tempest for rooftop folk; while in the sukkah - peace is there.
+
+Such wonders You shall show us, doubled over Egypt's tale;
+No more shall they say "Great is He who brought us from the land of Pharaoh".
+The latter signs surpass the first far beyond what mouths can speak —
+Forever more Your name we'll sanctify, in life, and joy, and peace.
 
 <style>
 .footnotes-list {
