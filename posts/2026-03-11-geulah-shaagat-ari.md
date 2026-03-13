@@ -69,12 +69,12 @@ A generation burns unbowed — their bush, unconsumed by war.
 
 Berzerkers breached the border, to land once parched, now green;
 The blood of innocents cries out, on high to set the battle's scene.
-Against the host of cruel Gog, his host all wicked and depraved,
+Against the cruel Gog, his host entirely wicked and depraved,
 Iron swords in hand, when the lion roars who is not afraid?
 
-Their sentence came in sudden force — that evil from the North,
+Their sentence came with sudden force — that evil from the North,
 Know well the reckoning is paid, struck blind each chariot and horse,
-Such dread and terror, pit and snare, went out to all who heard:
+Such dread and terror, fear and doubt, went out to all who heard:
 The beepers in their pockets — five thousand felled without a word.
 
 Awake, awake! My people rise, a lion in his den;
@@ -102,15 +102,15 @@ The wicked's name shall rot, crushed under mountains evermore,
 Salvation everlasting sprouts for Israel's faithful band,
 A pit of ruin for the tyrant — the lion roars across the land.
 
-Make way, O nations, make; at autumn's season to Jerusalem come;
+Make way, O nations, make; in autumn to Jerusalem come;
 Build booths unto yourselves — a simple charge, and simply done.
-Ungrateful rebels! spurn the gift, your faithlessness laid bare —
-Storm and tempest for rooftop folk; while in the sukkah - peace is there.
+Ungrateful rebels! Spurn the gift, your faithlessness laid bare —
+Storm and tempest for rooftop folk; but in the sukkah - peace is there.
 
 Such wonders You shall show us, doubled over Egypt's tale;
 No more shall they say "Great is He who brought us from the land of Pharaoh".
 The latter signs surpass the first far beyond what mouths can speak —
-Forever more Your name we'll sanctify, in life, and joy, and peace.
+Forever more Your name we'll bless, in life, and joy, and peace.
 
 <style>
 .footnotes-list {
