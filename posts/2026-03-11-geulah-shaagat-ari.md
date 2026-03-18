@@ -62,7 +62,7 @@ tags:
 
 ## The Lion's Roar of Redemption                                                                 
                                                                                                 
-They pierced the faithful on a feast day — in slaughter, hope was spurned;
+They pierced us on our feast day — in slaughter, hope was spurned;
 The word to Son of Man was set: for those secure, gathered from the world.
 Gog drew his bow from Persian land and sent his arrows far;
 A generation burns unbowed — their bush, unconsumed by war.
