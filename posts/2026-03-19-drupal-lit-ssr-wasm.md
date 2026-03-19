@@ -43,7 +43,7 @@ The previous post drew three fair criticisms. Here's how Backlit addresses each.
 
 **No more service to maintain.** The Node.js sidecar is gone. Backlit's binary is a static executable -- it starts on demand inside the PHP-FPM worker and dies with it. Nothing to monitor, restart, or deploy separately. `composer update` handles everything.
 
-**Minimal overhead.** The Node.js approach added ~50ms and ~100MB per request. Backlit adds ~0.32ms per render after a one-time 350ms cold start per worker, with a much smaller memory footprint (the binary is ~9MB, the WASM instance lightweight). With Drupal's page cache enabled, subsequent requests skip the binary entirely.
+**Minimal overhead.** The Node.js approach added ~50ms and ~100MB per request. Backlit adds ~0.32ms per render after a one-time 350ms cold start per worker, with a much smaller memory footprint (the binary is ~9MB, the WASM instance is lightweight). With Drupal's page cache enabled, subsequent requests skip the binary entirely.
 
 **Safe failure and author control.** If the binary is unavailable or returns an empty response, Backlit returns the original HTML unchanged -- SSR failure is invisible to end users. Beyond that, Backlit adds an "Enable SSR" checkbox to content types, so authors can disable SSR per-page. Not every layout needs shadow roots injected, and editorial teams should have the final say.
 
@@ -186,6 +186,8 @@ The [Backlit module][backlit], the [lit-ssr-wasm engine][repo], and a [working D
 
 This is early days. I'd love to hear what breaks, what's missing, and what you'd build with it. [Open an issue][backlit-issues] on the Backlit repo, or on [lit-ssr-wasm][repo-issues] for the engine itself. PRs welcome. Bug reports welcomed even more warmly.
 
+Thanks to [Steven Spriggs][zeroedin] for talking through the idea and vetting the approach with me. Steven built his own Go-based Lit SSR pipeline, golit, taking a different path to the same destination -- worth knowing about if Backlit's tradeoffs don't fit your setup.
+
 Full disclosure: I built `lit-ssr-wasm` to scratch a completely different itch -- a live preview feature in [`cem serve`][cem]. Backlit happened because, once the WASM module existed, the Drupal integration practically wrote itself. Two years of "this should be simpler" collapsed into an afternoon. That's the thing about building on standards. WASM is to backend runtimes what web components are to the browser: write it once, run it anywhere, watch it quietly solve problems you weren't even trying to solve. I'll take it.
 
 [prev-post]: /posts/drupal-lit-ssr/
@@ -201,3 +203,4 @@ Full disclosure: I built `lit-ssr-wasm` to scratch a completely different itch -
 [backlit-issues]: https://github.com/bennypowers/backlit/issues
 [repo-issues]: https://github.com/bennypowers/lit-ssr-wasm/issues
 [cem]: https://github.com/break-stuff/cem-tools
+[zeroedin]: https://github.com/zeroedin
