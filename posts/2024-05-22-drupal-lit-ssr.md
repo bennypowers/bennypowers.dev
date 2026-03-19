@@ -9,6 +9,11 @@ tldr: |
   experimental, we can write a proof-of-concept to integrate with Drupal.
 coverImageAlt: drupal logo facing lit logo
 coverImage: /assets/images/drupal-lit-ssr.png
+tags:
+  - drupal
+  - web components
+  - lit
+  - ssr
 ---
 
 <script type="module">
