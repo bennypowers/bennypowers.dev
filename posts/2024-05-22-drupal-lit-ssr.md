@@ -16,6 +16,11 @@ tags:
   - ssr
 ---
 
+<rh-alert state="info">
+  <h4 slot="header">Update: March 2026</h4>
+  <p>This approach has been superseded by <a href="/posts/drupal-lit-ssr-wasm/">Backlit</a>, which replaces the Node.js sidecar with a single Go binary embedding a WASM module. No containers, no Node.js, two lines to install. <a href="/posts/drupal-lit-ssr-wasm/">Read the new post</a>.</p>
+</rh-alert>
+
 <script type="module">
 import mermaid from 'https://esm.sh/mermaid';
 const match = window.matchMedia?.('(prefers-color-scheme: dark)');
