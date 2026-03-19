@@ -18,6 +18,14 @@ pre[class*="language-"] {
   padding: 16px;
 }
 
+pre[class*="language-"]::selection,
+pre[class*="language-"] *::selection,
+code[class*="language-"]::selection,
+code[class*="language-"] *::selection {
+  background: var(--cl-selection-bg);
+  color: var(--cl-selection-text);
+}
+
 code[class*="language-"],
 pre[class*="language-"] {
   color: var(--markdown-syntax-color, #393a34);
