@@ -68,16 +68,16 @@
   to = "https://bennypowers.github.io/cem/:splat"
   status = 200
   force = true
-# Serve minimal XHTML for Go module discovery - lit-ssr-go
+# Serve minimal XHTML for Go module discovery - lit-ssr-wasm
 [[redirects]]
-  from = "/lit-ssr-go"
-  to = "/lit-ssr-go/go-import.html"
+  from = "/lit-ssr-wasm"
+  to = "/lit-ssr-wasm/go-import.html"
   status = 200
   force = true
   query = {go-get = "1"}
 [[redirects]]
-  from = "/lit-ssr-go/*"
-  to = "/lit-ssr-go/go-import.html"
+  from = "/lit-ssr-wasm/*"
+  to = "/lit-ssr-wasm/go-import.html"
   status = 200
   force = true
   query = {go-get = "1"}

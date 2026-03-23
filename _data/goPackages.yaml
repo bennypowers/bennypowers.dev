@@ -25,8 +25,8 @@
     home: https://github.com/bennypowers/design-tokens-language-server
     directory: https://github.com/bennypowers/design-tokens-language-server/tree/main{/dir}
     file: https://github.com/bennypowers/design-tokens-language-server/blob/main{/dir}/{file}#L{line}
-- name: lit-ssr-go
-  importPath: bennypowers.dev/lit-ssr-go
+- name: lit-ssr-wasm
+  importPath: bennypowers.dev/lit-ssr-wasm
   vcs: git
   repoUrl: https://github.com/bennypowers/lit-ssr-wasm
   goSource:
