@@ -10,14 +10,14 @@ tags:
   - torah
 ---
 
-דָּקְרוּ צָרִים [^2] בְּיוֹם חַג [^3], בְּטֶבַח תִּקְוָה נֶהְדַּף  
-דְּבַר בֶּן הָאָדָם [^4] הוּצַב לְיוֹשֵׁב לָבֶטַח [^6] גּוֹיִם מְאֻסַּף [^5]  
-דָּרַךְ גּוֹג חִצָּיו וְשָׁלַח הַרְחֵק מֵאֶרֶץ פָּרַס [^7]  
+דָּקְרוּ [^2] בְּיוֹם הֶחַג [^3], בְּטֶבַח תִּקְוָה נֶהְדָּף  
+דָּבַר בֶּן הָאָדָם [^4] הוּצַב לְעַם [^5] גּוֹיִם מְאָסַּף [^6]  
+דָּרַךְ גּוֹג וְשָׁלַח הֶרְחֵק מֵאֶרֶץ פָּרַס [^7]  
 דּוֹר נִצָּחוֹן לֹא נִכְנָע, נַפְשׁוֹ בּוֹעֵר וְלֹא נִשְׂרָף [^8]  
 
-וּפָרְצוּ גְּבוּל בְּעֵת צָרָה, אֶל אֶרֶץ צִיָּה לְעֵת קֵץ פּוֹרִיָּה [^9]  
-וְדַם עֲנָוִים צוֹעֵק מֵאֲדָמָה, לִפְרִיסַת הַמַּעֲרָכָה  
-וְעַל צְבָא גּוֹג הָאַכְזָר וְהָרָשָׁע, נִיצָּב הָעָם בִּגְבוּרָה  
+וּפָרְצוּ גְּבוּל אֶל אֶרֶץ צִיָּה, לְעֵת קֵץ פּוֹרִיָּה [^9]  
+וּדָם עֲנָוִים צַעֲקָה, לִפְרִיסַת הַמַּעֲרָכָה  
+וְעַל צְבָא גּוֹג וְהָרָשָׁע, נִיצָּב הָעָם בִּגְבוּרָה  
 וְחַרְבוֹת בַּרְזֶל בְּיָדָם וְאִם יִשְׁאַג מִי לֹא יִירָא [^10]  
 
 דִּינָם יֻתַּן בְּפֶתַע עֹז, פּוֹתְחֵי הָרָעָה מִצָּפוֹן [^11]  
@@ -38,9 +38,9 @@ tags:
 לְצִיּוֹן גּוֹאֵל בָּא [^21] כַּאֲשֶׁר גָּלוּ עֵיְנֵי הַכֹּל  
 וּלְשָׁבֵי פֶשַׁע בְּיַעֲקֹב חוֹזְרֵי דַּת הָעֶלְיוֹן  
 לְשׁוֹנֵנוּ רִנָּה בִּרְאוֹת הָאוֹיֵב שֶׁיִּפּוֹל  
-לָבִיא יָקוּם אַרְיֵה יִשְׁאַג, אָז יֹאמְרוּ בַּגּוֹיִם ה' גָּדוֹל [^22]
+לָבִיא יָקוּם, אָז יֹאמְרוּ בַּגּוֹיִם ה' גָּדוֹל [^22]
 
-נִגְלָה בְּרַעַשׁ גָּדוֹל אַדִּיר וְחָזָקה וּבְאַזְעָקָה  
+נִגְלָה בְּרַעַשׁ גָּדוֹל אַדִּיר וְחָזֵק וּבְאַזְעָקָה  
 נָטָה זְרוֹעוֹ עַל שׂוֹנְאָיו הִפִּילָם אֶל שְׁאוֹל תַּחְתִּיָּה  
 נִיצָּב רַגְלוֹ עַל הַר הַזֵּיתִים [^23] וְהִנֵּה אָדֹם בְּשַׂלְמָה [^24]  
 נִפְתַּח לְבֵית דָּוִד מָקוֹר לְחַטָּאת וּלְנִדָּה [^25].
@@ -48,38 +48,38 @@ tags:
 יְמִין ה' רוֹמֵמָה [^26], גָּבַר עַל עַמּוֹ חֲסָדָיו  
 יִרְקַב שֵׁם רְשָׁעִים [^27], עֲלֵיהֶם הַר כְּגִיגִית כְּפָאָהּ [^28]  
 יְשׁוּעַת עוֹלָמִים לְיִשְׂרָאֵל וּבְאֵר שַׁחַת לָאייתולה [^29]  
-יִשְׁאַג הָאֲרִי מִמְּעוֹנוֹ [^30], אוֹר חָדָשׁ עַל צִיּוֹן הָאִירָה.
+יִשְׁאַג מִמְּעוֹנוֹ [^30], אוֹר חָדָשׁ עַל צִיּוֹן הָאִירָה.
 
-סֹלּוּ דֶרֶךְ כָּל גּוֹיִם לְעִיר ה׳ לְעוֹנַת סְתָיו [^31]  
+סֹלּוּ דֶרֶךְ כָּל גּוֹיִם לְמוֹרִיָּה בְּעוֹנַת סְתָיו [^31]  
 סֻכּוֹת בְּנוּ לְעַצְמְכֶם, הִנֵּה נָתַתִּי מִצְוָה קַלָּה [^32]  
 סוּרוּ סְרוּחוּ סוֹרְרִים, בְּעָטוּ בָהּ כְּפוּיֵי טוֹבָה  
 סוּפָה וּסְעָרָה לְעַם הַגַּג [^33] וּלְסׁכְכֵי סְכָךְ שָלום וְשַׁלְוָה:
 
 נִפְלָאוֹת תִּרְאֵנוּ כָּפוּל עַל יְצִיאָה מִמֵּיצָר וּבוֹר [^34]  
-נֶאֱמַר לֹא עוֹד "יִגְדַּל ה' אֲשֶׁר הוֹצִיא אֶת עַמּוֹ מֵאֶרֶץ הַיְאוֹר" [^35]  
-נִסִּים אַחֲרוֹנִים יִגְבְּרוּ עַד בְּלִי דַּי, לָרִאשׁוֹנִים יִקְחוּ אֶת הַמָּקוֹם  
+נֶאֱמַר לֹא עוֹד "חַי ה' אֲשֶׁר הֶעֱלָה אֶת עַמּוֹ מֵאֶרֶץ הַיְאוֹר" [^35]  
+נִסִּים אַחֲרוֹנִים יִגְבְּרוּ, לְרִאשׁוֹנִים יִקְחוּ אֶת הַמָּקוֹם  
 נֵצַח נְצָחִים קְדֻשָּׁתְךָ נַקְדִּישׁ בַּחַיִּים וּבְשִׂמְחָה וּבְשָׁלוֹם.
 
 ## The Lion's Roar of Redemption                                                                 
                                                                                                 
-They pierced us on our feast day — in slaughter, hope was spurned;
-The word to Son of Man was set: for those secure, gathered from the world.
+They pierced us on our feast — in slaughter, hope was spurned;
+The word to the Son of Man: for those gathered from the world.
 Gog drew his bow from Persian land and sent his arrows far;
-A generation burns unbowed — their bush, unconsumed by war.
+A generation burns inside — but unconsumed by war.
 
 Berzerkers breached the border, to land once parched, now green;
-The blood of innocents cries out, on high to set the battle's scene.
-Against the cruel Gog, his host entirely wicked and depraved,
-Iron swords in hand, when the lion roars who is not afraid?
+The blood of innocents cries out, which set the battle's scene.
+Against cruel Gog, his host entirely wicked and depraved,
+Iron swords in hand; the lion roars — who is not afraid?
 
-Their sentence came with sudden force — that evil from the North,
+Their sentence came with sudden force — the evil from the North,
 Know well the reckoning is paid, struck blind each chariot and horse,
 Such dread and terror, fear and doubt, went out to all who heard:
 The beepers in their pockets — five thousand felled without a word.
 
 Awake, awake! My people rise, a lion in his den;
-Behold, I send Elijah now, the prophet among men.
-He comes to turn the fathers' hearts upon the sons once more —
+Behold, I send Elijah now, to turn the hearts of men.
+Fathers' hearts towards their sons, and their sons to them once more
 Not by might, and not by power: but by My spirit, says the Lord.
 
 To Jerusalem Your city, in compassion You'll return,
@@ -88,28 +88,28 @@ The warriors found courage — it was for this our feet were strong,
 Were not Your Torah our delight, we'd have perished in the throng.
 
 The Redeemer came to Zion, as was shown to every eye,
-To those who turn from sin in Jacob, faithful now to the Most High;
-Our tongues shall fill with singing when we see the foe brought low —
-The cub arose, the lion roared — the nations then shall know.
+To those who return in Jacob, faithful now to the Most High;
+Our tongues shall fill with singing when we see the foe brought low;
+The cub arose, the lion roared — all the nations then shall know.
 
-Revealed in quake and thunder, with a mighty hand and cry,
+Revealed in quake and thunder, with mighty hand and siren's cry,
 He stretched His arm against His foes and cast them down to die;
 His feet upon the Mount of Olives, robed in crimson hue —
-A fountain ope'd for David's house, to cleanse from sin anew.
+A fountain there for David's house, to cleanse from sin anew.
 
 The Lord's right hand exalted — on His people, mercies pour;
 The wicked's name shall rot, crushed under mountains evermore,
 Salvation everlasting sprouts for Israel's faithful band,
 A pit of ruin for the tyrant — the lion roars across the land.
 
-Make way, O nations, make; in autumn to Jerusalem come;
-Build booths unto yourselves — a simple charge, and simply done.
-Ungrateful rebels! Spurn the gift, your faithlessness laid bare —
-Storm and tempest for rooftop folk; but in the sukkah - peace is there.
+Make way, O nations, make; in autumn to Moriah come;
+Build sukkahs for yourselves — a simple charge, and simply done.
+Ungrateful rebels! Spurn the gift, your faithlessness laid bare
+Storm for rooftop folk; but under thatch — peace is there.
 
 Such wonders You shall show us, doubled over Egypt's tale;
-No more shall they say "Great is He who brought us from the land of Pharaoh".
-The latter signs surpass the first far beyond what mouths can speak —
+No more shall they say "By He Who brought us from the land of Pharaoh".
+The latter signs surpass the first, beyond what mouths can speak;
 Forever more Your name we'll bless, in life, and joy, and peace.
 
 <style>
@@ -144,7 +144,7 @@ Forever more Your name we'll bless, in life, and joy, and peace.
 
 [^4]: פנייה קבועה ליחזקאל בנבואות גוג (יחזקאל לח).
 
-[^5]: יחזקאל לח יא: "כֻּלָּם יֹשְׁבִים בְּאֵין חוֹמָה.
+[^5]: יחזקאל לח יא: "כֻּלָּם יֹשְׁבִים בְּאֵין חוֹמָה".
 
 [^6]: שם, יב: "הַמְאֻסָּף מִגּוֹיִם".
 
