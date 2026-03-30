@@ -31,6 +31,17 @@
   status = 200
   force = true
   query = {go-get = "1"}
+# Proxy all other /asimonim requests to GitHub Pages
+[[redirects]]
+  from = "/asimonim"
+  to = "https://bennypowers.github.io/asimonim/"
+  status = 200
+  force = true
+[[redirects]]
+  from = "/asimonim/*"
+  to = "https://bennypowers.github.io/asimonim/:splat"
+  status = 200
+  force = true
 # Serve minimal XHTML for Go module discovery - dtls
 [[redirects]]
   from = "/dtls"
