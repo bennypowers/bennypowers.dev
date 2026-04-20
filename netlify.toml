@@ -105,6 +105,19 @@
   status = 200
   force = true
   query = {go-get = "1"}
+# Serve minimal XHTML for Go module discovery - mansplain
+[[redirects]]
+  from = "/mansplain"
+  to = "/mansplain/go-import.html"
+  status = 200
+  force = true
+  query = {go-get = "1"}
+[[redirects]]
+  from = "/mansplain/*"
+  to = "/mansplain/go-import.html"
+  status = 200
+  force = true
+  query = {go-get = "1"}
 
 
 [[plugins]]
