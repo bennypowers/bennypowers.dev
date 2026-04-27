@@ -118,6 +118,32 @@
   status = 200
   force = true
   query = {go-get = "1"}
+# Serve minimal XHTML for Go module discovery - tree-sitter-jinja-dialects
+[[redirects]]
+  from = "/tree-sitter-jinja-dialects"
+  to = "/tree-sitter-jinja-dialects/go-import.html"
+  status = 200
+  force = true
+  query = {go-get = "1"}
+[[redirects]]
+  from = "/tree-sitter-jinja-dialects/*"
+  to = "/tree-sitter-jinja-dialects/go-import.html"
+  status = 200
+  force = true
+  query = {go-get = "1"}
+# Serve minimal XHTML for Go module discovery - tree-sitter-handlebars
+[[redirects]]
+  from = "/tree-sitter-handlebars"
+  to = "/tree-sitter-handlebars/go-import.html"
+  status = 200
+  force = true
+  query = {go-get = "1"}
+[[redirects]]
+  from = "/tree-sitter-handlebars/*"
+  to = "/tree-sitter-handlebars/go-import.html"
+  status = 200
+  force = true
+  query = {go-get = "1"}
 
 
 [[plugins]]
