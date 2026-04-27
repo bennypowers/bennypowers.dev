@@ -9,6 +9,7 @@
     home: https://bennypowers.dev/asimonim/
     directory: https://github.com/bennypowers/asimonim/tree/main{/dir}
     file: https://github.com/bennypowers/asimonim/blob/main{/dir}/{file}#L{line}
+
 - name: cem
   importPath: bennypowers.dev/cem
   vcs: git
@@ -17,6 +18,7 @@
     home: https://bennypowers.dev/cem/
     directory: https://github.com/bennypowers/cem/tree/main{/dir}
     file: https://github.com/bennypowers/cem/blob/main{/dir}/{file}#L{line}
+
 - name: dtls
   importPath: bennypowers.dev/dtls
   vcs: git
@@ -25,6 +27,7 @@
     home: https://github.com/bennypowers/design-tokens-language-server
     directory: https://github.com/bennypowers/design-tokens-language-server/tree/main{/dir}
     file: https://github.com/bennypowers/design-tokens-language-server/blob/main{/dir}/{file}#L{line}
+
 - name: lit-ssr-wasm
   importPath: bennypowers.dev/lit-ssr-wasm
   vcs: git
@@ -33,6 +36,7 @@
     home: https://github.com/bennypowers/lit-ssr-wasm
     directory: https://github.com/bennypowers/lit-ssr-wasm/tree/main/go{/dir}
     file: https://github.com/bennypowers/lit-ssr-wasm/blob/main/go{/dir}/{file}#L{line}
+
 - name: mappa
   importPath: bennypowers.dev/mappa
   vcs: git
@@ -41,3 +45,21 @@
     home: https://github.com/bennypowers/mappa
     directory: https://github.com/bennypowers/mappa/tree/main{/dir}
     file: https://github.com/bennypowers/mappa/blob/main{/dir}/{file}#L{line}
+
+- name: tree-sitter-handlebars
+  importPath: bennypowers.dev/tree-sitter-handlebars
+  vcs: git
+  repoUrl: https://github.com/bennypowers/tree-sitter-handlebars
+  goSource:
+    home: https://github.com/bennypowers/tree-sitter-handlebars
+    directory: https://github.com/bennypowers/tree-sitter-handlebars/tree/main{/dir}
+    file: https://github.com/bennypowers/tree-sitter-handlebars/blob/main{/dir}/{file}#L{line}
+
+- name: tree-sitter-jinja-dialects
+  importPath: bennypowers.dev/tree-sitter-jinja-dialects
+  vcs: git
+  repoUrl: https://github.com/bennypowers/tree-sitter-jinja-dialects
+  goSource:
+    home: https://github.com/bennypowers/tree-sitter-jinja-dialects
+    directory: https://github.com/bennypowers/tree-sitter-jinja-dialects/tree/main{/dir}
+    file: https://github.com/bennypowers/tree-sitter-jinja-dialects/blob/main{/dir}/{file}#L{line}
