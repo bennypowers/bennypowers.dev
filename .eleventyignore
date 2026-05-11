@@ -8,3 +8,4 @@ netlify/**/*
 .github/**/*
 # TODO: fix this deck
 decks/nvim-regexplainer/**/*
+decks/semantic-component-testing/

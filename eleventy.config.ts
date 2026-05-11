@@ -33,6 +33,7 @@ import { RedHatDeckPlugin } from '#plugins/redhat-deck.ts';
 import { RHDSPlugin } from '#plugins/rhds.ts';
 import { DC23Plugin } from '#plugins/devconf-brno-2023.ts';
 import { DC25Plugin } from '#plugins/devconf-brno-2025.ts';
+import { GAAD26Plugin } from '#plugins/gaad-2026.ts';
 import { NetlifyImageCDNPlugin } from '#plugins/netlify-image-cdn.ts';
 import { HTMLOptimizePlugin } from '#plugins/html-optimize.ts';
 import { WebCDSDWorkaroundPlugin } from '#plugins/dsd/webc-dsd-slot-workaround.ts';
@@ -103,6 +104,7 @@ export default function(eleventyConfig: UserConfig) {
   eleventyConfig.addPlugin(RHDSPlugin);
   eleventyConfig.addPlugin(DC23Plugin);
   eleventyConfig.addPlugin(DC25Plugin);
+  eleventyConfig.addPlugin(GAAD26Plugin);
   eleventyConfig.addPlugin(RedHatDeckPlugin);
   eleventyConfig.addPlugin(TableOfContentsPlugin);
   eleventyConfig.addPlugin(TimeToReadPlugin);
@@ -144,13 +146,13 @@ export default function(eleventyConfig: UserConfig) {
     specs: [
       'tslib',
       '@lit-labs/ssr-client/lit-element-hydrate-support.js',
-      '@patternfly/elements/pf-button/pf-button.js',
-      '@patternfly/elements/pf-card/pf-card.js',
-      '@patternfly/elements/pf-icon/pf-icon.js',
-      '@patternfly/elements/pf-modal/pf-modal.js',
-      '@patternfly/elements/pf-spinner/pf-spinner.js',
-      '@patternfly/elements/pf-accordion/pf-accordion.js',
-      '@patternfly/elements/pf-tooltip/pf-tooltip.js',
+      '@patternfly/elements@4/pf-button/pf-button.js',
+      '@patternfly/elements@4/pf-card/pf-card.js',
+      '@patternfly/elements@4/pf-icon/pf-icon.js',
+      '@patternfly/elements@4/pf-modal/pf-modal.js',
+      '@patternfly/elements@4/pf-spinner/pf-spinner.js',
+      '@patternfly/elements@4/pf-accordion/pf-accordion.js',
+      '@patternfly/elements@4/pf-tooltip/pf-tooltip.js',
       '@patternfly/pfe-core',
       '@patternfly/pfe-core/controllers/logger.js',
       '@patternfly/pfe-core/controllers/style-controller.js',
@@ -205,7 +207,7 @@ export default function(eleventyConfig: UserConfig) {
   });
 
   return {
-    templateFormats: [ 'md', 'njk', 'html', 'svg', 'css', '11ty.ts', '11ty.js' ],
+    templateFormats: [ 'md', 'njk', 'html', 'webc', 'svg', 'css', '11ty.ts', '11ty.js' ],
     markdownTemplateEngine: 'njk',
     htmlTemplateEngine: 'njk',
   };
