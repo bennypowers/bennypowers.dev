@@ -215,7 +215,7 @@ rh-slide-divider [slot="image"] {
 
 slidem-deck rh-slide > p {
   text-align: center;
-  margin-block: 3.5rem !important;
+  margin-block: var(--rh-space-lg) !important;
 
   &:has(img:last-child:first-child) {
     display: contents;
@@ -231,7 +231,7 @@ slidem-deck rh-slide > p {
   margin-block: var(--rh-space-2xl);
 
   & rh-icon {
-    --rh-icon-size: var(--rh-size-icon-08);
+    --rh-icon-size: 8vw;
   }
 
   & .arrow {
@@ -289,22 +289,59 @@ slidem-deck rh-slide > p {
   margin-block: var(--rh-space-2xl);
 }
 
+/* Chat session simulation */
+.chat {
+  display: flex;
+  flex-direction: column;
+  gap: var(--rh-space-lg);
+  max-width: 42ch;
+  margin-inline: auto;
+  margin-block: var(--rh-space-xl);
+  text-align: start;
+}
+
+.chat-msg {
+  display: grid;
+  grid-template-columns: 3vw 1fr;
+  gap: var(--rh-space-lg);
+  align-items: start;
+
+  & rh-icon {
+    --rh-icon-size: 3vw;
+  }
+
+  & .bubble {
+    background: var(--rh-color-surface-lighter);
+    border-radius: var(--rh-border-radius-default);
+    padding: var(--rh-space-md) var(--rh-space-lg);
+    font-size: 0.9em;
+    line-height: 1.5;
+  }
+
+  &.bot .bubble {
+    background: var(--rh-color-surface-lightest);
+    border: 1px solid var(--rh-color-border-subtle-on-light);
+  }
+
+  & code {
+    font-size: 0.85em;
+  }
+}
+
 /* Inline icon sizing for content slides */
 rh-slide rh-icon {
-  --rh-icon-size: var(--rh-size-icon-04);
+  --rh-icon-size: 3vw;
   vertical-align: middle;
 }
 
-/* Standalone hero icons: paragraph with only an icon */
-slidem-deck rh-slide > p:has(> rh-icon:only-child) {
-  --rh-icon-size: var(--rh-size-icon-07);
-  display: grid;
-  place-content: center;
-  margin-block: var(--rh-space-lg) !important;
+/* Standalone hero icon: explicit class */
+.hero-icon {
+  --rh-icon-size: 6vw;
+  text-align: center;
 }
 
 .grid-3 rh-icon {
-  --rh-icon-size: var(--rh-size-icon-06);
+  --rh-icon-size: 5vw;
   display: block;
   margin-inline: auto;
   margin-block-end: var(--rh-space-lg);
@@ -313,7 +350,7 @@ slidem-deck rh-slide > p:has(> rh-icon:only-child) {
 
 rh-slide-closing {
   li a {
-    --rh-icon-size: var(--rh-size-icon-04);
+    --rh-icon-size: 3vw;
     gap: var(--rh-space-2xl);
     font-size: var(--rh-font-size-body-text-2xl);
     display: flex;
