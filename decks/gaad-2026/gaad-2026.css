@@ -171,7 +171,7 @@ mark[reveal] {
 }
 
 /* Light DOM reveal support */
-rh-slide span[reveal] {
+rh-slide :is(span, p, div)[reveal] {
   opacity: 0;
   transition: opacity 0.2s ease;
 
@@ -325,7 +325,7 @@ img.image-body {
   color: var(--rh-color-brand-red-on-light);
 }
 
-.icon {
+rh-icon {
   &.size-01 { --rh-icon-size: var(--rh-size-icon-01); }
   &.size-02 { --rh-icon-size: var(--rh-size-icon-02); }
   &.size-03 { --rh-icon-size: var(--rh-size-icon-03); }

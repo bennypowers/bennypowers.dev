@@ -58,10 +58,11 @@ export class RhSlide extends SlidemSlide {
   }
 
   afterStamp() {
-    const shadowReveals = this.shadowRoot.querySelectorAll('[reveal]');
-    const lightReveals = this.querySelectorAll('[reveal]');
-    this.defineSteps([...shadowReveals, ...lightReveals]);
     const deck = this.closest('slidem-deck');
+    if (deck?.currentSlide === this) {
+      const stepMatch = location.hash.match(/step-(\d+)/);
+      if (stepMatch) this.step = Number(stepMatch[1]);
+    }
     const allSlides = Array.from(deck.querySelectorAll('*')).filter(x => x instanceof SlidemSlide);
     const counter = this.shadowRoot.getElementById('counter');
     if (counter)
