@@ -8,20 +8,24 @@
         href="components/rh-slide-title.css">
   <div id="container"
        part="container">
-    <div id="product-logo">
+    <div id="black-bar">
+      <slot name="subtitle"></slot>
+    </div>
+    <div id="image-area">
       <slot name="product-logo"></slot>
     </div>
-    <section id="title-container">
+    <section id="content"
+             part="content">
       <div id="title">
         <slot></slot>
       </div>
       <div id="subheading">
         <slot name="subheading"></slot>
       </div>
+      <div id="presenter">
+        <slot name="presenter"></slot>
+      </div>
     </section>
-    <div id="presenter">
-      <slot name="presenter"></slot>
-    </div>
     <footer id="slide-footer">
       <span id="counter"
             part="counter"></span>

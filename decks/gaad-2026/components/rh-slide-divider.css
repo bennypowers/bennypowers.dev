@@ -1,22 +1,10 @@
 :host {
-  border-inline-start: 4px solid var(--rh-color-brand-red-on-light, #ee0000) !important;
+  border-inline-start: none !important;
 }
 
 #slide-header {
   display: flex !important;
-  border-block-end: none !important;
   padding-block-end: 1vw !important;
-  position: relative !important;
-}
-
-#slide-header::after {
-  content: "";
-  position: absolute;
-  inset-block-end: 0;
-  inset-inline-start: 3vw;
-  width: 6vw;
-  height: 3px;
-  background: var(--rh-color-brand-red-on-light, #ee0000);
 }
 
 #content {
@@ -52,7 +40,6 @@
 }
 
 #aside {
-  grid-area: aside;
   display: none;
 }
 
@@ -60,8 +47,4 @@
   margin: 0 !important;
   font-weight: 400 !important;
   line-height: 1.5 !important;
-}
-
-#image {
-  display: none;
 }

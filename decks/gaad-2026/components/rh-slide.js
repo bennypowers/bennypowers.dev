@@ -26,10 +26,15 @@ overrides.replaceSync(`
     display: grid;
     place-content: center;
   }
+  :host([variant="image-body"]) #content {
+    grid-template-columns: 22.06vw 1fr;
+    gap: 4.85vw;
+    place-content: center stretch;
+    padding-inline-start: 0;
+  }
   #slide-footer {
     background: var(--rh-color-surface-lightest, #ffffff);
     color: var(--rh-color-text-primary-on-light, #151515);
-    border-block-start: 1px solid var(--rh-color-border-subtle-on-light, #d2d2d2);
   }
 `);
 
@@ -44,6 +49,8 @@ export class RhSlide extends SlidemSlide {
 
   connectedCallback() {
     super.connectedCallback();
+    if (this.querySelector('.image-body'))
+      this.setAttribute('variant', 'image-body');
     if (!HTMLTemplateElement.prototype.hasOwnProperty('shadowRoot') || !HTMLTemplateElement.prototype.hasOwnProperty('shadowRootMode'))
       this.addEventListener('declarative-shadow-dom-stamped', this.afterStamp, { once: true });
     else
@@ -51,7 +58,9 @@ export class RhSlide extends SlidemSlide {
   }
 
   afterStamp() {
-    this.defineSteps(this.shadowRoot.querySelectorAll('[reveal]') ?? []);
+    const shadowReveals = this.shadowRoot.querySelectorAll('[reveal]');
+    const lightReveals = this.querySelectorAll('[reveal]');
+    this.defineSteps([...shadowReveals, ...lightReveals]);
     const deck = this.closest('slidem-deck');
     const allSlides = Array.from(deck.querySelectorAll('*')).filter(x => x instanceof SlidemSlide);
     const counter = this.shadowRoot.getElementById('counter');
