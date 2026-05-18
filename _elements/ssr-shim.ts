@@ -1,4 +1,7 @@
 import { isServer } from 'lit';
+import { LitElementRenderer } from '@lit-labs/ssr'
+
+LitElementRenderer.renderOptions.push(() => ({ connectedCallback:true }));
 
 if (isServer) {
   const { installWindowOnGlobal } = await import('@lit-labs/ssr/lib/dom-shim.js');
@@ -32,8 +35,6 @@ if (isServer) {
       },
     };
   };
-
-  (globalThis as any).litSsrCallConnectedCallback = true;
 
   installWindowOnGlobal({
     ErrorEvent: Event,

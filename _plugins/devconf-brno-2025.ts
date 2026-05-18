@@ -6,17 +6,22 @@ import { fileURLToPath } from 'node:url';
 
 const globPath = fileURLToPath(new URL('../decks/devconf-brno-2025/components/*.html', import.meta.url));
 
-const paths =
-    await Array.fromAsync(glob(globPath))
-
-const templates = await Promise.all(paths.map(async path => ({
-  path,
-  content: await readFile(path, 'utf8'),
-  name: path.split('/').pop().replace('.html', '')
-})))
+async function loadTemplates() {
+  const paths = await Array.fromAsync(glob(globPath));
+  return Promise.all(paths.map(async path => ({
+    path,
+    content: await readFile(path, 'utf8'),
+    name: path.split('/').pop().replace('.html', '')
+  })));
+}
 
 export function DC25Plugin(eleventyConfig: UserConfig) {
-  eleventyConfig.addPassthroughCopy('./decks/devconf-brno-2025/components/*');
+  eleventyConfig.addPassthroughCopy('./decks/devconf-brno-2025/components/*.{js,css}');
+
+  let templates: Awaited<ReturnType<typeof loadTemplates>> = [];
+  eleventyConfig.on('eleventy.before', async () => {
+    templates = await loadTemplates();
+  });
   eleventyConfig.addTransform('devconf-brno-2025', function (content: string) {
     if (!this.page.outputPath.endsWith?.('.html') || !(this.page.inputPath.match?.('devconf-brno-2025'))) {
       return content;

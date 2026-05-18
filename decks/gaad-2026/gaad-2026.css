@@ -78,23 +78,25 @@ ol {
   margin-inline-start: 1em;
 }
 
-ul li {
-  padding-inline-start: 0.5em;
-  &::marker {
-    content: "\25b6";
-    color: var(--rh-color-brand-red-on-light);
-    font-size: 80%;
+ul, ol {
+  line-height: 2;
+  margin: 0 auto;
+  width: max-content;
+}
+
+ul {
+  li {
+    padding-inline-start: 0.5em;
+    &::marker {
+      content: "\25b6";
+      color: var(--rh-color-brand-red-on-light);
+      font-size: 80%;
+    }
   }
 }
 
 summary::marker {
   color: var(--rh-color-brand-red-on-light);
-}
-
-ul, ol {
-  line-height: 1.5;
-  margin: 0 auto;
-  width: max-content;
 }
 
 figure blockquote + figcaption {
@@ -122,7 +124,7 @@ h2 {
 }
 
 .subtitle,
-:is(h1, h2, h3, h4, h5, h6) {
+rh-slide > :is(h1, h2, h3, h4, h5, h6) {
   text-align: center;
 }
 
@@ -144,29 +146,60 @@ pre[class*="language-"], code {
   font-family: var(--rh-font-family-code);
 }
 
-code {
+:not(a, h1, h2, h3, h4, h5, h6) > code:not([class]),
+code:not([class]) {
   padding-inline: var(--rh-space-sm);
-  border-radius: var(--rh-border-radius-default);
+  padding-block: 0;
+  background: transparent;
+  position: relative;
+  &::after {
+    position: absolute;
+    inset: 0;
+    display: block;
+    content: "";
+    background: var(--markdown-code-background-color, #ddd4);
+    border-radius: var(--rh-border-radius-default);
+    overflow: hidden;
+  }
 }
 
 /* Prism token colors */
-pre .token.punctuation { color: var(--rh-color-gray-60); }
-pre .token.attr-name { color: var(--rh-color-purple-60); }
-pre .token.attr-value { color: var(--rh-color-green-60); }
-pre .token.tag { color: var(--rh-color-blue-50); }
-pre .token.function { color: var(--rh-color-blue-50); }
-pre .token.keyword { color: var(--rh-color-purple-60); }
-pre .token.class-name { color: var(--rh-color-orange-50); }
-pre .token.string { color: var(--rh-color-green-60); }
+pre .token.punctuation { color: var(--_color, var(--rh-color-gray-60)); }
+pre .token.attr-name { color: var(--_color, var(--rh-color-purple-60)); }
+pre .token.attr-value { color: var(--_color, var(--rh-color-green-60)); }
+pre .token.tag { color: var(--_color, var(--rh-color-blue-50)); }
+pre .token.function { color: var(--_color, var(--rh-color-blue-50)); }
+pre .token.keyword { color: var(--_color, var(--rh-color-purple-60)); }
+pre .token.class-name { color: var(--_color, var(--rh-color-orange-50)); }
+pre .token.string { color: var(--_color, var(--rh-color-green-60)); }
 
 /* Reveal animations */
-mark[reveal] {
-  opacity: 1;
-  background-color: transparent;
+mark {
+  transition-duration: 0.2s;
+  transition-timing-function: ease-in;
+  transition-property: background-color, color, font-weight;
+  &[reveal] {
+    opacity: 1;
+    background-color: transparent;
 
-  &:is([past], [current]) {
-    background-color: var(--rh-color-green-10);
-    font-weight: 450;
+    &:is([past], [current]) {
+      background-color: var(--rh-color-green-10);
+      font-weight: 450;
+    }
+  }
+
+  /* Step-based error highlights for code slides */
+  &.error {
+    background-color: transparent;
+    color: var(--_color);
+    &.revealed {
+      background-color: var(--rh-color-red-10, #fce3e3);
+      border-radius: var(--rh-length-md);
+      &.active {
+        font-weight: bold;
+        --_color: var(--rh-color-red-60, #a30000);
+      }
+    }
   }
 }
 
@@ -178,19 +211,6 @@ rh-slide :is(span, p, div)[reveal] {
   &:is([current], [past]) {
     opacity: 1;
   }
-}
-
-/* Step-based error highlights for code slide */
-mark.error {
-  background-color: transparent;
-  color: inherit;
-}
-
-rh-slide:is([step="2"], [step="3"], [step="4"]) mark.attr-err,
-rh-slide:is([step="3"], [step="4"]) mark.color-err,
-rh-slide[step="4"] mark.slot-err {
-  background-color: var(--rh-color-red-10, #fce3e3);
-  color: var(--rh-color-red-60, #a30000);
 }
 
 /* Utilities */
@@ -239,7 +259,6 @@ rh-slide-divider [slot="image"] {
 }
 
 slidem-deck rh-slide > p {
-  text-align: center;
   margin-block: var(--rh-space-lg) !important;
 
   &:has(img:last-child:first-child) {
@@ -247,59 +266,18 @@ slidem-deck rh-slide > p {
   }
 }
 
-/* Image + body text layout (PPTX slide 37) */
-img.image-body {
+/* Slotted side images */
+[slot="image-left"],
+[slot="image-right"] {
   width: 100%;
-  height: auto;
-  object-fit: cover;
-  align-self: center;
-  margin: 0 !important;
-}
+  height: 100%;
 
-.body-text {
-  padding-inline-end: 6vw;
-  font-size: 1.1em;
-  line-height: 1.5;
-  text-align: start;
-  align-self: center;
-}
-
-/* 3-step chevron process (PPTX slide 46) */
-.chevron-process {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  gap: 0;
-  width: calc(100% + 10vw);
-  margin-inline: -5vw !important;
-  margin-block: var(--rh-space-xl) !important;
-
-  & .chevron {
-    background: var(--rh-color-surface-lighter, #f2f2f2);
-    padding: 3vw 4vw 3vw 5vw;
-    position: relative;
-    text-align: start;
-    font-size: 0.85em;
-    line-height: 1.5;
-    clip-path: polygon(0 0, calc(100% - 3vw) 0, 100% 50%, calc(100% - 3vw) 100%, 0 100%, 3vw 50%);
-
-    &:first-child {
-      clip-path: polygon(0 0, calc(100% - 3vw) 0, 100% 50%, calc(100% - 3vw) 100%, 0 100%);
-      padding-inline-start: 3vw;
-    }
-
-    &:last-child {
-      clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%, 3vw 50%);
-    }
-
-    & strong {
-      display: block;
-      font-size: 1.2em;
-      margin-block-end: 0.5em;
-    }
-
-    & code {
-      font-size: 0.9em;
-    }
+  & img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    object-position: center;
+    display: block;
   }
 }
 
@@ -319,6 +297,47 @@ img.image-body {
     font-size: 3vw;
     color: var(--rh-color-brand-red-on-light);
   }
+
+}
+
+/* Icon circle: three icons in equilateral triangle with arc connectors */
+.icon-circle {
+  background: var(--rh-color-surface-dark);
+  display: grid;
+  place-content: center;
+  width: 100%;
+  height: 100%;
+
+  & svg {
+    width: 80%;
+    height: auto;
+    margin: auto;
+  }
+
+  & rh-icon {
+    --rh-icon-size: 100%;
+    color: var(--rh-color-text-primary-on-dark);
+    display: block;
+  }
+}
+
+/* Icon grid: 3x3 grid of icons */
+.icon-grid {
+  background: var(--rh-color-surface-lighter, #f2f2f2);
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, 150px);
+  place-items: center;
+  place-self: center;
+  width: 100%;
+  height: 100%;
+  padding: 3vw;
+  box-sizing: border-box;
+
+  & rh-icon {
+    --rh-icon-size: 5vw;
+    color: var(--rh-color-brand-red-on-light, #ee0000);
+  }
 }
 
 .brand-red {
@@ -336,20 +355,6 @@ rh-icon {
   &.size-08 { --rh-icon-size: var(--rh-size-icon-08); }
   &.size-09 { --rh-icon-size: var(--rh-size-icon-09); }
   &.center { margin-inline: auto; }
-}
-
-/* Split screen: two-panel layout */
-.split-screen {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: var(--rh-space-2xl);
-  align-items: center;
-  margin-block: var(--rh-space-xl);
-
-  & pre[class*="language-"] {
-    min-width: unset;
-    font-size: 0.8em;
-  }
 }
 
 /* Harvey ball pair: before → after */
@@ -388,7 +393,6 @@ blockquote {
   font-weight: 300;
   font-family: var(--rh-font-family-heading);
   line-height: 1.4;
-  text-align: center;
   max-width: 38ch;
   margin-inline: auto;
   margin-block: var(--rh-space-2xl);
@@ -396,9 +400,9 @@ blockquote {
 
 /* PF chatbot — matched from patternfly.org/patternfly-ai/chatbot */
 .chat {
-  --_avatar: 2.5vw;
-  --_pad: 1.25vw;
-  --_font: 1.1vw;
+  --_avatar: 3.5vw;
+  --_pad: 2vw;
+  --_font: 1.6vw;
   --_blue: var(--rh-color-blue-50, #0066cc);
 
   display: flex;
@@ -409,6 +413,7 @@ blockquote {
   box-shadow: 0 0.5vw 1vw rgba(41, 41, 41, 0.15);
   overflow: hidden;
   width: 100%;
+  min-height: 60vh;
 
   & .chat-messages {
     display: flex;
@@ -545,6 +550,11 @@ rh-slide rh-icon {
 }
 
 rh-slide-closing {
+  li {
+    list-style: none;
+    &::marker { content: none; }
+  }
+
   li a {
     --rh-icon-size: 3vw;
     gap: var(--rh-space-2xl);

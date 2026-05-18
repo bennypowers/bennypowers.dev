@@ -1,9 +1,28 @@
+:host {
+  --_grid-areas: none;
+  --_grid-cols: 3fr 2fr;
+  --_grid-rows: 5vw 1fr 5vw;
+  --_header-col: 1;
+  --_header-row: 1;
+  --_content-col: 1;
+  --_content-row: 2;
+  --_content-padding-inline: 3vw 2vw;
+  --_content-place: center;
+  --_footer-col: 1 / -1;
+  --_footer-row: 3;
+  --_footer-z: 2;
+  --_footer-bg: transparent;
+}
+
 #content {
-  padding-inline: 3vw 2vw !important;
-  place-content: center !important;
+  height: auto !important;
+  max-height: 100% !important;
 }
 
 #sidebar {
+  grid-column: 2;
+  grid-row: 1 / -1;
+  z-index: 1;
   background: var(--rh-color-surface-lighter, #f2f2f2);
   padding: 3vw;
   display: flex;

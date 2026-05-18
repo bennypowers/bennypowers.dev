@@ -49,14 +49,15 @@ import isWatch from '#data/watch.ts';
 
 export default function(eleventyConfig: UserConfig) {
   eleventyConfig.setQuietMode(true);
+  eleventyConfig.setServerPassthroughCopyBehavior('passthrough');
   eleventyConfig.addPassthroughCopy('manifest.webmanifest');
   eleventyConfig.addPassthroughCopy('assets/**/*.{svg,png,jpeg,jpg,gif,webp,webm,mp4,js,d.ts,ico,webmanifest,json,woff,woff2}');
   eleventyConfig.addPassthroughCopy({ 'icons': 'assets/icons' });
   eleventyConfig.addPassthroughCopy('decks/**/*.{gif,png,jpeg,jpg,svg}');
   eleventyConfig.addPassthroughCopy('decks/pf-collab/demo/react-dist/fonts');
   eleventyConfig.addGlobalData('isProductionBuild', process.env.NETLIFY && process.env.CONTEXT === 'production');
-  eleventyConfig.addWatchTarget('decks/**/*.css');
   eleventyConfig.addWatchTarget('decks/*/*.md');
+  eleventyConfig.addWatchTarget('decks/*/components/*.html');
   eleventyConfig.addWatchTarget('decks/*/index.webc');
   eleventyConfig.addWatchTarget('_elements/**/*.ts');
   eleventyConfig.watchIgnores.add('assets/images/*');

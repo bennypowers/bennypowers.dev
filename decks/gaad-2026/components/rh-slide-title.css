@@ -1,6 +1,29 @@
+:host {
+  color: var(--rh-color-text-primary-on-light, #151515) !important;
+  background-color: var(--rh-color-surface-lightest, #ffffff) !important;
+  background-image: none !important;
+
+  --_grid-areas: none;
+  --_grid-cols: 7.18vw 29.44vw 1fr;
+  --_grid-rows: minmax(0, 1fr) 5vw;
+  --_header-display: none;
+  --_content-area: auto;
+  --_content-col: 3;
+  --_content-row: 1;
+  --_content-place: unset;
+  --_content-padding-inline: 9.82vw 6.5vw;
+  --_footer-col: 1 / -1;
+  --_footer-row: 2;
+  --_footer-z: 2;
+  --_footer-bg: transparent;
+}
+
 #black-bar {
-  grid-area: bar;
+  grid-column: 1;
+  grid-row: 1 / -1;
+  z-index: 1;
   background: #151515;
+
   ::slotted(p) {
     color: var(--rh-color-text-primary-on-dark);
     rotate: 90deg;
@@ -14,8 +37,11 @@
 }
 
 #image-area {
+  grid-column: 2;
+  grid-row: 1 / -1;
+  z-index: 1;
   background: var(--rh-color-surface-lighter, #f2f2f2);
-  background-image: url('/decks/gaad-2026/images/fedoras.png');
+  background-image: url("/decks/gaad-2026/images/fedoras.png");
   background-size: cover;
   background-position: center;
   display: flex;
@@ -31,7 +57,6 @@
   display: flex !important;
   flex-direction: column !important;
   justify-content: flex-start !important;
-  padding-inline: 9.82vw 6.5vw !important;
   padding-block: 24.92vh 0 !important;
   text-align: start;
 }
@@ -75,11 +100,10 @@
   }
 }
 
-#slide-footer {
-  background: var(--rh-color-surface-lightest, #ffffff) !important;
-  color: var(--rh-color-text-primary-on-light, #151515) !important;
+#slide-footer #logo {
+  height: 5vh !important;
+}
 
-  & #logo {
-    height: 5vh !important;
-  }
+#counter {
+  color: #ffffff !important;
 }

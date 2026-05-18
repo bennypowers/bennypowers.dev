@@ -1,17 +1,46 @@
+:host {
+  color: var(--rh-color-text-primary-on-dark, #ffffff) !important;
+
+  --_header-display: none;
+}
+
+#slide-header {
+  display: none !important;
+}
+
+#slide-footer {
+  grid-row: 3 !important;
+  grid-column: 1 / -1 !important;
+  background: var(--rh-color-surface-darkest, #151515) !important;
+  color: var(--rh-color-text-primary-on-dark, #ffffff) !important;
+  color-scheme: dark only;
+}
+
+#logo path:not([fill]) {
+  fill: currentColor;
+}
+
+#container {
+  align-items: stretch !important;
+}
+
 #content {
   display: grid !important;
-  color-scheme: dark only;
   grid-template-columns: 1fr 1fr !important;
-  grid-template-rows: auto auto 1fr !important;
+  grid-template-rows: auto 1fr !important;
   grid-template-areas:
-    "thanks ."
-    "body links"
-    ". ." !important;
+    "thanks links"
+    "body links" !important;
   align-items: start !important;
-  padding: 8vw 5vw 5vw !important;
+  color-scheme: dark only;
+  background: var(--rh-color-surface-darker, #1f1f1f) !important;
+  color: var(--rh-color-text-primary-on-dark, #ffffff) !important;
+  padding: 8vh 5vw 5vw 17vw !important;
   gap: 2vw 4vw !important;
   scale: none !important;
-  height: auto !important;
+  grid-row: 2 !important;
+  grid-column: 1 !important;
+  max-height: none !important;
   width: 100% !important;
   max-width: 100% !important;
   box-sizing: border-box !important;
@@ -36,7 +65,6 @@
 }
 
 #body {
-  grid-area: body / body / links / links;
   display: contents;
 
   ::slotted(*) {

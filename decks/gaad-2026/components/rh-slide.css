@@ -1,33 +1,58 @@
+/* ---- Base layout (var-driven, no !important below) ---- */
+
 :host {
-  font-size: 2vw !important;
+  font-size: 2.25vw;
+  background: var(--rh-color-surface-lightest, white);
+  color: var(--rh-color-text-primary-on-light, #151515);
 }
 
 #container {
+  grid-template-areas: var(--_grid-areas, "header" "main" "footer");
+  grid-template-columns: var(--_grid-cols, 1fr);
+  grid-template-rows: var(--_grid-rows, var(--header-height) minmax(0, 1fr) var(--footer-height));
+  height: 100%;
+  width: 100%;
+
+  /* Override slidem adopted stylesheet (adopted > linked, needs !important) */
   display: grid !important;
-  grid-template-areas:
-    "header"
-    "body"
-    "footer" !important;
-  grid-template-rows: var(--header-height) 1fr var(--footer-height) !important;
-  height: 100% !important;
-  width: 100% !important;
+  flex-direction: unset !important;
+  align-items: stretch !important;
 
   --header-height: 5vw;
   --footer-height: 5vw;
+  &.chevrons {
+    grid-template-areas: "header" "main" "chevrons" "footer" !important;
+    grid-template-rows: var(--header-height) min-content auto var(--footer-height) !important;
+
+    #content {
+      height: min-content !important;
+    }
+
+    #chevron-process {
+      grid-area: chevrons;
+      align-self: center;
+    }
+  }
 }
 
 #content {
-  grid-area: body !important;
-  position: relative !important;
-  padding-inline: 5vw !important;
-  overflow: hidden !important;
-  scale: none !important;
-  height: auto !important;
-  width: 100% !important;
+  grid-area: var(--_content-area, main);
+  grid-column: var(--_content-col, auto);
+  grid-row: var(--_content-row, auto);
+  position: relative;
+  padding-inline: var(--_content-padding-inline, 5vw);
+  overflow: visible;
+  height: auto;
+  min-height: 0;
+  box-sizing: border-box;
+  display: grid;
+  place-content: var(--_content-place, center);
+
+  /* Override slidem adopted stylesheet (adopted > linked, needs !important) */
+  width: var(--_content-width, 100%) !important;
   max-width: 100% !important;
-  box-sizing: border-box !important;
-  display: grid !important;
-  place-content: center !important;
+  max-height: 100% !important;
+  flex-shrink: unset !important;
 }
 
 ol {
@@ -36,8 +61,10 @@ ol {
 
 #slide-header {
   grid-area: header;
+  grid-column: var(--_header-col, auto);
+  grid-row: var(--_header-row, auto);
   z-index: 2;
-  display: flex;
+  display: var(--_header-display, flex);
   align-items: flex-end;
   padding-inline-start: 3vw;
   padding-block-end: 0.5vw;
@@ -56,20 +83,22 @@ ol {
   ::slotted([slot="heading"]) {
     margin: 0;
     padding-inline-start: 4vw;
-    font-weight: 400 !important;
-    color: var(--rh-color-brand-red-on-light, #ee0000) !important;
-    font-size: 1.4vw !important;
+    font-weight: 400;
+    color: var(--rh-color-brand-red-on-light, #ee0000);
+    font-size: 1.4vw;
   }
 }
 
 #slide-footer {
   grid-area: footer;
-  z-index: 2;
+  grid-column: var(--_footer-col, auto);
+  grid-row: var(--_footer-row, auto);
+  z-index: var(--_footer-z, 2);
   display: flex;
   align-items: flex-start;
   padding-inline: 3vw;
   padding-block-start: 0.5vw;
-  background: var(--rh-color-surface-lightest, #ffffff);
+  background: var(--_footer-bg, var(--rh-color-surface-lightest, #ffffff));
   color: var(--rh-color-text-primary-on-light, #151515);
 }
 
@@ -81,7 +110,7 @@ ol {
 #logo {
   height: 2vw;
   margin-inline-start: auto;
-  align-self: flex-end;
+  align-self: center;
 }
 
 #counter {
@@ -98,3 +127,114 @@ ol {
     background: var(--rh-color-brand-red-on-light, #ee0000);
   }
 }
+
+/* Split screen variant */
+#split-screen {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--rh-space-2xl);
+  align-items: center;
+  margin-block: var(--rh-space-xl);
+
+  & pre[class*="language-"] {
+    min-width: unset;
+    font-size: 0.8em;
+  }
+
+  &[hidden] {
+    display: none;
+  }
+}
+
+/* Full-width variant: no content padding */
+.full-width {
+  --_content-padding-inline: 0;
+}
+
+/* Side image slots (outside #content, not affected by slidem scale) */
+#image-left,
+#image-right {
+  display: none;
+}
+
+.has-image-right {
+  --_grid-areas: "header header" "main image-right" "footer footer";
+  --_grid-cols: 1fr var(--_image-col-width, 33%);
+
+  & #slide-header { grid-area: header !important; }
+  & #content { grid-area: main !important; }
+  & #slide-footer { grid-area: footer !important; }
+
+  & #image-right {
+    display: block;
+    grid-area: image-right;
+    z-index: 1;
+    position: relative;
+
+    & ::slotted(*) {
+      position: absolute !important;
+      inset: 0 !important;
+    }
+  }
+}
+
+.has-image-left {
+  --_grid-areas: "header header" "image-left main" "footer footer";
+  --_grid-cols: var(--_image-col-width, 25%) 1fr;
+
+  & #slide-header { grid-area: header !important; }
+  & #content { grid-area: main !important; }
+  & #slide-footer { grid-area: footer !important; }
+
+  & #image-left {
+    display: block;
+    grid-area: image-left;
+    z-index: 1;
+    position: relative;
+
+    & ::slotted(*) {
+      position: absolute !important;
+      inset: 0 !important;
+    }
+  }
+}
+
+/* 3-step chevron process (PPTX slide 46) */
+#chevron-process {
+  display: none;
+  .chevrons & { display: grid;}
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 0;
+  width: 100%;
+  margin-block: var(--rh-space-xl);
+
+  & .chevron {
+    background: var(--rh-color-surface-lighter, #f2f2f2);
+    padding: 3vw 4vw 3vw 5vw;
+    position: relative;
+    text-align: start;
+    font-size: 0.85em;
+    line-height: 1.5;
+    clip-path: polygon(0 0, calc(100% - 3vw) 0, 100% 50%, calc(100% - 3vw) 100%, 0 100%, 3vw 50%);
+
+    &:first-child {
+      clip-path: polygon(0 0, calc(100% - 3vw) 0, 100% 50%, calc(100% - 3vw) 100%, 0 100%);
+      padding-inline-start: 3vw;
+    }
+
+    &:last-child {
+      clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%, 3vw 50%);
+    }
+
+    & strong {
+      display: block;
+      font-size: 1.2em;
+      margin-block-end: 0.5em;
+    }
+
+    & code {
+      font-size: 0.9em;
+    }
+  }
+}
+
