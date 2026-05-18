@@ -325,14 +325,13 @@ slidem-deck rh-slide > p {
 .icon-grid {
   background: var(--rh-color-surface-lighter, #f2f2f2);
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  grid-template-rows: repeat(3, 150px);
+  grid-template-columns: repeat(3, 8vw);
+  grid-template-rows: repeat(3, 8vw);
+  place-content: center;
   place-items: center;
-  place-self: center;
+  gap: 2vw;
   width: 100%;
   height: 100%;
-  padding: 3vw;
-  box-sizing: border-box;
 
   & rh-icon {
     --rh-icon-size: 5vw;

@@ -16,22 +16,24 @@ export class RhSlide extends SlidemSlide {
     container.classList.toggle('full-width', !!this.querySelector('.full-width'));
     container.classList.toggle('chevrons', !!this.querySelector('[slot^="chevron"]'));
     splitScreen?.toggleAttribute('hidden', !hasSlots);
-    this.#updateCounterAndNotes();
   }
 
-  #updateCounterAndNotes() {
+  afterStamp() {
+    super.afterStamp?.();
     const deck = this.closest('slidem-deck');
-    if (deck?.currentSlide === this) {
+    if (!deck) return;
+    if (deck.currentSlide === this) {
       const stepMatch = location.hash.match(/step-(\d+)/);
       if (stepMatch) this.step = Number(stepMatch[1]);
     }
-    const allSlides = Array.from(deck.querySelectorAll('*')).filter(x => x instanceof SlidemSlide);
+    const allSlides = Array.from(deck.querySelectorAll(':scope > *')).filter(x => x instanceof SlidemSlide);
+    const index = allSlides.indexOf(this) + 1;
     const counter = this.shadowRoot.getElementById('counter');
     if (counter)
-      counter.textContent = (allSlides.indexOf(this) + 1).toString();
+      counter.textContent = index.toString();
     const notes = this.shadowRoot.querySelectorAll('[slot=notes]');
     for (const note of notes) {
-      note.setAttribute('slide', allSlides.indexOf(this) + 1);
+      note.setAttribute('slide', index);
       deck.append(note);
     }
   }

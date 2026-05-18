@@ -14,11 +14,6 @@
   --_footer-bg: transparent;
 }
 
-#content {
-  height: auto !important;
-  max-height: 100% !important;
-}
-
 #sidebar {
   grid-column: 2;
   grid-row: 1 / -1;
