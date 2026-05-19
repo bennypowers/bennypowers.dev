@@ -9,12 +9,14 @@ export class RhSlide extends SlidemSlide {
   connectedCallback() {
     super.connectedCallback();
     const container = this.#$('container');
-    const splitScreen = this.#$('split-screen');
+    if (!container) return;
     const hasSlots = !!(this.querySelector('[slot=left]') || this.querySelector('[slot=right]'))
     container.classList.toggle('has-image-left', !!this.querySelector('[slot="image-left"]'));
     container.classList.toggle('has-image-right', !!this.querySelector('[slot="image-right"]'));
     container.classList.toggle('full-width', !!this.querySelector('.full-width'));
     container.classList.toggle('chevrons', !!this.querySelector('[slot^="chevron"]'));
+    const splitScreen = this.#$('split-screen');
+    if (!splitScreen) return;
     splitScreen?.toggleAttribute('hidden', !hasSlots);
   }
 

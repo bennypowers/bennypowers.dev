@@ -5,6 +5,8 @@
   color: var(--rh-color-text-primary-on-light, #151515) !important;
 }
 
+:host(:not([center])) #content { height: auto !important; }
+
 #slide-header {
   display: flex !important;
 }
