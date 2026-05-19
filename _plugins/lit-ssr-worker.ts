@@ -89,6 +89,8 @@ class UnsafeHTMLStringsArray extends Array {
   }
 }
 
+Gnome2SSRRenderer.renderOptions.push(() => ({ connectedCallback:true }));
+
 const elementRenderers = [Gnome2SSRRenderer];
 
 export default async function renderPage({
