@@ -1,0 +1,35 @@
+<template shadowroot="open"
+          shadowrootmode="open">
+  <link rel="stylesheet"
+        href="components/shared.css">
+  <link rel="stylesheet"
+        href="components/rh-slide.css">
+  <link rel="stylesheet"
+        href="components/rh-slide-sidebar.css">
+  <div id="container"
+       part="container">
+    <header id="slide-header">
+      <slot name="heading"></slot>
+      <small id="confidential">
+        <slot name="confidential"></slot>
+      </small>
+    </header>
+    <section id="content"
+             part="content">
+      <slot></slot>
+    </section>
+    <div id="sidebar">
+      <slot name="sidebar"></slot>
+    </div>
+    <footer id="slide-footer">
+      <span id="counter"
+            part="counter"></span>
+      <slot name="footer"></slot>
+      <img id="logo"
+           alt="red hat"
+           src="/decks/gaad-2026/images/red-hat.svg">
+    </footer>
+  </div>
+  <slot hidden
+        name="notes"></slot>
+</template>

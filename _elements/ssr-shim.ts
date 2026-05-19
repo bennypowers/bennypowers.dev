@@ -33,8 +33,6 @@ if (isServer) {
     };
   };
 
-  (globalThis as any).litSsrCallConnectedCallback = true;
-
   installWindowOnGlobal({
     ErrorEvent: Event,
     IntersectionObserver: ObserverShim,

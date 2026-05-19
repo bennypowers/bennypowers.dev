@@ -7,7 +7,7 @@
   "type": "module",
   "scripts": {
     "build": "eleventy --config=eleventy.config.ts --incremental",
-    "start": "eleventy --config=eleventy.config.ts --serve",
+    "start": "eleventy --config=eleventy.config.ts --serve --incremental",
     "postinstall": "patch-package && node --experimental-strip-types scripts/build-types.ts",
     "demo": "cem serve",
     "test": "playwright test"
@@ -27,7 +27,7 @@
   },
   "homepage": "https://github.com/bennypowers/bennypowers.github.io#readme",
   "dependencies": {
-    "@11ty/eleventy": "^3.1.2",
+    "@11ty/eleventy": "^3.1.5",
     "@11ty/eleventy-navigation": "^1.0.5",
     "@11ty/eleventy-plugin-directory-output": "^1.0.2",
     "@11ty/eleventy-plugin-rss": "^2.0.4",

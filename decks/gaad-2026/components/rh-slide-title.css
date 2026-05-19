@@ -1,0 +1,109 @@
+:host {
+  color: var(--rh-color-text-primary-on-light, #151515) !important;
+  background-color: var(--rh-color-surface-lightest, #ffffff) !important;
+  background-image: none !important;
+
+  --_grid-areas: none;
+  --_grid-cols: 7.18vw 29.44vw 1fr;
+  --_grid-rows: minmax(0, 1fr) 5vw;
+  --_header-display: none;
+  --_content-area: auto;
+  --_content-col: 3;
+  --_content-row: 1;
+  --_content-place: unset;
+  --_content-padding-inline: 9.82vw 6.5vw;
+  --_footer-col: 1 / -1;
+  --_footer-row: 2;
+  --_footer-z: 2;
+  --_footer-bg: transparent;
+}
+
+#black-bar {
+  grid-column: 1;
+  grid-row: 1 / -1;
+  z-index: 1;
+  background: #151515;
+
+  ::slotted(p) {
+    color: var(--rh-color-text-primary-on-dark);
+    rotate: 90deg;
+    font-size: 10pt;
+    transform-origin: bottom left;
+    margin-block: 0 !important;
+    padding: 0;
+    width: 100vh;
+    translate: 3vw 1vw;
+  }
+}
+
+#image-area {
+  grid-column: 2;
+  grid-row: 1 / -1;
+  z-index: 1;
+  background: var(--rh-color-surface-lighter, #f2f2f2);
+  background-image: url("/decks/gaad-2026/images/fedoras.png");
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  align-items: flex-start;
+  padding: 3vw;
+
+  ::slotted(*) {
+    height: 3vw !important;
+  }
+}
+
+#content {
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: flex-start !important;
+  padding-block: 24.92vh 0 !important;
+  text-align: start;
+}
+
+#title {
+  margin-block-end: 1vw;
+}
+
+#subheading {
+  margin-block-end: auto;
+}
+
+::slotted(:is(h1, h2, h3, h4, h5)) {
+  margin: 0 !important;
+}
+
+::slotted(h1) {
+  font-size: 4vw !important;
+  font-weight: 700 !important;
+  line-height: 1.2 !important;
+  text-align: start !important;
+  color: var(--rh-color-brand-red-on-light, #ee0000) !important;
+}
+
+#subheading ::slotted(*) {
+  font-size: 2vw !important;
+  font-weight: 300 !important;
+  line-height: 1.3 !important;
+  text-align: start !important;
+  color: var(--rh-color-text-primary-on-light, #151515) !important;
+}
+
+#presenter {
+  margin-block-start: auto;
+  padding-block-end: 2vw;
+  font-size: 1.4vw;
+
+  & ::slotted([slot="presenter"]) {
+    display: grid !important;
+    gap: 0.3vw !important;
+  }
+}
+
+#slide-footer #logo {
+  height: 5vh !important;
+}
+
+#counter {
+  color: #ffffff !important;
+}

@@ -4,7 +4,7 @@ import { parseHTML } from 'linkedom';
 import { glob, readFile } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
 
-const globPath = fileURLToPath(new URL('../decks/devconf-brno-2025/components/*.html', import.meta.url));
+const globPath = fileURLToPath(new URL('../decks/gaad-2026/components/*.html', import.meta.url));
 
 async function loadTemplates() {
   const paths = await Array.fromAsync(glob(globPath));
@@ -15,15 +15,15 @@ async function loadTemplates() {
   })));
 }
 
-export function DC25Plugin(eleventyConfig: UserConfig) {
-  eleventyConfig.addPassthroughCopy('./decks/devconf-brno-2025/components/*.{js,css}');
+export function GAAD26Plugin(eleventyConfig: UserConfig) {
+  eleventyConfig.addPassthroughCopy('./decks/gaad-2026/components/*.{js,css}');
 
   let templates: Awaited<ReturnType<typeof loadTemplates>> = [];
   eleventyConfig.on('eleventy.before', async () => {
     templates = await loadTemplates();
   });
-  eleventyConfig.addTransform('devconf-brno-2025', function (content: string) {
-    if (!this.page.outputPath.endsWith?.('.html') || !(this.page.inputPath.match?.('devconf-brno-2025'))) {
+  eleventyConfig.addTransform('gaad-2026', function (content: string) {
+    if (!this.page.outputPath?.endsWith?.('.html') || !(this.page.inputPath?.match?.('gaad-2026'))) {
       return content;
     } else {
       const { document } = parseHTML(content);

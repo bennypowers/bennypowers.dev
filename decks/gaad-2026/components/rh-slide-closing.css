@@ -1,0 +1,93 @@
+:host {
+  color: var(--rh-color-text-primary-on-dark, #ffffff) !important;
+
+  --_header-display: none;
+}
+
+#slide-header {
+  display: none !important;
+}
+
+#slide-footer {
+  grid-row: 3 !important;
+  grid-column: 1 / -1 !important;
+  background: var(--rh-color-surface-darkest, #151515) !important;
+  color: var(--rh-color-text-primary-on-dark, #ffffff) !important;
+  color-scheme: dark only;
+}
+
+#logo path:not([fill]) {
+  fill: currentColor;
+}
+
+#container {
+  align-items: stretch !important;
+}
+
+#content {
+  display: grid !important;
+  grid-template-columns: 1fr 1fr !important;
+  grid-template-rows: auto 1fr !important;
+  grid-template-areas:
+    "thanks links"
+    "body links" !important;
+  align-items: start !important;
+  color-scheme: dark only;
+  background: var(--rh-color-surface-darker, #1f1f1f) !important;
+  color: var(--rh-color-text-primary-on-dark, #ffffff) !important;
+  padding: 8vh 5vw 5vw 17vw !important;
+  gap: 2vw 4vw !important;
+  scale: none !important;
+  grid-row: 2 !important;
+  grid-column: 1 !important;
+  max-height: none !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  box-sizing: border-box !important;
+}
+
+#thanks {
+  grid-area: thanks;
+  color: inherit;
+  font-family: var(--rh-font-family-heading, "Red Hat Display", sans-serif);
+  font-size: 6vw;
+  font-weight: 300;
+  line-height: 1.1;
+  margin-block-end: 2vw;
+
+  ::slotted(h1) {
+    font-size: inherit !important;
+    font-weight: inherit !important;
+    color: inherit !important;
+    margin: 0 !important;
+    text-align: start !important;
+  }
+}
+
+#body {
+  display: contents;
+
+  ::slotted(*) {
+    color: inherit !important;
+  }
+
+  ::slotted(p) {
+    grid-area: body !important;
+    font-size: 1.3vw !important;
+    line-height: 1.6 !important;
+    margin: 0 !important;
+    text-align: start !important;
+  }
+
+  ::slotted(ul) {
+    grid-area: links !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    list-style-type: none !important;
+    width: auto !important;
+    font-size: 1.3vw !important;
+    line-height: 3 !important;
+    text-align: start !important;
+    color: inherit !important;
+  }
+}
