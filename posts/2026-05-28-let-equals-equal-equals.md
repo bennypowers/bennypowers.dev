@@ -241,8 +241,11 @@ The encapsulation argument leans heavily on closed shadow roots. But
 closed shadow roots are vanishingly rare in practice:
 
 - **Chrome UseCounters** show open shadow DOM on ~17.5% of page loads vs
-  closed on ~5.3%, but the closed figure is inflated by browser-internal
-  UA shadow trees (`<video>`, `<input>`, etc.) and browser extensions.
+  closed on ~5.3%. Per the [Chromium UseCounter Wiki][usecounter-wiki],
+  this figure is *not* inflated by UA shadow roots (internal code paths)
+  or browser extensions (separate histogram). It's real page JS. But
+  even this ~5% likely reflects ad-tech widgets and third-party embeds,
+  not web component library usage.
 - **No major web component framework** defaults to closed shadow roots.
   Lit, Stencil, FAST, Angular, Svelte, Vue -- all default to open.
   Several don't even support closed mode.
@@ -398,4 +401,5 @@ That's backwards. Fix it.
 [rt-tracking]: https://github.com/WICG/webcomponents/issues/1086
 [aom-195]: https://github.com/WICG/aom/issues/195
 [alice-analysis]: https://gist.github.com/alice/54108d8037f865876702b07755f771a5
+[usecounter-wiki]: https://chromium.googlesource.com/chromium/src/+/HEAD/docs/use_counter_wiki.md
 [nolan-warning]: https://github.com/WICG/aom/issues/192#issuecomment-4552421315
