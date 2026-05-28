@@ -226,6 +226,14 @@ This isn't a close call. This is the worst possible violation of the highest
 principles of the HTML spec itself, perpetrated by spec authors, in the name of
 a theoretical purity that nobody asked for.
 
+[Brian Kardell](https://bkardell.com/blog/PriorityOfConstituencies.html) argued
+(successfully) that the <abbr>PoC</abbr> is more of a guideline than a binding
+principle, and that even then, engineering resources should be taken into account.
+And regardless, the existence of the WHATWG is the tacit admission that browser
+vendors will do whatever they want, regardless. But even the most nuanced, least
+toothy read of the <abbr>PoC</abbr> puts this issue squarely in the center of the
+cross hairs. Theoretical spec purity must not win against real user needs.
+
 ## "But What About Closed Shadow Roots?"
 
 The encapsulation argument leans heavily on closed shadow roots. But
