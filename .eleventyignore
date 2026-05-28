@@ -1,3 +1,4 @@
+.drafts/**/*
 README.md
 playwright-report/**/*
 test-results/**/*

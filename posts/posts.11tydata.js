@@ -15,6 +15,9 @@ export default {
       else
         return datePublished;
     },
+    description({ description, tldr }) {
+      return description || tldr;
+    },
     permalink({ permalink, page }) {
       const match = page.inputPath.match(POST_DATE_RE);
       if (match && !page.filePathStem.endsWith('/index'))
