@@ -71,6 +71,11 @@
     height: min(80%, 410px);
   }
 
+  ::slotted(gtk2-window[data-app="gedit"]) {
+    height: calc(100% - 8px);
+    max-height: none;
+  }
+
   ::slotted(gtk2-window[data-app="pidgin"]) {
     inset-inline-end: 16px;
     inset-inline-start: auto;

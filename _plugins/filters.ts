@@ -84,6 +84,12 @@ export function FiltersPlugin(eleventyConfig: UserConfig) {
   eleventyConfig.addFilter('formatDate', formatDate);
   eleventyConfig.addFilter('linkifyHashtags', linkifyHashtags);
   eleventyConfig.addJavaScriptFunction('groupby', groupby);
+
+  let mdLib: { renderInline(s: string): string } | null = null;
+  eleventyConfig.amendLibrary('md', (md: any) => { mdLib = md; });
+  eleventyConfig.addFilter('md', (content: string) =>
+    mdLib?.renderInline(content) ?? content);
+
   eleventyConfig.addFilter('include', async function includeFilter(path: string) {
     const resolved = join(dirname(new URL(import.meta.url).pathname), '..', '_includes', path)
     const content = await readFile(resolved, 'utf8');

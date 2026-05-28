@@ -10,6 +10,7 @@ windowIcon: apps/accessories-text-editor
             :lang="lang ?? false"
             :dir="dir ?? false"
             icon="apps/accessories-text-editor"
+            data-app="gedit"
             focused
             resizable
             close-href="/">
@@ -27,6 +28,7 @@ windowIcon: apps/accessories-text-editor
                      dateStyle="medium"></date-time>
           <span webc:if="timeToRead" class="reading-time" @text="timeToRead(content, lang ?? 'en')"></span>
         </div>
+        <p class="p-summary tldr" webc:if="tldr" @html="md(tldr)"></p>
         <img id="cover-image"
              class="u-photo"
              height="400"
@@ -136,6 +138,16 @@ windowIcon: apps/accessories-text-editor
     gap: 16px;
     color: #888a85;
     font-size: 12px;
+  }
+
+  .tldr {
+    font-style: italic;
+    color: light-dark(#555753, #babdb6);
+    border-inline-start: 3px solid #3465a4;
+    padding-inline-start: 12px;
+    margin-block: 8px 0;
+    font-size: 13px;
+    line-height: 1.5;
   }
 
   #cover-image {
