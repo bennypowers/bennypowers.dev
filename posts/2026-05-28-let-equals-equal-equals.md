@@ -230,9 +230,10 @@ a theoretical purity that nobody asked for.
 (successfully) that the <abbr>PoC</abbr> is more of a guideline than a binding
 principle, and that even then, engineering resources should be taken into account.
 And regardless, the existence of the WHATWG is the tacit admission that browser
-vendors will do whatever they want, regardless. But even the most nuanced, least
-toothy read of the <abbr>PoC</abbr> puts this issue squarely in the center of the
-cross hairs. Theoretical spec purity must not win against real user needs.
+vendors will do whatever they want, whenever they want. But even the most
+nuanced, least toothy read of the <abbr>PoC</abbr> puts this issue squarely in
+the center of the cross hairs. Theoretical spec purity must not win against
+real user needs.
 
 ## "But What About Closed Shadow Roots?"
 
