@@ -143,13 +143,19 @@ shadow root:
    AT -- the "attr-associated element" remains intact for the
    accessibility tree, even though JavaScript can't read it back.
 2. **Retarget** the reference to the shadow host, similar to how events
-   retarget when crossing shadow boundaries.
+   retarget when crossing shadow boundaries. Alice Boxhall formalized
+   this in [WICG/aom#195][aom-195], proposing that the getter retarget
+   to the nearest visible host, with an opt-in API
+   (`getAttrAssociatedElement`) to "undo" retargeting when the caller
+   already has access to the relevant shadow root -- analogous to
+   `getComposedRanges()` in the Selection API.
 3. **Reference Target** -- the component explicitly declares which
    internal element should be exposed.
 
-Options 1 and 2 solve the encapsulation leak without breaking the setter.
-The spec authors chose something closer to option 0: discard everything
-silently.
+Alice's [comprehensive analysis][alice-analysis] of ARIA relationships
+and shadow DOM lays out these options in detail. Options 1 and 2 solve
+the encapsulation leak without breaking the setter. The spec authors
+chose something closer to option 0: discard everything silently.
 
 [Alice][alice-gh], who did much of the design work on ARIA element
 reflection, [shared her frustration][alice-frustration] in a recent
@@ -240,6 +246,18 @@ closed shadow roots are vanishingly rare in practice:
   Browser vendors themselves ship extension APIs
   (`dom.openOrClosedShadowRoot`) to bypass them.
 
+But even setting the data aside: **if I have a reference to a node in a
+closed shadow root, I should be able to use it.** Full stop. Having the
+reference means someone -- the component author, a framework, my own
+code -- already decided to share it. The encapsulation boundary was
+already crossed. The platform shouldn't second-guess that decision,
+especially not by silently breaking an accessibility feature.
+
+The component author is a grown-up. If they expose a node reference,
+they accept that it might be used. And the user of assistive technology
+deserves to have that accessibility relationship work, regardless of
+what mode some `attachShadow` call used three layers up the DOM tree.
+
 The spec is constraining a heavily-used imperative accessibility API to
 protect encapsulation guarantees that almost nobody uses, that provide no
 real security, and that actively harm the constituency the web platform
@@ -316,8 +334,8 @@ and working imperative assignment for everything else.
 2. **Null out the getter if needed.** If the referenced element is in a
    deeper/sibling shadow root, return `null` from the JavaScript getter.
    This preserves encapsulation for scripts while letting AT see the
-   relationship. This approach was [explored in the spec discussion]
-   [whatwg-5401] and is implementable.
+   relationship. This approach was [explored in the spec
+   discussion][whatwg-5401] and is implementable.
 
 3. **Warn, don't fail.** At minimum, emit a console warning when an
    assignment is silently scoped away. Nolan Lawson [suggested
@@ -369,4 +387,6 @@ That's backwards. Fix it.
 [aom-192]: https://github.com/WICG/aom/issues/192
 [ref-target]: https://github.com/WICG/webcomponents/blob/gh-pages/proposals/reference-target-explainer.md
 [rt-tracking]: https://github.com/WICG/webcomponents/issues/1086
+[aom-195]: https://github.com/WICG/aom/issues/195
+[alice-analysis]: https://gist.github.com/alice/54108d8037f865876702b07755f771a5
 [nolan-warning]: https://github.com/WICG/aom/issues/192#issuecomment-4552421315
