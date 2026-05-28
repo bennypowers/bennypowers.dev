@@ -2,6 +2,11 @@ import type { UserConfig } from '@11ty/eleventy';
 
 import EleventyFetch from '@11ty/eleventy-fetch';
 
+const BLOCKED_AUTHORS = new Set([
+  'https://dev.to/amos_joseph',
+  'https://dev.to/swetha_hopeinfotech_6c729',
+]);
+
 export interface WebMentionAuthor {
   url: string;
   name: string;
@@ -58,6 +63,7 @@ function getWebmentions(eleventyConfig: UserConfig, domain: string) {
     const allWMs: WebMentionResponse = eleventyConfig.globalData.allWebmentions;
     const pageUrlRE = new RegExp(`^https?:\/\/${domain}${pageUrl}?$`);
     const pageMentions = allWMs.children.filter(wm => {
+      if (BLOCKED_AUTHORS.has(wm.author?.url)) return false;
       const target = wm['wm-target'];
       return pageUrlRE.test(target) || altUrls?.includes(target);
     });
@@ -318,6 +324,8 @@ async function fetchDevToComments(
         );
 
         for (const comment of flattenDevToComments(comments)) {
+          const authorUrl = `https://dev.to/${comment.user.username}`;
+          if (BLOCKED_AUTHORS.has(authorUrl)) continue;
           const commentUrl = `${article.url}#comment-${comment.id_code}`;
           if (existingUrls.has(commentUrl)) continue;
           existingUrls.add(commentUrl);
