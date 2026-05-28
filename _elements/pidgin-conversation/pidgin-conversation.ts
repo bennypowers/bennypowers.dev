@@ -92,11 +92,46 @@ export class PidginConversation extends LitElement {
       this.appendChild(msg);
     }
 
-    // Scroll conversation to bottom
     this.updateComplete?.then(() => {
-      const conv = this.shadowRoot?.querySelector('#conversation');
-      if (conv) conv.scrollTop = conv.scrollHeight;
+      this.#sizeWindowToContent();
     });
+  }
+
+  #sizeWindowToContent() {
+    const conv = this.shadowRoot?.querySelector('#conversation');
+    if (!conv) return;
+
+    const messages = [...this.querySelectorAll('pidgin-message')];
+    if (!messages.length) return;
+
+    const last = messages.at(-1)!;
+    const prev = messages.at(-2);
+
+    const lastRect = last.getBoundingClientRect();
+    const convRect = conv.getBoundingClientRect();
+
+    // Height of content below the conversation area (protocol bar, input, etc.)
+    const win = this.closest('gtk2-window');
+    if (!win) return;
+    const winRect = win.getBoundingClientRect();
+    const chromeAbove = convRect.top - winRect.top;
+    const chromeBelow = winRect.bottom - convRect.bottom;
+
+    // Show full last message + peek of previous (40px or half its height)
+    const peek = prev ? Math.min(40, prev.getBoundingClientRect().height * 0.5) : 0;
+    const idealConvHeight = lastRect.height + peek + 16; // 16px padding
+    const idealWindowHeight = chromeAbove + idealConvHeight + chromeBelow;
+
+    // Cap to desktop bounds
+    const desktop = win.parentElement;
+    const maxHeight = desktop
+      ? desktop.getBoundingClientRect().height - 8
+      : window.innerHeight - 120;
+
+    win.style.height = `${Math.min(idealWindowHeight, maxHeight)}px`;
+
+    // Scroll to bottom
+    conv.scrollTop = conv.scrollHeight;
   }
 
   render() {
