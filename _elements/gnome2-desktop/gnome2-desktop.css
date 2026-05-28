@@ -82,7 +82,7 @@
     inset-block-start: 40px;
     margin: 0;
     width: min(90%, 400px);
-    height: min(80%, 500px);
+    max-height: calc(100% - 48px);
   }
 
   @media (width <= 767px) {
