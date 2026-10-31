@@ -79,6 +79,24 @@
   to = "https://bennypowers.github.io/cem/:splat"
   status = 200
   force = true
+# Serve minimal XHTML for Go module discovery - grind
+[[redirects]]
+  from = "/grind"
+  to = "/grind/go-import.html"
+  status = 200
+  force = true
+  query = {go-get = "1"}
+[[redirects]]
+  from = "/grind/*"
+  to = "/grind/go-import.html"
+  status = 200
+  force = true
+  query = {go-get = "1"}
+[[redirects]]
+  from = "/cem/*"
+  to = "https://github.com/bennypowers/grind/:splat"
+  status = 200
+  force = true
 # Serve minimal XHTML for Go module discovery - lit-ssr-wasm
 [[redirects]]
   from = "/lit-ssr-wasm"
